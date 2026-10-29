@@ -1,6 +1,6 @@
 # Ward scorecard
 
-12 messages per language, half abusive and half not by each dataset's own labels, same sample for every system (seed 26).
+200 messages per language, half abusive and half not by each dataset's own labels, same sample for every system (seed 26).
 Run on 2026-10-29, Apple M-series laptop, Ollama, nothing sent off the machine.
 
 Recall is the share of abusive messages caught. Precision is the share of flags that were right.
@@ -9,25 +9,25 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 
 | System | Caught (recall) | Right when it flags (precision) | F1 | Accuracy |
 | --- | --- | --- | --- | --- |
-| Slang packs | 0% | 0% | 0.00 | 50% |
-| ShieldGemma 2B | 0% | 0% | 0.00 | 50% |
-| Gemma 4 E4B | 100% | 100% | 1.00 | 100% |
+| Slang packs | 34% | 85% | 0.49 | 64% |
+| ShieldGemma 2B | 14% | 70% | 0.23 | 54% |
+| Gemma 4 E4B | 83% | 89% | 0.86 | 87% |
 
 ## Bangla
 
 | System | Caught (recall) | Right when it flags (precision) | F1 | Accuracy |
 | --- | --- | --- | --- | --- |
-| Slang packs | 0% | 0% | 0.00 | 50% |
-| ShieldGemma 2B | 17% | 100% | 0.29 | 58% |
-| Gemma 4 E4B | 33% | 100% | 0.50 | 67% |
+| Slang packs | 2% | 40% | 0.04 | 50% |
+| ShieldGemma 2B | 12% | 86% | 0.21 | 55% |
+| Gemma 4 E4B | 33% | 67% | 0.44 | 59% |
 
 ## English
 
 | System | Caught (recall) | Right when it flags (precision) | F1 | Accuracy |
 | --- | --- | --- | --- | --- |
-| Slang packs | 0% | 0% | 0.00 | 50% |
-| ShieldGemma 2B | 17% | 100% | 0.29 | 58% |
-| Gemma 4 E4B | 17% | 100% | 0.29 | 58% |
+| Slang packs | 10% | 83% | 0.18 | 54% |
+| ShieldGemma 2B | 19% | 73% | 0.30 | 56% |
+| Gemma 4 E4B | 22% | 71% | 0.34 | 56% |
 
 ## Systems
 

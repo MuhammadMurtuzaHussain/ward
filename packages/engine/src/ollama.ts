@@ -63,7 +63,7 @@ For each JUDGE message decide:
 - severity: 0 not hostile; 1 rude or unkind; 2 bullying (degrading, insulting appearance or identity, excluding, humiliating, repeated); 3 dangerous (threats of violence, telling someone to hurt or kill themselves, sexual messages or pressure for photos, threats to share photos or private information, blackmail).
 - categories: any of ${CATEGORIES.join(", ")}.
 - target: the name of the person it is aimed at, exactly as they appear in the chat, or null.
-- why: under 15 words, plain English a 10-year-old understands, e.g. "Calls her a buffalo to mock her weight."
+- why: under 15 words, plain English a 10-year-old understands. Refer to people by name or as "they"; never guess anyone's gender. Example: "Calls Ayesha a buffalo to mock their weight."
 Return every JUDGE message, in order.`;
 
 function line(m: Message, judge: boolean) {

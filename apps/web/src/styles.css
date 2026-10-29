@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource/atkinson-hyperlegible-next/400.css";
+@import "@fontsource/atkinson-hyperlegible-next/700.css";
+
+/*
+  Ward's looks. Every look is a night with one light in it: a dark room and a single warm
+  accent ("glow"). The child picks one in onboarding and can switch any time in Settings.
+  data-age sets how playful the shapes and type feel: 8 (8 to 10), 11 (11 to 13), 14 (14 to 17).
+  Semantic colours (alarm, safe) stay the same in every look so danger always reads as danger.
+*/
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-glow: var(--glow);
+  --color-glow-ink: var(--glow-ink);
+  --color-glow-soft: var(--glow-soft);
+  --color-alarm: var(--alarm);
+  --color-alarm-soft: var(--alarm-soft);
+  --color-safe: var(--safe);
+
+  --radius-card: var(--r-card);
+  --radius-btn: var(--r-btn);
+}
+
+:root,
+[data-look="lantern"] {
+  --bg: #0f1024;
+  --surface: #171933;
+  --raised: #20234a;
+  --line: rgb(226 224 255 / 0.09);
+  --ink: #f4f0e8;
+  --dim: #aeadc8;
+  --glow: #ffb547;
+  --glow-ink: #241500;
+  --glow-soft: rgb(255 181 71 / 0.14);
+  --halo: rgb(255 170 60 / 0.38);
+}
+
+[data-look="moonlit"] {
+  --bg: #0b1418;
+  --surface: #122027;
+  --raised: #1a2d35;
+  --line: rgb(220 240 240 / 0.09);
+  --ink: #eef4f2;
+  --dim: #a1b6b7;
+  --glow: #ece5ae;
+  --glow-ink: #1b1a08;
+  --glow-soft: rgb(236 229 174 / 0.13);
+  --halo: rgb(236 229 174 / 0.3);
+}
+
+[data-look="firefly"] {
+  --bg: #0c140f;
+  --surface: #131f17;
+  --raised: #1b2c21;
+  --line: rgb(220 245 210 / 0.09);
+  --ink: #eff4e8;
+  --dim: #a7b8a3;
+  --glow: #c9ef5d;
+  --glow-ink: #142000;
+  --glow-soft: rgb(201 239 93 / 0.13);
+  --halo: rgb(201 239 93 / 0.3);
+}
+
+[data-look="ember"] {
+  --bg: #160e13;
+  --surface: #21151c;
+  --raised: #2d1d27;
+  --line: rgb(255 225 225 / 0.09);
+  --ink: #f7ece9;
+  --dim: #c1a7ab;
+  --glow: #ff8d6e;
+  --glow-ink: #2a0a02;
+  --glow-soft: rgb(255 141 110 / 0.14);
+  --halo: rgb(255 141 110 / 0.34);
+}
+
+[data-look="aurora"] {
+  --bg: #0a0f1e;
+  --surface: #11192e;
+  --raised: #192440;
+  --line: rgb(210 230 255 / 0.09);
+  --ink: #ebf2ff;
+  --dim: #a2b2ce;
+  --glow: #63eecb;
+  --glow-ink: #02201a;
+  --glow-soft: rgb(99 238 203 / 0.12);
+  --halo: rgb(99 238 203 / 0.3);
+}
+
+/* The one light look, for daytime and for kids who find dark screens hard to read. */
+[data-look="daylight"] {
+  --bg: #eceef6;
+  --surface: #f8f8fc;
+  --raised: #e2e5f1;
+  --line: rgb(23 24 58 / 0.1);
+  --ink: #17183a;
+  --dim: #50536f;
+  --glow: #f0a12a;
+  --glow-ink: #1f1200;
+  --glow-soft: rgb(240 161 42 / 0.16);
+  --halo: rgb(240 161 42 / 0.28);
+}
+
+:root {
+  --alarm: #ff6f6f;
+  --alarm-soft: rgb(255 111 111 / 0.13);
+  --safe: #7fe0a8;
+  --r-card: 22px;
+  --r-btn: 16px;
+  font-size: 17px;
+}
+[data-look="daylight"] {
+  --alarm: #c42b2b;
+  --alarm-soft: rgb(196 43 43 / 0.1);
+  --safe: #1f7a49;
+}
+
+[data-age="8"] {
+  --r-card: 28px;
+  --r-btn: 22px;
+  font-size: 18px;
+}
+[data-age="14"] {
+  --r-card: 16px;
+  --r-btn: 12px;
+  font-size: 16px;
+}
+
+html,
+body,
+#root {
+  min-height: 100dvh;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The room's light: one soft pool of the look's glow, fixed behind everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, var(--glow-soft), transparent 60%),
+    radial-gradient(40rem 30rem at -10% 110%, rgb(120 110 255 / 0.06), transparent 60%);
+  z-index: 0;
+}
+[data-look="daylight"] body::before,
+body[data-look="daylight"]::before {
+  opacity: 0.6;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+:focus-visible {
+  outline: 3px solid var(--glow);
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-variation-settings: "opsz" 48;
+}
+
+/* Ward's float, blink and the rim trail used by the drop zone. */
+@keyframes ward-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes ward-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes rim-trail {
+  to {
+    offset-distance: 100%;
+  }
+}
+@keyframes rim-drift {
+  0%,
+  100% {
+    transform: translateX(-30%);
+  }
+  50% {
+    transform: translateX(30%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

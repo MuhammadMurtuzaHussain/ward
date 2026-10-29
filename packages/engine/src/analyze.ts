@@ -143,33 +143,42 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
     const kinds = uniq(danger.flatMap((f) => f.categories).filter((c) => ["threat", "selfharm", "sexual", "exposure"].includes(c)));
     const words: Record<string, string> = {
       threat: "threats to hurt you",
-      selfharm: "telling you to hurt yourself",
-      sexual: "sexual messages or pressure for photos",
-      exposure: "threats to share photos or private things",
+      selfharm: "messages telling you to hurt yourself",
+      sexual: "sexual messages or pressure to send photos",
+      exposure: "threats to share your photos or private things",
     };
+    const said = kinds.map((k) => words[k]).filter(Boolean);
+    const list = said.length > 1 ? `${said.slice(0, -1).join(", ")} and ${said.at(-1)}` : (said[0] ?? "messages that could put you in danger");
     out.push({
       kind: "danger",
       senders: uniq(danger.map((f) => f.message.sender)),
       messageIds: ids(danger),
-      summary: `This chat has ${kinds.map((k) => words[k]).filter(Boolean).join(", ") || "messages that could put you in danger"}. That is never okay, and it's not your fault.`,
+      summary: `This chat has ${list}. That is never okay, and it's not your fault.`,
     });
   }
 
   // The same person, again and again.
   const perSender = new Map<string, Finding[]>();
   for (const f of toSelf) perSender.set(f.message.sender, [...(perSender.get(f.message.sender) ?? []), f]);
+  const repeaters: { sender: string; fs: Finding[]; days: number }[] = [];
   for (const [sender, fs] of perSender) {
     const days = timed ? uniq(fs.map((f) => f.message.at!.toDateString())).length : 0;
-    if (fs.length >= 3 && (days >= 2 || (!timed && fs.length >= 4))) {
-      out.push({
-        kind: "campaign",
-        senders: [sender],
-        messageIds: ids(fs),
-        summary: timed
-          ? `${sender} has gone after you ${fs.length} times over ${days} days. When it keeps happening, it's bullying, not a joke.`
-          : `${sender} has gone after you ${fs.length} times. When it keeps happening, it's bullying, not a joke.`,
-      });
-    }
+    if (fs.length >= 3 && (days >= 2 || (!timed && fs.length >= 4))) repeaters.push({ sender, fs, days });
+  }
+  if (repeaters.length) {
+    repeaters.sort((a, b) => b.fs.length - a.fs.length);
+    const top = repeaters[0]!;
+    const others = repeaters.slice(1).map((r) => r.sender);
+    const lead = timed
+      ? `${top.sender} has gone after you ${top.fs.length} times over ${top.days} days`
+      : `${top.sender} has gone after you ${top.fs.length} times`;
+    const also = others.length ? `, and ${others.length === 1 ? others[0] : `${others.slice(0, -1).join(", ")} and ${others.at(-1)}`} ${others.length === 1 ? "keeps" : "keep"} doing it too` : "";
+    out.push({
+      kind: "campaign",
+      senders: repeaters.map((r) => r.sender),
+      messageIds: ids(repeaters.flatMap((r) => r.fs)),
+      summary: `${lead}${also}. When it keeps happening, it's bullying, not a joke.`,
+    });
   }
 
   // Many people at once: 3+ different senders inside an hour (or 15 messages, untimed).
