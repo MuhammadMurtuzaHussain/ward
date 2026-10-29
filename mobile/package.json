@@ -1,0 +1,19 @@
+{
+  "name": "@ward/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Ward for Android: the app bundled inside the APK, so it works offline",
+  "scripts": {
+    "sync": "rm -rf www && cp -R ../apps/web/dist www && cap sync android",
+    "apk": "pnpm sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "@capacitor/share": "^8.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2"
+  }
+}

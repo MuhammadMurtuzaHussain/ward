@@ -1,0 +1,10 @@
+{
+  "appId": "org.ward.app",
+  "appName": "Ward",
+  "webDir": "www",
+  "backgroundColor": "#0f1024",
+  "android": {
+    "allowMixedContent": true,
+    "webContentsDebuggingEnabled": false
+  }
+}

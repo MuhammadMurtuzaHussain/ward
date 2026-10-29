@@ -1,5 +1,8 @@
 packages:
   - apps/*
   - packages/*
+  - desktop
+  - mobile
 allowBuilds:
   esbuild: true
+  electron: true

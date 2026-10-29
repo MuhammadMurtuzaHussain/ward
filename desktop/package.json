@@ -1,0 +1,59 @@
+{
+  "name": "@ward/desktop",
+  "productName": "Ward",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ward: spot cyberbullying, keep the evidence, bounce back. Runs on your device.",
+  "author": "Muhammad Murtuza Hussain",
+  "license": "MIT",
+  "type": "module",
+  "main": "main.mjs",
+  "scripts": {
+    "start": "pnpm --filter @ward/web build && electron .",
+    "smoke": "WARD_SMOKE=1 electron .",
+    "dist": "pnpm --filter @ward/web build && electron-builder --publish never"
+  },
+  "build": {
+    "appId": "org.ward.app",
+    "productName": "Ward",
+    "files": [
+      "main.mjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../apps/web/dist",
+        "to": "web"
+      }
+    ],
+    "directories": {
+      "output": "../release",
+      "buildResources": "build"
+    },
+    "mac": {
+      "category": "public.app-category.education",
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "Ward-mac-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Ward-windows-setup.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Education",
+      "artifactName": "Ward-linux.${ext}",
+      "executableName": "ward"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.1.0",
+    "electron-builder": "^26.18.0"
+  }
+}

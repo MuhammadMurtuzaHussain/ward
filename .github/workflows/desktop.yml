@@ -1,0 +1,80 @@
+# Desktop installers for macOS (Apple Silicon and Intel), Windows and Linux. Run by hand from
+# the Actions tab (kept 14 days), or by pushing a v* tag, which publishes them on the Release.
+# Each packaged app is launched once (WARD_SMOKE) before it's kept. Unsigned for now.
+name: Desktop installers
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            name: mac-arm64
+            target: --mac dmg --arm64
+            app: release/mac-arm64/Ward.app/Contents/MacOS/Ward
+          - os: macos-15-intel
+            name: mac-x64
+            target: --mac dmg --x64
+            app: release/mac/Ward.app/Contents/MacOS/Ward
+          - os: windows-latest
+            name: windows-x64
+            target: --win nsis --x64
+            app: release/win-unpacked/Ward.exe
+          - os: ubuntu-latest
+            name: linux-x64
+            target: --linux AppImage --x64
+            app: release/linux-unpacked/ward
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @ward/web build
+      - run: pnpm exec electron-builder ${{ matrix.target }} --publish never
+        working-directory: desktop
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - name: Launch test
+        if: runner.os != 'Linux'
+        shell: bash
+        run: WARD_SMOKE=1 "${{ matrix.app }}"
+      - name: Launch test (virtual display)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb > /dev/null
+          WARD_SMOKE=1 xvfb-run -a "${{ matrix.app }}" --no-sandbox
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ward-${{ matrix.name }}
+          path: |
+            release/*.dmg
+            release/*.exe
+            release/*.AppImage
+          if-no-files-found: ignore
+          retention-days: 14
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: installers
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: installers/*
+          generate_release_notes: true
