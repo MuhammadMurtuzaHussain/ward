@@ -1,0 +1,110 @@
+{
+  "n": 12,
+  "results": {
+    "Roman Urdu": {
+      "Slang packs": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 6,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "accuracy": 0.5,
+        "seconds": 0.004
+      },
+      "ShieldGemma 2B": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 6,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "accuracy": 0.5,
+        "seconds": 1.794
+      },
+      "Gemma 4 E4B": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "tn": 6,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1,
+        "accuracy": 1,
+        "seconds": 11.95
+      }
+    },
+    "Bangla": {
+      "Slang packs": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 6,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "accuracy": 0.5,
+        "seconds": 0.015
+      },
+      "ShieldGemma 2B": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 5,
+        "tn": 6,
+        "precision": 1,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857,
+        "accuracy": 0.5833333333333334,
+        "seconds": 3.832
+      },
+      "Gemma 4 E4B": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 4,
+        "tn": 6,
+        "precision": 1,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "accuracy": 0.6666666666666666,
+        "seconds": 8.148
+      }
+    },
+    "English": {
+      "Slang packs": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 6,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "accuracy": 0.5,
+        "seconds": 0.014
+      },
+      "ShieldGemma 2B": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 5,
+        "tn": 6,
+        "precision": 1,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857,
+        "accuracy": 0.5833333333333334,
+        "seconds": 14.349
+      },
+      "Gemma 4 E4B": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 5,
+        "tn": 6,
+        "precision": 1,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857,
+        "accuracy": 0.5833333333333334,
+        "seconds": 2.089
+      }
+    }
+  }
+}

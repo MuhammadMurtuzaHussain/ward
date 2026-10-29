@@ -1,0 +1,27 @@
+{
+  "lang": "hi-Latn",
+  "name": "Hinglish",
+  "about": "Starter pack for Hindi typed in Latin letters, mixed with English.",
+  "entries": [
+    { "t": "kamina", "c": "insult", "s": 1, "g": "scoundrel" },
+    { "t": "kamine", "c": "insult", "s": 1, "g": "scoundrel" },
+    { "t": "saala", "c": "insult", "s": 1, "g": "mild abuse" },
+    { "t": "gandu", "c": "insult", "s": 2, "g": "vulgar insult" },
+    { "t": "bhosdike", "c": "insult", "s": 2, "g": "vulgar insult" },
+    { "t": "madarchod", "c": "insult", "s": 2, "g": "vulgar insult" },
+    { "t": "behenchod", "c": "insult", "s": 2, "g": "vulgar insult" },
+    { "t": "teri maa", "c": "insult", "s": 2, "g": "insult to your mother" },
+    { "t": "chakka", "c": "identity", "s": 2, "g": "slur for trans people, used as an insult" },
+    { "t": "kaali kalooti", "c": "appearance", "s": 2, "g": "dark-skinned (as an insult)" },
+    { "t": "motu", "c": "appearance", "s": 1, "g": "fatty" },
+    { "t": "suicide kar le", "c": "selfharm", "s": 3, "g": "kill yourself" },
+    { "t": "mar kyu nahi jata", "c": "selfharm", "s": 3, "g": "why don't you die" },
+    { "t": "mar kyu nahi jati", "c": "selfharm", "s": 3, "g": "why don't you die" },
+    { "t": "tujhse koi baat nahi karega", "c": "exclusion", "s": 2, "g": "nobody will talk to you" },
+    { "t": "isko nikalo", "c": "exclusion", "s": 2, "g": "throw them out" },
+    { "t": "photo leak", "c": "exposure", "s": 3, "g": "leak the photo" },
+    { "t": "sabko bhej dunga", "c": "exposure", "s": 3, "g": "I'll send it to everyone" },
+    { "t": "tujhe dekh lunga", "c": "threat", "s": 2, "g": "I'll deal with you" },
+    { "t": "tod dunga", "c": "threat", "s": 3, "g": "I'll break (you)" }
+  ]
+}

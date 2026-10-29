@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+eval/data/
+eval/results/*.raw.json
+mobile/android/app/build/
+mobile/www/
+release/
+eval/results-run.log

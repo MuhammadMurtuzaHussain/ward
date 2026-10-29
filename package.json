@@ -1,0 +1,13 @@
+{
+  "name": "ward",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.8.1",
+  "scripts": {
+    "dev": "pnpm --filter @ward/web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "eval": "node --experimental-strip-types eval/run.ts"
+  }
+}
