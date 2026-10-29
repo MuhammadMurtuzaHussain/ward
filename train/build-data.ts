@@ -95,6 +95,14 @@ sources["Bangla (mteb/bengali_hate_speech, personal and gender labels)"] = bn
   .filter((r) => r.label === 0 || r.label === 4)
   .map((r) => ({ text: String(r.text), hurtful: 1, danger: danger(String(r.text)), lang: "bn", source: "mteb-bengali" }));
 
+// Bangla non-abusive: real social-media comments (SentNoB, neutral and positive only). Without
+// these, every non-abusive Bangla example would be synthetic, and the model learns that real
+// Bangla comment text means "hurtful".
+const sentnob = await rows("khondoker/SentNoB", "default", "train");
+sources["Bangla non-abusive (SentNoB, neutral and positive comments)"] = shuffle(sentnob.filter((r) => r.Label === 0 || r.Label === 1))
+  .slice(0, 2500)
+  .map((r) => ({ text: String(r.Data), hurtful: 0, danger: danger(String(r.Data)), lang: "bn", source: "sentnob" }));
+
 // Synthetic kid-style chats from gen-synthetic.ts.
 const synth = new URL("./data/synthetic.jsonl", import.meta.url);
 if (existsSync(synth)) {
@@ -161,7 +169,7 @@ ${table}
 ## Known weaknesses
 
 - Public data is tweets and comments, not children's chats; synthetic chats fill that gap but were written by a model.
-- Bangla public data has no non-abusive rows aimed at the same topics; Bangla negatives come only from synthetic chats.
+- Bangla non-abusive examples are SentNoB comments (neutral and positive sentiment), which are a different source from the abusive Bangla rows; the model could partly learn source style rather than abuse.
 - The danger label on public data is weak (slang-pack hits only).
 `,
 );

@@ -60,3 +60,24 @@ computer with Gemma 4 gets 86%. The children with the least get the weakest Ward
 An opt-in Ward keyboard for Android that notices a hurtful message before it's sent and offers
 a pause. Everything on the device, nothing logged. Built only after the safeguarding review in
 Phase 5, because a keyboard sees everything a child types.
+
+## Partner technologies
+
+Ward's rule is that a child's messages never leave their device, so partner services are used to
+**build, evaluate, host static content and keep instructions current**, never to read a chat.
+
+| Partner | Where it helps Ward | Phase | Status |
+| --- | --- | --- | --- |
+| **Gemma** | Everything that reads: Gemma 4 E4B on computers, Gemma 4 E2B on phones (LiteRT-LM), Gemma 4 as the teacher that writes and labels Ward Lite's training data, ShieldGemma as the baseline | 1 | In use |
+| **ElevenLabs** | Read-aloud: lesson narration and the adult guide pre-recorded in English and Urdu, shipped as audio files inside the app (static text, no child data); Ward's voice for the youngest band | 2 | Planned |
+| **DigitalOcean** | A GPU droplet for the heavy, data-free jobs: generating and labelling synthetic chats with Gemma 4 at scale, training a larger teacher before distilling, and rerunning the scorecard on every release | 1, 5 | Planned |
+| **Render** | Hosting the static pieces: a try-it-in-the-browser demo (runs entirely client-side), the caseworker viewer, and the docs | 4 | Planned |
+| **Browserbase + SerpApi** | A weekly job that finds the official report/block help pages for WhatsApp, Instagram, TikTok, Snapchat and Discord and checks they still match the Coach's steps, opening an issue when an app changes its menus | 4 | Planned |
+| **Entire** | Checkpoints of these agent sessions with the code, so how Ward was built can be audited and replayed | All | To enable |
+| **Auth0 for AI Agents** | Logins for vetted Ward Annotate volunteers (adults only, synthetic and public data only) | 5 | Later |
+| **Tiger Data** | Scorecard and red-team history across releases, so regressions in any language are visible | 5 | Later |
+| **Temporal** | Making the distillation pipeline (generate, label, leak-check, train, gate, export) durable and resumable when it runs for hours on a GPU droplet | 5 | Later |
+
+Not used, on purpose: services that would store or process a child's chats or memories in the
+cloud. Tinker would have fit Phase 1 fine-tuning, but credits ran out; Ward Lite trains on a
+laptop instead (an M-series Mac fine-tunes it in minutes).

@@ -189,6 +189,10 @@ def export():
     onnx.checker.check_model(str(fp32))
     quantize_dynamic(str(fp32), str(OUT / "onnx" / "model_quantized.onnx"), weight_type=QuantType.QInt8)
     tok.save_pretrained(OUT)
+    # transformers v5 writes its own backend name here; transformers.js needs the real class.
+    tc = json.loads((OUT / "tokenizer_config.json").read_text())
+    tc["tokenizer_class"] = "XLMRobertaTokenizer"
+    (OUT / "tokenizer_config.json").write_text(json.dumps(tc, indent=2))
     model.config.save_pretrained(OUT)
     meta = {"labels": ["hurtful", "danger"], "max_length": MAX_LEN, "base": BASE, "threshold": 0.5}
     (OUT / "ward-lite.json").write_text(json.dumps(meta, indent=2))

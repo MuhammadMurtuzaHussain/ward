@@ -8,7 +8,8 @@ import type { Chat, Judge, ModelJudgement } from "@ward/engine";
 const BASE = new URL("./models/", document.baseURI).href;
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
-env.localModelPath = BASE;
+// Relative on purpose: transformers.js skips its local-file check for http(s) URLs.
+env.localModelPath = "./models/";
 if (env.backends.onnx.wasm) {
   env.backends.onnx.wasm.wasmPaths = new URL("./ort/", document.baseURI).href;
   // No cross-origin isolation in Capacitor or Electron's custom scheme, so one thread.

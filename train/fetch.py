@@ -12,6 +12,7 @@ SETS = [
     ("pankajbiswas6/prism-hinglish-hate-speech", "default", "train"),
     ("mteb/bengali_hate_speech", "default", "train"),
     ("mteb/bengali_hate_speech", "default", "test"),
+    ("khondoker/SentNoB", "default", "train"),
 ]
 for ds, cfg, split in SETS:
     urls = json.load(urllib.request.urlopen(f"https://huggingface.co/api/datasets/{ds}/parquet/{cfg}/{split}"))
