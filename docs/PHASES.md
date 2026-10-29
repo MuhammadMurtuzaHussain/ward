@@ -33,6 +33,17 @@ on a real low-end phone, and grow the Bangla data.
 | **Urdu UI** | Full interface in Urdu script with right-to-left layout, then Hindi, Bangla, Pashto, Sindhi, Punjabi (Shahmukhi) | All strings in translation files; no hard-coded English |
 | **Quiet mode** | A neutral app name and icon, for children whose risk is at home | Only after a safeguarding reviewer signs off |
 
+**Phase 2 results (2026-10-29).** Shared-phone mode shipped: profiles with their own progress,
+settings and vault database, an optional PIN (salted PBKDF2 hash), and quick exit from every
+screen (a button, or Escape twice) that locks Ward and, on Android, sends it to the background;
+the window is FLAG_SECURE so it never shows in the recents preview. The whole interface and all
+seven units of lessons are in Urdu, right to left, in Noto Nastaliq Urdu, with Gemma writing its
+notes in Urdu too. Read-aloud is on by default for the youngest band: 107 English lines
+(onboarding, verdicts, coach steps, every lesson prompt and explanation) are recorded with
+ElevenLabs and bundled offline; Urdu uses the device's Urdu voice for now. Still to do: record
+the Urdu clips (about 9,000 characters; the script and voice are chosen), voice input for
+written answers, a native Urdu speaker's review, and the next languages.
+
 ## Phase 3: the whole picture, not only the victim
 
 | Piece | What | Done when |
@@ -76,7 +87,7 @@ Ward's rule is that a child's messages never leave their device, so partner serv
 | Partner | Where it helps Ward | Phase | Status |
 | --- | --- | --- | --- |
 | **Gemma** | Everything that reads: Gemma 4 E4B on computers, Gemma 4 E2B on phones (LiteRT-LM), Gemma 4 as the teacher that writes and labels Ward Lite's training data, ShieldGemma as the baseline | 1 | In use |
-| **ElevenLabs** | Read-aloud: lesson narration and the adult guide pre-recorded in English and Urdu, shipped as audio files inside the app (static text, no child data); Ward's voice for the youngest band | 2 | Planned |
+| **ElevenLabs** | Read-aloud: lesson narration and the adult guide pre-recorded in English and Urdu, shipped as audio files inside the app (static text, no child data); Ward's voice for the youngest band | 2 | English shipped (107 clips); Urdu next |
 | **DigitalOcean** | A GPU droplet for the heavy, data-free jobs: generating and labelling synthetic chats with Gemma 4 at scale, training a larger teacher before distilling, and rerunning the scorecard on every release | 1, 5 | Planned |
 | **Render** | Hosting the static pieces: a try-it-in-the-browser demo (runs entirely client-side), the caseworker viewer, and the docs | 4 | Planned |
 | **Browserbase + SerpApi** | A weekly job that finds the official report/block help pages for WhatsApp, Instagram, TikTok, Snapchat and Discord and checks they still match the Coach's steps, opening an issue when an app changes its menus | 4 | Planned |

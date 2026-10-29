@@ -51,6 +51,9 @@ they tell, their class, and helplines.
 | **Evidence vault** | Saved chats are encrypted (AES-GCM, key from a PIN via PBKDF2), each message SHA-256 fingerprinted. |
 | **Resilience Path** | Duolingo-style daily lessons with streaks and XP: *Spot it, Shut it down, Save it, Say it, Back them up, Lock it down, Bounce back*. Content per age band (8 to 10, 11 to 13, 14 to 17). No hearts to lose. |
 | **Your night light** | Six looks the child picks from a gallery, no gender question. The age band changes how playful or grown-up it feels. |
+| **English and اردو** | The whole app, lessons included, in English or Urdu (right to left, Nastaliq script). Switch any time in Me. |
+| **Read aloud** | A Listen button on lessons, onboarding, verdicts and coach steps, on by default for the youngest children. English is narrated with ElevenLabs and bundled, so it works offline. |
+| **Shared phones** | Each person gets their own Ward behind an optional PIN. Quick exit (a button, or Escape twice) locks it instantly and hides it from the recents screen. |
 
 ### The child's circle
 
