@@ -83,3 +83,10 @@ test("a model that reads banter as friendly turns the pack hits off", async () =
   const a = await analyze(chat, { self: "Saad", judges: [friendly] });
   assert.equal(a.level, "calm");
 });
+
+test("everyday Roman Urdu and English words don't trip the pack", () => {
+  const p = new PackMatcher();
+  for (const s of ["is saal exam mushkil tha", "kal chuti hai", "kapre gande ho gaye", "big sale this weekend", "load ho raha hai", "kal milte hain", "ammi ne khana banaya"]) {
+    assert.deepEqual(p.match(s), [], s);
+  }
+});

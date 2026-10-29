@@ -67,7 +67,13 @@ export async function loadSets(n: number): Promise<Record<string, Item[]>> {
       ru.filter((r) => r.label != null).map((r) => ({ text: String(r.tweet), bad: r.label === 0, set: "Roman Urdu" })),
       n,
     ),
-    Bangla: balanced(bn.map((r) => ({ text: String(r.text), bad: r.label !== "Non-abusive", set: "Bangla" })), n),
+    Bangla: balanced(
+      bn
+        // Political and geopolitical rants aren't aimed at a child; keep abuse aimed at a person.
+        .filter((r) => ["Non-abusive", "Personal", "Gender abusive"].includes(String(r.label)))
+        .map((r) => ({ text: String(r.text), bad: r.label !== "Non-abusive", set: "Bangla" })),
+      n,
+    ),
     English: balanced(
       en
         // The "age/religion/ethnicity" classes are mostly tweets about bullying, not aimed at a person;

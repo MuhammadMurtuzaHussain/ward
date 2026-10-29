@@ -42,7 +42,11 @@ function stem(w: string): string {
 function tokenMatches(text: string, term: string, exact: boolean): boolean {
   if (text === term) return true;
   if (exact || !LATIN.test(term) || term.length < 4) return false;
-  if (Math.abs(text.length - term.length) <= 2 && stem(text).length >= 3 && stem(text) === stem(term)) return true;
+  // Inflections add letters ("kutta" -> "kuttay") more than they drop them, so a shorter word may
+  // be at most one letter short: "chuti" (a holiday) must not match "chutiya".
+  // Only gender and plural endings (a, e, i, ay) inflect; "gandu" and "gande" (dirty) differ by meaning.
+  const d = text.length - term.length;
+  if (/[aeiy]$/.test(term) && /[aeiy]$/.test(text) && d >= -1 && d <= 2 && stem(text).length >= 3 && stem(text) === stem(term)) return true;
   if (term.length >= 6 && text.length >= 5) {
     const sk = skeleton(term);
     return sk.length >= 4 && skeleton(text) === sk;

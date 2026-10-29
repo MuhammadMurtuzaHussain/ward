@@ -1,72 +1,709 @@
 {
   "lang": "ur-Latn",
   "name": "Roman Urdu",
-  "about": "Starter pack for Urdu typed in Latin letters. Spellings vary a lot; Ward matches by sound for longer words.",
+  "about": "Starter pack for Urdu typed in Latin letters. Spellings vary a lot; Ward matches by sound for longer words. Extended with words mined from the training split of community-datasets/roman_urdu_hate_speech (eval/mine-ru.ts) and reviewed by hand.",
   "entries": [
-    { "t": "kutta", "c": "insult", "s": 1, "g": "dog" },
-    { "t": "kutti", "c": "insult", "s": 2, "g": "dog (female, abusive)" },
-    { "t": "gadha", "c": "insult", "s": 1, "g": "donkey (idiot)" },
-    { "t": "gadhi", "c": "insult", "s": 1, "g": "donkey (idiot)" },
-    { "t": "ullu", "c": "insult", "s": 1, "g": "owl (fool)" },
-    { "t": "bewakoof", "c": "insult", "s": 1, "g": "idiot" },
-    { "t": "pagal", "c": "insult", "s": 1, "g": "crazy" },
-    { "t": "ghatiya", "c": "insult", "s": 1, "g": "cheap, low" },
-    { "t": "kameena", "c": "insult", "s": 1, "g": "scoundrel" },
-    { "t": "kameeni", "c": "insult", "s": 2, "g": "scoundrel (female, abusive)" },
-    { "t": "harami", "c": "insult", "s": 2, "g": "bastard" },
-    { "t": "nikamma", "c": "insult", "s": 2, "g": "worthless" },
-    { "t": "nikammi", "c": "insult", "s": 2, "g": "worthless" },
-    { "t": "nalayak", "c": "insult", "s": 1, "g": "useless" },
-    { "t": "chutiya", "c": "insult", "s": 2, "g": "vulgar insult" },
-    { "t": "kanjar", "c": "insult", "s": 2, "g": "vulgar insult" },
-    { "t": "kanjri", "c": "sexual", "s": 2, "g": "sexual insult" },
-    { "t": "behaya", "c": "insult", "s": 2, "g": "shameless" },
-    { "t": "lanati", "c": "insult", "s": 2, "g": "cursed" },
-    { "t": "moti", "c": "appearance", "s": 2, "g": "fat (girl)" },
-    { "t": "mota", "c": "appearance", "s": 1, "g": "fat (boy)" },
-    { "t": "kaali", "c": "appearance", "s": 2, "g": "dark-skinned (as an insult)" },
-    { "t": "kaalu", "c": "appearance", "s": 2, "g": "dark-skinned (as an insult)" },
-    { "t": "bhains", "c": "appearance", "s": 2, "g": "buffalo (fat-shaming)" },
-    { "t": "haathi", "c": "appearance", "s": 2, "g": "elephant (fat-shaming)" },
-    { "t": "chipkali", "c": "appearance", "s": 2, "g": "lizard (ugly)" },
-    { "t": "bandar", "c": "appearance", "s": 2, "g": "monkey" },
-    { "t": "badsurat", "c": "appearance", "s": 2, "g": "ugly" },
-    { "t": "shakal dekh", "c": "appearance", "s": 2, "g": "look at your face" },
-    { "t": "teri shakal", "c": "appearance", "s": 1, "g": "your face" },
-    { "t": "khusra", "c": "identity", "s": 2, "g": "slur for trans people, used as an insult" },
-    { "t": "langra", "c": "identity", "s": 2, "g": "lame (disability insult)" },
-    { "t": "group se nikalo", "c": "exclusion", "s": 2, "g": "remove from the group" },
-    { "t": "nikaal do", "c": "exclusion", "s": 2, "g": "throw out" },
-    { "t": "add mat karo", "c": "exclusion", "s": 2, "g": "don't add" },
-    { "t": "koi pasand nahi karta", "c": "exclusion", "s": 2, "g": "nobody likes (you)" },
-    { "t": "koi baat nahi karega", "c": "exclusion", "s": 2, "g": "nobody will talk (to you)" },
-    { "t": "is se door raho", "c": "exclusion", "s": 2, "g": "stay away from them" },
-    { "t": "rone wali", "c": "mockery", "s": 1, "g": "crybaby" },
-    { "t": "rone wala", "c": "mockery", "s": 1, "g": "crybaby" },
-    { "t": "chal nikal", "c": "mockery", "s": 1, "g": "get lost" },
-    { "t": "mar ja", "c": "selfharm", "s": 3, "g": "go die" },
-    { "t": "mar jao", "c": "selfharm", "s": 3, "g": "go die" },
-    { "t": "mar kyun nahi jati", "c": "selfharm", "s": 3, "g": "why don't you die" },
-    { "t": "mar kyun nahi jata", "c": "selfharm", "s": 3, "g": "why don't you die" },
-    { "t": "khudkushi kar", "c": "selfharm", "s": 3, "g": "kill yourself" },
-    { "t": "zehar kha", "c": "selfharm", "s": 3, "g": "eat poison" },
-    { "t": "duniya se chala ja", "c": "selfharm", "s": 3, "g": "leave this world" },
-    { "t": "maar dunga", "c": "threat", "s": 3, "g": "I'll beat / kill you" },
-    { "t": "maarenge", "c": "threat", "s": 3, "g": "we'll beat you" },
-    { "t": "jaan se maar", "c": "threat", "s": 3, "g": "kill" },
-    { "t": "haddi tod", "c": "threat", "s": 3, "g": "break your bones" },
-    { "t": "chhorunga nahi", "c": "threat", "s": 3, "g": "I won't spare you" },
-    { "t": "bahar milna", "c": "threat", "s": 2, "g": "meet me outside" },
-    { "t": "dekh lena", "c": "threat", "s": 2, "g": "you'll see (a threat)" },
-    { "t": "dekh lunga", "c": "threat", "s": 2, "g": "I'll deal with you" },
-    { "t": "pic bhejo", "c": "sexual", "s": 2, "g": "send a picture" },
-    { "t": "video call pe aa", "c": "sexual", "s": 2, "g": "come on video call" },
-    { "t": "nudes", "c": "sexual", "s": 3, "g": "naked photos" },
-    { "t": "viral kar dunga", "c": "exposure", "s": 3, "g": "I'll make it go viral" },
-    { "t": "viral kar dungi", "c": "exposure", "s": 3, "g": "I'll make it go viral" },
-    { "t": "sab ko bhej dunga", "c": "exposure", "s": 3, "g": "I'll send it to everyone" },
-    { "t": "sab ko dikhaunga", "c": "exposure", "s": 3, "g": "I'll show everyone" },
-    { "t": "pics leak", "c": "exposure", "s": 3, "g": "leak the pictures" },
-    { "t": "ghar ka address", "c": "exposure", "s": 2, "g": "home address" }
+    {
+      "t": "kutta",
+      "c": "insult",
+      "s": 1,
+      "g": "dog"
+    },
+    {
+      "t": "kutti",
+      "c": "insult",
+      "s": 2,
+      "g": "dog (female, abusive)"
+    },
+    {
+      "t": "gadha",
+      "c": "insult",
+      "s": 1,
+      "g": "donkey (idiot)"
+    },
+    {
+      "t": "gadhi",
+      "c": "insult",
+      "s": 1,
+      "g": "donkey (idiot)"
+    },
+    {
+      "t": "ullu",
+      "c": "insult",
+      "s": 1,
+      "g": "owl (fool)"
+    },
+    {
+      "t": "bewakoof",
+      "c": "insult",
+      "s": 1,
+      "g": "idiot"
+    },
+    {
+      "t": "pagal",
+      "c": "insult",
+      "s": 1,
+      "g": "crazy"
+    },
+    {
+      "t": "ghatiya",
+      "c": "insult",
+      "s": 1,
+      "g": "cheap, low"
+    },
+    {
+      "t": "kameena",
+      "c": "insult",
+      "s": 1,
+      "g": "scoundrel"
+    },
+    {
+      "t": "kameeni",
+      "c": "insult",
+      "s": 2,
+      "g": "scoundrel (female, abusive)"
+    },
+    {
+      "t": "harami",
+      "c": "insult",
+      "s": 2,
+      "g": "bastard"
+    },
+    {
+      "t": "nikamma",
+      "c": "insult",
+      "s": 2,
+      "g": "worthless"
+    },
+    {
+      "t": "nikammi",
+      "c": "insult",
+      "s": 2,
+      "g": "worthless"
+    },
+    {
+      "t": "nalayak",
+      "c": "insult",
+      "s": 1,
+      "g": "useless"
+    },
+    {
+      "t": "chutiya",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult"
+    },
+    {
+      "t": "kanjar",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult"
+    },
+    {
+      "t": "kanjri",
+      "c": "sexual",
+      "s": 2,
+      "g": "sexual insult"
+    },
+    {
+      "t": "behaya",
+      "c": "insult",
+      "s": 2,
+      "g": "shameless"
+    },
+    {
+      "t": "lanati",
+      "c": "insult",
+      "s": 2,
+      "g": "cursed"
+    },
+    {
+      "t": "moti",
+      "c": "appearance",
+      "s": 2,
+      "g": "fat (girl)"
+    },
+    {
+      "t": "mota",
+      "c": "appearance",
+      "s": 1,
+      "g": "fat (boy)"
+    },
+    {
+      "t": "kaali",
+      "c": "appearance",
+      "s": 2,
+      "g": "dark-skinned (as an insult)"
+    },
+    {
+      "t": "kaalu",
+      "c": "appearance",
+      "s": 2,
+      "g": "dark-skinned (as an insult)"
+    },
+    {
+      "t": "bhains",
+      "c": "appearance",
+      "s": 2,
+      "g": "buffalo (fat-shaming)"
+    },
+    {
+      "t": "haathi",
+      "c": "appearance",
+      "s": 2,
+      "g": "elephant (fat-shaming)"
+    },
+    {
+      "t": "chipkali",
+      "c": "appearance",
+      "s": 2,
+      "g": "lizard (ugly)"
+    },
+    {
+      "t": "bandar",
+      "c": "appearance",
+      "s": 2,
+      "g": "monkey"
+    },
+    {
+      "t": "badsurat",
+      "c": "appearance",
+      "s": 2,
+      "g": "ugly"
+    },
+    {
+      "t": "shakal dekh",
+      "c": "appearance",
+      "s": 2,
+      "g": "look at your face"
+    },
+    {
+      "t": "teri shakal",
+      "c": "appearance",
+      "s": 1,
+      "g": "your face"
+    },
+    {
+      "t": "khusra",
+      "c": "identity",
+      "s": 2,
+      "g": "slur for trans people, used as an insult"
+    },
+    {
+      "t": "langra",
+      "c": "identity",
+      "s": 2,
+      "g": "lame (disability insult)"
+    },
+    {
+      "t": "group se nikalo",
+      "c": "exclusion",
+      "s": 2,
+      "g": "remove from the group"
+    },
+    {
+      "t": "nikaal do",
+      "c": "exclusion",
+      "s": 2,
+      "g": "throw out"
+    },
+    {
+      "t": "add mat karo",
+      "c": "exclusion",
+      "s": 2,
+      "g": "don't add"
+    },
+    {
+      "t": "koi pasand nahi karta",
+      "c": "exclusion",
+      "s": 2,
+      "g": "nobody likes (you)"
+    },
+    {
+      "t": "koi baat nahi karega",
+      "c": "exclusion",
+      "s": 2,
+      "g": "nobody will talk (to you)"
+    },
+    {
+      "t": "is se door raho",
+      "c": "exclusion",
+      "s": 2,
+      "g": "stay away from them"
+    },
+    {
+      "t": "rone wali",
+      "c": "mockery",
+      "s": 1,
+      "g": "crybaby"
+    },
+    {
+      "t": "rone wala",
+      "c": "mockery",
+      "s": 1,
+      "g": "crybaby"
+    },
+    {
+      "t": "chal nikal",
+      "c": "mockery",
+      "s": 1,
+      "g": "get lost"
+    },
+    {
+      "t": "mar ja",
+      "c": "selfharm",
+      "s": 3,
+      "g": "go die"
+    },
+    {
+      "t": "mar jao",
+      "c": "selfharm",
+      "s": 3,
+      "g": "go die"
+    },
+    {
+      "t": "mar kyun nahi jati",
+      "c": "selfharm",
+      "s": 3,
+      "g": "why don't you die"
+    },
+    {
+      "t": "mar kyun nahi jata",
+      "c": "selfharm",
+      "s": 3,
+      "g": "why don't you die"
+    },
+    {
+      "t": "khudkushi kar",
+      "c": "selfharm",
+      "s": 3,
+      "g": "kill yourself"
+    },
+    {
+      "t": "zehar kha",
+      "c": "selfharm",
+      "s": 3,
+      "g": "eat poison"
+    },
+    {
+      "t": "duniya se chala ja",
+      "c": "selfharm",
+      "s": 3,
+      "g": "leave this world"
+    },
+    {
+      "t": "maar dunga",
+      "c": "threat",
+      "s": 3,
+      "g": "I'll beat / kill you"
+    },
+    {
+      "t": "maarenge",
+      "c": "threat",
+      "s": 3,
+      "g": "we'll beat you"
+    },
+    {
+      "t": "jaan se maar",
+      "c": "threat",
+      "s": 3,
+      "g": "kill"
+    },
+    {
+      "t": "haddi tod",
+      "c": "threat",
+      "s": 3,
+      "g": "break your bones"
+    },
+    {
+      "t": "chhorunga nahi",
+      "c": "threat",
+      "s": 3,
+      "g": "I won't spare you"
+    },
+    {
+      "t": "bahar milna",
+      "c": "threat",
+      "s": 2,
+      "g": "meet me outside"
+    },
+    {
+      "t": "dekh lena",
+      "c": "threat",
+      "s": 2,
+      "g": "you'll see (a threat)"
+    },
+    {
+      "t": "dekh lunga",
+      "c": "threat",
+      "s": 2,
+      "g": "I'll deal with you"
+    },
+    {
+      "t": "pic bhejo",
+      "c": "sexual",
+      "s": 2,
+      "g": "send a picture"
+    },
+    {
+      "t": "video call pe aa",
+      "c": "sexual",
+      "s": 2,
+      "g": "come on video call"
+    },
+    {
+      "t": "nudes",
+      "c": "sexual",
+      "s": 3,
+      "g": "naked photos"
+    },
+    {
+      "t": "viral kar dunga",
+      "c": "exposure",
+      "s": 3,
+      "g": "I'll make it go viral"
+    },
+    {
+      "t": "viral kar dungi",
+      "c": "exposure",
+      "s": 3,
+      "g": "I'll make it go viral"
+    },
+    {
+      "t": "sab ko bhej dunga",
+      "c": "exposure",
+      "s": 3,
+      "g": "I'll send it to everyone"
+    },
+    {
+      "t": "sab ko dikhaunga",
+      "c": "exposure",
+      "s": 3,
+      "g": "I'll show everyone"
+    },
+    {
+      "t": "pics leak",
+      "c": "exposure",
+      "s": 3,
+      "g": "leak the pictures"
+    },
+    {
+      "t": "ghar ka address",
+      "c": "exposure",
+      "s": 2,
+      "g": "home address"
+    },
+    {
+      "t": "bhenchod",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult (sister)"
+    },
+    {
+      "t": "bahanchod",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult (sister)"
+    },
+    {
+      "t": "madarchod",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult (mother)"
+    },
+    {
+      "t": "bsdk",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult (abbreviation)"
+    },
+    {
+      "t": "bosdk",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult (abbreviation)"
+    },
+    {
+      "t": "bhosdike",
+      "c": "insult",
+      "s": 2,
+      "g": "vulgar insult"
+    },
+    {
+      "t": "bhosra",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "bhosda",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "gashti",
+      "c": "sexual",
+      "s": 2,
+      "g": "whore"
+    },
+    {
+      "t": "ghasti",
+      "c": "sexual",
+      "s": 2,
+      "g": "whore"
+    },
+    {
+      "t": "randi",
+      "c": "sexual",
+      "s": 2,
+      "g": "whore"
+    },
+    {
+      "t": "rundi",
+      "c": "sexual",
+      "s": 2,
+      "g": "whore"
+    },
+    {
+      "t": "randdi",
+      "c": "sexual",
+      "s": 2,
+      "g": "whore"
+    },
+    {
+      "t": "randiyan",
+      "c": "sexual",
+      "s": 2,
+      "g": "whores"
+    },
+    {
+      "t": "bharwa",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "bharwe",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "bharway",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "bharwi",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp (female)"
+    },
+    {
+      "t": "bhadwa",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "bhadwe",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "bhadwi",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp (female)"
+    },
+    {
+      "t": "dalla",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "dalle",
+      "c": "insult",
+      "s": 2,
+      "g": "pimp"
+    },
+    {
+      "t": "dalal",
+      "c": "insult",
+      "s": 1,
+      "g": "broker, pimp"
+    },
+    {
+      "t": "beghairat",
+      "c": "insult",
+      "s": 2,
+      "g": "shameless, without honour"
+    },
+    {
+      "t": "begherat",
+      "c": "insult",
+      "s": 2,
+      "g": "shameless, without honour"
+    },
+    {
+      "t": "bayghairat",
+      "c": "insult",
+      "s": 2,
+      "g": "shameless, without honour"
+    },
+    {
+      "t": "najaiz",
+      "c": "insult",
+      "s": 2,
+      "g": "illegitimate"
+    },
+    {
+      "t": "haramkhor",
+      "c": "insult",
+      "s": 2,
+      "g": "freeloader, crook"
+    },
+    {
+      "t": "harami aulad",
+      "c": "insult",
+      "s": 2,
+      "g": "bastard child"
+    },
+    {
+      "t": "namard",
+      "c": "insult",
+      "s": 2,
+      "g": "not a man (insult)"
+    },
+    {
+      "t": "khanzeer",
+      "c": "insult",
+      "s": 2,
+      "g": "pig"
+    },
+    {
+      "t": "khinzeer",
+      "c": "insult",
+      "s": 2,
+      "g": "pig"
+    },
+    {
+      "t": "suar",
+      "c": "insult",
+      "s": 2,
+      "g": "pig"
+    },
+    {
+      "t": "lanat",
+      "c": "insult",
+      "s": 1,
+      "g": "curse on you"
+    },
+    {
+      "t": "laanat",
+      "c": "insult",
+      "s": 1,
+      "g": "curse on you"
+    },
+    {
+      "t": "bhaunk",
+      "c": "mockery",
+      "s": 1,
+      "g": "barking (like a dog)"
+    },
+    {
+      "t": "bhonk",
+      "c": "mockery",
+      "s": 1,
+      "g": "barking (like a dog)"
+    },
+    {
+      "t": "aukat",
+      "c": "mockery",
+      "s": 1,
+      "g": "know your place"
+    },
+    {
+      "t": "phattu",
+      "c": "mockery",
+      "s": 1,
+      "g": "coward"
+    },
+    {
+      "t": "tatti",
+      "c": "insult",
+      "s": 1,
+      "g": "shit"
+    },
+    {
+      "t": "jahil",
+      "c": "insult",
+      "s": 1,
+      "g": "ignorant"
+    },
+    {
+      "t": "munafiq",
+      "c": "insult",
+      "s": 1,
+      "g": "hypocrite"
+    },
+    {
+      "t": "lund",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "lun",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "lode",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "choot",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "phudi",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "gaand",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar word"
+    },
+    {
+      "t": "chudai",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "chudwa",
+      "c": "sexual",
+      "s": 2,
+      "g": "vulgar sexual word"
+    },
+    {
+      "t": "khusray",
+      "c": "identity",
+      "s": 2,
+      "g": "slur for trans people, used as an insult"
+    }
   ]
 }
