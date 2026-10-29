@@ -7,6 +7,7 @@ import { modelStatus, type ModelStatus } from "../lib/run.ts";
 import { go, updateProfile, useStore, type AgeBand } from "../lib/store.ts";
 import { wipe } from "../lib/vault.ts";
 import { LookTile } from "./Onboarding.tsx";
+import { PhoneGemmaCard } from "../components/PhoneGemmaCard.tsx";
 
 export function Me() {
   const p = useStore((s) => s.profile);
@@ -83,6 +84,7 @@ export function Me() {
           />
           <p className="mt-2 text-xs text-dim">On a phone, put your family computer's address here (same Wi-Fi) to use its Gemma. On that computer, start Ollama with OLLAMA_HOST=0.0.0.0.</p>
         </Card>
+        <PhoneGemmaCard />
       </div>
 
       <section className="mt-10">

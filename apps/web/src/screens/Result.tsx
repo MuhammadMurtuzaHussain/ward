@@ -217,9 +217,11 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
         <div className="grid gap-2 text-dim">
           <p>
             Word lists for {analysis.layers.packs.length} languages ran instantly.
-            {analysis.layers.models.length
-              ? ` Then ${analysis.layers.models.join(" and ")} read the whole chat on this device, with context, so friends joking around don't count as bullying.`
-              : " No AI model was running, so this is a quick check from word lists and patterns. Open Ward on a computer with Gemma for a closer read."}
+            {analysis.layers.models.includes("Ward Lite")
+              ? " Then Ward Lite, a small model that lives inside the app, read every message to catch what the word lists miss. It can only add warnings, never remove them. For the closest read, pair Ward with a computer running Gemma."
+              : analysis.layers.models.length
+                ? ` Then ${analysis.layers.models.join(" and ")} read the whole chat on this device, with context, so friends joking around don't count as bullying.`
+                : " No AI model was running, so this is a quick check from word lists and patterns. Open Ward on a computer with Gemma for a closer read."}
           </p>
           <p>Nothing was sent anywhere. Patterns like pile-ons and ghost accounts come from who said what, when.</p>
         </div>

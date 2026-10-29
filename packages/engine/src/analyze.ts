@@ -51,7 +51,13 @@ function combine(m: Message, matcher: PackMatcher, model: ModelJudgement | undef
   const packSev = hits.reduce<Severity>((s, h) => (h.severity > s ? h.severity : s), 0);
   let severity: Severity = packSev;
   let why = hits.length ? hits.map((h) => `"${h.term}" (${h.gloss})`).join(", ") : "";
-  if (model) {
+  if (model?.authority === "raise-only") {
+    // A small model can catch what the word lists missed, but never talk Ward out of a warning.
+    if (model.hostile && model.severity > packSev) {
+      severity = model.severity;
+      why = model.why ?? why;
+    }
+  } else if (model) {
     if (model.hostile) {
       severity = Math.max(model.severity, packSev >= 3 ? 3 : 1) as Severity;
       why = model.why ?? why;

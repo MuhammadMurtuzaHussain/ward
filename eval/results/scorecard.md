@@ -33,7 +33,10 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 
 - **Slang packs**: Ward's word lists alone: no model, works on any phone
 - **ShieldGemma 2B**: Google's open safety classifier, harassment policy
-- **Gemma 4 E4B**: Ward's judge prompt, one message at a time, no chat context
+- **Gemma 4 E4B**: Ward's judge prompt, one message at a time, no chat context (the computer tier)
+- **Gemma 4 E2B**: The same prompt on the phone-sized Gemma 4 (scored through Ollama; on a phone it runs through LiteRT-LM)
+- **Ward Lite**: The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5
+- **Phone: packs + Ward Lite**: What a phone without a big model does: a message counts if the word lists or Ward Lite flag it (Ward Lite can only add)
 
 ## Datasets
 

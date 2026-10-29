@@ -5,6 +5,9 @@
 import { unzipSync, strFromU8 } from "fflate";
 import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/engine";
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
+import { liteAvailable, WardLiteJudge } from "./lite.ts";
+import { phoneJudge } from "./phoneGemma.ts";
+import type { Judge } from "@ward/engine";
 
 export async function readChatFile(file: File): Promise<{ text: string; title: string }> {
   const base = file.name.replace(/\.(txt|zip)$/i, "");
@@ -44,16 +47,22 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   }));
   go({ name: "result", id });
 
+  // Tiers, strongest first: Gemma 4 on this computer (or the paired family computer), with
+  // authority to clear friendly banter; Gemma 4 E2B on this phone, if the child downloaded it;
+  // Ward Lite, inside the app on any device. The phone tiers can only add warnings.
   const status = await modelStatus();
-  if (!status.ok) {
-    patchSession(id, { refining: false, modelError: status.reason });
+  let judge: Judge | null = null;
+  if (status.ok) judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16 });
+  else judge = await phoneJudge();
+  if (!judge && (await liteAvailable())) judge = new WardLiteJudge();
+  if (!judge) {
+    patchSession(id, { refining: false, modelError: status.ok ? undefined : status.reason });
     return id;
   }
   try {
-    const { ollamaUrl } = getState().profile;
     const full = await analyze(chat, {
       self,
-      judges: [new GemmaJudge({ baseUrl: ollamaUrl, model: status.model, batch: 16 })],
+      judges: [judge],
       onProgress: (d, t) => patchSession(id, { progress: [d, t] }),
     });
     patchSession(id, { analysis: full, refining: false, progress: undefined });

@@ -10,3 +10,5 @@ mobile/android/app/build/
 mobile/www/
 release/
 eval/results-run.log
+
+apps/web/public/ort/

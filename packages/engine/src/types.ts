@@ -76,6 +76,11 @@ export interface ModelJudgement {
   why?: string;
   /** Which model said it, for the scorecard and the "how Ward knows" panel. */
   model: string;
+  /**
+   * "full": the model may clear a slang-pack hit (Gemma 4 reading friendly banter).
+   * "raise-only": it may only add or raise, never lower (small on-device models).
+   */
+  authority?: "full" | "raise-only";
 }
 
 export interface Finding {

@@ -7,6 +7,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(ShareInPlugin.class);
+        registerPlugin(GemmaPhonePlugin.class);
         super.onCreate(savedInstanceState);
     }
 }

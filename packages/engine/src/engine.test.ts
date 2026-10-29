@@ -90,3 +90,40 @@ test("everyday Roman Urdu and English words don't trip the pack", () => {
     assert.deepEqual(p.match(s), [], s);
   }
 });
+
+test("a raise-only model can add a warning but never remove one", async () => {
+  const chat = parseChat(fixture("dm-english.txt"));
+  const calmModel = {
+    name: "lite",
+    async judge() {
+      return new Map(chat.messages.map((m) => [m.id, { hostile: false, severity: 0 as const, categories: [], model: "lite", authority: "raise-only" as const }]));
+    },
+  };
+  const a = await analyze(chat, { self: "Sam", judges: [calmModel] });
+  assert.equal(a.level, "urgent", "kys and the threat to share still count");
+  const worried = {
+    name: "lite",
+    async judge() {
+      return new Map([[1, { hostile: true, severity: 2 as const, categories: [], model: "lite", authority: "raise-only" as const, why: "Reads as hurtful." }]]);
+    },
+  };
+  const b = await analyze(chat, { self: "Sam", judges: [worried] });
+  assert.equal(b.findings[1]!.severity, 2, "it can raise a message the lists missed");
+});
+
+test("GemmaJudge can run through any transport (the phone) and parses wrapped JSON", async () => {
+  const chat = parseChat(fixture("dm-english.txt"));
+  const { GemmaJudge } = await import("./index.ts");
+  const judge = new GemmaJudge({
+    name: "Gemma 4 E2B (phone)",
+    authority: "raise-only",
+    transport: async (_system, user) => {
+      assert.match(user, /JUDGE #6/);
+      return 'Here you go:\n```json\n{"messages":[{"id":6,"hostile":true,"severity":3,"categories":["selfharm"],"target":"Sam","why":"Tells Sam to kill themselves."}]}\n```';
+    },
+  });
+  const got = await judge.judge(chat, { self: "Sam" });
+  assert.equal(got.get(6)?.severity, 3);
+  assert.equal(got.get(6)?.authority, "raise-only");
+  assert.equal(judge.name, "Gemma 4 E2B (phone)");
+});

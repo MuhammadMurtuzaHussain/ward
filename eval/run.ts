@@ -2,16 +2,22 @@
 // Each system sees the same balanced sample from three public datasets and says, per message,
 // "abusive or not". Results go to eval/results/scorecard.{json,md}.
 //
-//   pnpm eval            200 per language (the published numbers)
-//   pnpm eval -- 40      a quick run
+//   pnpm eval                          200 per language (the published numbers)
+//   pnpm eval -- 40                    a quick run
+//   pnpm eval -- --only="Ward Lite"    rerun named systems; keep the rest from the last run
+//
+// Ward Lite's predictions come from train/score.py (it runs the exported ONNX model), written to
+// results/ward-lite.preds.json; run that first.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { GemmaJudge, PackMatcher, ShieldGemmaJudge, type Chat } from "../packages/engine/src/index.ts";
 import { loadSets, type Item } from "./data.ts";
 
 const N = Number(process.argv.find((a) => /^\d+$/.test(a)) ?? 200);
-// --packs-only: rescore just the slang packs (instant) and keep the model results from the last run.
-const PACKS_ONLY = process.argv.includes("--packs-only");
+// --only=a,b: rerun just these systems and keep the others' results from the last run.
+// --packs-only is kept as shorthand for --only="Slang packs".
+const onlyArg = process.argv.find((a) => a.startsWith("--only="))?.slice(7) ?? (process.argv.includes("--packs-only") ? "Slang packs" : null);
+const ONLY = onlyArg ? new Set(onlyArg.split(",").map((s) => s.trim())) : null;
 const sets = await loadSets(N);
 const packs = new PackMatcher();
 const shield = new ShieldGemmaJudge();
@@ -52,8 +58,32 @@ const systems: System[] = [
       return out;
     },
   },
-  { name: "Gemma 4 E4B", about: "Ward's judge prompt, one message at a time, no chat context", run: (items) => gemma("gemma4:e4b", items) },
+  { name: "Gemma 4 E4B", about: "Ward's judge prompt, one message at a time, no chat context (the computer tier)", run: (items) => gemma("gemma4:e4b", items) },
+  { name: "Gemma 4 E2B", about: "The same prompt on the phone-sized Gemma 4 (scored through Ollama; on a phone it runs through LiteRT-LM)", run: (items) => gemma("gemma4:e2b", items) },
+  {
+    name: "Ward Lite",
+    about: "The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5",
+    run: async (items) => litePreds(items),
+  },
+  {
+    name: "Phone: packs + Ward Lite",
+    about: "What a phone without a big model does: a message counts if the word lists or Ward Lite flag it (Ward Lite can only add)",
+    run: async (items) => {
+      const lite = litePreds(items);
+      return items.map((it, i) => lite[i]! || packs.match(it.text).some((h) => h.severity >= 1));
+    },
+  },
 ];
+
+let liteFile: Record<string, Record<string, boolean>> | null = null;
+function litePreds(items: Item[]): boolean[] {
+  liteFile ??= JSON.parse(readFileSync(new URL("./results/ward-lite.preds.json", import.meta.url), "utf8"));
+  return items.map((it) => {
+    const p = liteFile![it.set]?.[it.text];
+    if (p === undefined) throw new Error("ward-lite.preds.json is from a different sample: rerun train/score.py");
+    return p;
+  });
+}
 
 function score(pred: boolean[], items: Item[]) {
   let tp = 0, fp = 0, fn = 0, tn = 0;
@@ -72,13 +102,14 @@ function score(pred: boolean[], items: Item[]) {
 
 const results: Record<string, Record<string, ReturnType<typeof score> & { seconds: number }>> = {};
 const raw: Record<string, Record<string, boolean[]>> = {};
-const prev = PACKS_ONLY ? JSON.parse(readFileSync(new URL("./results/scorecard.raw.json", import.meta.url), "utf8")) : null;
+const prev = ONLY ? JSON.parse(readFileSync(new URL("./results/scorecard.raw.json", import.meta.url), "utf8")) : null;
 for (const [set, items] of Object.entries(sets)) {
   results[set] = {};
   raw[set] = {};
   for (const sys of systems) {
-    if (PACKS_ONLY && sys.name !== "Slang packs") {
-      const pred = prev.raw[set][sys.name] as boolean[];
+    if (ONLY && !ONLY.has(sys.name)) {
+      const pred = prev.raw[set]?.[sys.name] as boolean[] | undefined;
+      if (!pred) continue;
       raw[set]![sys.name] = pred;
       results[set]![sys.name] = { ...score(pred, items), seconds: 0 };
       continue;

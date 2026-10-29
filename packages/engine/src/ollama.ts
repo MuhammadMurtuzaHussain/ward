@@ -19,6 +19,17 @@ export interface OllamaOptions {
   signal?: AbortSignal;
 }
 
+/** Sends one system + user prompt with a JSON schema and returns the model's raw reply. */
+export type Transport = (system: string, user: string, schema: object) => Promise<string>;
+
+export interface GemmaJudgeOptions extends OllamaOptions {
+  /** Run somewhere other than Ollama, e.g. LiteRT-LM on the phone. */
+  transport?: Transport;
+  /** Shown in "how Ward knows". Defaults to the model name. */
+  name?: string;
+  authority?: ModelJudgement["authority"];
+}
+
 const DEFAULT_URL = "http://127.0.0.1:11434";
 
 export async function ollamaModels(baseUrl = DEFAULT_URL, f: typeof fetch = fetch): Promise<string[]> {
@@ -79,10 +90,15 @@ function clampSeverity(n: unknown): Severity {
 export class GemmaJudge implements Judge {
   readonly name: string;
   private o: Required<Omit<OllamaOptions, "signal">> & { signal?: AbortSignal };
+  private transport?: Transport;
+  private authority: ModelJudgement["authority"];
 
-  constructor(opts: OllamaOptions = {}) {
-    this.o = { baseUrl: DEFAULT_URL, model: "gemma4:e4b", batch: 20, context: 5, fetch: globalThis.fetch.bind(globalThis), ...opts };
-    this.name = this.o.model;
+  constructor(opts: GemmaJudgeOptions = {}) {
+    const { transport, name, authority, ...rest } = opts;
+    this.o = { baseUrl: DEFAULT_URL, model: "gemma4:e4b", batch: 20, context: 5, fetch: globalThis.fetch.bind(globalThis), ...rest };
+    this.name = name ?? this.o.model;
+    this.transport = transport;
+    this.authority = authority ?? "full";
   }
 
   async judge(chat: Chat, { self, onProgress }: { self: string | null; onProgress?: (d: number, t: number) => void }) {
@@ -107,6 +123,7 @@ export class GemmaJudge implements Judge {
           target: r.target ?? undefined,
           why: r.why,
           model: this.name,
+          authority: this.authority,
         });
       }
       onProgress?.(Math.min(i + this.o.batch, text.length), text.length);
@@ -115,6 +132,7 @@ export class GemmaJudge implements Judge {
   }
 
   private async chat(prompt: string): Promise<{ id: number; hostile: boolean; severity: number; categories?: string[]; target?: string | null; why?: string }[]> {
+    if (this.transport) return parseMessages(await this.transport(SYSTEM, prompt, SCHEMA));
     const r = await this.o.fetch(`${this.o.baseUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -133,11 +151,19 @@ export class GemmaJudge implements Judge {
     });
     if (!r.ok) throw new Error(`Ollama ${this.o.model}: ${r.status} ${await r.text()}`);
     const j = (await r.json()) as { message: { content: string } };
-    try {
-      return (JSON.parse(j.message.content) as { messages: never[] }).messages ?? [];
-    } catch {
-      return [];
-    }
+    return parseMessages(j.message.content);
+  }
+}
+
+/** Constrained decoding usually gives clean JSON; be forgiving when a runtime wraps it in prose or fences. */
+function parseMessages(text: string): never[] {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start < 0 || end <= start) return [];
+  try {
+    return (JSON.parse(text.slice(start, end + 1)) as { messages?: never[] }).messages ?? [];
+  } catch {
+    return [];
   }
 }
 
