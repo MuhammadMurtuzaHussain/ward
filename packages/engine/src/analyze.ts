@@ -160,6 +160,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
       senders: uniq(danger.map((f) => f.message.sender)),
       messageIds: ids(danger),
       summary: `This chat has ${list}. That is never okay, and it's not your fault.`,
+      data: { kinds },
       fact: `Dangerous messages: ${kinds.map((k) => ({ threat: "threats of violence", selfharm: "telling the child to hurt or kill themselves", sexual: "sexual messages or pressure for photos", exposure: "threats to share photos or private information" })[k]).filter(Boolean).join("; ")}.`,
     });
   }
@@ -185,6 +186,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
       senders: repeaters.map((r) => r.sender),
       messageIds: ids(repeaters.flatMap((r) => r.fs)),
       summary: `${lead}${also}. When it keeps happening, it's bullying, not a joke.`,
+      data: { lead: top.sender, count: top.fs.length, days: top.days, others },
       fact: `Repeated targeting: ${repeaters.map((r) => `${r.sender} (${r.fs.length} messages${timed ? ` over ${r.days} days` : ""})`).join(", ")}.`,
     });
   }
@@ -202,6 +204,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
         kind: "pileon",
         senders,
         messageIds: ids(window),
+        data: { count: senders.length },
         summary: `${senders.length} people joined in on you at once. A pile-on can feel like everyone is against you. They aren't everyone.`,
         fact: `Pile-on: ${senders.length} people sent hurtful messages ${timed ? "within one hour" : "in quick succession"} (${senders.join(", ")}).`,
       });
@@ -231,6 +234,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
         ghosts.length === 1
           ? `${ghosts[0]} showed up and only said mean things. Accounts like that are often made just to hurt someone.`
           : `${ghosts.length} accounts showed up and only said mean things. Accounts like that are often made just to hurt someone, and they can be blocked and reported.`,
+      data: { names: ghosts },
       fact: `Accounts that only sent hurtful messages${arrived.size ? " after being added to the group" : ""}: ${ghosts.join(", ")}.`,
     });
   }
@@ -246,6 +250,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
       summary: removedSelf.length
         ? "You were removed from the group, and people talked about keeping you out. Leaving someone out on purpose is a kind of bullying."
         : "People in this chat talked about keeping someone out. Leaving someone out on purpose is a kind of bullying.",
+      data: { removed: removedSelf.length > 0 },
       fact: removedSelf.length ? "Exclusion: the child was removed from the group, and members talked about keeping them out." : "Exclusion: members talked about keeping someone out of the group.",
     });
   }
@@ -262,6 +267,7 @@ export function findPatterns(chat: Chat, hostile: Finding[], toSelf: Finding[], 
         messageIds: ids(night),
         summary: `${night.length} of these came after 11 at night. You can mute this chat at night, and sleep is not giving up.`,
         fact: `${night.length} hurtful messages were sent between 11pm and 5am.`,
+        data: { count: night.length },
       });
     }
   }

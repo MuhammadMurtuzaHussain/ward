@@ -30,3 +30,12 @@ test("every age band has a path, and the teen-only lesson stays teen-only", () =
   assert.ok(!unitsFor("8").some((u) => u.lessons.some((l) => l.id === "lock-2")));
   assert.equal(nextLesson("11", [])?.lesson.id, "spot-1");
 });
+
+test("Urdu lessons match the English ones exactly in structure", async () => {
+  const { UNITS_UR } = await import("./index.ts");
+  assert.deepEqual(
+    UNITS_UR.map((u) => [u.id, u.lessons.map((l) => [l.id, l.ages, l.exercises.map((e) => e.kind)])]),
+    UNITS.map((u) => [u.id, u.lessons.map((l) => [l.id, l.ages, l.exercises.map((e) => e.kind)])]),
+  );
+  assert.ok(!JSON.stringify(UNITS_UR).includes("\u2014"));
+});

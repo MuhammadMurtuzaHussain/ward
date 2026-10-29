@@ -8,6 +8,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(ShareInPlugin.class);
         registerPlugin(GemmaPhonePlugin.class);
+        registerPlugin(PrivacyPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }

@@ -23,6 +23,9 @@ import { HelpNow } from "../components/HelpNow.tsx";
 import { BackBar, Button, Pill, Screen } from "../components/ui.tsx";
 import { go, useStore, type AgeBand } from "../lib/store.ts";
 import { SaveToVault } from "../components/SaveToVault.tsx";
+import { Speak } from "../components/Speak.tsx";
+import { patternText } from "../lib/patternText.ts";
+import { locale, useT, type Dict } from "../i18n/index.ts";
 
 const PATTERN_ICON: Record<PatternKind, Icon> = {
   danger: Warning,
@@ -34,61 +37,38 @@ const PATTERN_ICON: Record<PatternKind, Icon> = {
   escalating: TrendUp,
 };
 
-const PATTERN_TITLE: Record<PatternKind, string> = {
-  danger: "Dangerous messages",
-  campaign: "Again and again",
-  pileon: "A pile-on",
-  ghosts: "Ghost accounts",
-  exclusion: "Shutting you out",
-  nightwatch: "At night",
-  escalating: "Getting worse",
-};
-
-function verdict(level: Level, age: AgeBand, self: string | null): { mood: Mood; title: string; line: string } {
-  const you = self ? "you" : "your friend";
-  switch (level) {
-    case "urgent":
-      return {
-        mood: "worried",
-        title: "This is serious.",
-        line: `Some of these messages could put ${you} in danger. That is never okay and it's not ${self ? "your" : "their"} fault. Please talk to someone today.`,
-      };
-    case "bullying":
-      return {
-        mood: "calm",
-        title: age === "8" ? "This is bullying." : "This is bullying, not banter.",
-        line: `It keeps landing on ${you}, from more than one direction. It isn't ${self ? "your" : "their"} fault, and there are things that make it stop.`,
-      };
-    case "watch":
-      return {
-        mood: "think",
-        title: "Some of this is unkind.",
-        line: "It doesn't look like a pattern yet. If it keeps happening, or it hurts, that matters more than what I think.",
-      };
-    default:
-      return { mood: "happy", title: "This looks okay.", line: "I didn't find anything mean here. If it still feels wrong, trust that feeling and tell someone." };
-  }
+function verdict(level: Level, age: AgeBand, self: string | null, t: Dict): { mood: Mood; title: string; line: string } {
+  const you = self ? t.result.you : t.result.yourFriend;
+  const your = self ? t.result.your : t.result.their;
+  const moods: Record<Level, Mood> = { urgent: "worried", bullying: "calm", watch: "think", calm: "happy" };
+  const [title, line] = t.result.verdict[level];
+  return {
+    mood: moods[level],
+    title: level === "bullying" && age !== "8" ? t.result.bullyingTeen : title,
+    line: line(you, your),
+  };
 }
 
 export function Result({ id }: { id: string }) {
   const s = useStore((st) => st.sessions[id]);
   const age = useStore((st) => st.profile.age);
+  const t = useT();
   const reduce = useReducedMotion();
 
   if (!s) {
     return (
       <Screen>
         <BackBar />
-        <p className="text-dim">This check has closed. For your privacy, I forget chats you didn't save when Ward restarts.</p>
+        <p className="text-dim">{t.result.closed}</p>
         <Button className="mt-4" onClick={() => go({ name: "check" })}>
-          Check a chat
+          {t.home.checkChat}
         </Button>
       </Screen>
     );
   }
 
   const a = s.analysis;
-  const v = verdict(a.level, age, s.self);
+  const v = verdict(a.level, age, s.self, t);
   const danger = a.patterns.find((p) => p.kind === "danger");
   const imageRisk = a.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
   const hostile = a.findings.filter((f) => f.severity > 0 && f.message.sender !== s.self);
@@ -108,6 +88,7 @@ export function Result({ id }: { id: string }) {
             <div>
               <h1 className={`font-display text-2xl font-bold leading-tight tracking-tight sm:text-3xl ${a.level === "urgent" ? "text-alarm" : ""}`}>{v.title}</h1>
               <p className="mt-2 leading-relaxed">{v.line}</p>
+              <Speak text={[v.title, v.line, ...a.patterns.map((p) => patternText(p, t))]} className="mt-3" />
             </div>
           </motion.section>
 
@@ -116,7 +97,7 @@ export function Result({ id }: { id: string }) {
           {a.patterns.length > 0 ? (
             <section aria-labelledby="patterns">
               <h2 id="patterns" className="font-display text-lg font-bold tracking-tight">
-                What I noticed
+                {t.result.noticed}
               </h2>
               <ul className="mt-3 grid gap-3">
                 {a.patterns.map((p, i) => {
@@ -124,8 +105,8 @@ export function Result({ id }: { id: string }) {
                   return (
                     <motion.li
                       key={p.kind}
-                      initial={reduce ? false : { opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={reduce ? false : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.08 * i }}
                       className="flex gap-4"
                     >
@@ -133,8 +114,8 @@ export function Result({ id }: { id: string }) {
                         <I size={20} weight="bold" />
                       </span>
                       <span>
-                        <span className="block font-display font-bold">{PATTERN_TITLE[p.kind]}</span>
-                        <span className="text-dim">{p.summary}</span>
+                        <span className="block font-display font-bold">{t.result.patternTitle[p.kind]}</span>
+                        <span className="text-dim">{patternText(p, t)}</span>
                       </span>
                     </motion.li>
                   );
@@ -148,10 +129,10 @@ export function Result({ id }: { id: string }) {
           <div className="sticky bottom-20 z-10 grid gap-2 rounded-card bg-[color-mix(in_srgb,var(--bg),transparent_10%)] py-2 backdrop-blur-md sm:grid-cols-2 lg:static lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
             {a.level !== "calm" ? (
               <Button onClick={() => go({ name: "coach", id })}>
-                What do I do? <ArrowRight size={18} weight="bold" />
+                {t.result.whatToDo} <ArrowRight size={18} weight="bold" className="flip-rtl" />
               </Button>
             ) : (
-              <Button onClick={() => go({ name: "path" })}>Practise spotting it</Button>
+              <Button onClick={() => go({ name: "path" })}>{t.result.practise}</Button>
             )}
             <SaveToVault id={id} />
           </div>
@@ -166,64 +147,65 @@ export function Result({ id }: { id: string }) {
 }
 
 function RefineStatus({ refining, progress, error }: { refining: boolean; progress?: [number, number]; error?: string }) {
+  const t = useT();
   if (refining)
     return (
       <Pill tone="glow">
         <span className="size-2 animate-pulse rounded-full bg-glow" aria-hidden />
-        Reading closely{progress ? ` ${progress[0]}/${progress[1]}` : ""}
+        {t.result.readingClosely}
+        {progress ? ` ${progress[0]}/${progress[1]}` : ""}
       </Pill>
     );
-  if (error) return <Pill>Quick check</Pill>;
+  if (error) return <Pill>{t.result.quickCheck}</Pill>;
   return null;
 }
 
 function Who({ analysis, self }: { analysis: Analysis; self: string | null }) {
+  const t = useT();
   const ghosts = new Set(analysis.patterns.find((p) => p.kind === "ghosts")?.senders ?? []);
   const people = analysis.senders.filter((x) => x.hostile > 0 && x.name !== self);
   const upstanders = analysis.senders.filter((x) => x.hostile === 0 && x.name !== self && x.total > 0);
   return (
     <section aria-labelledby="who">
       <h2 id="who" className="font-display text-lg font-bold tracking-tight">
-        Who
+        {t.result.who}
       </h2>
       <ul className="mt-3 flex flex-wrap gap-2">
         {people.map((x) => (
           <li key={x.name} className={`flex items-center gap-2 rounded-full border px-3 py-1.5 ${x.worst >= 3 ? "border-alarm/50" : "border-line"}`}>
-            {ghosts.has(x.name) && <GhostIcon size={16} weight="fill" className="text-glow" aria-label="ghost account" />}
+            {ghosts.has(x.name) && <GhostIcon size={16} weight="fill" className="text-glow" aria-label={t.result.ghostAccount} />}
             <span className="font-semibold">{x.name}</span>
             <span className="text-sm text-dim">{x.hostile}</span>
           </li>
         ))}
       </ul>
       {upstanders.length > 0 && (
-        <p className="mt-3 text-sm text-dim">
-          Not part of it: {upstanders.slice(0, 4).map((u) => u.name).join(", ")}
-          {upstanders.length > 4 ? ` and ${upstanders.length - 4} more` : ""}.
-        </p>
+        <p className="mt-3 text-sm text-dim">{t.result.notPartOf(upstanders.slice(0, 4).map((u) => u.name).join(", "), Math.max(0, upstanders.length - 4))}</p>
       )}
     </section>
   );
 }
 
 function HowWardKnows({ analysis }: { analysis: Analysis }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <div className="text-sm">
       <button onClick={() => setOpen((o) => !o)} aria-expanded={open} className="flex min-h-11 items-center gap-2 font-bold text-dim hover:text-ink">
-        How I worked this out
+        {t.result.how}
         <CaretDown size={14} weight="bold" className={open ? "rotate-180" : ""} />
       </button>
       {open && (
         <div className="grid gap-2 text-dim">
           <p>
-            Word lists for {analysis.layers.packs.length} languages ran instantly.
+            {t.result.howLists(analysis.layers.packs.length)}
             {analysis.layers.models.includes("Ward Lite")
-              ? " Then Ward Lite, a small model that lives inside the app, read every message to catch what the word lists miss. It can only add warnings, never remove them. For the closest read, pair Ward with a computer running Gemma."
+              ? t.result.howLite
               : analysis.layers.models.length
-                ? ` Then ${analysis.layers.models.join(" and ")} read the whole chat on this device, with context, so friends joking around don't count as bullying.`
-                : " No AI model was running, so this is a quick check from word lists and patterns. Open Ward on a computer with Gemma for a closer read."}
+                ? t.result.howModel(analysis.layers.models.join(" + "))
+                : t.result.howNone}
           </p>
-          <p>Nothing was sent anywhere. Patterns like pile-ons and ghost accounts come from who said what, when.</p>
+          <p>{t.result.howPrivate}</p>
         </div>
       )}
     </div>
@@ -233,6 +215,7 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
 type Row = { kind: "msg"; f: Finding } | { kind: "fold"; count: number; from: number } | { kind: "day"; label: string };
 
 export function Timeline({ analysis, self }: { analysis: Analysis; self: string | null }) {
+  const t = useT();
   const [unfolded, setUnfolded] = useState<Set<number>>(new Set());
   const rows = useMemo(() => {
     const out: Row[] = [];
@@ -250,7 +233,7 @@ export function Timeline({ analysis, self }: { analysis: Analysis; self: string 
       quiet = [];
     };
     for (const f of analysis.findings) {
-      const day = f.message.at ? f.message.at.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" }) : "";
+      const day = f.message.at ? f.message.at.toLocaleDateString(locale(), { weekday: "short", day: "numeric", month: "short" }) : "";
       if (day && day !== lastDay) {
         flushQuiet();
         out.push({ kind: "day", label: day });
@@ -271,9 +254,9 @@ export function Timeline({ analysis, self }: { analysis: Analysis; self: string 
       <div className="flex items-center gap-2">
         <ChatsCircle size={22} weight="bold" className="text-glow" />
         <h2 id="timeline" className="font-display text-lg font-bold tracking-tight">
-          The chat
+          {t.result.theChat}
         </h2>
-        <span className="ml-auto text-sm text-dim">{analysis.findings.length} messages</span>
+        <span className="ms-auto text-sm text-dim">{t.result.messages(analysis.findings.length)}</span>
       </div>
       <ol className="mt-4 grid gap-2">
         {rows.map((r, i) => {
@@ -287,7 +270,7 @@ export function Timeline({ analysis, self }: { analysis: Analysis; self: string 
             return (
               <li key={`f${r.from}`} className="text-center">
                 <button onClick={() => setUnfolded((u) => new Set(u).add(r.from))} className="min-h-10 rounded-full px-3 text-sm font-bold text-dim hover:bg-raised hover:text-ink">
-                  {r.count} ordinary messages
+                  {t.result.ordinary(r.count)}
                 </button>
               </li>
             );
@@ -299,7 +282,11 @@ export function Timeline({ analysis, self }: { analysis: Analysis; self: string 
 }
 
 function Bubble({ f, mine }: { f: Finding; mine: boolean }) {
+  const t = useT();
+  const lang = useStore((s) => s.profile.lang);
   const m = f.message;
+  // Word-list notes carry English glosses; in Urdu, show just the words that were caught.
+  const why = lang === "ur" && !f.model && f.hits.length ? f.hits.map((h) => `"${h.term}"`).join("، ") : f.why;
   const loud = f.severity > 0 && !mine;
   const late = m.at && (m.at.getHours() >= 23 || m.at.getHours() < 5);
   const edge = f.severity >= 3 ? "border-alarm bg-alarm-soft" : f.severity === 2 ? "border-glow/70 bg-glow-soft" : f.severity === 1 ? "border-line bg-raised" : "border-transparent bg-raised/60";
@@ -307,20 +294,20 @@ function Bubble({ f, mine }: { f: Finding; mine: boolean }) {
     <li className={`flex flex-col ${mine ? "items-end" : "items-start"}`}>
       <div className={`max-w-[88%] rounded-[calc(var(--r-card)-6px)] border px-4 py-2.5 ${mine ? "border-transparent bg-glow-soft" : loud ? edge : "border-transparent bg-raised/60"}`}>
         <div className="flex items-center gap-2 text-xs">
-          <span className={`font-bold ${loud ? "text-ink" : "text-dim"}`}>{mine ? "You" : m.sender}</span>
+          <span className={`font-bold ${loud ? "text-ink" : "text-dim"}`}>{mine ? t.result.youSender : m.sender}</span>
           {m.at && (
             <span className="text-dim">
-              {m.at.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
-              {late && <MoonStars size={12} weight="fill" className="ml-1 inline text-glow" aria-label="late at night" />}
+              {m.at.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" })}
+              {late && <MoonStars size={12} weight="fill" className="ms-1 inline text-glow" aria-label={t.result.lateNight} />}
             </span>
           )}
         </div>
-        <p className={`mt-0.5 whitespace-pre-wrap break-words ${loud ? "" : "text-dim"}`}>{m.media ? <i>photo or video</i> : m.text}</p>
+        <p dir="auto" className={`mt-0.5 whitespace-pre-wrap break-words ${loud ? "" : "text-dim"}`}>{m.media ? <i>{t.result.media}</i> : m.text}</p>
       </div>
-      {loud && f.why && (
+      {loud && why && (
         <p className={`mt-1 max-w-[88%] px-1 text-sm ${f.severity >= 3 ? "font-bold text-alarm" : "text-dim"}`}>
-          {f.severity >= 3 && <Warning size={14} weight="fill" className="mr-1 inline" />}
-          {f.why}
+          {f.severity >= 3 && <Warning size={14} weight="fill" className="me-1 inline" />}
+          {why}
         </p>
       )}
     </li>

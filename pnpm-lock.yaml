@@ -177,6 +177,9 @@ importers:
       '@fontsource/atkinson-hyperlegible-next':
         specifier: ^5.3.0
         version: 5.3.0
+      '@fontsource/noto-nastaliq-urdu':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@huggingface/transformers':
         specifier: ^4.3.2
         version: 4.3.2(@types/node@24.19.2)
@@ -339,6 +342,9 @@ packages:
 
   '@fontsource/atkinson-hyperlegible-next@5.3.0':
     resolution: {integrity: sha512-8p1tHVoPDo6oYwSO3sMw5snGwFwSf3TmeSF9Gcj792GXdsg6oqvhoItbj6Hj/XZIk0Xs+Cwu6pkLBAl3Q5HrwA==}
+
+  '@fontsource/noto-nastaliq-urdu@5.3.0':
+    resolution: {integrity: sha512-rhozTu22mlnDp5R8A4gGeNJvoLroHEV0TytCwly20w1LMA+VXs/MyhORGJu3i3SWZFdyeCFe5EF5xzraq6zd6A==}
 
   '@huggingface/jinja@0.5.11':
     resolution: {integrity: sha512-YzEzwM5oQf4r0vs7ifWQ+yuVR1YkAHrjERQ+a8WRsStHHp4NRBg+NesjiFc+X2AFUpRvvrIeHDS1xFy9jY/IjQ==}
@@ -2421,6 +2427,8 @@ snapshots:
   '@fontsource-variable/bricolage-grotesque@5.3.0': {}
 
   '@fontsource/atkinson-hyperlegible-next@5.3.0': {}
+
+  '@fontsource/noto-nastaliq-urdu@5.3.0': {}
 
   '@huggingface/jinja@0.5.11': {}
 

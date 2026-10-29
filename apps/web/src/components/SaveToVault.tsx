@@ -7,8 +7,10 @@ import { Button } from "./ui.tsx";
 import { PinPad } from "./PinPad.tsx";
 import { createPin, hasPin, isUnlocked, save, unlock } from "../lib/vault.ts";
 import { useStore } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
 export function SaveToVault({ id }: { id: string }) {
+  const t = useT();
   const s = useStore((st) => st.sessions[id]);
   const saved = useStore((st) => st.profile.checks.find((c) => c.id === id)?.saved ?? false);
   const [step, setStep] = useState<null | "create" | "confirm" | "unlock">(null);
@@ -23,7 +25,7 @@ export function SaveToVault({ id }: { id: string }) {
   if (saved)
     return (
       <Button tone="quiet" disabled>
-        <CheckCircle size={20} weight="fill" className="text-safe" /> Saved in vault
+        <CheckCircle size={20} weight="fill" className="text-safe" /> {t.vault.saved}
       </Button>
     );
 
@@ -37,7 +39,7 @@ export function SaveToVault({ id }: { id: string }) {
           else void doSave();
         }}
       >
-        <LockKey size={20} weight="bold" /> Save as evidence
+        <LockKey size={20} weight="bold" /> {t.vault.save}
       </Button>
       <AnimatePresence>
         {step && (
@@ -50,13 +52,13 @@ export function SaveToVault({ id }: { id: string }) {
             className="fixed inset-0 z-40 grid place-items-center bg-[color-mix(in_srgb,var(--bg),transparent_15%)] p-4 backdrop-blur-md"
           >
             <motion.div initial={{ y: 24 }} animate={{ y: 0 }} className="relative w-full max-w-sm rounded-card border border-line bg-surface p-6 pt-10">
-              <button onClick={() => setStep(null)} className="absolute right-3 top-3 grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label="Close">
+              <button onClick={() => setStep(null)} className="absolute end-3 top-3 grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label={t.common.close}>
                 <X size={20} weight="bold" />
               </button>
               {step === "create" && (
                 <PinPad
-                  title="Make a vault PIN"
-                  hint="Four numbers only you know. Without it, nobody can open your evidence, not even me."
+                  title={t.vault.makePin}
+                  hint={t.vault.makePinHint}
                   onDone={(p) => {
                     setFirst(p);
                     setStep("confirm");
@@ -66,8 +68,8 @@ export function SaveToVault({ id }: { id: string }) {
               {step === "confirm" && (
                 <PinPad
                   key="confirm"
-                  title="Once more"
-                  hint="Type the same PIN again."
+                  title={t.vault.again}
+                  hint={t.vault.againHint}
                   onDone={async (p) => {
                     if (p !== first) {
                       setStep("create");
@@ -80,7 +82,7 @@ export function SaveToVault({ id }: { id: string }) {
               )}
               {step === "unlock" && (
                 <PinPad
-                  title="Unlock your vault"
+                  title={t.vault.unlock}
                   onDone={async (p) => {
                     if (!(await unlock(p))) return false;
                     await doSave();

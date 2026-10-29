@@ -4,9 +4,8 @@
 // fingerprint, so a printed report can show the evidence wasn't edited after saving.
 
 import { fingerprintMessages, type Analysis, type Chat } from "@ward/engine";
-import { getState, updateProfile } from "./store.ts";
+import { getState, onProfileLeave, updateProfile, vaultDbName } from "./store.ts";
 
-const DB = "ward-vault";
 const STORE = "items";
 const enc = new TextEncoder();
 const dec = new TextDecoder();
@@ -24,6 +23,10 @@ export interface VaultItem {
 }
 
 let key: CryptoKey | null = null;
+// A vault never stays open when the person using Ward changes.
+onProfileLeave(() => {
+  key = null;
+});
 
 const b64 = (b: ArrayBuffer | Uint8Array) => btoa(String.fromCharCode(...new Uint8Array(b instanceof Uint8Array ? b : new Uint8Array(b))));
 const unb64 = (s: string): Uint8Array<ArrayBuffer> => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
@@ -72,7 +75,7 @@ export async function unlock(pin: string): Promise<boolean> {
 
 function db(): Promise<IDBDatabase> {
   return new Promise((res, rej) => {
-    const r = indexedDB.open(DB, 1);
+    const r = indexedDB.open(vaultDbName(), 1);
     r.onupgradeneeded = () => r.result.createObjectStore(STORE, { keyPath: "id" });
     r.onsuccess = () => res(r.result);
     r.onerror = () => rej(r.error);
@@ -134,7 +137,7 @@ export async function remove(id: string) {
 export async function wipe() {
   key = null;
   await new Promise<void>((res) => {
-    const r = indexedDB.deleteDatabase(DB);
+    const r = indexedDB.deleteDatabase(vaultDbName());
     r.onsuccess = r.onerror = r.onblocked = () => res();
   });
   updateProfile((p) => ({ vaultSalt: null, vaultCheck: null, checks: p.checks.map((c) => ({ ...c, saved: false })) }));

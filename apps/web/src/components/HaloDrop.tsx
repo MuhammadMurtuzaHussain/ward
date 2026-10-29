@@ -42,7 +42,7 @@ export function HaloDrop({ accept, multiple, onFiles, children }: { accept: stri
       </div>
       {/* light pooled at the bottom */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2">
-        <div className="absolute -bottom-12 left-1/4 h-28 w-2/3 rounded-full blur-3xl" style={{ background: "var(--glow)", opacity: over ? 0.35 : 0.14, animation: "rim-drift 9s ease-in-out infinite" }} />
+        <div className="absolute -bottom-12 start-1/4 h-28 w-2/3 rounded-full blur-3xl" style={{ background: "var(--glow)", opacity: over ? 0.35 : 0.14, animation: "rim-drift 9s ease-in-out infinite" }} />
       </div>
 
       <button type="button" onClick={() => input.current?.click()} className="flex w-full flex-col items-center gap-3 px-6 py-10 text-center">

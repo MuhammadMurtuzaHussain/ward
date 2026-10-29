@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimationControls } from "motion/react";
 import { Backspace } from "@phosphor-icons/react";
+import { useT } from "../i18n/index.ts";
 
 /** Four big digits and a keypad that works with touch and a keyboard alike. */
 export function PinPad({ title, hint, onDone }: { title: string; hint?: string; onDone: (pin: string) => Promise<boolean | void> | boolean | void }) {
+  const t = useT();
   const [pin, setPin] = useState("");
   const [busy, setBusy] = useState(false);
   const controls = useAnimationControls();
@@ -34,11 +36,11 @@ export function PinPad({ title, hint, onDone }: { title: string; hint?: string; 
         if (/^\d$/.test(e.key)) press(e.key);
         if (e.key === "Backspace") setPin((p) => p.slice(0, -1));
       }}
-      className="mx-auto flex max-w-xs flex-col items-center outline-none"
+      dir="ltr" className="mx-auto flex max-w-xs flex-col items-center outline-none"
     >
-      <h2 className="text-center font-display text-2xl font-bold tracking-tight">{title}</h2>
-      {hint && <p className="mt-2 text-center text-dim">{hint}</p>}
-      <motion.div animate={controls} className="my-7 flex gap-4" aria-live="polite" aria-label={`${pin.length} of 4 digits entered`}>
+      <h2 dir="auto" className="text-center font-display text-2xl font-bold tracking-tight">{title}</h2>
+      {hint && <p dir="auto" className="mt-2 text-center text-dim">{hint}</p>}
+      <motion.div animate={controls} className="my-7 flex gap-4" aria-live="polite" aria-label={t.vault.pinDigits(pin.length)}>
         {[0, 1, 2, 3].map((i) => (
           <span key={i} className={`size-4 rounded-full transition-colors ${i < pin.length ? "bg-glow" : "bg-raised"}`} />
         ))}
@@ -51,7 +53,7 @@ export function PinPad({ title, hint, onDone }: { title: string; hint?: string; 
             <button
               key={k}
               onClick={() => (k === "del" ? setPin((p) => p.slice(0, -1)) : press(k))}
-              aria-label={k === "del" ? "Delete" : k}
+              aria-label={k === "del" ? t.vault.del1 : k}
               className="grid h-16 place-items-center rounded-btn bg-raised font-display text-2xl font-semibold active:scale-95"
             >
               {k === "del" ? <Backspace size={24} /> : k}

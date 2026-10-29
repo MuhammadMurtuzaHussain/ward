@@ -112,6 +112,16 @@ export interface Pattern {
   summary: string;
   /** The same finding in neutral third person, for a helpline or school report. */
   fact: string;
+  /** The facts behind the sentences, so the app can say them in the child's language. */
+  data?: {
+    kinds?: string[];
+    lead?: string;
+    count?: number;
+    days?: number;
+    others?: string[];
+    names?: string[];
+    removed?: boolean;
+  };
 }
 
 export type Level = "calm" | "watch" | "bullying" | "urgent";

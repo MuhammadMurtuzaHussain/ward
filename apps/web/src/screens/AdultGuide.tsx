@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Check, X } from "@phosphor-icons/react";
 import { HelpNow } from "../components/HelpNow.tsx";
 import { BackBar, Screen } from "../components/ui.tsx";
+import { useStore } from "../lib/store.ts";
 
 type Lang = "en" | "ur";
 
@@ -75,7 +76,7 @@ const TEXT: Record<
 };
 
 export function AdultGuide() {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>(useStore((s) => s.profile.lang));
   const t = TEXT[lang];
   const rtl = lang === "ur";
   return (

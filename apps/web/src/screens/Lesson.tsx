@@ -10,6 +10,8 @@ import { Ghost } from "../components/Ghost.tsx";
 import { Button } from "../components/ui.tsx";
 import { back, finishLesson, getState, liveStreak, useStore } from "../lib/store.ts";
 import { gradeWriting } from "../lib/grade.ts";
+import { Speak } from "../components/Speak.tsx";
+import { useT } from "../i18n/index.ts";
 
 type Answer = { right: boolean; why: string; mine?: string };
 
@@ -25,8 +27,9 @@ function shuffle<T>(xs: T[], seed: number) {
 }
 
 export function LessonPlayer({ id }: { id: string }) {
-  const found = lessonById(id);
   const p = useStore((s) => s.profile);
+  const t = useT();
+  const found = lessonById(id, p.lang);
   const reduce = useReducedMotion();
   const [queue, setQueue] = useState<number[]>(() => found?.lesson.exercises.map((_, i) => i) ?? []);
   const [pos, setPos] = useState(0);
@@ -38,7 +41,7 @@ export function LessonPlayer({ id }: { id: string }) {
   if (!found) {
     return (
       <main className="grid min-h-[100dvh] place-items-center">
-        <Button onClick={() => back({ name: "path" })}>Back to your path</Button>
+        <Button onClick={() => back({ name: "path" })}>{t.lesson.backToPath}</Button>
       </main>
     );
   }
@@ -74,22 +77,22 @@ export function LessonPlayer({ id }: { id: string }) {
     return (
       <main className="mx-auto flex min-h-[100dvh] max-w-md flex-col items-center justify-center px-6 text-center">
         <Ghost mood="cheer" size={150} />
-        <h1 className="mt-6 font-display text-4xl font-bold tracking-tight">Lesson done</h1>
+        <h1 className="mt-6 font-display text-4xl font-bold tracking-tight">{t.lesson.done}</h1>
         <p className="mt-2 text-lg text-dim">{lesson.title}</p>
         <div className="mt-8 grid w-full grid-cols-2 gap-3">
           <div className="rounded-card border border-line bg-surface p-4">
             <Lightning size={24} weight="fill" className="mx-auto text-glow" />
             <p className="mt-1 font-display text-3xl font-bold">+{finished.xp}</p>
-            <p className="text-sm text-dim">XP</p>
+            <p className="text-sm text-dim">{t.lesson.xp}</p>
           </div>
           <div className="rounded-card border border-line bg-surface p-4">
             <Fire size={24} weight="fill" className="mx-auto text-glow" />
             <p className="mt-1 font-display text-3xl font-bold">{finished.streak}</p>
-            <p className="text-sm text-dim">day streak</p>
+            <p className="text-sm text-dim">{t.lesson.streak}</p>
           </div>
         </div>
         <Button className="mt-10 w-full" onClick={() => back({ name: "path" })}>
-          Continue
+          {t.lesson.continue}
         </Button>
       </main>
     );
@@ -97,7 +100,7 @@ export function LessonPlayer({ id }: { id: string }) {
   return (
     <main className="mx-auto flex min-h-[100dvh] max-w-2xl flex-col px-4 pt-4 sm:px-6">
       <div className="flex items-center gap-4">
-        <button onClick={() => back({ name: "path" })} className="grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label="Leave lesson">
+        <button onClick={() => back({ name: "path" })} className="grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label={t.lesson.leave}>
           <X size={24} weight="bold" />
         </button>
         <div className="h-3.5 flex-1 overflow-hidden rounded-full bg-raised" role="progressbar" aria-valuenow={Math.round(progress * 100)} aria-valuemin={0} aria-valuemax={100}>
@@ -130,12 +133,13 @@ export function LessonPlayer({ id }: { id: string }) {
               <div className="flex-1">
                 <p className={`flex items-center gap-2 font-display text-xl font-bold ${answer.right ? "text-safe" : "text-glow"}`}>
                   {answer.right ? <CheckCircle size={24} weight="fill" /> : <XCircle size={24} weight="fill" />}
-                  {answer.right ? ["Nice one", "Exactly", "You've got it"][pos % 3] : "Not quite"}
+                  {answer.right ? t.lesson.right[pos % 3] : t.lesson.notQuite}
                 </p>
                 <p className="mt-1 leading-relaxed">{answer.why}</p>
+                <Speak text={answer.why} className="mt-2" />
               </div>
               <Button autoFocus onClick={next} className="sm:min-w-36">
-                Continue
+                {t.lesson.continue}
               </Button>
             </div>
           </motion.div>
@@ -156,7 +160,7 @@ function ChatView({ chat, onPick, picked, reveal }: { chat: ChatLine[]; onPick?:
             <button
               disabled={!onPick}
               onClick={() => onPick?.(i)}
-              className={`w-full rounded-[calc(var(--r-card)-8px)] bg-raised px-4 py-2.5 text-left transition-transform enabled:active:scale-[0.99] ${ring}`}
+              className={`w-full rounded-[calc(var(--r-card)-8px)] bg-raised px-4 py-2.5 text-start transition-transform enabled:active:scale-[0.99] ${ring}`}
             >
               <span className="block text-xs font-bold text-dim">{l.from}</span>
               <span>{l.text}</span>
@@ -169,6 +173,7 @@ function ChatView({ chat, onPick, picked, reveal }: { chat: ChatLine[]; onPick?:
 }
 
 function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed: number; locked: boolean; onAnswer: (a: Answer) => void; age: string }) {
+  const t = useT();
   const [pick, setPick] = useState<number | null>(null);
   const [sorted, setSorted] = useState<Record<number, 0 | 1>>({});
   const [text, setText] = useState("");
@@ -177,7 +182,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
 
   const title = "font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl";
 
-  const checkBar = (enabled: boolean, onCheck: () => void, label = "Check") =>
+  const checkBar = (enabled: boolean, onCheck: () => void, label = t.lesson.check) =>
     !locked && (
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-bg/95 pb-[env(safe-area-inset-bottom)] backdrop-blur">
         <div className="mx-auto max-w-2xl px-5 py-4">
@@ -192,8 +197,9 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
     case "truefalse":
       return (
         <>
-          <p className="text-sm font-bold text-glow">True or false?</p>
+          <p className="text-sm font-bold text-glow">{t.lesson.trueFalse}</p>
           <h1 className={`${title} mt-2`}>{ex.statement}</h1>
+          <Speak text={ex.statement} className="mt-3" />
           <div className="mt-8 grid grid-cols-2 gap-3">
             {[true, false].map((v) => (
               <button
@@ -202,7 +208,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
                 onClick={() => onAnswer({ right: v === ex.answer, why: ex.why })}
                 className="min-h-24 rounded-card border-2 border-line bg-surface font-display text-2xl font-bold transition-transform hover:border-glow active:scale-[0.98]"
               >
-                {v ? "True" : "False"}
+                {v ? t.lesson.true : t.lesson.false}
               </button>
             ))}
           </div>
@@ -213,6 +219,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
       return (
         <>
           <h1 className={title}>{ex.prompt}</h1>
+          <Speak text={ex.prompt} className="mt-3" />
           {ex.chat && <div className="mt-5"><ChatView chat={ex.chat} /></div>}
           <div className="mt-6 grid gap-3">
             {options.map((o) => (
@@ -220,7 +227,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
                 key={o.i}
                 disabled={locked}
                 onClick={() => setPick(o.i)}
-                className={`min-h-16 rounded-card border-2 px-5 py-4 text-left text-[1.05rem] transition-colors ${pick === o.i ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
+                className={`min-h-16 rounded-card border-2 px-5 py-4 text-start text-[1.05rem] transition-colors ${pick === o.i ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
               >
                 {o.text}
               </button>
@@ -229,7 +236,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
           {checkBar(pick !== null, () => {
             const o = ex.options[pick!]!;
             const right = ex.options.find((x) => x.right)!;
-            onAnswer({ right: !!o.right, why: o.right ? o.why : `${o.why} Best answer: "${right.text}".` });
+            onAnswer({ right: !!o.right, why: o.right ? o.why : `${o.why}${t.lesson.best(right.text)}` });
           })}
         </>
       );
@@ -238,6 +245,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
       return (
         <>
           <h1 className={title}>{ex.prompt}</h1>
+          <Speak text={ex.prompt} className="mt-3" />
           <div className="mt-6">
             <ChatView chat={ex.chat} onPick={locked ? undefined : setPick} picked={pick} reveal={locked} />
           </div>
@@ -251,6 +259,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
       return (
         <>
           <h1 className={title}>{ex.prompt}</h1>
+          <Speak text={ex.prompt} className="mt-3" />
           <ul className="mt-6 grid gap-3">
             {items.map((it, i) => (
               <li key={i} className="rounded-card border border-line bg-surface p-4">
@@ -279,7 +288,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
           </ul>
           {checkBar(all, () => {
             const wrong = items.filter((it, i) => sorted[i] !== it.bin).length;
-            onAnswer({ right: wrong === 0, why: wrong ? `${wrong} in the wrong place. ${ex.why}` : ex.why });
+            onAnswer({ right: wrong === 0, why: wrong ? `${t.lesson.wrongPlaces(wrong)}${ex.why}` : ex.why });
           })}
         </>
       );
@@ -289,9 +298,10 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
       return (
         <>
           <h1 className={title}>{ex.prompt}</h1>
+          <Speak text={ex.prompt} className="mt-3" />
           {ex.chat && <div className="mt-5"><ChatView chat={ex.chat} /></div>}
           <label htmlFor="write" className="sr-only">
-            Your answer
+            {t.lesson.yourAnswer}
           </label>
           <textarea
             id="write"
@@ -299,7 +309,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
             disabled={locked}
             onChange={(e) => setText(e.target.value)}
             rows={5}
-            placeholder="Write it your way"
+            placeholder={t.lesson.writePlaceholder}
             className="mt-6 w-full resize-y rounded-card border-2 border-line bg-surface p-4 text-[1.05rem] leading-relaxed text-ink placeholder:text-dim/70 focus:border-glow focus:outline-none"
           />
           {checkBar(text.trim().length > 8 && !grading, async () => {
@@ -307,7 +317,7 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
             const g = await gradeWriting(ex, text, age);
             setGrading(false);
             onAnswer({ right: true, why: g });
-          }, grading ? "Ward is reading…" : "Check")}
+          }, grading ? t.lesson.reading : t.lesson.check)}
         </>
       );
   }

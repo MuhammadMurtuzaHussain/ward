@@ -27,6 +27,8 @@ export interface GemmaJudgeOptions extends OllamaOptions {
   transport?: Transport;
   /** Shown in "how Ward knows". Defaults to the model name. */
   name?: string;
+  /** The language for the short "why" notes the child reads, e.g. "Urdu, in Urdu script". */
+  language?: string;
   authority?: ModelJudgement["authority"];
 }
 
@@ -92,13 +94,15 @@ export class GemmaJudge implements Judge {
   private o: Required<Omit<OllamaOptions, "signal">> & { signal?: AbortSignal };
   private transport?: Transport;
   private authority: ModelJudgement["authority"];
+  private system: string;
 
   constructor(opts: GemmaJudgeOptions = {}) {
-    const { transport, name, authority, ...rest } = opts;
+    const { transport, name, authority, language, ...rest } = opts;
     this.o = { baseUrl: DEFAULT_URL, model: "gemma4:e4b", batch: 20, context: 5, fetch: globalThis.fetch.bind(globalThis), ...rest };
     this.name = name ?? this.o.model;
     this.transport = transport;
     this.authority = authority ?? "full";
+    this.system = language && !/^english/i.test(language) ? `${SYSTEM}\nWrite every "why" in ${language}, simply, the way a child would understand. Keep names as written.` : SYSTEM;
   }
 
   async judge(chat: Chat, { self, onProgress }: { self: string | null; onProgress?: (d: number, t: number) => void }) {
@@ -132,7 +136,7 @@ export class GemmaJudge implements Judge {
   }
 
   private async chat(prompt: string): Promise<{ id: number; hostile: boolean; severity: number; categories?: string[]; target?: string | null; why?: string }[]> {
-    if (this.transport) return parseMessages(await this.transport(SYSTEM, prompt, SCHEMA));
+    if (this.transport) return parseMessages(await this.transport(this.system, prompt, SCHEMA));
     let r = await this.post(prompt, true);
     // Some model builds can't constrain output to a schema; ask for the JSON in words instead.
     if (r.status === 501) r = await this.post(`${prompt}\n\n${JSON_INSTRUCTION}`, false);
@@ -153,7 +157,7 @@ export class GemmaJudge implements Judge {
         ...(structured ? { format: SCHEMA } : {}),
         options: { temperature: 0, num_ctx: 8192 },
         messages: [
-          { role: "system", content: SYSTEM },
+          { role: "system", content: this.system },
           { role: "user", content: prompt },
         ],
       }),

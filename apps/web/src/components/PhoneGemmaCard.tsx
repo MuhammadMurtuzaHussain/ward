@@ -4,11 +4,13 @@
 import { useEffect, useState } from "react";
 import { DeviceMobile, DownloadSimple, Trash, X } from "@phosphor-icons/react";
 import { Button, Card, Pill } from "./ui.tsx";
+import { useT } from "../i18n/index.ts";
 import { cancelPhoneGemma, downloadPhoneGemma, phoneStatus, removePhoneGemma, type PhoneStatus } from "../lib/phoneGemma.ts";
 
 const gb = (b: number) => `${(b / 1e9).toFixed(1)} GB`;
 
 export function PhoneGemmaCard() {
+  const t = useT();
   const [s, setS] = useState<PhoneStatus | null>(null);
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -23,29 +25,32 @@ export function PhoneGemmaCard() {
   return (
     <Card className="p-5">
       <h2 className="flex items-center gap-2 font-display text-lg font-bold">
-        <DeviceMobile size={22} weight="bold" className="text-glow" /> Gemma on this phone
+        <DeviceMobile size={22} weight="bold" className="text-glow" /> {t.phone.title}
       </h2>
       <p className="mt-2 text-sm text-dim">
-        Gemma 4 can run right on this phone to help you write: the message to someone you trust, and feedback on your lesson answers. Nothing leaves the phone. Ward Lite already reads your chats without it.
+        {t.phone.line}
       </p>
 
       {!s.supported ? (
         <p className="mt-3 text-sm">
-          This phone has {gb(s.ramBytes)} of memory; Gemma needs about 6 GB. Ward Lite and the word lists keep working.
+          {t.phone.tooSmall(gb(s.ramBytes))}
         </p>
       ) : s.downloaded ? (
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <Pill tone="safe">Ready{s.backend ? ` (${s.backend})` : ""}</Pill>
+          <Pill tone="safe">
+            {t.phone.ready}
+            {s.backend ? ` (${s.backend})` : ""}
+          </Pill>
           <Button
             tone="ghost"
             className="text-sm"
             onClick={async () => {
-              if (!confirm("Remove Gemma from this phone? You can download it again later.")) return;
+              if (!confirm(t.phone.removeConfirm)) return;
               await removePhoneGemma();
               await refresh();
             }}
           >
-            <Trash size={18} /> Remove ({gb(s.modelBytes)})
+            <Trash size={18} /> {t.phone.remove(gb(s.modelBytes))}
           </Button>
         </div>
       ) : progress !== null ? (
@@ -55,10 +60,10 @@ export function PhoneGemmaCard() {
           </div>
           <div className="mt-2 flex items-center justify-between text-sm text-dim">
             <span>
-              {Math.round(progress * 100)}% of {gb(s.modelBytes)}. You can keep using Ward.
+              {t.phone.progress(Math.round(progress * 100), gb(s.modelBytes))}
             </span>
             <button onClick={() => cancelPhoneGemma()} className="flex min-h-10 items-center gap-1 font-bold text-dim hover:text-ink">
-              <X size={16} /> Stop
+              <X size={16} /> {t.phone.stop}
             </button>
           </div>
         </div>
@@ -77,9 +82,9 @@ export function PhoneGemmaCard() {
               await refresh();
             }}
           >
-            <DownloadSimple size={20} weight="bold" /> {s.partialBytes ? "Finish download" : `Download (${gb(s.modelBytes)})`}
+            <DownloadSimple size={20} weight="bold" /> {s.partialBytes ? t.phone.finish : t.phone.download(gb(s.modelBytes))}
           </Button>
-          <p className="mt-2 text-sm text-dim">Use Wi-Fi: it's a big download. It stops and picks up again if the connection drops. {gb(s.freeBytes)} free on this phone.</p>
+          <p className="mt-2 text-sm text-dim">{t.phone.wifi(gb(s.freeBytes))}</p>
         </div>
       )}
       {error && (

@@ -10,43 +10,41 @@ import { Ghost } from "../components/Ghost.tsx";
 import { BackBar, Button, Screen } from "../components/ui.tsx";
 import { UnitIcon } from "../components/UnitIcon.tsx";
 import { AGES } from "../lib/looks.ts";
-import { back, go, type AgeBand } from "../lib/store.ts";
+import { back, go, useStore, type AgeBand } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
-const RULES = [
-  "We don't use the names of real people in this room.",
-  "Anyone can pass. Nobody has to share.",
-  "What's said here stays kind.",
-  "If something today brings up a worry, talk to me after class, or to someone you trust.",
-];
+
 
 export function Teach() {
+  const t = useT();
+  const lang = useStore((s) => s.profile.lang);
   const [age, setAge] = useState<AgeBand>("11");
   return (
     <Screen wide>
-      <BackBar title="Teach a class" />
+      <BackBar title={t.teach.title} />
       <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
         <section className="rounded-card border border-line bg-surface p-6">
           <ChalkboardTeacher size={32} weight="bold" className="text-glow" />
-          <h1 className="mt-3 font-display text-2xl font-bold tracking-tight">Run a Ward lesson with your class</h1>
+          <h1 className="mt-3 font-display text-2xl font-bold tracking-tight">{t.teach.heading}</h1>
           <p className="mt-2 text-dim">
-            Project this screen. Each lesson takes 10 to 15 minutes: read the question, let the class vote or discuss, then reveal the answer. Nothing is recorded and no child uses an account.
+            {t.teach.line}
           </p>
           <h2 className="mt-6 flex items-center gap-2 font-display font-bold">
-            <ShieldCheck size={20} weight="bold" className="text-glow" /> Agree these first
+            <ShieldCheck size={20} weight="bold" className="text-glow" /> {t.teach.agree}
           </h2>
-          <ul className="mt-2 grid list-disc gap-1.5 pl-5 text-dim marker:text-glow">
-            {RULES.map((r) => (
+          <ul className="mt-2 grid list-disc gap-1.5 ps-5 text-dim marker:text-glow">
+            {t.teach.rules.map((r) => (
               <li key={r}>{r}</li>
             ))}
           </ul>
           <p className="mt-4 text-sm text-dim">
-            After the lesson, children who want help can use Ward on their own phone, or the guide for adults under Me.
+            {t.teach.after}
           </p>
         </section>
 
         <section>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-bold text-dim">Class age</span>
+            <span className="text-sm font-bold text-dim">{t.teach.classAge}</span>
             {AGES.map((a) => (
               <button
                 key={a.id}
@@ -54,12 +52,12 @@ export function Teach() {
                 aria-pressed={age === a.id}
                 className={`min-h-10 rounded-full px-4 text-sm font-bold ${age === a.id ? "bg-glow text-glow-ink" : "bg-raised text-dim hover:text-ink"}`}
               >
-                {a.label}
+                {t.ages[a.id]![0]}
               </button>
             ))}
           </div>
           <div className="mt-4 grid gap-4">
-            {unitsFor(age).map((u) => (
+            {unitsFor(age, lang).map((u) => (
               <div key={u.id} className="rounded-card border border-line bg-surface p-4">
                 <div className="flex items-center gap-3">
                   <span className="grid size-9 place-items-center rounded-full bg-glow-soft text-glow">
@@ -70,12 +68,12 @@ export function Teach() {
                 <ul className="mt-3 grid gap-2">
                   {u.lessons.map((l) => (
                     <li key={l.id}>
-                      <button onClick={() => go({ name: "teachLesson", id: l.id })} className="flex w-full items-center gap-3 rounded-btn bg-raised px-4 py-3 text-left hover:bg-[color-mix(in_srgb,var(--raised),var(--ink)_6%)]">
+                      <button onClick={() => go({ name: "teachLesson", id: l.id })} className="flex w-full items-center gap-3 rounded-btn bg-raised px-4 py-3 text-start hover:bg-[color-mix(in_srgb,var(--raised),var(--ink)_6%)]">
                         <span className="min-w-0 flex-1">
                           <span className="block font-semibold">{l.title}</span>
-                          <span className="text-sm text-dim">{l.exercises.length} questions. {l.line}</span>
+                          <span className="text-sm text-dim">{t.teach.questions(l.exercises.length, l.line)}</span>
                         </span>
-                        <ArrowRight size={18} weight="bold" className="text-glow" />
+                        <ArrowRight size={18} weight="bold" className="flip-rtl text-glow" />
                       </button>
                     </li>
                   ))}
@@ -89,16 +87,12 @@ export function Teach() {
   );
 }
 
-const TALK: Record<Exercise["kind"], string> = {
-  choose: "Hands up for each answer. Why might someone pick a different one?",
-  spot: "Point to the message you'd pick. What would you do if you saw this in your group?",
-  sort: "Which one was hardest to sort? Why?",
-  truefalse: "Stand up for true, stay seated for false. Who has heard someone say this?",
-  write: "Two minutes: write your own, then share with the person next to you if you want to.",
-};
+
 
 export function TeachLesson({ id }: { id: string }) {
-  const found = lessonById(id);
+  const t = useT();
+  const lang = useStore((s) => s.profile.lang);
+  const found = lessonById(id, lang);
   const [i, setI] = useState(0);
   const [shown, setShown] = useState(false);
   const total = found?.lesson.exercises.length ?? 0;
@@ -130,22 +124,22 @@ export function TeachLesson({ id }: { id: string }) {
   return (
     <main className="mx-auto flex min-h-[100dvh] max-w-6xl flex-col px-6 py-6 sm:px-10">
       <header className="flex items-center gap-4">
-        <button onClick={() => back({ name: "teach" })} className="grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label="End lesson">
+        <button onClick={() => back({ name: "teach" })} className="grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label={t.teach.end}>
           <X size={24} weight="bold" />
         </button>
         <p className="font-display font-semibold text-dim">
           {found.unit.title}: {found.lesson.title}
         </p>
-        <p className="ml-auto text-sm font-bold text-dim">{done ? "Done" : `${i + 1} of ${total}`}</p>
+        <p className="ms-auto text-sm font-bold text-dim">{done ? t.teach.finished : t.teach.of(i + 1, total)}</p>
       </header>
 
       <div className="flex flex-1 flex-col justify-center py-8">
         {done ? (
           <div className="flex flex-col items-center text-center">
             <Ghost mood="cheer" size={150} />
-            <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight">That's the lesson.</h1>
+            <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight">{t.teach.thatsIt}</h1>
             <p className="mt-3 max-w-[50ch] text-[clamp(1.1rem,2vw,1.5rem)] text-dim">
-              If anything today felt close to home, you can talk to me after class, or to any adult you trust. You're not on your own with it.
+              {t.teach.thatsItLine}
             </p>
           </div>
         ) : ex ? (
@@ -157,19 +151,19 @@ export function TeachLesson({ id }: { id: string }) {
         <footer className="grid gap-4 border-t border-line pt-5 sm:grid-cols-[1fr_auto] sm:items-center">
           <p className="flex items-start gap-3 text-[clamp(1rem,1.6vw,1.25rem)]">
             <ChatsTeardrop size={26} weight="bold" className="mt-0.5 shrink-0 text-glow" />
-            {ex ? TALK[ex.kind] : ""}
+            {ex ? t.teach.talk[ex.kind] : ""}
           </p>
           <div className="flex gap-2">
-            <Button tone="quiet" disabled={i === 0} onClick={() => (setShown(false), setI(i - 1))} aria-label="Previous question">
-              <ArrowLeft size={20} weight="bold" />
+            <Button tone="quiet" disabled={i === 0} onClick={() => (setShown(false), setI(i - 1))} aria-label={t.teach.prev}>
+              <ArrowLeft size={20} weight="bold" className="flip-rtl" />
             </Button>
             {!shown ? (
               <Button onClick={() => setShown(true)}>
-                <Eye size={20} weight="bold" /> Reveal
+                <Eye size={20} weight="bold" /> {t.teach.reveal}
               </Button>
             ) : (
               <Button onClick={() => (setShown(false), setI(i + 1))}>
-                Next <ArrowRight size={20} weight="bold" />
+                {t.teach.next} <ArrowRight size={20} weight="bold" className="flip-rtl" />
               </Button>
             )}
           </div>
@@ -183,14 +177,15 @@ const BIG = "font-display text-[clamp(1.8rem,4.2vw,3.25rem)] font-bold leading-[
 const MID = "text-[clamp(1.1rem,2.1vw,1.6rem)]";
 
 function ClassExercise({ ex, shown }: { ex: Exercise; shown: boolean }) {
+  const t = useT();
   const why = "why" in ex ? ex.why : "";
   switch (ex.kind) {
     case "truefalse":
       return (
         <div>
-          <p className={`${MID} font-bold text-glow`}>True or false?</p>
+          <p className={`${MID} font-bold text-glow`}>{t.lesson.trueFalse}</p>
           <h1 className={`${BIG} mt-3`}>{ex.statement}</h1>
-          {shown && <Answer title={ex.answer ? "True" : "False"} why={why} />}
+          {shown && <Answer title={ex.answer ? t.lesson.true : t.lesson.false} why={why} />}
         </div>
       );
     case "choose":
@@ -257,7 +252,7 @@ function ClassExercise({ ex, shown }: { ex: Exercise; shown: boolean }) {
       return (
         <div>
           <h1 className={BIG}>{ex.prompt}</h1>
-          {shown && <Answer title="One way to say it" why={`"${ex.example}"`} />}
+          {shown && <Answer title={t.teach.oneWay} why={`"${ex.example}"`} />}
         </div>
       );
   }

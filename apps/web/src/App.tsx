@@ -1,8 +1,11 @@
 import { useEffect } from "react";
-import { HouseSimple, MagnifyingGlass, Path, UserCircle, Vault } from "@phosphor-icons/react";
+import { HouseSimple, MagnifyingGlass, Path, SignOut, UserCircle, Vault } from "@phosphor-icons/react";
 import { Ghost } from "./components/Ghost.tsx";
 import { applyLook, tab, useStore, type Screen } from "./lib/store.ts";
+import { applyPrivacy, quickExit } from "./lib/privacy.ts";
+import { useT, type Dict } from "./i18n/index.ts";
 import { Onboarding } from "./screens/Onboarding.tsx";
+import { Who } from "./screens/Who.tsx";
 import { Home } from "./screens/Home.tsx";
 import { Check } from "./screens/Check.tsx";
 import { Result } from "./screens/Result.tsx";
@@ -14,12 +17,12 @@ import { Me } from "./screens/Me.tsx";
 import { AdultGuide } from "./screens/AdultGuide.tsx";
 import { Teach, TeachLesson } from "./screens/Teach.tsx";
 
-const NAV: { screen: Screen; label: string; icon: typeof HouseSimple }[] = [
-  { screen: { name: "home" }, label: "Home", icon: HouseSimple },
-  { screen: { name: "check" }, label: "Check", icon: MagnifyingGlass },
-  { screen: { name: "path" }, label: "Path", icon: Path },
-  { screen: { name: "vault" }, label: "Vault", icon: Vault },
-  { screen: { name: "me" }, label: "Me", icon: UserCircle },
+const NAV: { screen: Screen; label: (t: Dict) => string; icon: typeof HouseSimple }[] = [
+  { screen: { name: "home" }, label: (t) => t.nav.home, icon: HouseSimple },
+  { screen: { name: "check" }, label: (t) => t.nav.check, icon: MagnifyingGlass },
+  { screen: { name: "path" }, label: (t) => t.nav.path, icon: Path },
+  { screen: { name: "vault" }, label: (t) => t.nav.vault, icon: Vault },
+  { screen: { name: "me" }, label: (t) => t.nav.me, icon: UserCircle },
 ];
 
 const TAB_OF: Record<Screen["name"], Screen["name"]> = {
@@ -36,12 +39,31 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
   teachLesson: "me",
 };
 
+/** Always in reach: one tap hides Ward and locks it (and on Android drops to the home screen). */
+function QuickExit() {
+  const t = useT();
+  return (
+    <button
+      onClick={quickExit}
+      title={t.common.quickExitHint}
+      className="fixed end-3 top-3 z-30 inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line bg-[color-mix(in_srgb,var(--bg),transparent_10%)] px-3 text-sm font-bold text-dim backdrop-blur-md hover:text-ink lg:top-4"
+    >
+      <SignOut size={16} weight="bold" className="flip-rtl" /> {t.common.quickExit}
+    </button>
+  );
+}
+
 export function App() {
   const profile = useStore((s) => s.profile);
+  const locked = useStore((s) => s.locked);
+  const hideRecents = useStore((s) => s.profiles.hideRecents);
   const screen = useStore((s) => s.screen);
+  const t = useT();
 
-  useEffect(() => applyLook(profile), [profile.look, profile.age]);
+  useEffect(() => applyLook(profile), [profile.look, profile.age, profile.lang]);
+  useEffect(() => applyPrivacy(), [hideRecents]);
 
+  if (locked) return <Who />;
   if (!profile.onboarded) return <Onboarding />;
 
   // Lessons take the whole screen, like Duolingo: no nav to tap away from by accident.
@@ -52,14 +74,15 @@ export function App() {
   const current = TAB_OF[screen.name];
   return (
     <div className="lg:grid lg:grid-cols-[248px_1fr]">
-      <nav aria-label="Ward" className="sticky top-0 hidden h-[100dvh] flex-col border-r border-line px-4 py-6 lg:flex">
+      <QuickExit />
+      <nav aria-label="Ward" className="sticky top-0 hidden h-[100dvh] flex-col border-e border-line px-4 py-6 lg:flex">
         <div className="mb-8 flex items-center gap-3 px-2">
           <Ghost size={34} glow={false} />
           <span className="font-display text-2xl font-bold tracking-tight">Ward</span>
         </div>
         <ul className="grid gap-1">
           {NAV.map(({ screen: s, label, icon: Icon }) => (
-            <li key={label}>
+            <li key={s.name}>
               <button
                 onClick={() => tab(s)}
                 aria-current={current === s.name ? "page" : undefined}
@@ -68,15 +91,15 @@ export function App() {
                 }`}
               >
                 <Icon size={24} weight={current === s.name ? "fill" : "regular"} />
-                {label}
+                {label(t)}
               </button>
             </li>
           ))}
         </ul>
-        <p className="mt-auto px-2 text-xs leading-relaxed text-dim">Runs on this device. Your chats never leave it.</p>
+        <p className="mt-auto px-2 text-xs leading-relaxed text-dim">{t.nav.runsHere}</p>
       </nav>
 
-      <main className="min-h-[100dvh]">
+      <main className="min-h-[100dvh] pt-10 lg:pt-0">
         {screen.name === "home" && <Home />}
         {screen.name === "check" && <Check />}
         {screen.name === "result" && <Result id={screen.id} />}
@@ -94,14 +117,14 @@ export function App() {
       >
         <ul className="mx-auto grid max-w-lg grid-cols-5">
           {NAV.map(({ screen: s, label, icon: Icon }) => (
-            <li key={label}>
+            <li key={s.name}>
               <button
                 onClick={() => tab(s)}
                 aria-current={current === s.name ? "page" : undefined}
                 className={`flex h-16 w-full flex-col items-center justify-center gap-1 text-[0.72rem] font-bold ${current === s.name ? "text-glow" : "text-dim"}`}
               >
                 <Icon size={24} weight={current === s.name ? "fill" : "regular"} />
-                {label}
+                {label(t)}
               </button>
             </li>
           ))}

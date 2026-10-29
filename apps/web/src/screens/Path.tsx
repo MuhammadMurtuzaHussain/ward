@@ -8,13 +8,15 @@ import { Ghost } from "../components/Ghost.tsx";
 import { Pill, Screen } from "../components/ui.tsx";
 import { UnitIcon } from "../components/UnitIcon.tsx";
 import { go, liveStreak, useStore } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
 // Horizontal offsets for the snake, in rem.
 const SWAY = [0, 3.2, 4.6, 3.2, 0, -3.2, -4.6, -3.2];
 
 export function PathScreen() {
   const p = useStore((s) => s.profile);
-  const units = unitsFor(p.age);
+  const t = useT();
+  const units = unitsFor(p.age, p.lang);
   const flat = units.flatMap((u) => u.lessons);
   const currentId = flat.find((l) => !p.done.includes(l.id))?.id ?? null;
   const reduce = useReducedMotion();
@@ -23,7 +25,7 @@ export function PathScreen() {
   return (
     <Screen>
       <header className="flex items-center justify-between">
-        <h1 className="font-display text-3xl font-bold tracking-tight">Your path</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">{t.path.title}</h1>
         <div className="flex gap-2">
           <Pill tone={liveStreak(p) ? "glow" : "quiet"}>
             <Fire size={16} weight="fill" /> {liveStreak(p)}
@@ -34,7 +36,7 @@ export function PathScreen() {
         </div>
       </header>
       <p className="mt-2 text-dim">
-        {p.done.length} of {flat.length} lessons. A couple of minutes a day makes you harder to knock down.
+        {t.path.progress(p.done.length, flat.length)}
       </p>
 
       {units.map((u) => {
@@ -51,7 +53,7 @@ export function PathScreen() {
                 </h2>
                 <p className="text-sm text-dim">{u.about}</p>
               </div>
-              <span className="ml-auto shrink-0 text-sm font-bold text-dim">
+              <span className="ms-auto shrink-0 text-sm font-bold text-dim">
                 {doneInUnit}/{u.lessons.length}
               </span>
             </div>
@@ -64,7 +66,7 @@ export function PathScreen() {
                   <li key={l.id} style={{ transform: `translateX(${SWAY[i % SWAY.length]}rem)` }} className="relative">
                     <Node lesson={l} state={state} reduce={!!reduce} />
                     {state === "current" && (
-                      <div className={`absolute top-1/2 -translate-y-1/2 ${SWAY[i % SWAY.length]! > 0 ? "right-full mr-5" : "left-full ml-5"}`}>
+                      <div className={`absolute top-1/2 -translate-y-1/2 ${SWAY[i % SWAY.length]! > 0 ? "end-full me-5" : "start-full ms-5"}`}>
                         <Ghost mood="happy" size={58} />
                       </div>
                     )}
@@ -79,8 +81,8 @@ export function PathScreen() {
       {!currentId && (
         <div className="mt-12 flex flex-col items-center text-center">
           <Ghost mood="cheer" size={110} />
-          <p className="mt-4 font-display text-2xl font-bold">Every lamp is lit.</p>
-          <p className="mt-1 text-dim">Replay any lesson to keep it sharp.</p>
+          <p className="mt-4 font-display text-2xl font-bold">{t.path.allLit}</p>
+          <p className="mt-1 text-dim">{t.path.replay}</p>
         </div>
       )}
     </Screen>
@@ -88,13 +90,14 @@ export function PathScreen() {
 }
 
 function Node({ lesson, state, reduce }: { lesson: Lesson; state: "done" | "current" | "locked"; reduce: boolean }) {
+  const t = useT();
   const base = "relative grid size-[4.5rem] place-items-center rounded-full font-display transition-transform active:scale-95";
   return (
     <div className="flex flex-col items-center">
       <motion.button
         disabled={state === "locked"}
         onClick={() => go({ name: "lesson", id: lesson.id })}
-        aria-label={`${lesson.title}${state === "done" ? ", done" : state === "locked" ? ", locked" : ", start"}`}
+        aria-label={`${lesson.title}${state === "done" ? t.path.done : state === "locked" ? t.path.locked : t.path.start}`}
         className={
           state === "done"
             ? `${base} bg-glow text-glow-ink shadow-[0_6px_0_0_color-mix(in_srgb,var(--glow),black_35%)]`

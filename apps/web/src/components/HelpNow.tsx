@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Phone, Lifebuoy } from "@phosphor-icons/react";
 import { ELSEWHERE, guessRegion, REGIONS, TAKE_IT_DOWN } from "../lib/help.ts";
+import { useStore } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
 /** The crisis block. Shown at the top of any urgent result, and always reachable from Coach. */
 export function HelpNow({ images = false }: { images?: boolean }) {
+  const t = useT();
+  const ur = useStore((s) => s.profile.lang) === "ur";
   const [region, setRegion] = useState(guessRegion().id);
   const r = REGIONS.find((x) => x.id === region)!;
   return (
@@ -11,12 +15,10 @@ export function HelpNow({ images = false }: { images?: boolean }) {
       <div className="flex items-center gap-3">
         <Lifebuoy size={26} weight="bold" className="text-alarm" />
         <h2 id="help-now" className="font-display text-xl font-bold tracking-tight">
-          Talk to someone now
+          {t.help.title}
         </h2>
       </div>
-      <p className="mt-2 max-w-[52ch]">
-        You don't have to handle this alone. These people help children every day, and calling is free. If you're in danger right now, call <b>{r.emergency}</b>.
-      </p>
+      <p className="mt-2 max-w-[52ch]">{t.help.line(r.emergency)}</p>
       <ul className="mt-4 grid gap-2">
         {r.lines.map((l) => (
           <li key={l.number}>
@@ -24,9 +26,9 @@ export function HelpNow({ images = false }: { images?: boolean }) {
               <Phone size={22} weight="fill" className="shrink-0 text-alarm" />
               <span className="min-w-0 flex-1">
                 <span className="block font-display text-lg font-bold">
-                  {l.name} <span className="text-alarm">{l.number}</span>
+                  {l.name} <span className="text-alarm" dir="ltr">{l.number}</span>
                 </span>
-                <span className="text-sm text-dim">{l.note}</span>
+                <span className="text-sm text-dim">{ur && l.noteUr ? l.noteUr : l.note}</span>
               </span>
             </a>
           </li>
@@ -35,24 +37,24 @@ export function HelpNow({ images = false }: { images?: boolean }) {
           <li>
             <a href={TAKE_IT_DOWN.url} target="_blank" rel="noreferrer" className="block rounded-btn bg-surface px-4 py-3 hover:bg-raised">
               <span className="block font-display font-bold">{TAKE_IT_DOWN.name}</span>
-              <span className="text-sm text-dim">{TAKE_IT_DOWN.note}</span>
+              <span className="text-sm text-dim">{ur ? TAKE_IT_DOWN.noteUr : TAKE_IT_DOWN.note}</span>
             </a>
           </li>
         )}
       </ul>
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
         <label htmlFor="region" className="text-dim">
-          Where are you?
+          {t.help.where}
         </label>
         <select id="region" value={region} onChange={(e) => setRegion(e.target.value)} className="rounded-btn border border-line bg-surface px-3 py-2 text-ink">
           {REGIONS.map((x) => (
             <option key={x.id} value={x.id}>
-              {x.name}
+              {ur && x.nameUr ? x.nameUr : x.name}
             </option>
           ))}
         </select>
         <a href={ELSEWHERE.url} target="_blank" rel="noreferrer" className="font-bold text-glow">
-          Somewhere else
+          {t.help.elsewhere}
         </a>
       </div>
     </section>

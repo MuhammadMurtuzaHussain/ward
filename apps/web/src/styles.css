@@ -2,6 +2,8 @@
 @import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource/atkinson-hyperlegible-next/400.css";
 @import "@fontsource/atkinson-hyperlegible-next/700.css";
+@import "@fontsource/noto-nastaliq-urdu/arabic-400.css";
+@import "@fontsource/noto-nastaliq-urdu/arabic-700.css";
 
 /*
   Ward's looks. Every look is a night with one light in it: a dark room and a single warm
@@ -223,4 +225,40 @@ body[data-look="daylight"]::before {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Urdu: Nastaliq, the script children read in school books. It sits taller than Latin type,
+   so lines get more room, and the display face falls back to it too. Latin names, numbers and
+   chat messages inside Urdu screens still use the Latin faces. */
+html[lang="ur"] body {
+  font-family: "Noto Nastaliq Urdu", var(--font-sans);
+  line-height: 2.1;
+}
+html[lang="ur"] .font-display {
+  font-family: "Noto Nastaliq Urdu", var(--font-display);
+  letter-spacing: 0;
+  line-height: 1.9;
+}
+html[lang="ur"] h1,
+html[lang="ur"] h2,
+html[lang="ur"] h3 {
+  line-height: 1.9;
+}
+/* Nastaliq's tall stacked letters need room; outrank Tailwind's leading-* utilities. */
+html[lang="ur"] p,
+html[lang="ur"] li,
+html[lang="ur"] dd,
+html[lang="ur"] dt,
+html[lang="ur"] label,
+html[lang="ur"] button {
+  line-height: 2.05;
+}
+/* Chat messages, names and numbers keep Latin metrics even inside an Urdu screen. */
+html[lang="ur"] [dir="ltr"],
+html[lang="ur"] [lang="en"] {
+  line-height: 1.5;
+}
+/* Arrows point the way the reader reads. */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
 }

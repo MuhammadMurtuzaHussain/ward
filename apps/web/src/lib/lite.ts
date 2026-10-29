@@ -4,6 +4,7 @@
 
 import { AutoModelForSequenceClassification, AutoTokenizer, env, type PreTrainedModel, type PreTrainedTokenizer } from "@huggingface/transformers";
 import type { Chat, Judge, ModelJudgement } from "@ward/engine";
+import { t as words } from "../i18n/index.ts";
 
 const BASE = new URL("./models/", document.baseURI).href;
 env.allowRemoteModels = false;
@@ -79,13 +80,7 @@ export class WardLiteJudge implements Judge {
           hostile,
           severity: isDanger ? 3 : hurtful >= 0.8 ? 2 : hurtful >= t ? 1 : 0,
           categories: [],
-          why: isDanger
-            ? "Reads as dangerous: a threat, pressure, or telling someone to hurt themselves."
-            : hurtful >= 0.8
-              ? "Reads as hurtful."
-              : hostile
-                ? "Might be unkind. You know how it was meant better than I do."
-                : undefined,
+          why: isDanger ? words().result.liteDanger : hurtful >= 0.8 ? words().result.liteHurtful : hostile ? words().result.liteMaybe : undefined,
           model: this.name,
           authority: "raise-only",
         });

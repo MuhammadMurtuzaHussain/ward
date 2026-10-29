@@ -7,6 +7,7 @@ import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/e
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
 import { liteAvailable, WardLiteJudge } from "./lite.ts";
 import type { Judge } from "@ward/engine";
+import { t } from "../i18n/index.ts";
 
 export async function readChatFile(file: File): Promise<{ text: string; title: string }> {
   const base = file.name.replace(/\.(txt|zip)$/i, "");
@@ -51,7 +52,7 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   // phone's Gemma 4 E2B writes but doesn't judge: see phoneGemma.ts.)
   const status = await modelStatus();
   let judge: Judge | null = null;
-  if (status.ok) judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16 });
+  if (status.ok) judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16, language: t().draft.gemmaLanguage });
   else if (await liteAvailable()) judge = new WardLiteJudge();
   if (!judge) {
     patchSession(id, { refining: false, modelError: status.ok ? undefined : status.reason });

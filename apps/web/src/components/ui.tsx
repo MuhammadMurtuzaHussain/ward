@@ -4,6 +4,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { ArrowLeft } from "@phosphor-icons/react";
 import { back } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
 type Tone = "glow" | "quiet" | "alarm" | "ghost";
 
@@ -29,13 +30,14 @@ export function Card({ children, className = "", as: As = "section" }: { childre
 }
 
 export function BackBar({ title, right }: { title?: string; right?: ReactNode }) {
+  const t = useT();
   return (
     <div className="mb-4 flex min-h-12 items-center gap-2">
-      <button onClick={() => back()} className="-ml-2 grid size-11 place-items-center rounded-full text-dim hover:bg-raised hover:text-ink" aria-label="Back">
-        <ArrowLeft size={22} weight="bold" />
+      <button onClick={() => back()} className="-ms-2 grid size-11 place-items-center rounded-full text-dim hover:bg-raised hover:text-ink" aria-label="Back">
+        <ArrowLeft size={22} weight="bold" className="flip-rtl" />
       </button>
       {title && <h1 className="font-display text-lg font-semibold tracking-tight">{title}</h1>}
-      <div className="ml-auto">{right}</div>
+      <div className="ms-auto">{right}</div>
     </div>
   );
 }

@@ -10,11 +10,13 @@ import { HaloDrop } from "../components/HaloDrop.tsx";
 import { Button, Screen } from "../components/ui.tsx";
 import { parse, readChatFile, readScreenshots, startCheck } from "../lib/run.ts";
 import { setState, useStore } from "../lib/store.ts";
+import { useT } from "../i18n/index.ts";
 
 type Stage = { at: "input" } | { at: "who"; chat: Chat; title: string };
 
 export function Check() {
   const name = useStore((s) => s.profile.name);
+  const t = useT();
   const [stage, setStage] = useState<Stage>({ at: "input" });
   const [paste, setPaste] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
@@ -27,7 +29,7 @@ export function Check() {
     setError(null);
     const chat = parse(text);
     if (chat.messages.length < 2) {
-      setError("I couldn't find a conversation in that. Try exporting the chat again, or paste a few messages.");
+      setError(t.check.noChat);
       return;
     }
     setStage({ at: "who", chat, title });
@@ -46,7 +48,7 @@ export function Check() {
     setError(null);
     try {
       if (files.every((f) => f.type.startsWith("image/"))) {
-        setBusy("Reading your screenshots");
+        setBusy(t.check.readingScreens);
         const text = await readScreenshots(files);
         setBusy(null);
         return take(text, "Screenshots");
@@ -57,7 +59,7 @@ export function Check() {
       return take(text, sharedTitle || title);
     } catch (e) {
       setBusy(null);
-      setError(e instanceof Error ? e.message : "Something went wrong reading that file.");
+      setError(e instanceof Error ? e.message : t.check.fileError);
     }
   }
 
@@ -65,8 +67,8 @@ export function Check() {
 
   return (
     <Screen>
-      <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">Check a chat</h1>
-      <p className="mt-2 max-w-[48ch] text-dim">Show me a conversation and I'll tell you what I see. I read it right here. It never leaves this device.</p>
+      <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.check.title}</h1>
+      <p className="mt-2 max-w-[48ch] text-dim">{t.check.line}</p>
 
       <div className="mt-6">
         {busy ? (
@@ -76,45 +78,42 @@ export function Check() {
           </div>
         ) : (
           <HaloDrop accept=".txt,.zip,image/*" multiple onFiles={onFiles}>
-            <span className="font-display text-xl font-semibold">Drop a WhatsApp export or screenshots</span>
-            <span className="text-sm text-dim">Or tap to choose a file (.txt, .zip, or images)</span>
+            <span className="font-display text-xl font-semibold">{t.check.drop}</span>
+            <span className="text-sm text-dim">{t.check.dropHint}</span>
           </HaloDrop>
         )}
       </div>
 
       <div className="mt-3">
         <button onClick={() => setHowOpen((o) => !o)} aria-expanded={howOpen} className="flex min-h-11 items-center gap-2 text-sm font-bold text-glow">
-          How do I export a WhatsApp chat?
+          {t.check.howExport}
           <CaretDown size={16} weight="bold" className={`transition-transform ${howOpen ? "rotate-180" : ""}`} />
         </button>
         {howOpen && (
-          <ol className="mt-2 grid list-decimal gap-1.5 pl-5 text-dim marker:font-bold marker:text-glow">
-            <li>Open the chat in WhatsApp.</li>
-            <li>
-              Android: tap <b className="text-ink">⋮</b>, then <b className="text-ink">More</b>, then <b className="text-ink">Export chat</b>. iPhone: tap the name at the top, then <b className="text-ink">Export chat</b>.
-            </li>
-            <li>
-              Choose <b className="text-ink">Without media</b>, then pick <b className="text-ink">Ward</b> in the share list. On a computer, save it and drop it here.
-            </li>
+          <ol className="mt-2 grid list-decimal gap-1.5 ps-5 text-dim marker:font-bold marker:text-glow">
+            {t.check.exportSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
           </ol>
         )}
       </div>
 
       <div className="mt-8">
         <label htmlFor="paste" className="flex items-center gap-2 font-display text-lg font-semibold">
-          <ClipboardText size={22} weight="bold" className="text-glow" /> Or paste messages
+          <ClipboardText size={22} weight="bold" className="text-glow" /> {t.check.paste}
         </label>
         <textarea
           id="paste"
           value={paste}
           onChange={(e) => setPaste(e.target.value)}
           rows={6}
-          placeholder={"Hamza: lol did you see her photo\nBilal: so fat haha\nMe: please stop"}
+          placeholder={t.check.pastePlaceholder}
+          dir="auto"
           className="mt-2 w-full resize-y rounded-card border border-line bg-surface p-4 text-[1rem] leading-relaxed text-ink placeholder:text-dim/70 focus:border-glow focus:outline-none"
         />
-        <p className="mt-1.5 text-sm text-dim">One message per line. "Name: message" helps me tell people apart.</p>
-        <Button className="mt-3" disabled={!paste.trim()} onClick={() => take(paste, "Pasted chat")}>
-          Check this
+        <p className="mt-1.5 text-sm text-dim">{t.check.pasteHint}</p>
+        <Button className="mt-3" disabled={!paste.trim()} onClick={() => take(paste, t.check.paste)}>
+          {t.check.checkThis}
         </Button>
       </div>
 
@@ -126,10 +125,10 @@ export function Check() {
 
       <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-line pt-6">
         <span className="flex items-center gap-2 text-dim">
-          <ImageSquare size={20} /> Just looking around?
+          <ImageSquare size={20} /> {t.check.lookingAround}
         </span>
         <Button tone="quiet" onClick={() => take(sample, "8B Science (example)")}>
-          <Sparkle size={18} weight="bold" /> Try an example chat
+          <Sparkle size={18} weight="bold" /> {t.check.tryExample}
         </Button>
       </div>
     </Screen>
@@ -140,6 +139,7 @@ function WhoAreYou({ chat, title, myName, onBack }: { chat: Chat; title: string;
   const guess = chat.participants.find((p) => myName && p.toLowerCase().startsWith(myName.toLowerCase().split(" ")[0]!)) ?? null;
   const [self, setSelf] = useState<string | null>(guess);
   const [starting, setStarting] = useState(false);
+  const t = useT();
   const counts = new Map<string, number>();
   for (const m of chat.messages) counts.set(m.sender, (counts.get(m.sender) ?? 0) + 1);
 
@@ -147,20 +147,18 @@ function WhoAreYou({ chat, title, myName, onBack }: { chat: Chat; title: string;
     <Screen>
       <div className="mb-2">
         <button onClick={onBack} className="text-sm font-bold text-dim hover:text-ink">
-          ← Choose a different chat
+          {t.check.otherChat}
         </button>
       </div>
-      <h1 className="font-display text-3xl font-bold tracking-tight">Which one is you?</h1>
-      <p className="mt-2 text-dim">
-        {chat.messages.length} messages in <b className="text-ink">{title}</b>. So I know who's being talked to.
-      </p>
+      <h1 className="font-display text-3xl font-bold tracking-tight">{t.check.whoTitle}</h1>
+      <p className="mt-2 text-dim">{t.check.whoLine(chat.messages.length, title)}</p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {chat.participants.slice(0, 24).map((p) => (
           <button
             key={p}
             onClick={() => setSelf(p)}
             aria-pressed={self === p}
-            className={`flex min-h-14 items-center gap-3 rounded-btn border px-4 text-left transition-colors ${self === p ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
+            className={`flex min-h-14 items-center gap-3 rounded-btn border px-4 text-start transition-colors ${self === p ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
           >
             <UserCircle size={26} weight={self === p ? "fill" : "regular"} className={self === p ? "text-glow" : "text-dim"} />
             <span className="min-w-0 flex-1 truncate font-semibold">{p}</span>
@@ -170,10 +168,10 @@ function WhoAreYou({ chat, title, myName, onBack }: { chat: Chat; title: string;
         <button
           onClick={() => setSelf(null)}
           aria-pressed={self === null}
-          className={`flex min-h-14 items-center gap-3 rounded-btn border px-4 text-left transition-colors sm:col-span-2 ${self === null ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
+          className={`flex min-h-14 items-center gap-3 rounded-btn border px-4 text-start transition-colors sm:col-span-2 ${self === null ? "border-glow bg-glow-soft" : "border-line bg-surface hover:border-dim/40"}`}
         >
           <UsersThree size={26} className={self === null ? "text-glow" : "text-dim"} />
-          <span className="font-semibold">I'm checking it for a friend</span>
+          <span className="font-semibold">{t.check.forFriend}</span>
         </button>
       </div>
       <Button
@@ -184,7 +182,7 @@ function WhoAreYou({ chat, title, myName, onBack }: { chat: Chat; title: string;
           await startCheck(chat, self, title);
         }}
       >
-        Read it, Ward
+        {t.check.readIt}
       </Button>
     </Screen>
   );
