@@ -133,7 +133,16 @@ export class GemmaJudge implements Judge {
 
   private async chat(prompt: string): Promise<{ id: number; hostile: boolean; severity: number; categories?: string[]; target?: string | null; why?: string }[]> {
     if (this.transport) return parseMessages(await this.transport(SYSTEM, prompt, SCHEMA));
-    const r = await this.o.fetch(`${this.o.baseUrl}/api/chat`, {
+    let r = await this.post(prompt, true);
+    // Some model builds can't constrain output to a schema; ask for the JSON in words instead.
+    if (r.status === 501) r = await this.post(`${prompt}\n\n${JSON_INSTRUCTION}`, false);
+    if (!r.ok) throw new Error(`Ollama ${this.o.model}: ${r.status} ${await r.text()}`);
+    const j = (await r.json()) as { message: { content: string } };
+    return parseMessages(j.message.content);
+  }
+
+  private post(prompt: string, structured: boolean) {
+    return this.o.fetch(`${this.o.baseUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       signal: this.o.signal,
@@ -141,7 +150,7 @@ export class GemmaJudge implements Judge {
         model: this.o.model,
         stream: false,
         think: false,
-        format: SCHEMA,
+        ...(structured ? { format: SCHEMA } : {}),
         options: { temperature: 0, num_ctx: 8192 },
         messages: [
           { role: "system", content: SYSTEM },
@@ -149,11 +158,11 @@ export class GemmaJudge implements Judge {
         ],
       }),
     });
-    if (!r.ok) throw new Error(`Ollama ${this.o.model}: ${r.status} ${await r.text()}`);
-    const j = (await r.json()) as { message: { content: string } };
-    return parseMessages(j.message.content);
   }
 }
+
+export const JSON_INSTRUCTION = `Answer with only JSON, no other text, in exactly this shape:
+{"messages":[{"id":0,"hostile":false,"severity":0,"categories":[],"target":null,"why":""}]}`;
 
 /** Constrained decoding usually gives clean JSON; be forgiving when a runtime wraps it in prose or fences. */
 function parseMessages(text: string): never[] {

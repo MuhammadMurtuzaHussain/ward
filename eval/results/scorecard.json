@@ -11,7 +11,7 @@
         "recall": 0.59,
         "f1": 0.7239263803680981,
         "accuracy": 0.775,
-        "seconds": 0.081
+        "seconds": 0
       },
       "ShieldGemma 2B": {
         "tp": 14,
@@ -34,6 +34,28 @@
         "f1": 0.8599999999999999,
         "accuracy": 0.86,
         "seconds": 0
+      },
+      "Ward Lite": {
+        "tp": 83,
+        "fp": 14,
+        "fn": 17,
+        "tn": 86,
+        "precision": 0.8556701030927835,
+        "recall": 0.83,
+        "f1": 0.8426395939086294,
+        "accuracy": 0.845,
+        "seconds": 0
+      },
+      "Phone: packs + Ward Lite": {
+        "tp": 85,
+        "fp": 17,
+        "fn": 15,
+        "tn": 83,
+        "precision": 0.8333333333333334,
+        "recall": 0.85,
+        "f1": 0.8415841584158417,
+        "accuracy": 0.84,
+        "seconds": 0.038
       }
     },
     "Bangla": {
@@ -46,7 +68,7 @@
         "recall": 0.1,
         "f1": 0.17857142857142858,
         "accuracy": 0.54,
-        "seconds": 0.057
+        "seconds": 0
       },
       "ShieldGemma 2B": {
         "tp": 14,
@@ -69,6 +91,28 @@
         "f1": 0.7103825136612022,
         "accuracy": 0.735,
         "seconds": 0
+      },
+      "Ward Lite": {
+        "tp": 32,
+        "fp": 13,
+        "fn": 68,
+        "tn": 87,
+        "precision": 0.7111111111111111,
+        "recall": 0.32,
+        "f1": 0.44137931034482764,
+        "accuracy": 0.595,
+        "seconds": 0
+      },
+      "Phone: packs + Ward Lite": {
+        "tp": 39,
+        "fp": 14,
+        "fn": 61,
+        "tn": 86,
+        "precision": 0.7358490566037735,
+        "recall": 0.39,
+        "f1": 0.5098039215686275,
+        "accuracy": 0.625,
+        "seconds": 0.045
       }
     },
     "English": {
@@ -81,7 +125,7 @@
         "recall": 0.1,
         "f1": 0.1801801801801802,
         "accuracy": 0.545,
-        "seconds": 0.074
+        "seconds": 0
       },
       "ShieldGemma 2B": {
         "tp": 19,
@@ -104,6 +148,28 @@
         "f1": 0.4799999999999999,
         "accuracy": 0.61,
         "seconds": 0
+      },
+      "Ward Lite": {
+        "tp": 82,
+        "fp": 47,
+        "fn": 18,
+        "tn": 53,
+        "precision": 0.6356589147286822,
+        "recall": 0.82,
+        "f1": 0.7161572052401746,
+        "accuracy": 0.675,
+        "seconds": 0.001
+      },
+      "Phone: packs + Ward Lite": {
+        "tp": 83,
+        "fp": 47,
+        "fn": 17,
+        "tn": 53,
+        "precision": 0.6384615384615384,
+        "recall": 0.83,
+        "f1": 0.7217391304347824,
+        "accuracy": 0.68,
+        "seconds": 0.02
       }
     }
   }

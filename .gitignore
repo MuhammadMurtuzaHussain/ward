@@ -12,3 +12,6 @@ release/
 eval/results-run.log
 
 apps/web/public/ort/
+
+train/results-train.log
+eval/results-e2b.log

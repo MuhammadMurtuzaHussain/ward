@@ -2,7 +2,7 @@
 // prompt and schema as the computer's Gemma 4; the reply never leaves the phone.
 
 import { Capacitor, registerPlugin, type PluginListenerHandle } from "@capacitor/core";
-import { GemmaJudge, type ModelJudgement } from "@ward/engine";
+import { GemmaJudge, JSON_INSTRUCTION, type ModelJudgement } from "@ward/engine";
 
 export interface PhoneStatus {
   ramBytes: number;
@@ -68,6 +68,13 @@ export async function phoneJudge(): Promise<GemmaJudge | null> {
     name: "Gemma 4 E2B on this phone",
     authority: PHONE_AUTHORITY,
     batch: 10,
-    transport: async (system, prompt, schema) => (await GemmaPhone.generate({ system, prompt, schema: JSON.stringify(schema) })).text,
+    transport: async (system, prompt, schema) => {
+      try {
+        return (await GemmaPhone.generate({ system, prompt, schema: JSON.stringify(schema) })).text;
+      } catch {
+        // If constrained decoding isn't available for this model build, ask in words.
+        return (await GemmaPhone.generate({ system, prompt: `${prompt}\n\n${JSON_INSTRUCTION}` })).text;
+      }
+    },
   });
 }

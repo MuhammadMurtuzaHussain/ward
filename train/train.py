@@ -94,6 +94,9 @@ def train():
             opt.zero_grad()
             total += loss.item()
             step += 1
+        if device == "mps":
+            # MPS keeps freed buffers cached; on a 16 GB Mac that pushes later epochs into swap.
+            torch.mps.empty_cache()
         m = evaluate(model, dev_rows, tok)
         score = m["hurtful"]["f1"] + m["danger"]["recall"] * 0.5
         history.append({"epoch": epoch + 1, "loss": round(total / max(1, step), 4), "seconds": round(time.time() - t0), **m})

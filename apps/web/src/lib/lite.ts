@@ -16,19 +16,31 @@ if (env.backends.onnx.wasm) {
   env.backends.onnx.wasm.numThreads = 1;
 }
 
-let loaded: Promise<{ tok: PreTrainedTokenizer; model: PreTrainedModel; threshold: number }> | null = null;
+interface Meta {
+  threshold: number;
+  /** Per-script "hurtful" thresholds, calibrated on the dev split (train/calibrate.py). */
+  thresholds?: Partial<Record<"bengali" | "devanagari" | "latin", number>>;
+}
+
+let loaded: Promise<{ tok: PreTrainedTokenizer; model: PreTrainedModel; meta: Meta }> | null = null;
+
+function script(text: string): "bengali" | "devanagari" | "latin" {
+  if (/[\u0980-\u09FF]/.test(text)) return "bengali";
+  if (/[\u0900-\u097F]/.test(text)) return "devanagari";
+  return "latin";
+}
 
 export function loadLite() {
   loaded ??= (async () => {
     const meta = await fetch(`${BASE}ward-lite/ward-lite.json`).then((r) => {
       if (!r.ok) throw new Error("Ward Lite isn't in this build");
-      return r.json() as Promise<{ threshold: number }>;
+      return r.json() as Promise<Meta>;
     });
     const [tok, model] = await Promise.all([
       AutoTokenizer.from_pretrained("ward-lite"),
       AutoModelForSequenceClassification.from_pretrained("ward-lite", { dtype: "q8", device: "wasm" }),
     ]);
-    return { tok, model, threshold: meta.threshold };
+    return { tok, model, meta };
   })();
   loaded.catch(() => (loaded = null));
   return loaded;
@@ -49,7 +61,7 @@ export class WardLiteJudge implements Judge {
   readonly name = "Ward Lite";
 
   async judge(chat: Chat, { onProgress }: { self: string | null; onProgress?: (d: number, t: number) => void }) {
-    const { tok, model, threshold } = await loadLite();
+    const { tok, model, meta } = await loadLite();
     const out = new Map<number, ModelJudgement>();
     const msgs = chat.messages.filter((m) => !m.media && m.text.trim());
     for (let i = 0; i < msgs.length; i += 16) {
@@ -60,12 +72,20 @@ export class WardLiteJudge implements Judge {
       batch.forEach((m, k) => {
         const hurtful = sigmoid(data[k * 2]!);
         const danger = sigmoid(data[k * 2 + 1]!);
-        const hostile = hurtful >= threshold || danger >= threshold;
+        const t = meta.thresholds?.[script(m.text)] ?? meta.threshold;
+        const isDanger = danger >= meta.threshold;
+        const hostile = hurtful >= t || isDanger;
         out.set(m.id, {
           hostile,
-          severity: danger >= threshold ? 3 : hurtful >= 0.8 ? 2 : hurtful >= threshold ? 1 : 0,
+          severity: isDanger ? 3 : hurtful >= 0.8 ? 2 : hurtful >= t ? 1 : 0,
           categories: [],
-          why: danger >= threshold ? "Reads as dangerous: a threat, pressure, or telling someone to hurt themselves." : hostile ? "Reads as hurtful." : undefined,
+          why: isDanger
+            ? "Reads as dangerous: a threat, pressure, or telling someone to hurt themselves."
+            : hurtful >= 0.8
+              ? "Reads as hurtful."
+              : hostile
+                ? "Might be unkind. You know how it was meant better than I do."
+                : undefined,
           model: this.name,
           authority: "raise-only",
         });

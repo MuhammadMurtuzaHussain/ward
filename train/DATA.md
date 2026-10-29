@@ -1,6 +1,6 @@
 # Ward Lite training data
 
-Built by `build-data.ts`. 20498 messages after removing duplicates and **97 that also appear in the scorecard's eval sets** (dropped so the scorecard stays honest). 90% train, 10% dev (for choosing the checkpoint; the scorecard is separate).
+Built by `build-data.ts`. 25984 messages after removing duplicates and **97 that also appear in the scorecard's eval sets** (dropped so the scorecard stays honest). 90% train, 10% dev (for choosing the checkpoint; the scorecard is separate).
 
 ## Sources
 
@@ -8,7 +8,8 @@ Built by `build-data.ts`. 20498 messages after removing duplicates and **97 that
 - **English (Cyberbullying-Detection-CB1, train)**: 6000 rows before dedupe
 - **Hinglish and Hindi (prism-hinglish-hate-speech, train)**: 6000 rows before dedupe
 - **Bangla (mteb/bengali_hate_speech, personal and gender labels)**: 877 rows before dedupe
-- **Synthetic chats (Gemma 4 on this machine)**: 680 rows before dedupe
+- **Bangla non-abusive (SentNoB, neutral and positive comments)**: 2500 rows before dedupe
+- **Synthetic chats (Gemma 4 on this machine)**: 3743 rows before dedupe
 
 The scorecard's own splits (Roman Urdu validation, Bangla blindspot test, CB1 test) are never used for training.
 
@@ -19,14 +20,14 @@ The scorecard's own splits (Roman Urdu validation, Bangla blindspot test, CB1 te
 
 | Language | Messages | Hurtful | Danger |
 | --- | --- | --- | --- |
-| ur-Latn | 7187 | 3344 | 16 |
-| en | 6462 | 3345 | 127 |
+| ur-Latn | 8062 | 3928 | 307 |
+| en | 6658 | 3541 | 323 |
 | hi | 4039 | 2097 | 0 |
-| hi-Latn | 1935 | 888 | 2 |
-| bn | 875 | 875 | 0 |
+| hi-Latn | 2806 | 1470 | 291 |
+| bn | 4419 | 1447 | 289 |
 
 ## Known weaknesses
 
 - Public data is tweets and comments, not children's chats; synthetic chats fill that gap but were written by a model.
-- Bangla public data has no non-abusive rows aimed at the same topics; Bangla negatives come only from synthetic chats.
+- Bangla non-abusive examples are SentNoB comments (neutral and positive sentiment), which are a different source from the abusive Bangla rows; the model could partly learn source style rather than abuse.
 - The danger label on public data is weak (slang-pack hits only).

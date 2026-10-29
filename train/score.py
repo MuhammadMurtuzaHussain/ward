@@ -3,7 +3,7 @@ and writes eval/results/ward-lite.preds.json for eval/run.ts. Also reports CPU s
 
     .venv/bin/python score.py
 """
-import json, time
+import json, re, time
 from pathlib import Path
 
 import numpy as np
@@ -20,6 +20,18 @@ opts = ort.SessionOptions()
 opts.intra_op_num_threads = 1  # like a phone's WebView: one thread
 sess = ort.InferenceSession(str(MODEL / "onnx" / "model_quantized.onnx"), opts, providers=["CPUExecutionProvider"])
 
+def script(text):
+    if re.search(r"[\u0980-\u09FF]", text):
+        return "bengali"
+    if re.search(r"[\u0900-\u097F]", text):
+        return "devanagari"
+    return "latin"
+
+
+def hurt_threshold(text):
+    return meta.get("thresholds", {}).get(script(text), meta["threshold"])
+
+
 sets = json.loads((EVAL / "scorecard.raw.json").read_text())["sets"]
 preds, n, t0 = {}, 0, time.time()
 for name, items in sets.items():
@@ -30,7 +42,7 @@ for name, items in sets.items():
         logits = sess.run(["logits"], {"input_ids": enc["input_ids"].astype(np.int64), "attention_mask": enc["attention_mask"].astype(np.int64)})[0]
         p = 1 / (1 + np.exp(-logits))
         for t, row in zip(texts[i : i + 16], p):
-            preds[name][t] = bool(row[0] >= meta["threshold"] or row[1] >= meta["threshold"])
+            preds[name][t] = bool(row[0] >= hurt_threshold(t) or row[1] >= meta["threshold"])
         n += len(texts[i : i + 16])
 ms = (time.time() - t0) * 1000 / n
 (EVAL / "ward-lite.preds.json").write_text(json.dumps(preds, ensure_ascii=False))

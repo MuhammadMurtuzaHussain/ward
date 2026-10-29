@@ -6,11 +6,12 @@
 import { appendFileSync, existsSync, readFileSync } from "node:fs";
 
 const OUT = new URL("./data/synthetic.jsonl", import.meta.url);
+// Bangla first: it has no public non-abusive examples, so it needs these the most.
 const LANGS: Record<string, string> = {
-  en: "English, the way 10 to 17 year olds text (lowercase, slang, typos, emoji)",
-  "ur-Latn": "Roman Urdu: Urdu written in Latin letters the way Pakistani kids text, with English mixed in and inconsistent spelling",
-  "hi-Latn": "Hinglish: Hindi written in Latin letters mixed with English, the way Indian kids text",
   bn: "Bangla, mostly in Bangla script with some Banglish (Bangla in Latin letters), the way Bangladeshi kids text",
+  "hi-Latn": "Hinglish: Hindi written in Latin letters mixed with English, the way Indian kids text",
+  "ur-Latn": "Roman Urdu: Urdu written in Latin letters the way Pakistani kids text, with English mixed in and inconsistent spelling",
+  en: "English, the way 10 to 17 year olds text (lowercase, slang, typos, emoji)",
 };
 // [kind, hurtful, danger, instruction]
 const KINDS: [string, 0 | 1, 0 | 1, string][] = [
@@ -37,14 +38,16 @@ const schema = { type: "object", properties: { messages: { type: "array", items:
 
 for (const [lang, langDesc] of Object.entries(LANGS)) {
   for (const [kind, hurtful, danger, desc] of KINDS) {
-    for (let c = 0; c < CALLS; c++) {
+    // Extra Bangla negatives, for the reason above.
+    const calls = lang === "bn" && !hurtful ? CALLS + 3 : CALLS;
+    for (let c = 0; c < calls; c++) {
       const batch = `${lang}/${kind}/${c}`;
       if (done.has(batch)) continue;
       const prompt = `You are helping build a free, open-source app that protects children from cyberbullying by recognising it on their own phone. To train its classifier we need realistic example messages.
 
 Write ${PER_CALL} different single chat messages in ${langDesc}.
 Kind: ${desc}.
-Make them varied: different lengths (2 to 25 words), different names (South Asian and other names), different situations. They must sound like real teenagers in a WhatsApp group, not like a textbook. Do not number them. Return JSON {"messages": [...]}.${c === 1 ? " Use more slang and creative spelling this time." : c === 2 ? " Make some of them subtle or indirect this time." : ""}`;
+Make them varied: different lengths (2 to 25 words), different names (South Asian and other names), different situations. They must sound like real teenagers in a WhatsApp group, not like a textbook. Do not number them. Return JSON {"messages": [...]}.${c % 3 === 1 ? " Use more slang and creative spelling this time." : c % 3 === 2 ? " Make some of them subtle or indirect this time." : ""}${c >= 3 ? " Different topics and names from before." : ""}`;
       try {
         const r = await fetch("http://127.0.0.1:11434/api/chat", {
           method: "POST",

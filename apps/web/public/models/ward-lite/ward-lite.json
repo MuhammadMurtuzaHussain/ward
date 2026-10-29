@@ -1,0 +1,14 @@
+{
+  "labels": [
+    "hurtful",
+    "danger"
+  ],
+  "max_length": 96,
+  "base": "intfloat/multilingual-e5-small",
+  "threshold": 0.5,
+  "thresholds": {
+    "bengali": 0.72,
+    "devanagari": 0.28,
+    "latin": 0.58
+  }
+}
