@@ -7,6 +7,8 @@ import { motion, useReducedMotion } from "motion/react";
 import {
   ArrowRight,
   CaretDown,
+  ChatCircleText,
+  Lifebuoy,
   ChatsCircle,
   Ghost as GhostIcon,
   HandPalm,
@@ -25,6 +27,7 @@ import { go, useStore, type AgeBand } from "../lib/store.ts";
 import { SaveToVault } from "../components/SaveToVault.tsx";
 import { Speak } from "../components/Speak.tsx";
 import { patternText } from "../lib/patternText.ts";
+import { LessonSuggestions } from "../components/LessonSuggestions.tsx";
 import { locale, useT, type Dict } from "../i18n/index.ts";
 
 const PATTERN_ICON: Record<PatternKind, Icon> = {
@@ -72,6 +75,8 @@ export function Result({ id }: { id: string }) {
   const danger = a.patterns.find((p) => p.kind === "danger");
   const imageRisk = a.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
   const hostile = a.findings.filter((f) => f.severity > 0 && f.message.sender !== s.self);
+  // The child's own messages that could land hard: often anger after being hurt. Named gently.
+  const ownHarsh = s.self ? a.findings.some((f) => f.severity >= 2 && f.message.sender === s.self) : false;
 
   return (
     <Screen wide>
@@ -93,6 +98,11 @@ export function Result({ id }: { id: string }) {
           </motion.section>
 
           {danger && <HelpNow images={imageRisk} />}
+          {danger && age === "14" && s.self && (
+            <Button tone="quiet" onClick={() => go({ name: "plan" })}>
+              <Lifebuoy size={20} weight="bold" /> {t.plan.open}
+            </Button>
+          )}
 
           {a.patterns.length > 0 ? (
             <section aria-labelledby="patterns">
@@ -136,6 +146,18 @@ export function Result({ id }: { id: string }) {
             )}
             <SaveToVault id={id} />
           </div>
+
+          {ownHarsh && (
+            <button onClick={() => go({ name: "mean" })} className="flex items-start gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
+              <ChatCircleText size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
+              <span>
+                <span className="block font-display font-bold">{t.mean.fromResult[0]}</span>
+                <span className="text-sm text-dim">{t.mean.fromResult[1]}</span>
+              </span>
+            </button>
+          )}
+
+          <LessonSuggestions analysis={a} self={s.self} />
 
           <HowWardKnows analysis={a} />
         </div>

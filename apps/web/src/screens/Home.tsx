@@ -1,4 +1,4 @@
-import { ArrowRight, Fire, Lightning, LockKey, MagnifyingGlass } from "@phosphor-icons/react";
+import { ArrowRight, ChatCircleText, Fire, Lifebuoy, Lightning, LockKey, MagnifyingGlass, type Icon } from "@phosphor-icons/react";
 import { nextLesson } from "@ward/lessons";
 import { Ghost, type Mood } from "../components/Ghost.tsx";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
@@ -88,6 +88,11 @@ export function Home() {
         )}
       </div>
 
+      <div className={`mt-5 grid gap-3 ${p.age === "14" ? "sm:grid-cols-2" : ""}`}>
+        <SideDoor icon={ChatCircleText} text={t.mean.homeCard} onClick={() => go({ name: "mean" })} />
+        {p.age === "14" && <SideDoor icon={Lifebuoy} text={t.plan.card} onClick={() => go({ name: "plan" })} />}
+      </div>
+
       <section className="mt-10">
         <div className="flex items-end justify-between">
           <h2 className="font-display text-xl font-bold tracking-tight">{t.home.recent}</h2>
@@ -113,5 +118,19 @@ export function Home() {
         )}
       </section>
     </Screen>
+  );
+}
+
+/** A quiet card for the less common doors: "Was I mean?" and the safety plan. */
+function SideDoor({ icon: I, text: [title, line], onClick }: { icon: Icon; text: [string, string]; onClick: () => void }) {
+  return (
+    <button onClick={onClick} className="group flex items-center gap-4 rounded-card border border-line bg-surface px-5 py-4 text-start hover:border-dim/40">
+      <I size={24} weight="bold" className="shrink-0 text-glow" />
+      <span className="min-w-0 flex-1">
+        <span className="block font-display font-semibold">{title}</span>
+        <span className="text-sm text-dim">{line}</span>
+      </span>
+      <ArrowRight size={18} weight="bold" className="flip-rtl shrink-0 text-glow transition-transform group-hover:translate-x-0.5" />
+    </button>
   );
 }

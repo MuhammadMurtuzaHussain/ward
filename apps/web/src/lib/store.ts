@@ -21,7 +21,9 @@ export type Screen =
   | { name: "me" }
   | { name: "adults" }
   | { name: "teach" }
-  | { name: "teachLesson"; id: string };
+  | { name: "teachLesson"; id: string }
+  | { name: "mean" }
+  | { name: "plan" };
 
 export interface CheckSummary {
   id: string;

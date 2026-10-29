@@ -16,6 +16,8 @@ import { VaultScreen } from "./screens/Vault.tsx";
 import { Me } from "./screens/Me.tsx";
 import { AdultGuide } from "./screens/AdultGuide.tsx";
 import { Teach, TeachLesson } from "./screens/Teach.tsx";
+import { Mean } from "./screens/Mean.tsx";
+import { SafetyPlan } from "./screens/SafetyPlan.tsx";
 
 const NAV: { screen: Screen; label: (t: Dict) => string; icon: typeof HouseSimple }[] = [
   { screen: { name: "home" }, label: (t) => t.nav.home, icon: HouseSimple },
@@ -37,6 +39,8 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
   adults: "me",
   teach: "me",
   teachLesson: "me",
+  mean: "home",
+  plan: "vault",
 };
 
 /** Always in reach: one tap hides Ward and locks it (and on Android drops to the home screen). */
@@ -109,6 +113,8 @@ export function App() {
         {screen.name === "me" && <Me />}
         {screen.name === "adults" && <AdultGuide />}
         {screen.name === "teach" && <Teach />}
+        {screen.name === "mean" && <Mean />}
+        {screen.name === "plan" && <SafetyPlan />}
       </main>
 
       <nav

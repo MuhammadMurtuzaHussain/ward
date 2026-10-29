@@ -86,7 +86,10 @@ function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest<T
   return db().then(
     (d) =>
       new Promise<T>((res, rej) => {
-        const req = fn(d.transaction(STORE, mode).objectStore(STORE));
+        const t = d.transaction(STORE, mode);
+        // Close every connection when done, or a later wipe() is blocked and the data stays.
+        t.oncomplete = t.onabort = t.onerror = () => d.close();
+        const req = fn(t.objectStore(STORE));
         req.onsuccess = () => res(req.result);
         req.onerror = () => rej(req.error);
       }),
@@ -119,6 +122,7 @@ export async function list(): Promise<VaultItem[]> {
   const rows = await tx<{ id: string; blob: string }[]>("readonly", (s) => s.getAll());
   const out: VaultItem[] = [];
   for (const r of rows) {
+    if (r.id === PLAN_ID) continue;
     try {
       out.push(revive(JSON.parse(await open(key, r.blob))));
     } catch {
@@ -131,6 +135,35 @@ export async function list(): Promise<VaultItem[]> {
 export async function remove(id: string) {
   await tx("readwrite", (s) => s.delete(id));
   updateProfile((p) => ({ checks: p.checks.map((c) => (c.id === id ? { ...c, saved: false } : c)) }));
+}
+
+// The teen safety plan: one more sealed row in the same vault, under the same PIN.
+export interface SafetyPlan {
+  signs: string[];
+  calm: string[];
+  places: string[];
+  people: string[];
+  space: string[];
+  updatedAt: number;
+}
+const PLAN_ID = "__plan";
+export const emptyPlan = (): SafetyPlan => ({ signs: [], calm: [], places: [], people: [], space: [], updatedAt: 0 });
+
+export async function savePlan(plan: SafetyPlan) {
+  if (!key) throw new Error("locked");
+  const blob = await seal(key, JSON.stringify({ ...plan, updatedAt: Date.now() }));
+  await tx("readwrite", (s) => s.put({ id: PLAN_ID, blob }));
+}
+
+export async function loadPlan(): Promise<SafetyPlan> {
+  if (!key) throw new Error("locked");
+  const row = await tx<{ id: string; blob: string } | undefined>("readonly", (s) => s.get(PLAN_ID));
+  if (!row) return emptyPlan();
+  try {
+    return { ...emptyPlan(), ...JSON.parse(await open(key, row.blob)) };
+  } catch {
+    return emptyPlan();
+  }
 }
 
 /** Wipes the vault and the PIN. For "forgot my PIN" and "delete everything". */

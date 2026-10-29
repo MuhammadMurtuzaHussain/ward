@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, FilePdf, LockKey, LockSimpleOpen, Trash, Vault as VaultIcon } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, FilePdf, Lifebuoy, LockKey, LockSimpleOpen, Trash, Vault as VaultIcon } from "@phosphor-icons/react";
 import { Ghost } from "../components/Ghost.tsx";
 import { LevelPill } from "../components/LevelPill.tsx";
 import { PinPad } from "../components/PinPad.tsx";
 import { Button, Screen } from "../components/ui.tsx";
 import { ReportDialog } from "../components/ReportDialog.tsx";
-import { go } from "../lib/store.ts";
+import { go, useStore } from "../lib/store.ts";
 import { locale, useT } from "../i18n/index.ts";
 import { hasPin, isUnlocked, list, lock, remove, unlock, type VaultItem } from "../lib/vault.ts";
 import { Timeline } from "./Result.tsx";
@@ -16,6 +16,7 @@ export function VaultScreen() {
   const [items, setItems] = useState<VaultItem[] | null>(null);
   const [viewing, setViewing] = useState<VaultItem | null>(null);
   const [reporting, setReporting] = useState(false);
+  const teen = useStore((s) => s.profile.age) === "14";
 
   useEffect(() => {
     if (open) list().then(setItems, () => setOpen(false));
@@ -94,6 +95,16 @@ export function VaultScreen() {
       <p className="mt-2 flex items-center gap-2 text-dim">
         <LockSimpleOpen size={18} /> {t.vault.openUntil}
       </p>
+      {teen && (
+        <button onClick={() => go({ name: "plan" })} className="mt-6 flex w-full items-center gap-4 rounded-card border border-glow/40 bg-glow-soft p-4 text-start">
+          <Lifebuoy size={24} weight="bold" className="shrink-0 text-glow" />
+          <span className="min-w-0 flex-1">
+            <span className="block font-display text-lg font-semibold">{t.plan.card[0]}</span>
+            <span className="text-sm text-dim">{t.plan.card[1]}</span>
+          </span>
+          <ArrowRight size={18} weight="bold" className="flip-rtl shrink-0 text-glow" />
+        </button>
+      )}
       {items === null ? (
         <div className="mt-6 grid gap-3" aria-busy>
           {[0, 1].map((i) => (

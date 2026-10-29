@@ -54,6 +54,26 @@ written answers, a native Urdu speaker's review, and the next languages.
 | **Lessons that respond** | After a check, Ward suggests the lessons that fit what happened; streaks never guilt-trip | Suggestions shown after checks |
 | **Safety plan** | A teen safety plan (warning signs, things that help, people, safe places) kept in the vault, one tap from any urgent result | Reviewed by a professional before release |
 
+**Phase 3 progress (2026-10-29).** Four of five pieces shipped, in English and Urdu:
+- **Lessons that respond:** every result and coach screen ends with up to three lessons chosen
+  from what Ward found (exclusion, a pile-on, photo pressure, late nights, a friend's chat),
+  for the child's age, new ones first. No streak pressure.
+- **Help a friend:** a check done "for a friend" now gets its own coach: a private message to
+  them (three lines to copy), don't join in or fight back, keep the proof, report anonymously,
+  and bringing in an adult without going behind their back, unless they're in danger.
+- **"Was I mean?":** five private questions, nothing stored, never the word "bully"; then either
+  reassurance or five repair steps with apologies to copy, and two lessons. A result also says,
+  gently, when the child's own messages could land hard, and links here.
+- **Safety plan:** five short sections with tap-to-add ideas, sealed in the vault under the same
+  PIN, autosaved, with the country's helplines below. Shown to the 14 to 17 band, on Home, in the
+  Vault and under any urgent result about their own chat. Still needs the professional review
+  before it is turned on more widely.
+
+Also fixed on the way: vault connections now close after each transaction, so "delete
+everything" really deletes the vault database instead of waiting for a reload.
+
+Still to do: branching stories.
+
 ## Phase 4: the circle and the community
 
 | Piece | What | Done when |
