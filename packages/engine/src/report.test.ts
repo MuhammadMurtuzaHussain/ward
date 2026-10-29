@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { analyze, buildReport, fingerprintMessages, parseChat, verifyReport } from "./index.ts";
+import { analyze, buildReport, checkReport, fingerprintMessages, parseChat, reportProblem, verifyReport } from "./index.ts";
 
 const chat = parseChat(readFileSync(new URL("../fixtures/pileon-roman-urdu.txt", import.meta.url), "utf8"));
 
@@ -46,4 +46,18 @@ test("the digest catches an edited message", async () => {
   assert.ok(await verifyReport(r));
   r.incidents[0]!.text = "something nicer";
   assert.ok(!(await verifyReport(r)));
+});
+
+test("checkReport pins an edit to the message it touched", async () => {
+  const r = await report();
+  const clean = await checkReport(r);
+  assert.ok(clean.digestOk && clean.perMessage.every(Boolean));
+  r.incidents[2]!.text += "!";
+  const c = await checkReport(r);
+  assert.equal(c.digestOk, false);
+  assert.deepEqual(c.perMessage.map((ok, i) => ok || i), c.perMessage.map((_, i) => (i === 2 ? 2 : true)));
+  assert.equal(reportProblem(r), null);
+  assert.equal(reportProblem({ schema: "x" }), "schema");
+  assert.equal(reportProblem(null), "not-report");
+  assert.equal(reportProblem({ hello: 1 }), "not-report");
 });

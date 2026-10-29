@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, ChalkboardTeacher, Cpu, HandHeart, LockKey, SpeakerHigh, Translate, Trash, UserCircle, UsersThree } from "@phosphor-icons/react";
+import { ArrowRight, Briefcase, ChalkboardTeacher, Cpu, HandHeart, LockKey, SpeakerHigh, Translate, Trash, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { STARTER_PACKS } from "@ward/engine";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { PinPad } from "../components/PinPad.tsx";
@@ -172,6 +172,14 @@ export function Me() {
             <span className="min-w-0 flex-1">
               <span className="block font-display text-lg font-bold">{t.me.teach[0]}</span>
               <span className="text-sm text-dim">{t.me.teach[1]}</span>
+            </span>
+            <ArrowRight size={18} weight="bold" className="flip-rtl text-glow" />
+          </button>
+          <button onClick={() => go({ name: "counsel" })} className="flex items-center gap-4 rounded-card border border-line bg-surface p-5 text-start hover:border-dim/40">
+            <Briefcase size={28} weight="bold" className="shrink-0 text-glow" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-lg font-bold">{t.counsel.card[0]}</span>
+              <span className="text-sm text-dim">{t.counsel.card[1]}</span>
             </span>
             <ArrowRight size={18} weight="bold" className="flip-rtl text-glow" />
           </button>

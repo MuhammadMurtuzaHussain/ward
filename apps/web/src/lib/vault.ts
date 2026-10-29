@@ -3,7 +3,7 @@
 // stored; a small encrypted marker lets Ward check it. Each saved message also gets a SHA-256
 // fingerprint, so a printed report can show the evidence wasn't edited after saving.
 
-import { fingerprintMessages, type Analysis, type Chat } from "@ward/engine";
+import { fingerprintMessages, type Analysis, type Chat, type WardReport } from "@ward/engine";
 import { getState, onProfileLeave, updateProfile, vaultDbName } from "./store.ts";
 
 const STORE = "items";
@@ -122,7 +122,7 @@ export async function list(): Promise<VaultItem[]> {
   const rows = await tx<{ id: string; blob: string }[]>("readonly", (s) => s.getAll());
   const out: VaultItem[] = [];
   for (const r of rows) {
-    if (r.id === PLAN_ID) continue;
+    if (r.id === PLAN_ID || r.id.startsWith(CASE_PREFIX)) continue;
     try {
       out.push(revive(JSON.parse(await open(key, r.blob))));
     } catch {
@@ -164,6 +164,49 @@ export async function loadPlan(): Promise<SafetyPlan> {
   } catch {
     return emptyPlan();
   }
+}
+
+// Counsellor mode: reports received from children, with the counsellor's own notes. Sealed in
+// the same vault under the same PIN, one row per report, keyed by the report's digest so the
+// same report received twice is one case.
+export interface CaseNote {
+  at: number;
+  text: string;
+}
+export interface CaseRecord {
+  id: string;
+  receivedAt: number;
+  via: "file" | "qr";
+  report: WardReport;
+  check: { digestOk: boolean; perMessage: boolean[] };
+  status: "new" | "open" | "closed";
+  notes: CaseNote[];
+}
+const CASE_PREFIX = "case:";
+
+export async function saveCase(c: CaseRecord) {
+  if (!key) throw new Error("locked");
+  const blob = await seal(key, JSON.stringify(c));
+  await tx("readwrite", (s) => s.put({ id: CASE_PREFIX + c.id, blob }));
+}
+
+export async function listCases(): Promise<CaseRecord[]> {
+  if (!key) throw new Error("locked");
+  const rows = await tx<{ id: string; blob: string }[]>("readonly", (s) => s.getAll());
+  const out: CaseRecord[] = [];
+  for (const r of rows) {
+    if (!r.id.startsWith(CASE_PREFIX)) continue;
+    try {
+      out.push(JSON.parse(await open(key, r.blob)));
+    } catch {
+      // sealed under an older PIN
+    }
+  }
+  return out.sort((a, b) => b.receivedAt - a.receivedAt);
+}
+
+export async function removeCase(id: string) {
+  await tx("readwrite", (s) => s.delete(CASE_PREFIX + id));
 }
 
 /** Wipes the vault and the PIN. For "forgot my PIN" and "delete everything". */

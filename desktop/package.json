@@ -32,6 +32,9 @@
     },
     "mac": {
       "category": "public.app-category.education",
+      "extendInfo": {
+        "NSCameraUsageDescription": "Counsellor mode uses the camera to read a report shown as QR codes on a child's phone. Nothing is recorded or sent."
+      },
       "target": [
         "dmg"
       ],

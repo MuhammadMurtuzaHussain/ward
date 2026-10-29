@@ -70,6 +70,7 @@ they tell, their class, and helplines.
 | --- | --- |
 | **A helpline-ready report** | The child picks who it's for and what they want to happen; details about them are optional. They get a readable page plus `ward-report.json` in a documented format ([docs/REPORT.md](docs/REPORT.md)) with a digest a helpline can check. Only hurtful messages go in. The rest of the chat stays private. |
 | **Case viewer** | [`viewer/ward-viewer.html`](viewer/ward-viewer.html): one offline file a caseworker double-clicks. It checks the report wasn't edited (digest and every message's fingerprint), puts safety and the child's wishes first, and exports a summary, a CSV or a print view. No network, nothing uploaded. |
+| **Counsellor mode** | A counsellor's Ward that takes a child's report by file or by QR codes from the child's screen (no internet needed), checks it, and keeps case notes. Locked with a PIN, on that device. No server. |
 
 ## Does the approach work? The scorecard
 

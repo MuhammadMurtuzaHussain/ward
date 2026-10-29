@@ -1,7 +1,7 @@
 // Ward for desktop: the same app, served from the bundle at app://ward so it works with the
 // internet off. app:// is one of Ollama's default allowed origins, so the window can talk to
 // Gemma on 127.0.0.1:11434 directly. Nothing else is loaded from the network.
-import { app, BrowserWindow, net, protocol, shell } from "electron";
+import { app, BrowserWindow, net, protocol, session, shell } from "electron";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -50,6 +50,11 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Only the camera, and only for counsellor mode's QR scanner (the page asks for video, never
+  // audio). Every other permission (location, notifications, microphone…) is refused.
+  session.defaultSession.setPermissionRequestHandler((_wc, permission, done, details) => {
+    done(permission === "media" && !(details.mediaTypes ?? []).includes("audio"));
+  });
   protocol.handle("app", (req) => {
     const { pathname } = new URL(req.url);
     const file = path.normalize(path.join(WEB, decodeURIComponent(pathname)));

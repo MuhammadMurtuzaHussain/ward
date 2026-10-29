@@ -7,7 +7,7 @@
     "dev": "pnpm --filter @ward/web dev",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test && node --test --experimental-strip-types viewer/viewer.test.ts apps/web/src/lib/kitResults.test.ts",
+    "test": "pnpm -r test && node --test --experimental-strip-types viewer/viewer.test.ts apps/web/src/lib/kitResults.test.ts apps/web/src/lib/qrTransfer.test.ts",
     "eval": "node --experimental-strip-types eval/run.ts"
   }
 }

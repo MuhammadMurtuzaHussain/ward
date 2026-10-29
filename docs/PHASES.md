@@ -110,6 +110,16 @@ counted from the sheets, sees each question's change with the right direction fo
 a warning under 10 sheets, ticks lessons taught, and can download totals only as CSV. Each part
 prints on its own in black on white.
 
+Counsellor mode shipped (Me, then Counsellor mode), in English and Urdu: a school counsellor or
+other trusted adult receives a child's report as a file, or as a loop of QR codes shown on the
+child's phone (compressed, split into about six frames, read by the camera in any order; no
+network). Each report is checked (digest and every message's fingerprint), keyed by its full
+content so an edited copy can never hide behind the genuine case, and laid out safety first.
+Cases have a status (new, ongoing, closed) and dated notes, sealed in the vault under the same
+PIN. The desktop app now refuses every permission except the camera, and Android asks for the
+camera only when scanning. Tests decode every rendered QR frame with the same decoder the
+scanner uses.
+
 ## Phase 5: proof and staying alive
 
 | Piece | What | Done when |

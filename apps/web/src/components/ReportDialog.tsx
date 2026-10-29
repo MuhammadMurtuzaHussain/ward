@@ -4,10 +4,11 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { FilePdf, X } from "@phosphor-icons/react";
-import { buildReport, WANTS, type Want } from "@ward/engine";
+import { FilePdf, QrCode, X } from "@phosphor-icons/react";
+import { buildReport, WANTS, type Want, type WardReport } from "@ward/engine";
 import { Button } from "./ui.tsx";
 import { HelpNow } from "./HelpNow.tsx";
+import { QrSend } from "./QrSend.tsx";
 import { exportReport } from "../lib/report.ts";
 import { useStore } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
@@ -30,6 +31,8 @@ export function ReportDialog({ item, onClose }: { item: VaultItem; onClose: () =
   const [wants, setWants] = useState<Want[]>(["stop"]);
   const [danger, setDanger] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
+  const [made, setMade] = useState<WardReport | null>(null);
+  const [qr, setQr] = useState(false);
 
   const field = "mt-1.5 w-full rounded-btn border border-line bg-bg px-4 py-3 text-ink placeholder:text-dim/70 focus:border-glow focus:outline-none";
 
@@ -119,13 +122,36 @@ export function ReportDialog({ item, onClose }: { item: VaultItem; onClose: () =
               wants,
               recipient,
             });
-            await exportReport(r);
+            setMade(r);
             setBusy(false);
           }}
         >
           <FilePdf size={20} weight="bold" /> {busy ? t.report.making : t.report.make}
         </Button>
         <p className="mt-2 text-sm text-dim">{t.report.note}</p>
+        {made && (
+          <div role="dialog" aria-modal aria-labelledby="made-title" className="absolute inset-0 overflow-y-auto rounded-card bg-surface p-6 pt-12">
+            <button onClick={() => (qr ? setQr(false) : setMade(null))} className="absolute end-3 top-3 grid size-11 place-items-center rounded-full text-dim hover:bg-raised" aria-label={t.common.close}>
+              <X size={20} weight="bold" />
+            </button>
+            {qr ? (
+              <QrSend json={JSON.stringify(made)} />
+            ) : (
+              <>
+                <h2 id="made-title" className="font-display text-2xl font-bold tracking-tight">{t.counsel.made}</h2>
+                <p className="mt-2 text-dim">{t.counsel.madeLine}</p>
+                <div className="mt-6 grid gap-3">
+                  <Button onClick={() => exportReport(made)}>
+                    <FilePdf size={20} weight="bold" /> {t.counsel.saveFiles}
+                  </Button>
+                  <Button tone="quiet" onClick={() => setQr(true)}>
+                    <QrCode size={20} weight="bold" /> {t.counsel.qrGive}
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );

@@ -129,6 +129,26 @@ export async function verifyReport(r: WardReport): Promise<boolean> {
   return (await sha256(JSON.stringify({ conversation: r.conversation, incidents: r.incidents }))) === r.integrity.digest;
 }
 
+/**
+ * The full check a caseworker or counsellor needs: the digest, plus each incident against the
+ * fingerprint taken when the child saved it, so an edit can be pinned to the message it touched.
+ * The case viewer (viewer/ward-viewer.html) carries the same check inline.
+ */
+export async function checkReport(r: WardReport): Promise<{ digestOk: boolean; perMessage: boolean[] }> {
+  const digestOk = await verifyReport(r);
+  const perMessage = await Promise.all(r.incidents.map(async (i) => (await sha256(`${i.from}|${i.at ?? ""}|${i.text}`)) === i.sha256));
+  return { digestOk, perMessage };
+}
+
+/** A reason the object isn't a report this version of Ward can read, or null. */
+export function reportProblem(r: unknown): string | null {
+  const o = r as Partial<WardReport> | null;
+  if (!o || typeof o !== "object" || !("schema" in o)) return "not-report";
+  if (o.schema !== "ward.report/v1") return "schema";
+  if (!o.conversation || !o.integrity || !o.safety || !Array.isArray(o.incidents)) return "incomplete";
+  return null;
+}
+
 export async function fingerprintMessages(chat: Chat): Promise<string[]> {
   return Promise.all(chat.messages.map((m) => sha256(`${m.sender}|${m.at?.toISOString() ?? ""}|${m.text}`)));
 }
