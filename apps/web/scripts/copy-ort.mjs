@@ -9,5 +9,5 @@ const tf = realpathSync(path.join(web, "node_modules", "@huggingface", "transfor
 const ort = path.join(realpathSync(path.join(tf, "..", "..", "onnxruntime-web")), "dist");
 const out = path.join(import.meta.dirname, "..", "public", "ort");
 mkdirSync(out, { recursive: true });
-for (const f of readdirSync(ort).filter((f) => /^ort-wasm-simd-threaded(\.asyncify)?\.(wasm|mjs)$/.test(f))) copyFileSync(path.join(ort, f), path.join(out, f));
+for (const f of readdirSync(ort).filter((f) => /^ort-wasm-simd-threaded\.asyncify\.(wasm|mjs)$/.test(f))) copyFileSync(path.join(ort, f), path.join(out, f));
 console.log("ort ->", out);
