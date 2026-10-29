@@ -1,0 +1,1 @@
+Look, we can't just build a world problem in one prompt and claim that we solved it. I think we have an MVP and an Approach, let's see how can we actually bridge the gap so people can use it, and have it in their growing years, read the problem again and think of how this could be tackled much better at a larger scale.
