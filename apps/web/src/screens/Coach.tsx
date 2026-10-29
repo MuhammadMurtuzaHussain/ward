@@ -8,7 +8,7 @@ import { HelpNow } from "../components/HelpNow.tsx";
 import { SaveToVault } from "../components/SaveToVault.tsx";
 import { BackBar, Button, Screen } from "../components/ui.tsx";
 import { gemmaDraft, templateDraft } from "../lib/draft.ts";
-import { updateProfile, useStore } from "../lib/store.ts";
+import { go, updateProfile, useStore } from "../lib/store.ts";
 
 const APPS = {
   WhatsApp: [
@@ -167,6 +167,9 @@ export function Coach({ id }: { id: string }) {
             </Button>
           </div>
           <p className="mt-2 text-sm text-dim">I never send it myself. You choose if and when.</p>
+          <button onClick={() => go({ name: "adults" })} className="mt-4 flex min-h-11 items-center gap-2 font-bold text-glow">
+            When you tell them, show them this guide for adults (English and Urdu) →
+          </button>
         </Step>
       </ol>
 

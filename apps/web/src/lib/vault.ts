@@ -3,7 +3,7 @@
 // stored; a small encrypted marker lets Ward check it. Each saved message also gets a SHA-256
 // fingerprint, so a printed report can show the evidence wasn't edited after saving.
 
-import type { Analysis, Chat } from "@ward/engine";
+import { fingerprintMessages, type Analysis, type Chat } from "@ward/engine";
 import { getState, updateProfile } from "./store.ts";
 
 const DB = "ward-vault";
@@ -90,14 +90,7 @@ function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest<T
   );
 }
 
-async function sha256(s: string) {
-  const h = await crypto.subtle.digest("SHA-256", enc.encode(s));
-  return [...new Uint8Array(h)].map((x) => x.toString(16).padStart(2, "0")).join("");
-}
-
-export async function fingerprint(chat: Chat) {
-  return Promise.all(chat.messages.map((m) => sha256(`${m.sender}|${m.at?.toISOString() ?? ""}|${m.text}`)));
-}
+export const fingerprint = (chat: Chat) => fingerprintMessages(chat);
 
 /** Dates don't survive JSON; bring them back on the way out. */
 function revive(item: VaultItem): VaultItem {

@@ -4,3 +4,4 @@ export { PackMatcher, STARTER_PACKS, type Pack, type PackEntry } from "./packs.t
 export { parseChat, parseWhatsApp, parsePasted } from "./parse.ts";
 export { analyze, findPatterns, type AnalyzeOptions, type Judge } from "./analyze.ts";
 export { GemmaJudge, ShieldGemmaJudge, ollamaModels, type OllamaOptions } from "./ollama.ts";
+export { buildReport, verifyReport, fingerprintMessages, WANTS, type Want, type WardReport, type ReportInput } from "./report.ts";

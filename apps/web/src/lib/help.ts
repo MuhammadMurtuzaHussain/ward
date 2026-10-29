@@ -20,7 +20,10 @@ export const REGIONS: Region[] = [
     id: "PK",
     name: "Pakistan",
     emergency: "15",
-    lines: [{ name: "Madadgaar National Helpline", number: "1098", note: "For children and women facing abuse or violence." }],
+    lines: [
+      { name: "Madadgaar National Helpline", number: "1098", note: "For children and women facing abuse or violence." },
+      { name: "DRF Cyber Harassment Helpline", number: "0800-39393", note: "Online harassment, blackmail and leaked photos, and help with a cybercrime complaint. Weekdays 9am to 5pm." },
+    ],
   },
   {
     id: "IN",

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Cpu, Translate, Trash, UserCircle } from "@phosphor-icons/react";
+import { ArrowRight, ChalkboardTeacher, Cpu, HandHeart, Translate, Trash, UserCircle } from "@phosphor-icons/react";
 import { STARTER_PACKS } from "@ward/engine";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { AGES, LOOKS } from "../lib/looks.ts";
 import { modelStatus, type ModelStatus } from "../lib/run.ts";
-import { updateProfile, useStore, type AgeBand } from "../lib/store.ts";
+import { go, updateProfile, useStore, type AgeBand } from "../lib/store.ts";
 import { wipe } from "../lib/vault.ts";
 import { LookTile } from "./Onboarding.tsx";
 
@@ -84,6 +84,28 @@ export function Me() {
           <p className="mt-2 text-xs text-dim">On a phone, put your family computer's address here (same Wi-Fi) to use its Gemma. On that computer, start Ollama with OLLAMA_HOST=0.0.0.0.</p>
         </Card>
       </div>
+
+      <section className="mt-10">
+        <h2 className="font-display text-xl font-bold tracking-tight">For adults</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <button onClick={() => go({ name: "adults" })} className="flex items-center gap-4 rounded-card border border-line bg-surface p-5 text-left hover:border-dim/40">
+            <HandHeart size={28} weight="bold" className="shrink-0 text-glow" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-lg font-bold">If a child told you</span>
+              <span className="text-sm text-dim">What to do and not do, in English and Urdu. Hand your phone to the adult.</span>
+            </span>
+            <ArrowRight size={18} weight="bold" className="text-glow" />
+          </button>
+          <button onClick={() => go({ name: "teach" })} className="flex items-center gap-4 rounded-card border border-line bg-surface p-5 text-left hover:border-dim/40">
+            <ChalkboardTeacher size={28} weight="bold" className="shrink-0 text-glow" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-lg font-bold">Teach a class</span>
+              <span className="text-sm text-dim">Project a lesson for a whole room. Nothing is recorded.</span>
+            </span>
+            <ArrowRight size={18} weight="bold" className="text-glow" />
+          </button>
+        </div>
+      </section>
 
       <section className="mt-10">
         <h2 className="font-display text-xl font-bold tracking-tight">Look</h2>

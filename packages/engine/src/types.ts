@@ -105,6 +105,8 @@ export interface Pattern {
   messageIds: number[];
   /** One sentence for the child. Age-neutral; the UI adapts the tone. */
   summary: string;
+  /** The same finding in neutral third person, for a helpline or school report. */
+  fact: string;
 }
 
 export type Level = "calm" | "watch" | "bullying" | "urgent";

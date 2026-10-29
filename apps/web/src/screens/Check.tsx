@@ -1,7 +1,7 @@
 // Check a chat: bring it in (WhatsApp export, paste, or screenshots), say which person is you,
 // and Ward reads it on the device.
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CaretDown, ClipboardText, ImageSquare, Sparkle, UserCircle, UsersThree } from "@phosphor-icons/react";
 import type { Chat } from "@ward/engine";
 import sample from "../../../../packages/engine/fixtures/pileon-roman-urdu.txt?raw";
@@ -9,7 +9,7 @@ import { Ghost } from "../components/Ghost.tsx";
 import { HaloDrop } from "../components/HaloDrop.tsx";
 import { Button, Screen } from "../components/ui.tsx";
 import { parse, readChatFile, readScreenshots, startCheck } from "../lib/run.ts";
-import { useStore } from "../lib/store.ts";
+import { setState, useStore } from "../lib/store.ts";
 
 type Stage = { at: "input" } | { at: "who"; chat: Chat; title: string };
 
@@ -20,6 +20,8 @@ export function Check() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [howOpen, setHowOpen] = useState(false);
+  const incoming = useStore((s) => s.incoming);
+  const handled = useRef<object | null>(null);
 
   async function take(text: string, title: string) {
     setError(null);
@@ -31,7 +33,16 @@ export function Check() {
     setStage({ at: "who", chat, title });
   }
 
-  async function onFiles(files: File[]) {
+  // A chat shared in from WhatsApp: take it once, then forget it.
+  useEffect(() => {
+    if (!incoming || handled.current === incoming) return;
+    handled.current = incoming;
+    setState((s) => ({ ...s, incoming: null }));
+    if (incoming.files.length) void onFiles(incoming.files, incoming.title);
+    else if (incoming.text) void take(incoming.text, incoming.title ?? "Shared chat");
+  }, [incoming]);
+
+  async function onFiles(files: File[], sharedTitle?: string) {
     setError(null);
     try {
       if (files.every((f) => f.type.startsWith("image/"))) {
@@ -40,8 +51,10 @@ export function Check() {
         setBusy(null);
         return take(text, "Screenshots");
       }
-      const { text, title } = await readChatFile(files[0]!);
-      return take(text, title);
+      // An export "with media" shares the chat text alongside photos: read the chat.
+      const chatFile = files.find((f) => /\.(txt|zip)$/i.test(f.name) || f.type === "text/plain") ?? files[0]!;
+      const { text, title } = await readChatFile(chatFile);
+      return take(text, sharedTitle || title);
     } catch (e) {
       setBusy(null);
       setError(e instanceof Error ? e.message : "Something went wrong reading that file.");
@@ -81,7 +94,7 @@ export function Check() {
               Android: tap <b className="text-ink">⋮</b>, then <b className="text-ink">More</b>, then <b className="text-ink">Export chat</b>. iPhone: tap the name at the top, then <b className="text-ink">Export chat</b>.
             </li>
             <li>
-              Choose <b className="text-ink">Without media</b>, and share it to Ward (or save it and drop it here).
+              Choose <b className="text-ink">Without media</b>, then pick <b className="text-ink">Ward</b> in the share list. On a computer, save it and drop it here.
             </li>
           </ol>
         )}

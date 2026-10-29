@@ -4,16 +4,16 @@ import { Ghost } from "../components/Ghost.tsx";
 import { LevelPill } from "../components/LevelPill.tsx";
 import { PinPad } from "../components/PinPad.tsx";
 import { Button, Screen } from "../components/ui.tsx";
-import { exportReport } from "../lib/report.ts";
-import { go, useStore } from "../lib/store.ts";
+import { ReportDialog } from "../components/ReportDialog.tsx";
+import { go } from "../lib/store.ts";
 import { hasPin, isUnlocked, list, lock, remove, unlock, type VaultItem } from "../lib/vault.ts";
 import { Timeline } from "./Result.tsx";
 
 export function VaultScreen() {
-  const name = useStore((s) => s.profile.name);
   const [open, setOpen] = useState(isUnlocked());
   const [items, setItems] = useState<VaultItem[] | null>(null);
   const [viewing, setViewing] = useState<VaultItem | null>(null);
+  const [reporting, setReporting] = useState(false);
 
   useEffect(() => {
     if (open) list().then(setItems, () => setOpen(false));
@@ -52,13 +52,14 @@ export function VaultScreen() {
           </button>
           <h1 className="font-display text-lg font-semibold">{viewing.title}</h1>
           <div className="ml-auto flex gap-2">
-            <Button tone="quiet" onClick={() => exportReport(viewing, name)}>
+            <Button tone="quiet" onClick={() => setReporting(true)}>
               <FilePdf size={20} weight="bold" /> Make a report
             </Button>
           </div>
         </div>
         <p className="mb-4 text-sm text-dim">Saved {new Date(viewing.savedAt).toLocaleString()}. Each message is fingerprinted, so the report shows it wasn't changed.</p>
         <Timeline analysis={viewing.analysis} self={viewing.self} />
+        {reporting && <ReportDialog item={viewing} onClose={() => setReporting(false)} />}
         <button
           className="mt-8 flex min-h-11 items-center gap-2 text-sm font-bold text-alarm"
           onClick={async () => {

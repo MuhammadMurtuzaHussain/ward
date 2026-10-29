@@ -16,7 +16,10 @@ export type Screen =
   | { name: "path" }
   | { name: "lesson"; id: string }
   | { name: "vault" }
-  | { name: "me" };
+  | { name: "me" }
+  | { name: "adults" }
+  | { name: "teach" }
+  | { name: "teachLesson"; id: string };
 
 export interface CheckSummary {
   id: string;
@@ -91,9 +94,11 @@ interface State {
   screen: Screen;
   history: Screen[];
   sessions: Record<string, Session>;
+  /** A chat shared into Ward from another app, waiting for the Check screen. */
+  incoming: { files: File[]; text?: string; title?: string } | null;
 }
 
-let state: State = { profile: load(), screen: { name: "home" }, history: [], sessions: {} };
+let state: State = { profile: load(), screen: { name: "home" }, history: [], sessions: {}, incoming: null };
 const listeners = new Set<() => void>();
 
 function emit() {
