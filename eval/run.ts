@@ -33,8 +33,8 @@ function asChat(items: Item[]): Chat {
   };
 }
 
-async function gemma(model: string, items: Item[]) {
-  const j = new GemmaJudge({ model, batch: 20, context: 0 });
+async function gemma(model: string, items: Item[], batch = 20) {
+  const j = new GemmaJudge({ model, batch, context: 0 });
   const got = await j.judge(asChat(items), {
     self: null,
     onProgress: (d, t) => process.stderr.write(`\r  ${model} ${d}/${t}   `),
@@ -59,7 +59,7 @@ const systems: System[] = [
     },
   },
   { name: "Gemma 4 E4B", about: "Ward's judge prompt, one message at a time, no chat context (the computer tier)", run: (items) => gemma("gemma4:e4b", items) },
-  { name: "Gemma 4 E2B", about: "The same prompt on the phone-sized Gemma 4 (scored through Ollama; on a phone it runs through LiteRT-LM)", run: (items) => gemma("gemma4:e2b", items) },
+  { name: "Gemma 4 E2B", about: "The same prompt on the phone-sized Gemma 4, 5 messages per request (it loses track of longer lists); scored through Ollama, on a phone it runs through LiteRT-LM", run: (items) => gemma("gemma4:e2b", items, 5) },
   {
     name: "Ward Lite",
     about: "The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5",

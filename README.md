@@ -43,6 +43,7 @@ they tell, their class, and helplines.
 | | |
 | --- | --- |
 | **Share to Ward** | In WhatsApp, *Export chat* and pick Ward from the share list (Android). Or paste messages, or drop screenshots on desktop. Say which person is you. |
+| **Reads on any phone** | Ward Lite, a 38 MB model inside the app, reads every message offline. On a computer, Gemma 4 reads with context and can tell banter from bullying. On Android phones with 6 GB+, Gemma 4 E2B can be downloaded to help write. |
 | **See the pattern** | One mean message is rude; bullying is a pattern. Ward finds the same person again and again, pile-ons, accounts added to a group just to attack ("ghost accounts"), exclusion, attacks after 11pm, and dangerous messages (threats, telling someone to hurt themselves, sexual pressure, threats to share photos). |
 | **The Haunting** | The chat with the attacks lit up and every ordinary stretch folded away, a verdict in plain words for the child's age, and who is doing it (and who isn't). |
 | **Coach** | Don't reply, save it, block/report/mute with steps for WhatsApp, Instagram, TikTok, Snapchat and Discord, and a message to a trusted adult that Gemma drafts in a kid's voice. Ward never sends anything itself. |
@@ -70,11 +71,17 @@ Same balanced sample for every system, 200 messages per language, half abusive b
 own labels. All run locally through Ollama. Method in
 [`eval/results/scorecard.md`](eval/results/scorecard.md); rerun with `pnpm eval`.
 
-| Caught (recall) | Slang packs (no AI) | ShieldGemma 2B | Gemma 4 E4B (Ward) |
-| --- | --- | --- | --- |
-| **Roman Urdu** | 59% | 14% | **86%** |
-| **Bangla** (abuse aimed at a person) | 10% | 14% | **65%** |
-| **English** (tweet dataset) | 10% | 19% | **36%** |
+| Caught (precision) | Word lists only | ShieldGemma 2B | **A phone: word lists + Ward Lite** | Gemma 4 E2B (phone size) | **A computer: Gemma 4 E4B** |
+| --- | --- | --- | --- | --- | --- |
+| **Roman Urdu** | 59% (94%) | 14% (70%) | **85% (83%)** | 33% (75%) | **86% (86%)** |
+| **Bangla** (abuse aimed at a person) | 10% (83%) | 14% (93%) | **39% (74%)** | 34% (71%) | **65% (78%)** |
+| **English** (tweet dataset) | 10% (91%) | 19% (73%) | **83% (64%)** | 33% (69%) | **36% (72%)** |
+
+**Ward Lite** is a small classifier we distilled for phones ([`train/`](train/)): 37.7 MB, about 8 ms
+per message on one CPU thread, fully offline. It was trained only on data the scorecard never
+sees (a leak check dropped 97 overlapping messages), and in the app it can only *add* warnings,
+never clear one. On a phone it brings Roman Urdu close to the computer's Gemma 4. Bangla is
+still the weak spot: the next step is more real, non-abusive Bangla chat to train on.
 
 This measures whether Ward *reads* abuse, not whether children are better off. That second
 question needs a pilot in schools; the plan is in [docs/ROADMAP.md](docs/ROADMAP.md#measurement-plan).
@@ -84,10 +91,11 @@ What the numbers do and don't show:
 - **English is low for every system.** That dataset is mostly tweets *about* gender and other
   topics rather than aimed at one person. Ward's pattern engine is tested on the chats in
   [`packages/engine/fixtures`](packages/engine/fixtures).
-- **A 1B model for phones failed.** Gemma 3 1B in WebAssembly cleared real insults as harmless
-  and dropped a sample chat from "Get help now" to "Keep an eye". So phones run the slang packs
-  and pattern engine on the device, and can pair with a family computer's Gemma 4. A distilled
-  phone model is the next step in the roadmap.
+- **Small generative models are poor judges.** Gemma 3 1B cleared real insults as harmless.
+  Gemma 4 E2B (phone-sized, run natively through LiteRT-LM) caught about a third, and it loses
+  track of lists longer than 5 messages. So on phones Ward Lite reads the chats, and Gemma 4 E2B,
+  if the child downloads it, does what it's good at: writing the message to a trusted adult and
+  giving feedback on lesson answers.
 
 ## What could go wrong
 

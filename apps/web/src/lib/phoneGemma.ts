@@ -2,7 +2,6 @@
 // prompt and schema as the computer's Gemma 4; the reply never leaves the phone.
 
 import { Capacitor, registerPlugin, type PluginListenerHandle } from "@capacitor/core";
-import { GemmaJudge, JSON_INSTRUCTION, type ModelJudgement } from "@ward/engine";
 
 export interface PhoneStatus {
   ramBytes: number;
@@ -50,31 +49,19 @@ export const cancelPhoneGemma = () => GemmaPhone.cancelDownload();
 export const removePhoneGemma = () => GemmaPhone.remove();
 
 /**
- * Until Gemma 4 E2B's scorecard says otherwise it is raise-only, like Ward Lite. See
- * eval/results/scorecard.md: if E2B matches E4B, it earns full authority to clear banter.
+ * Gemma 4 E2B on the phone writes; it doesn't judge. On the scorecard it caught about a third of
+ * abuse (eval/results/scorecard.md) where Ward Lite catches 83 to 85% in a 38 MB model, so Ward
+ * Lite reads the chats and the phone's Gemma drafts the message to a trusted adult and gives
+ * feedback on written lesson answers, which a classifier can't do.
  */
-export const PHONE_AUTHORITY: ModelJudgement["authority"] = "raise-only";
-
-/** A judge running on the phone's Gemma, or null if it isn't downloaded or won't start. */
-export async function phoneJudge(): Promise<GemmaJudge | null> {
+export async function phoneWrite(prompt: string): Promise<string | null> {
   const s = await phoneStatus();
   if (!s?.downloaded) return null;
   try {
     await GemmaPhone.load();
+    const text = (await GemmaPhone.generate({ system: "", prompt })).text.trim();
+    return text || null;
   } catch {
     return null;
   }
-  return new GemmaJudge({
-    name: "Gemma 4 E2B on this phone",
-    authority: PHONE_AUTHORITY,
-    batch: 10,
-    transport: async (system, prompt, schema) => {
-      try {
-        return (await GemmaPhone.generate({ system, prompt, schema: JSON.stringify(schema) })).text;
-      } catch {
-        // If constrained decoding isn't available for this model build, ask in words.
-        return (await GemmaPhone.generate({ system, prompt: `${prompt}\n\n${JSON_INSTRUCTION}` })).text;
-      }
-    },
-  });
 }

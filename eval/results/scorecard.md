@@ -12,7 +12,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 59% | 94% | 0.72 | 78% |
 | ShieldGemma 2B | 14% | 70% | 0.23 | 54% |
 | Gemma 4 E4B | 86% | 86% | 0.86 | 86% |
-| Gemma 4 E2B | 1% | 100% | 0.02 | 51% |
+| Gemma 4 E2B | 33% | 75% | 0.46 | 61% |
 | Ward Lite | 83% | 86% | 0.84 | 85% |
 | Phone: packs + Ward Lite | 85% | 83% | 0.84 | 84% |
 
@@ -23,7 +23,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 10% | 83% | 0.18 | 54% |
 | ShieldGemma 2B | 14% | 93% | 0.24 | 56% |
 | Gemma 4 E4B | 65% | 78% | 0.71 | 74% |
-| Gemma 4 E2B | 0% | 0% | 0.00 | 50% |
+| Gemma 4 E2B | 34% | 71% | 0.46 | 60% |
 | Ward Lite | 32% | 71% | 0.44 | 60% |
 | Phone: packs + Ward Lite | 39% | 74% | 0.51 | 63% |
 
@@ -34,7 +34,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 10% | 91% | 0.18 | 55% |
 | ShieldGemma 2B | 19% | 73% | 0.30 | 56% |
 | Gemma 4 E4B | 36% | 72% | 0.48 | 61% |
-| Gemma 4 E2B | 1% | 100% | 0.02 | 51% |
+| Gemma 4 E2B | 33% | 69% | 0.45 | 59% |
 | Ward Lite | 82% | 64% | 0.72 | 68% |
 | Phone: packs + Ward Lite | 83% | 64% | 0.72 | 68% |
 
@@ -43,7 +43,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 - **Slang packs**: Ward's word lists alone: no model, works on any phone
 - **ShieldGemma 2B**: Google's open safety classifier, harassment policy
 - **Gemma 4 E4B**: Ward's judge prompt, one message at a time, no chat context (the computer tier)
-- **Gemma 4 E2B**: The same prompt on the phone-sized Gemma 4 (scored through Ollama; on a phone it runs through LiteRT-LM)
+- **Gemma 4 E2B**: The same prompt on the phone-sized Gemma 4, 5 messages per request (it loses track of longer lists); scored through Ollama, on a phone it runs through LiteRT-LM
 - **Ward Lite**: The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5
 - **Phone: packs + Ward Lite**: What a phone without a big model does: a message counts if the word lists or Ward Lite flag it (Ward Lite can only add)
 

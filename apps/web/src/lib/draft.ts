@@ -4,6 +4,7 @@
 
 import type { Analysis } from "@ward/engine";
 import { getState } from "./store.ts";
+import { phoneWrite } from "./phoneGemma.ts";
 
 const KIND_WORDS: Record<string, string> = {
   danger: "some messages threaten me",
@@ -35,28 +36,18 @@ export async function gemmaDraft(a: Analysis, where: string, adult: string, age:
     ...a.patterns.map((p) => `- ${p.summary}`),
     `- ${a.findings.filter((f) => f.severity > 0).length} hurtful messages`,
   ].join("\n");
+  const content = `Write a short text message (3 or 4 sentences) from a child aged ${age === "8" ? "8 to 10" : age === "11" ? "11 to 13" : "14 to 17"} to ${adult || "a trusted adult"}, asking for help because they are being bullied in "${where}". Use simple, honest words a child that age would use. Do not quote any insults. Mention they saved the messages. Facts:\n${facts}\nReply with only the message.`;
+  const clean = (t: string | null) => t?.trim().replace(/^"|"$/g, "") || null;
   try {
     const r = await fetch(`${ollamaUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       signal: AbortSignal.timeout(45_000),
-      body: JSON.stringify({
-        model,
-        stream: false,
-        think: false,
-        options: { temperature: 0.4 },
-        messages: [
-          {
-            role: "user",
-            content: `Write a short text message (3 or 4 sentences) from a child aged ${age === "8" ? "8 to 10" : age === "11" ? "11 to 13" : "14 to 17"} to ${adult || "a trusted adult"}, asking for help because they are being bullied in "${where}". Use simple, honest words a child that age would use. Do not quote any insults. Mention they saved the messages. Facts:\n${facts}\nReply with only the message.`,
-          },
-        ],
-      }),
+      body: JSON.stringify({ model, stream: false, think: false, options: { temperature: 0.4 }, messages: [{ role: "user", content }] }),
     });
-    if (!r.ok) return null;
-    const j = (await r.json()) as { message: { content: string } };
-    return j.message.content.trim().replace(/^"|"$/g, "") || null;
+    if (r.ok) return clean(((await r.json()) as { message: { content: string } }).message.content);
   } catch {
-    return null;
+    // no computer Gemma: try the phone's
   }
+  return clean(await phoneWrite(content));
 }

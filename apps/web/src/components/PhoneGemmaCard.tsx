@@ -26,7 +26,7 @@ export function PhoneGemmaCard() {
         <DeviceMobile size={22} weight="bold" className="text-glow" /> Gemma on this phone
       </h2>
       <p className="mt-2 text-sm text-dim">
-        A closer read without a computer: Gemma 4 runs right on this phone, and nothing leaves it. Ward Lite already works without it.
+        Gemma 4 can run right on this phone to help you write: the message to someone you trust, and feedback on your lesson answers. Nothing leaves the phone. Ward Lite already reads your chats without it.
       </p>
 
       {!s.supported ? (

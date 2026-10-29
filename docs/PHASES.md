@@ -15,7 +15,14 @@ computer with Gemma 4 gets 86%. The children with the least get the weakest Ward
 | **Training data without leakage** | Public train splits only (never the eval splits), plus synthetic kid-style chats in English, Roman Urdu, Hinglish and Bangla written and labelled by Gemma 4, including friendly banter as hard negatives | A data card listing every source, split and count |
 | **The safety gate** | The model can raise a message's severity, but never lowers one the word lists call dangerous; fixture chats keep their verdicts | Engine tests on every fixture |
 | **Tiers** | Ward picks the strongest reader available: Gemma 4 (computer) > Gemma 3n on the phone > Ward Lite > word lists, and says which one read the chat | "How I worked this out" names the tier |
-| **Gemma 3n on capable phones** | A native Android plugin running Gemma 3n through Google's on-device runtime, for phones with 4 GB+ RAM, for the close read and the explanations | Runs on the CI emulator; measured on a real phone |
+| **Gemma 4 E2B on capable phones** | A native Android plugin running Gemma 4 E2B through LiteRT-LM (2 GB, downloaded by choice, phones with 6 GB+ RAM) | Runs on the CI emulator; measured on a real phone |
+
+**Phase 1 results (2026-10-29).** Ward Lite shipped: 37.7 MB, 8 ms per message, raise-only. On
+the scorecard a phone now catches 85% of Roman Urdu abuse (word lists alone: 59%) and 83% of
+English (10%); Bangla is at 39% (10%), and needs more real non-abusive Bangla chat. Gemma 4 E2B
+scored about a third even with 5 messages per request, so it doesn't judge chats: on phones it
+writes (the message to a trusted adult, feedback on lesson answers). Still to do: measure both
+on a real low-end phone, and grow the Bangla data.
 
 ## Phase 2: every child can use it
 
