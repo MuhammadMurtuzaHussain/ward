@@ -36,10 +36,11 @@ function createWindow() {
   win.loadURL("app://ward/index.html");
   if (SMOKE) {
     win.webContents.once("did-finish-load", async () => {
-      // React renders after load; give it up to 10 s to put Ward on screen.
+      // React renders after load; give it up to 10 s to put a screen up. Any first screen counts
+      // (a fresh install opens on the language picker, which doesn't say "Ward").
       let ok = false;
       for (let i = 0; i < 50 && !ok; i++) {
-        ok = await win.webContents.executeJavaScript("document.body.innerText.includes('Ward')");
+        ok = await win.webContents.executeJavaScript("!!document.querySelector('#root main') && document.body.innerText.trim().length > 20");
         if (!ok) await new Promise((r) => setTimeout(r, 200));
       }
       console.log(ok ? "smoke: ok" : "smoke: page loaded without Ward");
