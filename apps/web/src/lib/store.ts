@@ -22,6 +22,7 @@ export type Screen =
   | { name: "adults" }
   | { name: "teach" }
   | { name: "teachLesson"; id: string }
+  | { name: "story"; id: string }
   | { name: "mean" }
   | { name: "plan" };
 
@@ -44,6 +45,8 @@ export interface Profile {
   streak: number;
   lastLessonDay: string | null;
   done: string[];
+  /** Story endings found, as "storyId:sceneId". */
+  storyEnds: string[];
   checks: CheckSummary[];
   trusted: { name: string; how: string }[];
   ollamaUrl: string;
@@ -89,6 +92,7 @@ const DEFAULTS: Profile = {
   streak: 0,
   lastLessonDay: null,
   done: [],
+  storyEnds: [],
   checks: [],
   trusted: [],
   ollamaUrl: "http://127.0.0.1:11434",
@@ -248,6 +252,19 @@ export function finishLesson(id: string, xp: number) {
     const y = today(new Date(Date.now() - 86_400_000));
     const streak = p.lastLessonDay === t ? p.streak : p.lastLessonDay === y ? p.streak + 1 : 1;
     return { xp: p.xp + xp, streak, lastLessonDay: t, done: p.done.includes(id) ? p.done : [...p.done, id] };
+  });
+}
+
+/** A story ending found. The first ending of each story earns XP and keeps the streak going. */
+export function finishStory(storyId: string, endId: string, xp = 10) {
+  const key = `${storyId}:${endId}`;
+  updateProfile((p) => {
+    if (p.storyEnds.includes(key)) return {};
+    const first = !p.storyEnds.some((k) => k.startsWith(`${storyId}:`));
+    const t = today();
+    const y = today(new Date(Date.now() - 86_400_000));
+    const streak = !first || p.lastLessonDay === t ? p.streak : p.lastLessonDay === y ? p.streak + 1 : 1;
+    return { storyEnds: [...p.storyEnds, key], ...(first ? { xp: p.xp + xp, streak, lastLessonDay: t } : {}) };
   });
 }
 

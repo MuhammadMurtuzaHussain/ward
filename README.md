@@ -50,6 +50,7 @@ they tell, their class, and helplines.
 | **Get help now** | Anything dangerous puts helplines for the child's country first (including Pakistan's Madadgaar 1098 and DRF Cyber Harassment Helpline 0800-39393), plus Take It Down for images. |
 | **Evidence vault** | Saved chats are encrypted (AES-GCM, key from a PIN via PBKDF2), each message SHA-256 fingerprinted. |
 | **Resilience Path** | Duolingo-style daily lessons with streaks and XP: *Spot it, Shut it down, Save it, Say it, Back them up, Lock it down, Bounce back*. Content per age band (8 to 10, 11 to 13, 14 to 17). No hearts to lose. |
+| **Stories** | Short branching chats where *you* choose: laugh along, stay quiet, speak up, tell someone. Every ending says what that choice did and what else could work, and you can go back and try another. One per age band so far, in English and Urdu. |
 | **Your night light** | Six looks the child picks from a gallery, no gender question. The age band changes how playful or grown-up it feels. |
 | **English and اردو** | The whole app, lessons included, in English or Urdu (right to left, Nastaliq script). Switch any time in Me. |
 | **Read aloud** | A Listen button on lessons, onboarding, verdicts and coach steps, on by default for the youngest children. English is narrated with ElevenLabs and bundled, so it works offline. |

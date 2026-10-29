@@ -72,7 +72,14 @@ written answers, a native Urdu speaker's review, and the next languages.
 Also fixed on the way: vault connections now close after each transaction, so "delete
 everything" really deletes the vault database instead of waiting for a reload.
 
-Still to do: branching stories.
+**Stories (2026-10-29).** The story player shipped with one story per age band, in English and
+Urdu: *Mia's drawing* (8 to 10, Back them up), *The secret fan* (11 to 13, Shut it down) and *The
+screenshot* (14 to 17, Lock it down). Each is a small graph of chat scenes and choices with the
+lessons' cast; endings are kind, mixed or hard, never a telling-off, each saying what the choice
+did and what else could work. Stories sit on the Path after their unit, are never locked, count
+endings found ("2 of 5"), and the first ending earns XP like a lesson. Tests walk every path (no
+dead links, no loops, a kind ending in each), keep the reader ungendered, and hold the Urdu to
+the same structure. Still to do: the rest of the "one per unit per age band" set (18 more).
 
 ## Phase 4: the circle and the community
 

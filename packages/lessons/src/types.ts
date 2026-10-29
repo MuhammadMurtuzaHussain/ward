@@ -63,3 +63,46 @@ export interface Unit {
   icon: "eye" | "hand" | "camera" | "chat" | "users" | "lock" | "heart";
   lessons: Lesson[];
 }
+
+// Stories: short branching scenes with the same cast as the lessons, growing with the age bands.
+// A scene shows some lines (chat messages or narration), then either choices or an ending.
+// Endings are "kind", "mixed" or "hard", never a telling-off: each says what the choice did and
+// what else could work, and every story can be replayed.
+
+export interface StoryLine {
+  /** A chat message from this person; omit for narration. */
+  from?: string;
+  /** A message the reader sends. */
+  me?: boolean;
+  text: string;
+}
+
+export interface StoryChoice {
+  text: string;
+  next: string;
+}
+
+export interface StoryEnding {
+  tone: "kind" | "mixed" | "hard";
+  title: string;
+  body: string;
+}
+
+export interface StoryScene {
+  lines: StoryLine[];
+  choices?: StoryChoice[];
+  end?: StoryEnding;
+}
+
+export interface Story {
+  id: string;
+  /** The unit it belongs with on the Path. */
+  unit: string;
+  title: string;
+  line: string;
+  ages: AgeBand[];
+  /** Where the chat happens, shown like a group or DM name. */
+  place: string;
+  start: string;
+  scenes: Record<string, StoryScene>;
+}

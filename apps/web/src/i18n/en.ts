@@ -442,6 +442,17 @@ export const en = {
     open: "Was I mean?",
     again: "Start again",
   },
+  story: {
+    label: "Story",
+    endings: (found: number, total: number) => `${found} of ${total} endings found`,
+    choose: "What do you do?",
+    youChose: "You chose",
+    tone: { kind: "A kind ending", mixed: "A mixed ending", hard: "A hard ending" } as Record<"kind" | "mixed" | "hard", string>,
+    again: "Try a different choice",
+    done: "Done",
+    close: "Close story",
+    xp: (n: number) => `+${n} XP`,
+  },
   plan: {
     title: "My safety plan",
     card: ["My safety plan", "For hard moments: what helps, and who to reach. Locked in your vault."] as [string, string],

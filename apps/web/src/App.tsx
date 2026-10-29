@@ -17,6 +17,7 @@ import { Me } from "./screens/Me.tsx";
 import { AdultGuide } from "./screens/AdultGuide.tsx";
 import { Teach, TeachLesson } from "./screens/Teach.tsx";
 import { Mean } from "./screens/Mean.tsx";
+import { StoryPlayer } from "./screens/Story.tsx";
 import { SafetyPlan } from "./screens/SafetyPlan.tsx";
 
 const NAV: { screen: Screen; label: (t: Dict) => string; icon: typeof HouseSimple }[] = [
@@ -39,6 +40,7 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
   adults: "me",
   teach: "me",
   teachLesson: "me",
+  story: "path",
   mean: "home",
   plan: "vault",
 };
@@ -72,6 +74,7 @@ export function App() {
 
   // Lessons take the whole screen, like Duolingo: no nav to tap away from by accident.
   if (screen.name === "lesson") return <LessonPlayer id={screen.id} />;
+  if (screen.name === "story") return <StoryPlayer id={screen.id} />;
   // Class mode is projected: the whole screen is the lesson.
   if (screen.name === "teachLesson") return <TeachLesson id={screen.id} />;
 

@@ -2,8 +2,8 @@
 // garden with lamps along it. Done lessons are lit, the next one glows, later ones wait.
 
 import { motion, useReducedMotion } from "motion/react";
-import { Check, Fire, Lightning, LockSimple, Star } from "@phosphor-icons/react";
-import { unitsFor, type Lesson } from "@ward/lessons";
+import { BookOpenText, Check, Fire, Lightning, LockSimple, Star } from "@phosphor-icons/react";
+import { storiesFor, unitsFor, type Lesson, type Story } from "@ward/lessons";
 import { Ghost } from "../components/Ghost.tsx";
 import { Pill, Screen } from "../components/ui.tsx";
 import { UnitIcon } from "../components/UnitIcon.tsx";
@@ -74,6 +74,9 @@ export function PathScreen() {
                 );
               })}
             </ol>
+            {storiesFor(p.age, p.lang, u.id).map((st) => (
+              <StoryCard key={st.id} story={st} found={p.storyEnds.filter((k) => k.startsWith(`${st.id}:`)).length} />
+            ))}
           </section>
         );
       })}
@@ -112,5 +115,27 @@ function Node({ lesson, state, reduce }: { lesson: Lesson; state: "done" | "curr
       </motion.button>
       <span className={`mt-3 max-w-[11rem] text-center text-sm font-bold ${state === "locked" ? "text-dim" : ""}`}>{lesson.title}</span>
     </div>
+  );
+}
+
+/** A story sits after its unit's lessons: always open, never locked, nothing to lose. */
+function StoryCard({ story, found }: { story: Story; found: number }) {
+  const t = useT();
+  const total = Object.values(story.scenes).filter((x) => x.end).length;
+  return (
+    <button
+      onClick={() => go({ name: "story", id: story.id })}
+      className="group mt-8 flex w-full items-center gap-4 rounded-card border border-dashed border-glow/50 bg-surface px-5 py-4 text-start hover:border-glow"
+    >
+      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-glow-soft text-glow">
+        <BookOpenText size={24} weight="bold" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-xs font-bold uppercase tracking-wider text-glow">{t.story.label}</span>
+        <span className="block font-display text-lg font-bold">{story.title}</span>
+        <span className="block text-sm text-dim">{story.line}</span>
+      </span>
+      {found > 0 && <span className="shrink-0 text-sm font-bold text-dim">{found}/{total}</span>}
+    </button>
   );
 }
