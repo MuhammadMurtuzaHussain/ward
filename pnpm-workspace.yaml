@@ -6,3 +6,5 @@ packages:
 allowBuilds:
   esbuild: true
   electron: true
+  # Only needed for Squirrel installers, which Ward doesn't build (NSIS instead).
+  electron-winstaller: false
