@@ -52,7 +52,8 @@ export function LessonPlayer({ id }: { id: string }) {
     setAnswer(a);
     if (exIndex === undefined) return;
     if (a.right && !missed.has(exIndex)) setFirstTry((s) => new Set(s).add(exIndex));
-    if (!a.right) {
+    // A miss comes back once at the end; a second miss just moves on, with the answer explained.
+    if (!a.right && !missed.has(exIndex)) {
       setMissed((s) => new Set(s).add(exIndex));
       setQueue((q) => [...q, exIndex]);
     }
