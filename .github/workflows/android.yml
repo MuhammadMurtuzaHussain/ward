@@ -76,6 +76,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: packages/engine/fixtures
       - uses: actions/download-artifact@v4
         with:
           name: ward-android
@@ -100,6 +103,14 @@ jobs:
             adb exec-out screencap -p > launch.png
             adb logcat -d > logcat.txt
             adb shell pidof org.ward.app
+            # Share to Ward: hand it a WhatsApp export the way WhatsApp's share sheet does.
+            adb push packages/engine/fixtures/pileon-roman-urdu.txt "/data/local/tmp/WhatsApp Chat with 8B Science.txt"
+            adb shell chmod 644 "'/data/local/tmp/WhatsApp Chat with 8B Science.txt'"
+            adb shell am start -W -a android.intent.action.SEND -t text/plain --eu android.intent.extra.STREAM "'file:///data/local/tmp/WhatsApp Chat with 8B Science.txt'" -n org.ward.app/.MainActivity
+            sleep 10
+            adb exec-out screencap -p > share.png
+            adb logcat -d > logcat.txt
+            adb shell pidof org.ward.app
             ! grep -E "FATAL EXCEPTION.*org\.ward\.app|AndroidRuntime.*org\.ward\.app" logcat.txt
       - uses: actions/upload-artifact@v4
         if: always()
@@ -107,6 +118,7 @@ jobs:
           name: ward-android-launch
           path: |
             launch.png
+            share.png
             logcat.txt
           retention-days: 14
 

@@ -85,6 +85,7 @@ public class ShareInPlugin extends Plugin {
                 if (col >= 0) name = c.getString(col);
             }
         }
+        if ("shared".equals(name) && uri.getLastPathSegment() != null) name = uri.getLastPathSegment();
         String mime = getContext().getContentResolver().getType(uri);
         try (InputStream in = getContext().getContentResolver().openInputStream(uri)) {
             if (in == null) return null;

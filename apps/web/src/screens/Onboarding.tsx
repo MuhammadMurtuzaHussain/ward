@@ -13,6 +13,7 @@ const STEPS = ["hello", "name", "age", "look", "promise"] as const;
 
 export function Onboarding() {
   const p = useStore((s) => s.profile);
+  const shared = useStore((s) => s.incoming);
   const [step, setStep] = useState(0);
   const [name, setName] = useState(p.name);
   const reduce = useReducedMotion();
@@ -26,6 +27,11 @@ export function Onboarding() {
       </div>
 
       <div className="pb-10 pt-8 lg:py-16">
+        {shared && (
+          <p role="status" className="mb-6 rounded-card bg-glow-soft px-4 py-3 font-semibold text-glow">
+            I've got the chat you shared. Let's say hello first, then I'll read it.
+          </p>
+        )}
         <div className="mb-8 flex gap-1.5" aria-hidden>
           {STEPS.map((s, i) => (
             <span key={s} className={`h-1.5 rounded-full transition-all duration-300 ${i <= step ? "w-8 bg-glow" : "w-4 bg-raised"}`} />
