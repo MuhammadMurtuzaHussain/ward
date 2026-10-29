@@ -63,7 +63,7 @@ One React app, three shells.
 | Shell | Inference | Notes |
 | --- | --- | --- |
 | Desktop (Electron: macOS, Windows, Linux) | Ollama on the machine: `gemma4:e4b` (vision too), `shieldgemma:2b` | Same pattern as Deis: built and launch-tested in GitHub Actions. |
-| Android APK (Capacitor) | In the app: Gemma 3 1B via wllama (llama.cpp in WebAssembly), downloaded once. Slang packs and pattern engine work with no model at all. Optional: pair with your own Ward desktop over home Wi-Fi. | App bundled inside the APK, works with the internet off. Built in Actions, launch-tested on an emulator. |
+| Android APK (Capacitor) | Slang packs and pattern engine on the device, no model needed. Optional: pair with the family computer's Gemma 4 over home Wi-Fi. (Gemma 3 1B in WebAssembly was tested and dropped: it cleared real insults as harmless.) | App bundled inside the APK, works with the internet off. Built in Actions, launch-tested on an emulator. |
 | Web (dev and demo) | Ollama if present, else wllama, else slang packs only | For judges who won't install anything. |
 
 ## Layout

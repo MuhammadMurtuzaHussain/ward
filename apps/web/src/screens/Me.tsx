@@ -81,7 +81,7 @@ export function Me() {
             onChange={(e) => updateProfile({ ollamaUrl: e.target.value.trim() })}
             className="mt-1.5 w-full rounded-btn border border-line bg-bg px-4 py-3 font-mono text-sm text-ink focus:border-glow focus:outline-none"
           />
-          <p className="mt-2 text-xs text-dim">On a phone, put your own computer's address here (same Wi-Fi) to use its Gemma.</p>
+          <p className="mt-2 text-xs text-dim">On a phone, put your family computer's address here (same Wi-Fi) to use its Gemma. On that computer, start Ollama with OLLAMA_HOST=0.0.0.0.</p>
         </Card>
       </div>
 
