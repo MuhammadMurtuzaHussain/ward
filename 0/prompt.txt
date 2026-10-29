@@ -1,0 +1,1 @@
+Build the three this-week pieces: Share to Ward from WhatsApp, the trusted-adult guide and teacher class mode, and a helpline-ready report plus docs/ROADMAP.md with the measurement plan. Then reframe the README as MVP plus approach.
