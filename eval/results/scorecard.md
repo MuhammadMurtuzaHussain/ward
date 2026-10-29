@@ -12,6 +12,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 59% | 94% | 0.72 | 78% |
 | ShieldGemma 2B | 14% | 70% | 0.23 | 54% |
 | Gemma 4 E4B | 86% | 86% | 0.86 | 86% |
+| Gemma 4 E2B | 1% | 100% | 0.02 | 51% |
 | Ward Lite | 83% | 86% | 0.84 | 85% |
 | Phone: packs + Ward Lite | 85% | 83% | 0.84 | 84% |
 
@@ -22,6 +23,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 10% | 83% | 0.18 | 54% |
 | ShieldGemma 2B | 14% | 93% | 0.24 | 56% |
 | Gemma 4 E4B | 65% | 78% | 0.71 | 74% |
+| Gemma 4 E2B | 0% | 0% | 0.00 | 50% |
 | Ward Lite | 32% | 71% | 0.44 | 60% |
 | Phone: packs + Ward Lite | 39% | 74% | 0.51 | 63% |
 
@@ -32,6 +34,7 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | Slang packs | 10% | 91% | 0.18 | 55% |
 | ShieldGemma 2B | 19% | 73% | 0.30 | 56% |
 | Gemma 4 E4B | 36% | 72% | 0.48 | 61% |
+| Gemma 4 E2B | 1% | 100% | 0.02 | 51% |
 | Ward Lite | 82% | 64% | 0.72 | 68% |
 | Phone: packs + Ward Lite | 83% | 64% | 0.72 | 68% |
 

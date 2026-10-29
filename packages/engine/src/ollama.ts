@@ -161,8 +161,7 @@ export class GemmaJudge implements Judge {
   }
 }
 
-export const JSON_INSTRUCTION = `Answer with only JSON, no other text, in exactly this shape:
-{"messages":[{"id":0,"hostile":false,"severity":0,"categories":[],"target":null,"why":""}]}`;
+export const JSON_INSTRUCTION = `Reply with only a JSON object, no other text: {"messages": [...]}, with one entry for EVERY message marked JUDGE, in order. Each entry has: "id" (the number after #), "hostile" (true or false), "severity" (0, 1, 2 or 3), "categories" (a list, possibly empty), "target" (a name or null), and "why" (a short reason).`;
 
 /** Constrained decoding usually gives clean JSON; be forgiving when a runtime wraps it in prose or fences. */
 function parseMessages(text: string): never[] {

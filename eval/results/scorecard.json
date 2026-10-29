@@ -35,6 +35,17 @@
         "accuracy": 0.86,
         "seconds": 0
       },
+      "Gemma 4 E2B": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 99,
+        "tn": 100,
+        "precision": 1,
+        "recall": 0.01,
+        "f1": 0.019801980198019802,
+        "accuracy": 0.505,
+        "seconds": 96.249
+      },
       "Ward Lite": {
         "tp": 83,
         "fp": 14,
@@ -55,7 +66,7 @@
         "recall": 0.85,
         "f1": 0.8415841584158417,
         "accuracy": 0.84,
-        "seconds": 0.038
+        "seconds": 0
       }
     },
     "Bangla": {
@@ -92,6 +103,17 @@
         "accuracy": 0.735,
         "seconds": 0
       },
+      "Gemma 4 E2B": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 100,
+        "tn": 100,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "accuracy": 0.5,
+        "seconds": 82.063
+      },
       "Ward Lite": {
         "tp": 32,
         "fp": 13,
@@ -112,7 +134,7 @@
         "recall": 0.39,
         "f1": 0.5098039215686275,
         "accuracy": 0.625,
-        "seconds": 0.045
+        "seconds": 0
       }
     },
     "English": {
@@ -149,6 +171,17 @@
         "accuracy": 0.61,
         "seconds": 0
       },
+      "Gemma 4 E2B": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 99,
+        "tn": 100,
+        "precision": 1,
+        "recall": 0.01,
+        "f1": 0.019801980198019802,
+        "accuracy": 0.505,
+        "seconds": 77.003
+      },
       "Ward Lite": {
         "tp": 82,
         "fp": 47,
@@ -158,7 +191,7 @@
         "recall": 0.82,
         "f1": 0.7161572052401746,
         "accuracy": 0.675,
-        "seconds": 0.001
+        "seconds": 0
       },
       "Phone: packs + Ward Lite": {
         "tp": 83,
@@ -169,7 +202,7 @@
         "recall": 0.83,
         "f1": 0.7217391304347824,
         "accuracy": 0.68,
-        "seconds": 0.02
+        "seconds": 0
       }
     }
   }

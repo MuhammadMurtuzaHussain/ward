@@ -36,7 +36,12 @@ function createWindow() {
   win.loadURL("app://ward/index.html");
   if (SMOKE) {
     win.webContents.once("did-finish-load", async () => {
-      const ok = await win.webContents.executeJavaScript("document.body.innerText.includes('Ward')");
+      // React renders after load; give it up to 10 s to put Ward on screen.
+      let ok = false;
+      for (let i = 0; i < 50 && !ok; i++) {
+        ok = await win.webContents.executeJavaScript("document.body.innerText.includes('Ward')");
+        if (!ok) await new Promise((r) => setTimeout(r, 200));
+      }
       console.log(ok ? "smoke: ok" : "smoke: page loaded without Ward");
       app.exit(ok ? 0 : 1);
     });
