@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- No network at all: this page can't upload anything it opens. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Ward case viewer</title>
+<!--
+  Ward case viewer. Opens a ward-report.json (format: docs/REPORT.md), checks it wasn't edited
+  after the child saved the evidence, and lays the case out for intake. One file, no
+  dependencies, no network: save it, double-click it, use it offline. Read it before you trust
+  it; it's short. Part of Ward, MIT licence: https://github.com/MuhammadMurtuzaHussain/ward
+-->
+<style>
+  :root {
+    --bg: #f6f6f8; --surface: #ffffff; --raised: #eeeef3; --line: #dcdce5; --ink: #17183a; --dim: #565a76;
+    --accent: #3d47c9; --accent-soft: #e7e8fb; --ok: #1d7a4c; --ok-soft: #e1f3ea; --alarm: #b3261e; --alarm-soft: #fbe6e4;
+    --warn: #8a5a00; --warn-soft: #fbf0d9; --r: 12px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101124; --surface: #17183a; --raised: #212350; --line: #2f3266; --ink: #f1f0f7; --dim: #a9abc8;
+      --accent: #9fa6ff; --accent-soft: #262a63; --ok: #6fd6a2; --ok-soft: #163a2c; --alarm: #ff8a80; --alarm-soft: #45201f;
+      --warn: #f0c36b; --warn-soft: #3d3016;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Nastaliq Urdu", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1, h2, h3 { line-height: 1.25; margin: 0; }
+  h1 { font-size: 22px; letter-spacing: -0.01em; }
+  h2 { font-size: 16px; margin-bottom: 10px; }
+  p { margin: 0; }
+  .dim { color: var(--dim); }
+  .small { font-size: 13px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { flex: none; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+  button, label.btn { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-weight: 600; border-radius: 999px; padding: 8px 16px; min-height: 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  button:hover, label.btn:hover { border-color: var(--accent); }
+  button.primary, label.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { button.primary, label.btn.primary { color: #101124; } }
+  button:focus-visible, label.btn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .drop { border: 2px dashed var(--line); border-radius: var(--r); background: var(--surface); padding: 48px 24px; text-align: center; display: grid; gap: 14px; justify-items: center; }
+  .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; }
+  .grid { display: grid; gap: 14px; }
+  @media (min-width: 760px) { .grid.four { grid-template-columns: repeat(4, 1fr); } .grid.two { grid-template-columns: 1fr 1fr; } }
+  .banner { border-radius: var(--r); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; border: 1px solid transparent; }
+  .banner.ok { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, transparent); }
+  .banner.bad { background: var(--alarm-soft); border-color: color-mix(in srgb, var(--alarm) 45%, transparent); }
+  .banner.warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+  .banner strong { display: block; font-size: 16px; }
+  .banner.ok strong { color: var(--ok); } .banner.bad strong { color: var(--alarm); } .banner.warn strong { color: var(--warn); }
+  .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); margin-bottom: 6px; }
+  .big { font-size: 18px; font-weight: 700; }
+  .alarm { color: var(--alarm); } .ok { color: var(--ok); }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 9px; background: var(--raised); color: var(--dim); margin: 2px 4px 2px 0; white-space: nowrap; }
+  .pill.s3 { background: var(--alarm-soft); color: var(--alarm); } .pill.s2 { background: var(--warn-soft); color: var(--warn); } .pill.cat-danger { background: var(--alarm-soft); color: var(--alarm); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+  dt { color: var(--dim); } dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+  section { margin-top: 18px; }
+  ul.facts { margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: start; padding: 9px 10px; border-top: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); border-top: 0; }
+  td.msg { min-width: 240px; } td.msg p { white-space: pre-wrap; overflow-wrap: anywhere; font-weight: 600; } td.msg .note { font-weight: 400; color: var(--dim); font-size: 13px; margin-top: 2px; }
+  td.time { white-space: nowrap; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .fp { font-size: 13px; white-space: nowrap; }
+  tr.s3 td:first-child { box-shadow: inset 3px 0 0 var(--alarm); }
+  [dir=rtl] tr.s3 td:first-child { box-shadow: inset -3px 0 0 var(--alarm); }
+  details { margin-top: 18px; } summary { cursor: pointer; font-weight: 700; min-height: 32px; }
+  .hidden { display: none !important; }
+  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 16px; border-radius: 999px; font-weight: 600; }
+  @media print {
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .toolbar, .noprint, .drop { display: none !important; }
+    .card, .banner { break-inside: avoid; border-color: #bbb; }
+    tr { break-inside: avoid; }
+    main { padding: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <div class="brand">
+      <svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 1C7.3 1 2 6.8 2 14.5V31c0 1 1.1 1.5 1.9.9l3.1-2.4 3.1 2.4c.6.5 1.4.5 2 0L15 29.5l2.9 2.4c.6.5 1.4.5 2 0l3.1-2.4 3.1 2.4c.8.6 1.9.1 1.9-.9V14.5C28 6.8 22.7 1 15 1Z" fill="var(--accent)"/><circle cx="10.5" cy="14" r="2.2" fill="var(--surface)"/><circle cx="19.5" cy="14" r="2.2" fill="var(--surface)"/></svg>
+      <div>
+        <h1>Ward case viewer</h1>
+        <p class="dim small">Works offline. Nothing you open here leaves this computer.</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="btn primary">Open a report<input type="file" id="file" accept=".json,application/json"></label>
+      <span id="caseTools" class="toolbar hidden">
+        <button id="copy" type="button">Copy case summary</button>
+        <button id="csv" type="button">Download CSV</button>
+        <button id="print" type="button">Print</button>
+      </span>
+    </div>
+  </header>
+
+  <div id="empty" class="drop" tabindex="-1">
+    <p class="big">Drop a ward-report.json here</p>
+    <p class="dim" style="max-width:56ch">A child makes this file in Ward and chooses to give it to you. This page checks that the messages weren't edited after they were saved, then lays out the case.</p>
+    <button id="sampleBtn" type="button">Try a sample report</button>
+  </div>
+
+  <div id="error" class="banner bad hidden" role="alert"></div>
+  <div id="case" class="hidden" aria-live="polite"></div>
+
+  <details class="noprint">
+    <summary>What the checks prove, and what they don't</summary>
+    <div class="dim" style="display:grid;gap:8px;margin-top:8px;max-width:72ch">
+      <p><b>The digest</b> is SHA-256 over the conversation facts and every incident. If any message, time, name or count in this file was changed after Ward made it, the digest won't match.</p>
+      <p><b>Each message's fingerprint</b> is SHA-256 of sender, time and text, taken when the child saved the chat in Ward's locked vault. A match means that message is exactly as saved.</p>
+      <p><b>What neither proves:</b> that the chat export itself was genuine. If it matters, ask the child to show you the conversation in the app. Times come from the child's chat export and are shown in this computer's time zone.</p>
+      <p>Only hurtful messages from others are in a report. The rest of the chat, the child's own messages, and anyone who stood up for them stay on the child's phone.</p>
+    </div>
+  </details>
+</main>
+
+<script type="application/json" id="sample">{"schema":"ward.report/v1","createdAt":"2026-10-29T23:03:10.561Z","recipient":"helpline","tool":{"name":"Ward","version":"0.1.0","models":[],"languages":["en","ur-Latn","hi-Latn","bn"]},"reporter":{"firstName":"Ayesha","ageBand":"11","city":"Lahore","country":"Pakistan"},"safety":{"inDangerNow":false,"level":"urgent","dangerous":["selfharm","threat","exposure"]},"wants":[{"id":"stop","label":"Make it stop"},{"id":"school","label":"Tell my school"}],"conversation":{"title":"8B Science (sample)","platform":"WhatsApp","source":"whatsapp","messages":16,"participants":7,"firstIncident":"2026-10-12T21:42:00.000Z","lastIncident":"2026-10-14T21:05:00.000Z","days":3},"accounts":[{"name":"Hamza","hurtfulMessages":2,"worstSeverity":3,"addedDuringChat":false,"onlyAttacked":false},{"name":"xx.ghost.xx","hurtfulMessages":2,"worstSeverity":3,"addedDuringChat":true,"onlyAttacked":true},{"name":"Bilal","hurtfulMessages":3,"worstSeverity":2,"addedDuringChat":false,"onlyAttacked":false},{"name":"Shadow_786","hurtfulMessages":2,"worstSeverity":2,"addedDuringChat":true,"onlyAttacked":true},{"name":"Usman","hurtfulMessages":1,"worstSeverity":2,"addedDuringChat":false,"onlyAttacked":false}],"patterns":[{"kind":"danger","fact":"Dangerous messages: telling the child to hurt or kill themselves; threats to share photos or private information."},{"kind":"campaign","fact":"Repeated targeting: Bilal (3 messages over 3 days)."},{"kind":"pileon","fact":"Pile-on: 5 people sent hurtful messages within one hour (Bilal, Hamza, Usman, Shadow_786, xx.ghost.xx)."},{"kind":"ghosts","fact":"Accounts that only sent hurtful messages after being added to the group: Shadow_786, xx.ghost.xx."},{"kind":"exclusion","fact":"Exclusion: members talked about keeping someone out of the group."},{"kind":"nightwatch","fact":"4 hurtful messages were sent between 11pm and 5am."},{"kind":"escalating","fact":"The messages became more severe over time."}],"incidents":[{"at":"2026-10-12T21:42:00.000Z","from":"Bilal","text":"haan moti lag rahi thi bilkul bhains 😂😂","severity":2,"categories":["appearance"],"why":"\"moti\" (fat (girl)), \"bhains\" (buffalo (fat-shaming)), \"mota\" (fat (boy))","sha256":"3fb9767e9d14ded9bd36bf7a1b8ee4184970b71613eee46063655caa2380201d"},{"at":"2026-10-12T21:43:00.000Z","from":"Hamza","text":"rone wali aa gayi","severity":1,"categories":["mockery"],"why":"\"rone wali\" (crybaby), \"rone wala\" (crybaby)","sha256":"64b7cef32246bb0c90732d46e5224fab35a0fc14a89bfe73f35617b2d4c4a576"},{"at":"2026-10-12T21:44:00.000Z","from":"Usman","text":"ayesha teri shakal dekh ke hi pata chal jata hai","severity":2,"categories":["appearance"],"why":"\"shakal dekh\" (look at your face), \"teri shakal\" (your face)","sha256":"0805333596dd32e975ec93a23ac5c7ea913702825a0895664ebc12906d231292"},{"at":"2026-10-12T22:16:00.000Z","from":"Shadow_786","text":"ayesha tujhe koi pasand nahi karta","severity":2,"categories":["exclusion"],"why":"\"koi pasand nahi karta\" (nobody likes (you))","sha256":"126f904ff1b4422741503cc51fb7e7372c96b9212b4757ccaa6f85fdf62f5d52"},{"at":"2026-10-12T22:16:00.000Z","from":"xx.ghost.xx","text":"haan isko group se nikalo yaar","severity":2,"categories":["exclusion"],"why":"\"group se nikalo\" (remove from the group)","sha256":"e6b9f326115a46bc9610c3808ea72160fabe898cef7b92fbca08ea0c92a8200a"},{"at":"2026-10-12T22:17:00.000Z","from":"Shadow_786","text":"moti bhains 🐃","severity":2,"categories":["appearance"],"why":"\"moti\" (fat (girl)), \"bhains\" (buffalo (fat-shaming)), \"mota\" (fat (boy))","sha256":"cd0bbbd493552fbd6002f5382d9bef42b77d89c1c23ae814cfd116898cb79fb4"},{"at":"2026-10-12T22:18:00.000Z","from":"xx.ghost.xx","text":"tu mar kyun nahi jati","severity":3,"categories":["selfharm"],"why":"\"mar kyun nahi jati\" (why don't you die), \"mar kyun nahi jata\" (why don't you die)","sha256":"e287ce16b952b306beae39d05a082c72e0b13de537a22536fb35e84788d9b24c"},{"at":"2026-10-13T20:10:00.000Z","from":"Bilal","text":"ayesha kal school ke baad bahar milna","severity":2,"categories":["threat"],"why":"\"bahar milna\" (meet me outside)","sha256":"5ce3e12423753c2c89e9adf13919b202516510238d4e144e534e1ce0d6a469eb"},{"at":"2026-10-13T20:12:00.000Z","from":"Hamza","text":"tumhari pics sab ko bhej dunga","severity":3,"categories":["exposure"],"why":"\"sab ko bhej dunga\" (I'll send it to everyone)","sha256":"c41485eb74be236800bece0ae1e12e1265cf199ce76d661b9d5d99f357ddd6e6"},{"at":"2026-10-14T21:05:00.000Z","from":"Bilal","text":"ayesha nikammi","severity":2,"categories":["insult"],"why":"\"nikammi\" (worthless), \"nikamma\" (worthless)","sha256":"802bb6f2b8d733704146aef3d8560b928239c5c9173fc7fc1bf3eba3e18ea5f6"}],"integrity":{"algorithm":"SHA-256","savedAt":"2026-10-15T10:00:00.000Z","perMessage":true,"digest":"d5a258cef177f0ab005118cf661ceaabc0a3bf1e3942aca30fea68a2bae02510"}}</script>
+<script>
+"use strict";
+
+/* <verify> Same checks as verifyReport in packages/engine/src/report.ts. */
+async function sha256(s) {
+  const h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return [...new Uint8Array(h)].map((x) => x.toString(16).padStart(2, "0")).join("");
+}
+
+function problem(r) {
+  if (!r || typeof r !== "object") return "This file isn't a Ward report.";
+  if (r.schema !== "ward.report/v1") return `This isn't a Ward report this viewer knows (schema: ${String(r.schema ?? "none")}).`;
+  for (const k of ["conversation", "incidents", "integrity", "safety"]) if (!r[k]) return `The report is missing its "${k}" section.`;
+  if (!Array.isArray(r.incidents)) return "The report's incidents aren't a list.";
+  return null;
+}
+
+async function checkReport(r) {
+  const digestOk = (await sha256(JSON.stringify({ conversation: r.conversation, incidents: r.incidents }))) === r.integrity.digest;
+  const perMessage = await Promise.all(r.incidents.map(async (i) => (await sha256(`${i.from}|${i.at ?? ""}|${i.text}`)) === i.sha256));
+  return { digestOk, perMessage };
+}
+/* </verify> */
+
+const SEVERITY = { 1: "Unkind", 2: "Bullying", 3: "Dangerous" };
+const LEVEL = { calm: "Looks okay", watch: "Unkind, no pattern yet", bullying: "Bullying", urgent: "Urgent: dangerous messages" };
+const CATEGORY = {
+  insult: "Insults", appearance: "About appearance", identity: "About identity", exclusion: "Exclusion", threat: "Threats",
+  selfharm: "Urging self-harm", sexual: "Sexual", exposure: "Sharing private images or details", mockery: "Mockery",
+};
+const DANGER = ["threat", "selfharm", "sexual", "exposure"];
+const AGE = { 8: "8 to 10", 11: "11 to 13", 14: "14 to 17" };
+const RECIPIENT = { helpline: "a helpline", school: "their school", police: "the police", adult: "a trusted adult" };
+const PATTERN = {
+  danger: "Dangerous messages", campaign: "Repeated targeting", pileon: "Pile-on", ghosts: "Accounts that only attacked",
+  exclusion: "Exclusion", nightwatch: "At night", escalating: "Getting worse",
+};
+
+let current = null;
+
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) el.append(k instanceof Node ? k : document.createTextNode(String(k)));
+  return el;
+}
+
+const when = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "No time");
+const pill = (text, cls) => h("span", { class: `pill ${cls || ""}` }, text);
+const catPills = (cats) => (cats || []).map((c) => pill(CATEGORY[c] || c, DANGER.includes(c) ? "cat-danger" : ""));
+
+function show(el) { el.classList.remove("hidden"); }
+function hide(el) { el.classList.add("hidden"); }
+
+function fail(msg) {
+  const e = document.getElementById("error");
+  e.replaceChildren(h("div", null, h("strong", null, "Can't open this file"), h("p", null, msg)));
+  show(e);
+}
+
+async function open(text, name) {
+  hide(document.getElementById("error"));
+  let r;
+  try { r = JSON.parse(text); } catch { return fail(`${name || "The file"} isn't valid JSON. Ward reports are the ward-report.json file, not the HTML page.`); }
+  const p = problem(r);
+  if (p) return fail(p);
+  let check;
+  try { check = await checkReport(r); } catch {
+    return fail(isSecureContext
+      ? "This browser can't run the integrity check (it needs Web Crypto). Try a recent Chrome, Edge, Firefox or Safari."
+      : "The browser blocks the integrity check where this page is open now. Save the viewer file and double-click it, or open it from an https:// address.");
+  }
+  current = { r, check };
+  render(r, check);
+}
+
+function render(r, check) {
+  const c = r.conversation, s = r.safety;
+  const okMsgs = check.perMessage.filter(Boolean).length, n = r.incidents.length;
+  const allOk = check.digestOk && okMsgs === n;
+
+  const banner = allOk
+    ? h("div", { class: "banner ok", role: "status" }, h("div", null, h("strong", null, "Unchanged since it was saved"), h("p", null, `The digest matches, and all ${n} messages match the fingerprints taken when the child saved them on ${when(r.integrity.savedAt)}.`)))
+    : h("div", { class: "banner bad", role: "alert" }, h("div", null, h("strong", null, "This report was changed after Ward made it"),
+        h("p", null, `${check.digestOk ? "The digest matches, but " : `The digest doesn't match${okMsgs < n ? ", and " : ". "}`}${okMsgs < n ? `${n - okMsgs} of ${n} message${n - okMsgs === 1 ? " doesn't" : "s don't"} match the fingerprints taken when it was saved. ` : ""}Treat the content below with care, and ask the child for the original file or to show you the chat.`)));
+
+  const danger = s.inDangerNow === true;
+  const safety = h("div", { class: "card" },
+    h("div", { class: "label" }, "Safety"),
+    h("p", { class: `big ${danger ? "alarm" : ""}` }, s.inDangerNow === true ? "Child says they're in danger now" : s.inDangerNow === false ? "Child says they're not in danger now" : "Child skipped the danger question"),
+    h("p", { class: s.level === "urgent" ? "alarm" : "dim", style: "margin-top:6px;font-weight:600" }, `Ward's reading: ${LEVEL[s.level] || s.level}`),
+    s.dangerous?.length ? h("p", { style: "margin-top:6px" }, catPills(s.dangerous)) : null);
+
+  const wants = h("div", { class: "card" }, h("div", { class: "label" }, "The child wants"),
+    r.wants?.length ? h("ul", { class: "facts" }, r.wants.map((w) => h("li", null, w.label || w.id))) : h("p", { class: "dim" }, "Not said"));
+
+  const rep = r.reporter || {};
+  const about = h("div", { class: "card" }, h("div", { class: "label" }, "About the child"),
+    Object.keys(rep).length
+      ? h("dl", null,
+          rep.firstName ? [h("dt", null, "Name"), h("dd", { dir: "auto" }, rep.firstName)] : null,
+          rep.ageBand ? [h("dt", null, "Age"), h("dd", null, AGE[rep.ageBand] || rep.ageBand)] : null,
+          rep.city ? [h("dt", null, "City"), h("dd", { dir: "auto" }, rep.city)] : null,
+          rep.country ? [h("dt", null, "Country"), h("dd", { dir: "auto" }, rep.country)] : null)
+      : h("p", { class: "dim" }, "The child chose not to share details."),
+    h("p", { class: "dim small", style: "margin-top:8px" }, `Made for ${RECIPIENT[r.recipient] || r.recipient} on ${when(r.createdAt)}`));
+
+  const convo = h("div", { class: "card" }, h("div", { class: "label" }, "Conversation"),
+    h("dl", null,
+      h("dt", null, "Chat"), h("dd", { dir: "auto" }, c.title),
+      h("dt", null, "App"), h("dd", null, `${c.platform}${c.source === "whatsapp" ? " (exported chat)" : c.source === "paste" ? " (pasted)" : ""}`),
+      h("dt", null, "Size"), h("dd", null, `${c.messages} messages, ${c.participants} people`),
+      h("dt", null, "Hurtful"), h("dd", null, `${n} messages over ${c.days} day${c.days === 1 ? "" : "s"}`),
+      h("dt", null, "From"), h("dd", null, when(c.firstIncident)),
+      h("dt", null, "To"), h("dd", null, when(c.lastIncident))));
+
+  const accounts = h("section", null, h("h2", null, "Accounts that sent hurtful messages"),
+    h("div", { class: "card table-wrap" }, h("table", null,
+      h("thead", null, h("tr", null, h("th", null, "Account, as named in the chat"), h("th", null, "Messages"), h("th", null, "Worst"), h("th", null, "Notes"))),
+      h("tbody", null, (r.accounts || []).map((a) => h("tr", null,
+        h("td", { dir: "auto", style: "font-weight:600" }, a.name),
+        h("td", null, a.hurtfulMessages),
+        h("td", null, pill(SEVERITY[a.worstSeverity] || a.worstSeverity, `s${a.worstSeverity}`)),
+        h("td", { class: "dim" }, [a.addedDuringChat ? "Added to the group during the chat" : null, a.onlyAttacked ? "Only ever sent hurtful messages" : null].filter(Boolean).join(". ") || "")))))));
+
+  const patterns = (r.patterns || []).length
+    ? h("section", null, h("h2", null, "Patterns Ward found"), h("div", { class: "card" }, h("ul", { class: "facts" }, r.patterns.map((p) => h("li", { title: PATTERN[p.kind] || p.kind }, p.fact)))))
+    : null;
+
+  const incidents = h("section", null, h("h2", null, `Every hurtful message (${n})`),
+    h("div", { class: "card table-wrap" }, h("table", null,
+      h("thead", null, h("tr", null, h("th", null, "When"), h("th", null, "From"), h("th", null, "Message"), h("th", null, "How bad"), h("th", null, "Fingerprint"))),
+      h("tbody", null, r.incidents.map((i, k) => h("tr", { class: `s${i.severity}` },
+        h("td", { class: "time" }, when(i.at)),
+        h("td", { dir: "auto", style: "font-weight:600" }, i.from),
+        h("td", { class: "msg" }, h("p", { dir: "auto" }, i.text), i.why ? h("p", { class: "note", dir: "auto" }, i.why) : null),
+        h("td", null, pill(SEVERITY[i.severity] || i.severity, `s${i.severity}`), h("div", null, catPills(i.categories))),
+        h("td", { class: "fp" }, check.perMessage[k] ? h("span", { class: "ok", title: i.sha256 }, "✓ Matches") : h("span", { class: "alarm", title: i.sha256 }, "✗ Changed"))))))));
+
+  const tool = h("p", { class: "dim small", style: "margin-top:14px" },
+    `Made with Ward ${r.tool?.version || ""}. Read by: ${(r.tool?.models || []).length ? r.tool.models.join(", ") + " and " : ""}word lists (${(r.tool?.languages || []).join(", ")}). Ward's notes help you scan; the messages themselves are the evidence.`);
+
+  const el = document.getElementById("case");
+  el.replaceChildren(banner, h("div", { class: "grid four" }, safety, wants, about, convo), accounts, patterns, incidents, tool);
+  show(el);
+  hide(document.getElementById("empty"));
+  show(document.getElementById("caseTools"));
+  document.title = `${c.title} · Ward case viewer`;
+  el.scrollIntoView({ block: "start" });
+}
+
+function summary({ r, check }) {
+  const c = r.conversation, s = r.safety, rep = r.reporter || {};
+  const n = r.incidents.length, ok = check.digestOk && check.perMessage.every(Boolean);
+  return [
+    `Ward report: ${c.title} (${c.platform})`,
+    `Integrity: ${ok ? "unchanged since saved (digest and all message fingerprints match)" : "CHANGED after it was made, do not rely on it without the original"}`,
+    `In danger now (child's answer): ${s.inDangerNow === true ? "YES" : s.inDangerNow === false ? "no" : "not answered"}`,
+    `Ward's reading: ${LEVEL[s.level] || s.level}${s.dangerous?.length ? `; ${s.dangerous.map((d) => CATEGORY[d] || d).join(", ")}` : ""}`,
+    `Child: ${[rep.firstName, rep.ageBand ? `age ${AGE[rep.ageBand] || rep.ageBand}` : "", rep.city, rep.country].filter(Boolean).join(", ") || "not shared"}`,
+    `Wants: ${(r.wants || []).map((w) => w.label).join("; ") || "not said"}`,
+    `${n} hurtful messages over ${c.days} day(s), ${when(c.firstIncident)} to ${when(c.lastIncident)}`,
+    `Accounts: ${(r.accounts || []).map((a) => `${a.name} (${a.hurtfulMessages}${a.onlyAttacked ? ", only attacked" : ""})`).join(", ")}`,
+    ...(r.patterns || []).map((p) => `- ${p.fact}`),
+    `Digest (SHA-256): ${r.integrity.digest}`,
+  ].join("\n");
+}
+
+function cell(v) {
+  let s = String(v ?? "");
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; // keep spreadsheets from running a message as a formula
+  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function csv({ r, check }) {
+  const head = ["time_iso", "from", "severity", "severity_label", "categories", "message", "ward_note", "sha256", "fingerprint_ok"];
+  const rows = r.incidents.map((i, k) => [i.at ?? "", i.from, i.severity, SEVERITY[i.severity] || "", (i.categories || []).join(";"), i.text, i.why, i.sha256, check.perMessage[k] ? "yes" : "no"]);
+  return "﻿" + [head, ...rows].map((row) => row.map(cell).join(",")).join("\r\n") + "\r\n";
+}
+
+function toast(msg) {
+  const t = h("div", { class: "toast", role: "status" }, msg);
+  document.body.append(t);
+  setTimeout(() => t.remove(), 1800);
+}
+
+document.getElementById("file").addEventListener("change", async (e) => {
+  const f = e.target.files?.[0];
+  if (f) await open(await f.text(), f.name);
+  e.target.value = "";
+});
+const drop = document.getElementById("empty");
+for (const ev of ["dragenter", "dragover"]) document.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); });
+for (const ev of ["dragleave", "drop"]) document.addEventListener(ev, () => drop.classList.remove("over"));
+document.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  const f = e.dataTransfer?.files?.[0];
+  if (f) await open(await f.text(), f.name);
+});
+document.getElementById("sampleBtn").addEventListener("click", () => open(document.getElementById("sample").textContent, "The sample"));
+document.getElementById("copy").addEventListener("click", async () => {
+  if (!current) return;
+  try { await navigator.clipboard.writeText(summary(current)); toast("Case summary copied"); }
+  catch { toast("Couldn't copy here. Use Print instead."); }
+});
+document.getElementById("csv").addEventListener("click", () => {
+  if (!current) return;
+  const url = URL.createObjectURL(new Blob([csv(current)], { type: "text/csv;charset=utf-8" }));
+  const a = h("a", { href: url, download: `${current.r.conversation.title.replace(/[^\p{L}\p{N} _-]+/gu, "").trim() || "ward-case"} - incidents.csv` });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+document.getElementById("print").addEventListener("click", () => window.print());
+</script>
+</body>
+</html>

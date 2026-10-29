@@ -40,7 +40,15 @@ complete saves that time on every case.
 
 ## Checking a report
 
-Recompute the digest and compare. In JavaScript, with the same function Ward uses
+The easy way: open [`viewer/ward-viewer.html`](../viewer/ward-viewer.html), the Ward case viewer.
+It's one file with no dependencies and no network access (its content-security policy blocks
+every request), so a caseworker can save it, double-click it and drop a `ward-report.json` on it,
+offline. It checks the digest and every message's fingerprint, then lays the case out for intake:
+safety first, what the child wants, the accounts, the patterns and every message. It can copy a
+plain-text case summary, download the messages as CSV (with spreadsheet formulas neutralised) or
+print. It also ships inside every Ward build as `ward-viewer.html`.
+
+By hand: recompute the digest and compare. In JavaScript, with the same function Ward uses
 (`verifyReport` in `packages/engine/src/report.ts`):
 
 ```js

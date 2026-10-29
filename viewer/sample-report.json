@@ -1,0 +1,236 @@
+{
+  "schema": "ward.report/v1",
+  "createdAt": "2026-10-29T23:03:10.561Z",
+  "recipient": "helpline",
+  "tool": {
+    "name": "Ward",
+    "version": "0.1.0",
+    "models": [],
+    "languages": [
+      "en",
+      "ur-Latn",
+      "hi-Latn",
+      "bn"
+    ]
+  },
+  "reporter": {
+    "firstName": "Ayesha",
+    "ageBand": "11",
+    "city": "Lahore",
+    "country": "Pakistan"
+  },
+  "safety": {
+    "inDangerNow": false,
+    "level": "urgent",
+    "dangerous": [
+      "selfharm",
+      "threat",
+      "exposure"
+    ]
+  },
+  "wants": [
+    {
+      "id": "stop",
+      "label": "Make it stop"
+    },
+    {
+      "id": "school",
+      "label": "Tell my school"
+    }
+  ],
+  "conversation": {
+    "title": "8B Science (sample)",
+    "platform": "WhatsApp",
+    "source": "whatsapp",
+    "messages": 16,
+    "participants": 7,
+    "firstIncident": "2026-10-12T21:42:00.000Z",
+    "lastIncident": "2026-10-14T21:05:00.000Z",
+    "days": 3
+  },
+  "accounts": [
+    {
+      "name": "Hamza",
+      "hurtfulMessages": 2,
+      "worstSeverity": 3,
+      "addedDuringChat": false,
+      "onlyAttacked": false
+    },
+    {
+      "name": "xx.ghost.xx",
+      "hurtfulMessages": 2,
+      "worstSeverity": 3,
+      "addedDuringChat": true,
+      "onlyAttacked": true
+    },
+    {
+      "name": "Bilal",
+      "hurtfulMessages": 3,
+      "worstSeverity": 2,
+      "addedDuringChat": false,
+      "onlyAttacked": false
+    },
+    {
+      "name": "Shadow_786",
+      "hurtfulMessages": 2,
+      "worstSeverity": 2,
+      "addedDuringChat": true,
+      "onlyAttacked": true
+    },
+    {
+      "name": "Usman",
+      "hurtfulMessages": 1,
+      "worstSeverity": 2,
+      "addedDuringChat": false,
+      "onlyAttacked": false
+    }
+  ],
+  "patterns": [
+    {
+      "kind": "danger",
+      "fact": "Dangerous messages: telling the child to hurt or kill themselves; threats to share photos or private information."
+    },
+    {
+      "kind": "campaign",
+      "fact": "Repeated targeting: Bilal (3 messages over 3 days)."
+    },
+    {
+      "kind": "pileon",
+      "fact": "Pile-on: 5 people sent hurtful messages within one hour (Bilal, Hamza, Usman, Shadow_786, xx.ghost.xx)."
+    },
+    {
+      "kind": "ghosts",
+      "fact": "Accounts that only sent hurtful messages after being added to the group: Shadow_786, xx.ghost.xx."
+    },
+    {
+      "kind": "exclusion",
+      "fact": "Exclusion: members talked about keeping someone out of the group."
+    },
+    {
+      "kind": "nightwatch",
+      "fact": "4 hurtful messages were sent between 11pm and 5am."
+    },
+    {
+      "kind": "escalating",
+      "fact": "The messages became more severe over time."
+    }
+  ],
+  "incidents": [
+    {
+      "at": "2026-10-12T21:42:00.000Z",
+      "from": "Bilal",
+      "text": "haan moti lag rahi thi bilkul bhains 😂😂",
+      "severity": 2,
+      "categories": [
+        "appearance"
+      ],
+      "why": "\"moti\" (fat (girl)), \"bhains\" (buffalo (fat-shaming)), \"mota\" (fat (boy))",
+      "sha256": "3fb9767e9d14ded9bd36bf7a1b8ee4184970b71613eee46063655caa2380201d"
+    },
+    {
+      "at": "2026-10-12T21:43:00.000Z",
+      "from": "Hamza",
+      "text": "rone wali aa gayi",
+      "severity": 1,
+      "categories": [
+        "mockery"
+      ],
+      "why": "\"rone wali\" (crybaby), \"rone wala\" (crybaby)",
+      "sha256": "64b7cef32246bb0c90732d46e5224fab35a0fc14a89bfe73f35617b2d4c4a576"
+    },
+    {
+      "at": "2026-10-12T21:44:00.000Z",
+      "from": "Usman",
+      "text": "ayesha teri shakal dekh ke hi pata chal jata hai",
+      "severity": 2,
+      "categories": [
+        "appearance"
+      ],
+      "why": "\"shakal dekh\" (look at your face), \"teri shakal\" (your face)",
+      "sha256": "0805333596dd32e975ec93a23ac5c7ea913702825a0895664ebc12906d231292"
+    },
+    {
+      "at": "2026-10-12T22:16:00.000Z",
+      "from": "Shadow_786",
+      "text": "ayesha tujhe koi pasand nahi karta",
+      "severity": 2,
+      "categories": [
+        "exclusion"
+      ],
+      "why": "\"koi pasand nahi karta\" (nobody likes (you))",
+      "sha256": "126f904ff1b4422741503cc51fb7e7372c96b9212b4757ccaa6f85fdf62f5d52"
+    },
+    {
+      "at": "2026-10-12T22:16:00.000Z",
+      "from": "xx.ghost.xx",
+      "text": "haan isko group se nikalo yaar",
+      "severity": 2,
+      "categories": [
+        "exclusion"
+      ],
+      "why": "\"group se nikalo\" (remove from the group)",
+      "sha256": "e6b9f326115a46bc9610c3808ea72160fabe898cef7b92fbca08ea0c92a8200a"
+    },
+    {
+      "at": "2026-10-12T22:17:00.000Z",
+      "from": "Shadow_786",
+      "text": "moti bhains 🐃",
+      "severity": 2,
+      "categories": [
+        "appearance"
+      ],
+      "why": "\"moti\" (fat (girl)), \"bhains\" (buffalo (fat-shaming)), \"mota\" (fat (boy))",
+      "sha256": "cd0bbbd493552fbd6002f5382d9bef42b77d89c1c23ae814cfd116898cb79fb4"
+    },
+    {
+      "at": "2026-10-12T22:18:00.000Z",
+      "from": "xx.ghost.xx",
+      "text": "tu mar kyun nahi jati",
+      "severity": 3,
+      "categories": [
+        "selfharm"
+      ],
+      "why": "\"mar kyun nahi jati\" (why don't you die), \"mar kyun nahi jata\" (why don't you die)",
+      "sha256": "e287ce16b952b306beae39d05a082c72e0b13de537a22536fb35e84788d9b24c"
+    },
+    {
+      "at": "2026-10-13T20:10:00.000Z",
+      "from": "Bilal",
+      "text": "ayesha kal school ke baad bahar milna",
+      "severity": 2,
+      "categories": [
+        "threat"
+      ],
+      "why": "\"bahar milna\" (meet me outside)",
+      "sha256": "5ce3e12423753c2c89e9adf13919b202516510238d4e144e534e1ce0d6a469eb"
+    },
+    {
+      "at": "2026-10-13T20:12:00.000Z",
+      "from": "Hamza",
+      "text": "tumhari pics sab ko bhej dunga",
+      "severity": 3,
+      "categories": [
+        "exposure"
+      ],
+      "why": "\"sab ko bhej dunga\" (I'll send it to everyone)",
+      "sha256": "c41485eb74be236800bece0ae1e12e1265cf199ce76d661b9d5d99f357ddd6e6"
+    },
+    {
+      "at": "2026-10-14T21:05:00.000Z",
+      "from": "Bilal",
+      "text": "ayesha nikammi",
+      "severity": 2,
+      "categories": [
+        "insult"
+      ],
+      "why": "\"nikammi\" (worthless), \"nikamma\" (worthless)",
+      "sha256": "802bb6f2b8d733704146aef3d8560b928239c5c9173fc7fc1bf3eba3e18ea5f6"
+    }
+  ],
+  "integrity": {
+    "algorithm": "SHA-256",
+    "savedAt": "2026-10-15T10:00:00.000Z",
+    "perMessage": true,
+    "digest": "d5a258cef177f0ab005118cf661ceaabc0a3bf1e3942aca30fea68a2bae02510"
+  }
+}

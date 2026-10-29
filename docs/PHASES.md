@@ -84,6 +84,14 @@ Still to do: branching stories.
 | **One-click desktop** | Gemma bundled through llama.cpp inside the desktop app, no Ollama install; a lab mode that wipes itself for shared school computers | Fresh machine to first close read with one download |
 | **Give Ward to a friend** | Share the app's own APK over Bluetooth or Nearby Share, no internet needed; Play Store and F-Droid listings | APK shared phone to phone in CI |
 
+**Phase 4 progress (2026-10-29).** The caseworker viewer shipped: `viewer/ward-viewer.html`, one
+self-contained file that works offline and can't make network requests. It verifies the digest
+and each message's fingerprint (flagging exactly which message changed), shows safety and the
+child's wishes first, and exports a case summary, a CSV for intake systems and a print view.
+Report content is only ever rendered as text. Tests run its check code against reports the
+engine builds, untouched and tampered. It also ships inside every Ward build, and the child's
+report page points to it.
+
 ## Phase 5: proof and staying alive
 
 | Piece | What | Done when |
