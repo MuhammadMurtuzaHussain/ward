@@ -5,11 +5,13 @@
 //   pnpm eval            200 per language (the published numbers)
 //   pnpm eval -- 40      a quick run
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { GemmaJudge, PackMatcher, ShieldGemmaJudge, type Chat } from "../packages/engine/src/index.ts";
 import { loadSets, type Item } from "./data.ts";
 
-const N = Number(process.argv[2] ?? 200);
+const N = Number(process.argv.find((a) => /^\d+$/.test(a)) ?? 200);
+// --packs-only: rescore just the slang packs (instant) and keep the model results from the last run.
+const PACKS_ONLY = process.argv.includes("--packs-only");
 const sets = await loadSets(N);
 const packs = new PackMatcher();
 const shield = new ShieldGemmaJudge();
@@ -70,10 +72,17 @@ function score(pred: boolean[], items: Item[]) {
 
 const results: Record<string, Record<string, ReturnType<typeof score> & { seconds: number }>> = {};
 const raw: Record<string, Record<string, boolean[]>> = {};
+const prev = PACKS_ONLY ? JSON.parse(readFileSync(new URL("./results/scorecard.raw.json", import.meta.url), "utf8")) : null;
 for (const [set, items] of Object.entries(sets)) {
   results[set] = {};
   raw[set] = {};
   for (const sys of systems) {
+    if (PACKS_ONLY && sys.name !== "Slang packs") {
+      const pred = prev.raw[set][sys.name] as boolean[];
+      raw[set]![sys.name] = pred;
+      results[set]![sys.name] = { ...score(pred, items), seconds: 0 };
+      continue;
+    }
     console.error(`${set} / ${sys.name}`);
     const t = Date.now();
     const pred = await sys.run(items);

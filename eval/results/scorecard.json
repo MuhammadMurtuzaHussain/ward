@@ -3,15 +3,15 @@
   "results": {
     "Roman Urdu": {
       "Slang packs": {
-        "tp": 34,
-        "fp": 6,
-        "fn": 66,
-        "tn": 94,
-        "precision": 0.85,
-        "recall": 0.34,
-        "f1": 0.4857142857142858,
-        "accuracy": 0.64,
-        "seconds": 0.061
+        "tp": 59,
+        "fp": 4,
+        "fn": 41,
+        "tn": 96,
+        "precision": 0.9365079365079365,
+        "recall": 0.59,
+        "f1": 0.7239263803680981,
+        "accuracy": 0.775,
+        "seconds": 0.07
       },
       "ShieldGemma 2B": {
         "tp": 14,
@@ -22,56 +22,21 @@
         "recall": 0.14,
         "f1": 0.23333333333333336,
         "accuracy": 0.54,
-        "seconds": 29.726
+        "seconds": 0
       },
       "Gemma 4 E4B": {
-        "tp": 83,
-        "fp": 10,
-        "fn": 17,
-        "tn": 90,
-        "precision": 0.8924731182795699,
-        "recall": 0.83,
-        "f1": 0.8601036269430051,
-        "accuracy": 0.865,
-        "seconds": 159.339
+        "tp": 86,
+        "fp": 14,
+        "fn": 14,
+        "tn": 86,
+        "precision": 0.86,
+        "recall": 0.86,
+        "f1": 0.8599999999999999,
+        "accuracy": 0.86,
+        "seconds": 0
       }
     },
     "Bangla": {
-      "Slang packs": {
-        "tp": 2,
-        "fp": 3,
-        "fn": 98,
-        "tn": 97,
-        "precision": 0.4,
-        "recall": 0.02,
-        "f1": 0.03809523809523809,
-        "accuracy": 0.495,
-        "seconds": 0.071
-      },
-      "ShieldGemma 2B": {
-        "tp": 12,
-        "fp": 2,
-        "fn": 88,
-        "tn": 98,
-        "precision": 0.8571428571428571,
-        "recall": 0.12,
-        "f1": 0.21052631578947367,
-        "accuracy": 0.55,
-        "seconds": 31.677
-      },
-      "Gemma 4 E4B": {
-        "tp": 33,
-        "fp": 16,
-        "fn": 67,
-        "tn": 84,
-        "precision": 0.673469387755102,
-        "recall": 0.33,
-        "f1": 0.4429530201342282,
-        "accuracy": 0.585,
-        "seconds": 148.059
-      }
-    },
-    "English": {
       "Slang packs": {
         "tp": 10,
         "fp": 2,
@@ -81,7 +46,42 @@
         "recall": 0.1,
         "f1": 0.17857142857142858,
         "accuracy": 0.54,
-        "seconds": 0.091
+        "seconds": 0.055
+      },
+      "ShieldGemma 2B": {
+        "tp": 14,
+        "fp": 1,
+        "fn": 86,
+        "tn": 99,
+        "precision": 0.9333333333333333,
+        "recall": 0.14,
+        "f1": 0.24347826086956526,
+        "accuracy": 0.565,
+        "seconds": 0
+      },
+      "Gemma 4 E4B": {
+        "tp": 65,
+        "fp": 18,
+        "fn": 35,
+        "tn": 82,
+        "precision": 0.7831325301204819,
+        "recall": 0.65,
+        "f1": 0.7103825136612022,
+        "accuracy": 0.735,
+        "seconds": 0
+      }
+    },
+    "English": {
+      "Slang packs": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 90,
+        "tn": 99,
+        "precision": 0.9090909090909091,
+        "recall": 0.1,
+        "f1": 0.1801801801801802,
+        "accuracy": 0.545,
+        "seconds": 0.073
       },
       "ShieldGemma 2B": {
         "tp": 19,
@@ -92,18 +92,18 @@
         "recall": 0.19,
         "f1": 0.30158730158730157,
         "accuracy": 0.56,
-        "seconds": 30.894
+        "seconds": 0
       },
       "Gemma 4 E4B": {
-        "tp": 22,
-        "fp": 9,
-        "fn": 78,
-        "tn": 91,
-        "precision": 0.7096774193548387,
-        "recall": 0.22,
-        "f1": 0.33587786259541985,
-        "accuracy": 0.565,
-        "seconds": 95.714
+        "tp": 36,
+        "fp": 14,
+        "fn": 64,
+        "tn": 86,
+        "precision": 0.72,
+        "recall": 0.36,
+        "f1": 0.4799999999999999,
+        "accuracy": 0.61,
+        "seconds": 0
       }
     }
   }
