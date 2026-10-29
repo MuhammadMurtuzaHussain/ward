@@ -1,0 +1,3 @@
+WS05937 | World Solve | https://www.worldsolve.org/index.php?view=problem&id=5937
+
+see this problem, anyway we could improvise to solve it?
