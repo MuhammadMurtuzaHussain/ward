@@ -8,3 +8,6 @@ allowBuilds:
   electron: true
   # Only needed for Squirrel installers, which Ward doesn't build (NSIS instead).
   electron-winstaller: false
+  # transformers.js runs in the browser (ONNX Runtime Web); its Node-only native pieces aren't built.
+  onnxruntime-node: false
+  protobufjs: false

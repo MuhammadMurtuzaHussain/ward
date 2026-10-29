@@ -107,12 +107,72 @@ def train():
     (HERE / "results" / "train-history.json").write_text(json.dumps(history, indent=2))
 
 
+def corpus():
+    """Every text Ward Lite should tokenize exactly as the full model would: its training data,
+    the slang packs and the lessons. (Not the scorecard's eval sets.)"""
+    texts = [r["text"] for r in load("train.jsonl") + load("dev.jsonl")]
+    for f in (HERE.parent / "packages" / "engine" / "packs").glob("*.json"):
+        texts += [e["t"] for e in json.loads(f.read_text())["entries"]]
+    units = (HERE.parent / "packages" / "lessons" / "src" / "units.ts").read_text()
+    texts += units.split("\n")
+    return texts
+
+
+def trim_vocab(model, tok, texts):
+    """Keeps only the vocabulary pieces our languages use (plus every single character, so any
+    text still tokenizes). The 250k-row embedding table is most of the model; this cuts it to a
+    fraction with identical outputs on everything in the corpus."""
+    from tokenizers import Tokenizer
+    from transformers import PreTrainedTokenizerFast
+
+    used = set()
+    for i in range(0, len(texts), 512):
+        for ids in tok(texts[i : i + 512], add_special_tokens=False)["input_ids"]:
+            used.update(ids)
+    t = json.loads(tok.backend_tokenizer.to_str())
+    vocab = t["model"]["vocab"]
+    chars = {i for i, (piece, _) in enumerate(vocab) if len(piece.replace("\u2581", "")) <= 1}
+    keep = sorted(used | chars | {0, 1, 2, 3, len(vocab) - 1})
+    remap = {old: new for new, old in enumerate(keep)}
+    assert all(remap[i] == i for i in range(4)), "special tokens must keep their ids"
+    t["model"]["vocab"] = [vocab[i] for i in keep]
+    t["model"]["unk_id"] = remap[3]
+    for a in t["added_tokens"]:
+        a["id"] = remap[a["id"]]
+    for v in t["post_processor"]["special_tokens"].values():
+        v["ids"] = [remap[i] for i in v["ids"]]
+    new_tok = PreTrainedTokenizerFast(
+        tokenizer_object=Tokenizer.from_str(json.dumps(t)),
+        bos_token="<s>", eos_token="</s>", unk_token="<unk>", pad_token="<pad>", mask_token="<mask>", cls_token="<s>", sep_token="</s>",
+        model_max_length=512,
+    )
+    old_emb = model.get_input_embeddings()
+    new_emb = torch.nn.Embedding(len(keep), old_emb.weight.shape[1], padding_idx=1)
+    new_emb.weight.data = old_emb.weight.data[keep].clone()
+    model.set_input_embeddings(new_emb)
+    model.config.vocab_size = len(keep)
+    print(f"vocab {len(vocab)} -> {len(keep)}")
+    return model, new_tok
+
+
 def export():
+    import copy
+
     import onnx
     from onnxruntime.quantization import QuantType, quantize_dynamic
 
-    tok = AutoTokenizer.from_pretrained(CKPT)
-    model = AutoModelForSequenceClassification.from_pretrained(CKPT).eval()
+    full_tok = AutoTokenizer.from_pretrained(CKPT)
+    full = AutoModelForSequenceClassification.from_pretrained(CKPT).eval()
+    model, tok = trim_vocab(copy.deepcopy(full), full_tok, corpus())
+    model.eval()
+    # The trimmed model must give the same answers as the full one.
+    sample = [r["text"] for r in load("dev.jsonl")[:256]]
+    with torch.no_grad():
+        a = full(**full_tok(sample, truncation=True, max_length=MAX_LEN, padding=True, return_tensors="pt")).logits
+        b = model(**tok(sample, truncation=True, max_length=MAX_LEN, padding=True, return_tensors="pt")).logits
+    drift = (a - b).abs().max().item()
+    print(f"max logit difference after trimming: {drift:.2e}")
+    assert drift < 1e-3, "trimming changed the model's answers"
     (OUT / "onnx").mkdir(parents=True, exist_ok=True)
     fp32 = HERE / "checkpoints" / "model.onnx"
     dummy = tok(["ek do teen", "a b"], padding=True, return_tensors="pt")
