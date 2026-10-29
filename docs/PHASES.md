@@ -99,6 +99,17 @@ Report content is only ever rendered as text. Tests run its check code against r
 engine builds, untouched and tampered. It also ships inside every Ward build, and the child's
 report page points to it.
 
+The school kit shipped (Me, then "Teach a class", then School kit), in English and Urdu: a
+nine-week term plan; a lesson plan per unit for each age band, built from the lessons (aim,
+warm-up, the lesson on screen, talk questions, a close with the country's helplines, and what
+to do if a child tells you something); a letter home the teacher fills in and prints in
+English, Urdu or both; and an anonymous before and after survey matching the Stage 1 measures
+in [ROADMAP.md](ROADMAP.md) (being picked on, being mean, seeing it, telling an adult, six
+confidence statements, and whether children used Ward). Results: the teacher types in totals
+counted from the sheets, sees each question's change with the right direction for better, gets
+a warning under 10 sheets, ticks lessons taught, and can download totals only as CSV. Each part
+prints on its own in black on white.
+
 ## Phase 5: proof and staying alive
 
 | Piece | What | Done when |

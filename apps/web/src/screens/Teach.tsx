@@ -4,7 +4,7 @@
 // show their clearest effects, so the same lessons a child plays alone also run in a classroom.
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, ChalkboardTeacher, ChatsTeardrop, Eye, ShieldCheck, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, ChalkboardTeacher, ChatsTeardrop, Eye, Printer, ShieldCheck, X } from "@phosphor-icons/react";
 import { lessonById, unitsFor, type Exercise } from "@ward/lessons";
 import { Ghost } from "../components/Ghost.tsx";
 import { BackBar, Button, Screen } from "../components/ui.tsx";
@@ -12,6 +12,7 @@ import { UnitIcon } from "../components/UnitIcon.tsx";
 import { AGES } from "../lib/looks.ts";
 import { back, go, useStore, type AgeBand } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
+import { KIT } from "../lib/kit.ts";
 
 
 
@@ -40,6 +41,14 @@ export function Teach() {
           <p className="mt-4 text-sm text-dim">
             {t.teach.after}
           </p>
+          <button onClick={() => go({ name: "kit" })} className="mt-6 flex w-full items-center gap-4 rounded-card border border-glow/40 bg-glow-soft p-4 text-start">
+            <Printer size={24} weight="bold" className="shrink-0 text-glow" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-display font-bold">{KIT[lang].open}</span>
+              <span className="text-sm text-dim">{KIT[lang].openLine}</span>
+            </span>
+            <ArrowRight size={18} weight="bold" className="flip-rtl shrink-0 text-glow" />
+          </button>
         </section>
 
         <section>

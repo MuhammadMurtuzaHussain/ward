@@ -62,6 +62,7 @@ they tell, their class, and helplines.
 | --- | --- |
 | **For the adult they told** | A page the child hands over, in English and Urdu: what to do in the first minutes, what not to do (take the phone away, confront the other family), and next steps with school, the app and a helpline. |
 | **Class mode** | A teacher projects any lesson for a whole room: one question at a time, the class votes or talks, then the answer. Ground rules up front. Nothing recorded, no accounts. |
+| **School kit** | A term plan, a lesson plan per unit, a letter home (English and Urdu) and an anonymous before and after survey, all printable. The teacher types in the totals and sees what changed. Nothing about any child is collected. |
 
 ### The community
 

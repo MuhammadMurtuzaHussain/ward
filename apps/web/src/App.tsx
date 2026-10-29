@@ -18,6 +18,7 @@ import { AdultGuide } from "./screens/AdultGuide.tsx";
 import { Teach, TeachLesson } from "./screens/Teach.tsx";
 import { Mean } from "./screens/Mean.tsx";
 import { StoryPlayer } from "./screens/Story.tsx";
+import { Kit } from "./screens/Kit.tsx";
 import { SafetyPlan } from "./screens/SafetyPlan.tsx";
 
 const NAV: { screen: Screen; label: (t: Dict) => string; icon: typeof HouseSimple }[] = [
@@ -41,6 +42,7 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
   teach: "me",
   teachLesson: "me",
   story: "path",
+  kit: "me",
   mean: "home",
   plan: "vault",
 };
@@ -117,6 +119,7 @@ export function App() {
         {screen.name === "adults" && <AdultGuide />}
         {screen.name === "teach" && <Teach />}
         {screen.name === "mean" && <Mean />}
+        {screen.name === "kit" && <Kit />}
         {screen.name === "plan" && <SafetyPlan />}
       </main>
 

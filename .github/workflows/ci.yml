@@ -19,5 +19,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r typecheck
       - run: pnpm -r test
-      - run: node --test --experimental-strip-types viewer/viewer.test.ts
+      - run: node --test --experimental-strip-types viewer/viewer.test.ts apps/web/src/lib/kitResults.test.ts
       - run: pnpm --filter @ward/web build

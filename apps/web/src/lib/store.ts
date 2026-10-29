@@ -23,6 +23,7 @@ export type Screen =
   | { name: "teach" }
   | { name: "teachLesson"; id: string }
   | { name: "story"; id: string }
+  | { name: "kit" }
   | { name: "mean" }
   | { name: "plan" };
 
