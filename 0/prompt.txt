@@ -1,0 +1,1 @@
+Start Phase 2: shared-phone profiles with quick exit, read-aloud with ElevenLabs narration in English and Urdu, and the Urdu UI.
