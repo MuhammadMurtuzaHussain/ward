@@ -5,6 +5,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { verifyReport, type WardReport } from "../packages/engine/src/index.ts";
 
 const html = readFileSync(new URL("./ward-viewer.html", import.meta.url), "utf8");
@@ -44,6 +45,24 @@ test("a changed count or a removed message fails the digest", async () => {
 test("files that aren't Ward reports get a plain reason", () => {
   assert.match(problem(null)!, /isn't a Ward report/);
   assert.match(problem({ schema: "other/v9" })!, /schema: other\/v9/);
-  assert.match(problem({ schema: "ward.report/v1", conversation: {}, incidents: [], safety: {} })!, /integrity/);
+  assert.match(problem({ schema: "ward.report/v2", conversation: {}, incidents: [], safety: {} })!, /integrity/);
   assert.equal(problem(sample()), null);
+});
+
+test("the child's answers are covered, the same as the engine says", async () => {
+  for (const edit of [(r: WardReport) => (r.safety.inDangerNow = true), (r: WardReport) => r.wants.pop(), (r: WardReport) => (r.reporter.city = "Karachi")]) {
+    const r = sample();
+    edit(r);
+    assert.equal((await checkReport(r)).digestOk, false);
+    assert.equal(await verifyReport(r), false);
+  }
+});
+
+test("a v1 report still opens and checks its messages", async () => {
+  const r = sample();
+  r.schema = "ward.report/v1";
+  r.integrity.digest = createHash("sha256").update(JSON.stringify({ conversation: r.conversation, incidents: r.incidents })).digest("hex");
+  assert.equal(problem(r), null);
+  assert.equal((await checkReport(r)).digestOk, true);
+  assert.equal(await verifyReport(r), true);
 });

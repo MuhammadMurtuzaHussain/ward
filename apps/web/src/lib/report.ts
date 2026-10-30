@@ -1,4 +1,4 @@
-// Renders a ward.report/v1 (built in @ward/engine) as a page a person can read, and exports it
+// Renders a ward.report/v2 (built in @ward/engine) as a page a person can read, and exports it
 // with the JSON alongside so a helpline can import or verify it. Printed to PDF on desktop,
 // shared as files on phones. Plain HTML so it needs nothing online.
 
@@ -52,7 +52,7 @@ ${r.accounts.map((a) => `<tr><td>${esc(a.name)}</td><td>${a.hurtfulMessages}</td
 ${r.incidents.map((i) => `<tr class="s${i.severity}"><td>${esc(when(i.at))}</td><td>${esc(i.from)}</td><td>${esc(i.text)}${i.why ? `<div class="why">${esc(i.why)}</div>` : ""}</td><td class="mono">${esc(i.sha256.slice(0, 16))}</td></tr>`).join("\n")}
 </tbody></table>
 <h2>About this evidence</h2>
-<p class="meta">Exported from ${r.conversation.source === "whatsapp" ? "WhatsApp's own Export chat" : "a pasted copy of the chat"} and kept in Ward's encrypted vault on the child's device from ${esc(when(r.integrity.savedAt))}. Each message has a SHA-256 fingerprint taken when it was saved; the whole report's digest is below, and the attached ward-report.json can be checked against it with the free, offline Ward case viewer (github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html; format: ward.report/v1, docs/REPORT.md). Ward runs on the device; nothing was uploaded. Ward's notes under each message were written by ${esc(r.tool.models.join(", ") || "word lists")}, not by a person, and can be wrong.</p>
+<p class="meta">Exported from ${r.conversation.source === "whatsapp" ? "WhatsApp's own Export chat" : "a pasted copy of the chat"} and kept in Ward's encrypted vault on the child's device from ${esc(when(r.integrity.savedAt))}. Each message has a SHA-256 fingerprint taken when it was saved; the whole report's digest is below, and the attached ward-report.json can be checked against it with the free, offline Ward case viewer (github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html; format: ward.report/v2, docs/REPORT.md). Ward runs on the device; nothing was uploaded. Ward's notes under each message were written by ${esc(r.tool.models.join(", ") || "word lists")}, not by a person, and can be wrong.</p>
 <p class="mono">Digest: ${esc(r.integrity.digest)}</p>
 </body></html>`;
 }

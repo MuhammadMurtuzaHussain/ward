@@ -1,5 +1,5 @@
 // Counsellor mode: a school counsellor's (or any trusted adult's) Ward. Children hand over a
-// ward.report/v1 as a file or a loop of QR codes; Ward checks it wasn't edited, lays the case out
+// ward.report (v2, or an older v1) as a file or a loop of QR codes; Ward checks it wasn't edited, lays the case out
 // safety first, and keeps the adult's notes with it. Cases are sealed in the vault under the same
 // PIN and never leave the device: there's no server anywhere.
 
@@ -208,6 +208,7 @@ function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBa
         <div className={`rounded-card border p-4 ${ok ? "border-safe/40 bg-[color-mix(in_srgb,var(--surface),var(--safe)_12%)]" : "border-alarm/50 bg-alarm-soft"}`} role={ok ? "status" : "alert"}>
           <p className={`font-display text-lg font-bold ${ok ? "text-safe" : "text-alarm"}`}>{ok ? t.counsel.verified : t.counsel.changed}</p>
           <p className="text-sm">{ok ? t.counsel.verifiedLine(n, when(r.integrity.savedAt)) : t.counsel.changedLine(n - okCount, n)}</p>
+          {r.schema === "ward.report/v1" && <p className="mt-2 text-sm text-dim">{t.counsel.olderReport}</p>}
         </div>
 
         <h1 className="font-display text-2xl font-bold tracking-tight" dir="auto">

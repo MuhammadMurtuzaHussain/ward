@@ -1,6 +1,6 @@
 {
-  "schema": "ward.report/v1",
-  "createdAt": "2026-10-29T23:03:10.561Z",
+  "schema": "ward.report/v2",
+  "createdAt": "2026-10-30T01:34:53.352Z",
   "recipient": "helpline",
   "tool": {
     "name": "Ward",
@@ -231,6 +231,6 @@
     "algorithm": "SHA-256",
     "savedAt": "2026-10-15T10:00:00.000Z",
     "perMessage": true,
-    "digest": "d5a258cef177f0ab005118cf661ceaabc0a3bf1e3942aca30fea68a2bae02510"
+    "digest": "93e9f2850d8510cd24a6e59a9cc7e019849bbc410f2d85e8b6ee871c5238324e"
   }
 }

@@ -473,6 +473,7 @@ export const en = {
     verifiedLine: (n: number, when: string) => `All ${n} messages match the fingerprints taken when it was saved, ${when}.`,
     changed: "Changed after it was made",
     changedLine: (bad: number, n: number) => `${bad} of ${n} messages, or the summary, don't match. Ask the child to show you the chat itself.`,
+    olderReport: "An older report: the check covers the messages, not the child's answers (danger, wishes, details). Confirm those with the child.",
     safety: "Safety",
     danger: { yes: "The child says they're in danger now", no: "The child says they're not in danger now", skip: "The child skipped the danger question" },
     reading: (level: string) => `Ward's reading: ${level}`,

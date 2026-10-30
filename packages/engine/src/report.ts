@@ -1,7 +1,7 @@
 // A report a helpline, school or police officer can act on without a back-and-forth: who, what,
 // when, how bad, what the child wants, and proof the messages weren't edited after saving.
-// The format is versioned (ward.report/v1) and documented in docs/REPORT.md so a helpline can
-// import it, not just read it.
+// The format is versioned (ward.report/v2) and documented in docs/REPORT.md so a helpline can
+// import it, not just read it. v1 reports, whose digest covered only the messages, still check.
 
 import type { Analysis, Category, Chat, PatternKind, Severity } from "./types.ts";
 
@@ -42,8 +42,11 @@ export interface ReportIncident {
   sha256: string;
 }
 
+export const REPORT_SCHEMA = "ward.report/v2";
+const SCHEMAS = ["ward.report/v1", REPORT_SCHEMA];
+
 export interface WardReport {
-  schema: "ward.report/v1";
+  schema: "ward.report/v1" | typeof REPORT_SCHEMA;
   createdAt: string;
   recipient: ReportInput["recipient"];
   tool: { name: "Ward"; version: string; models: string[]; languages: string[] };
@@ -69,6 +72,17 @@ export interface WardReport {
 async function sha256(s: string) {
   const h = await globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return [...new Uint8Array(h)].map((x) => x.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * The text the digest is taken over. v2 covers everything a reader relies on, the child's own
+ * answers included (in danger now, what they want, who it's for, their details), in a fixed
+ * order so key order in the file doesn't matter. v1 covered only the conversation and incidents.
+ */
+export function digestText(r: WardReport): string {
+  if (r.schema === "ward.report/v1") return JSON.stringify({ conversation: r.conversation, incidents: r.incidents });
+  const { createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents } = r;
+  return JSON.stringify({ createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, savedAt: r.integrity.savedAt });
 }
 
 const DANGER: Category[] = ["threat", "selfharm", "sexual", "exposure"];
@@ -100,10 +114,8 @@ export async function buildReport(input: ReportInput): Promise<WardReport> {
     lastIncident: times.at(-1) ?? null,
     days: new Set(times.map((t) => t.slice(0, 10))).size,
   };
-  // The digest covers what a reader relies on: the conversation facts and every incident.
-  const digest = await sha256(JSON.stringify({ conversation, incidents }));
-  return {
-    schema: "ward.report/v1",
+  const report: WardReport = {
+    schema: REPORT_SCHEMA,
     createdAt: new Date().toISOString(),
     recipient: input.recipient,
     tool: { name: "Ward", version: input.appVersion ?? "0.1.0", models: a.layers.models, languages: a.layers.packs },
@@ -120,13 +132,15 @@ export async function buildReport(input: ReportInput): Promise<WardReport> {
       .map((s) => ({ name: s.name, hurtfulMessages: s.hostile, worstSeverity: s.worst, addedDuringChat: added.has(s.name), onlyAttacked: ghosts.has(s.name) })),
     patterns: a.patterns.map((p) => ({ kind: p.kind, fact: p.fact ?? p.summary })),
     incidents,
-    integrity: { algorithm: "SHA-256", savedAt: input.savedAt.toISOString(), perMessage: true, digest },
+    integrity: { algorithm: "SHA-256", savedAt: input.savedAt.toISOString(), perMessage: true, digest: "" },
   };
+  report.integrity.digest = await sha256(digestText(report));
+  return report;
 }
 
 /** Recompute the digest of a received report, so a helpline can check it wasn't altered. */
 export async function verifyReport(r: WardReport): Promise<boolean> {
-  return (await sha256(JSON.stringify({ conversation: r.conversation, incidents: r.incidents }))) === r.integrity.digest;
+  return (await sha256(digestText(r))) === r.integrity.digest;
 }
 
 /**
@@ -144,7 +158,7 @@ export async function checkReport(r: WardReport): Promise<{ digestOk: boolean; p
 export function reportProblem(r: unknown): string | null {
   const o = r as Partial<WardReport> | null;
   if (!o || typeof o !== "object" || !("schema" in o)) return "not-report";
-  if (o.schema !== "ward.report/v1") return "schema";
+  if (!SCHEMAS.includes(o.schema as string)) return "schema";
   if (!o.conversation || !o.integrity || !o.safety || !Array.isArray(o.incidents)) return "incomplete";
   return null;
 }

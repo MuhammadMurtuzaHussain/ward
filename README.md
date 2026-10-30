@@ -145,7 +145,7 @@ pnpm eval                       # the scorecard (also needs: ollama pull shieldg
 
 ```
 packages/engine    parser, slang packs, pattern engine, Gemma and ShieldGemma judges,
-                   the ward.report/v1 builder; unit-tested
+                   the ward.report/v2 builder; unit-tested
 packages/lessons   the Resilience Path as plain data, with content tests
 apps/web           React 19, Vite, Tailwind 4, Motion, Phosphor icons
 desktop            Electron, served from app://ward (one of Ollama's allowed origins)

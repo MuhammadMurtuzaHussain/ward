@@ -167,8 +167,8 @@ export async function loadPlan(): Promise<SafetyPlan> {
 }
 
 // Counsellor mode: reports received from children, with the counsellor's own notes. Sealed in
-// the same vault under the same PIN, one row per report, keyed by the report's digest so the
-// same report received twice is one case.
+// the same vault under the same PIN, one row per report, keyed by a hash of the whole report so
+// the same report received twice is one case and an edited copy is a separate one.
 export interface CaseNote {
   at: number;
   text: string;
