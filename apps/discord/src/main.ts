@@ -302,8 +302,11 @@ process.on("unhandledRejection", (e) => log("unhandled:", (e as Error)?.message 
 // On a host that expects a web service (Render), answer health checks on $PORT. Nothing else is served.
 if (process.env.PORT) {
   const { createServer } = await import("node:http");
-  createServer((_req, res) => {
-    res.writeHead(client.isReady() ? 200 : 503, { "content-type": "text/plain" }).end(client.isReady() ? "ok" : "starting");
+  const { handleGemma } = await import("./gemmaDemo.ts");
+  createServer((req, res) => {
+    void handleGemma(req, res).then((handled) => {
+      if (!handled) res.writeHead(client.isReady() ? 200 : 503, { "content-type": "text/plain" }).end(client.isReady() ? "ok" : "starting");
+    });
   }).listen(Number(process.env.PORT), "0.0.0.0");
 }
 

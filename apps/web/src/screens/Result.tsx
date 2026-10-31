@@ -37,6 +37,8 @@ import { patternText } from "../lib/patternText.ts";
 import { LessonSuggestions } from "../components/LessonSuggestions.tsx";
 import { locale, useT, type Dict } from "../i18n/index.ts";
 import { BUILT_IN_GEMMA, desktopStatus } from "../lib/desktopGemma.ts";
+import { DEMO_GEMMA_URL } from "../lib/demoGemma.ts";
+import { readWithDemoGemma } from "../lib/run.ts";
 
 const PATTERN_ICON: Record<PatternKind, Icon> = {
   danger: Warning,
@@ -241,6 +243,7 @@ export function Result({ id }: { id: string }) {
 
           <HowWardKnows analysis={a} />
           {!s.refining && <GemmaOffer analysis={a} />}
+          {!s.refining && DEMO_GEMMA_URL && !a.layers.models.some((m) => /gemma/i.test(m)) && <DemoGemmaOffer id={id} />}
         </div>
 
         <Timeline analysis={a} self={s.self} help={plan.helpNow} fps={fps} />
@@ -584,3 +587,17 @@ function Correct({ f, fp, c, view, help, helpHere }: { f: Finding; fp: string; c
   );
 }
 
+
+/** The web demo only: a close read by Gemma on Ward's demo server, after saying where the chat goes. */
+function DemoGemmaOffer({ id }: { id: string }) {
+  const t = useT();
+  return (
+    <section className="rounded-card border border-dashed border-line bg-surface p-4">
+      <h2 className="font-display text-lg font-bold tracking-tight">{t.result.demoGemmaTitle}</h2>
+      <p className="mt-1 text-sm text-dim">{t.result.demoGemmaLine}</p>
+      <Button tone="quiet" className="mt-3" onClick={() => void readWithDemoGemma(id)}>
+        {t.result.demoGemmaButton}
+      </Button>
+    </section>
+  );
+}

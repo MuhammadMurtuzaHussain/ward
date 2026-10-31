@@ -95,6 +95,9 @@ export const en = {
     readIt: "Read it, Ward",
   },
   result: {
+    demoGemmaTitle: "Try the close read with Gemma",
+    demoGemmaLine: "This web demo can ask Gemma, on Ward's demo server, to read the whole chat. That sends this chat to the server, so use the example chat, not a real one. The Ward app itself reads on your device and never does this.",
+    demoGemmaButton: "Read it with Gemma (demo)",
     closed: "This check has closed. For your privacy, I forget chats you didn't save when Ward restarts.",
     readingClosely: "Reading closely",
     quickCheck: "Quick check",

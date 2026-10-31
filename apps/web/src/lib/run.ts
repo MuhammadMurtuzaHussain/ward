@@ -11,6 +11,7 @@ import { recorded } from "./history.ts";
 import type { Judge, SecondLook } from "@ward/engine";
 import { t } from "../i18n/index.ts";
 import { DEMO } from "../demo/demo.ts";
+import { DEMO_GEMMA, demoTransport } from "./demoGemma.ts";
 
 export async function readChatFile(file: File): Promise<{ text: string; title: string }> {
   const base = file.name.replace(/\.(txt|zip)$/i, "");
@@ -128,4 +129,21 @@ export async function readScreenshots(files: File[]): Promise<string> {
     out.push(j.message.content.trim());
   }
   return out.join("\n");
+}
+
+/** The web demo: re-read a check with Gemma on the demo server, when the visitor asks for it. */
+export async function readWithDemoGemma(id: string) {
+  const s = getState().sessions[id];
+  if (!s) return;
+  patchSession(id, { refining: true, modelError: undefined, progress: undefined });
+  try {
+    const full = await analyze(s.chat, {
+      self: s.self,
+      judges: [new GemmaJudge({ transport: demoTransport, name: DEMO_GEMMA, batch: 16, language: t().draft.gemmaLanguage })],
+      onProgress: (d, n) => patchSession(id, { progress: [d, n] }),
+    });
+    patchSession(id, { analysis: full, refining: false, progress: undefined });
+  } catch (e) {
+    patchSession(id, { refining: false, progress: undefined, modelError: e instanceof Error ? e.message : String(e) });
+  }
 }
