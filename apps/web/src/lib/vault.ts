@@ -2,13 +2,13 @@
 // child's PIN (PBKDF2, 310k rounds) and kept in IndexedDB on this device. The PIN is never
 // stored; a small encrypted marker lets Ward check it. Each saved message also gets a SHA-256
 // fingerprint, so a printed report can show the evidence wasn't edited after saving.
+// The sealing itself is in vaultSeal.ts.
 
 import { fingerprintMessages, type Analysis, type Chat, type WardReport } from "@ward/engine";
 import { getState, onProfileLeave, updateProfile, vaultDbName } from "./store.ts";
+import { b64, derive, open, seal, unb64 } from "./vaultSeal.ts";
 
 const STORE = "items";
-const enc = new TextEncoder();
-const dec = new TextDecoder();
 
 export interface VaultItem {
   id: string;
@@ -27,26 +27,6 @@ let key: CryptoKey | null = null;
 onProfileLeave(() => {
   key = null;
 });
-
-const b64 = (b: ArrayBuffer | Uint8Array) => btoa(String.fromCharCode(...new Uint8Array(b instanceof Uint8Array ? b : new Uint8Array(b))));
-const unb64 = (s: string): Uint8Array<ArrayBuffer> => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
-
-async function derive(pin: string, salt: Uint8Array<ArrayBuffer>) {
-  const base = await crypto.subtle.importKey("raw", enc.encode(pin), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 310_000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
-}
-
-async function seal(k: CryptoKey, data: string) {
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, k, enc.encode(data));
-  return `${b64(iv)}.${b64(ct)}`;
-}
-
-async function open(k: CryptoKey, sealed: string) {
-  const [iv, ct] = sealed.split(".");
-  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv!) }, k, unb64(ct!));
-  return dec.decode(pt);
-}
 
 export const hasPin = () => Boolean(getState().profile.vaultSalt);
 export const isUnlocked = () => key !== null;
