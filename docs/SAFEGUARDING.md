@@ -333,6 +333,99 @@ check, but they do read this policy.
 - Changes to this policy are made by pull request. The safeguarding lead must approve; the
   maintainers cannot merge a change to it alone.
 
+## 13. Ward for Discord
+
+Ward for Discord is a bot that runs the same open engine as the app
+([apps/discord](../apps/discord/README.md)). Discord is for people aged 13 and over. The bot has
+two modes, and they sit very differently against this policy.
+
+**Personal mode fits the rest of this policy.** A teen adds Ward to their own account and
+right-clicks a message to check it or save it as evidence. Only they see the answer, and saved
+evidence lives in their own DMs with Ward. Ward reads only the message they pick. One difference
+from the app: the bot runs on the computer of whoever hosts it, not on the teen's phone, so the
+message passes through that computer while it is read. It is not stored there.
+
+**Server mode is a moderator tool, and the one place Ward alerts adults.** It is a tool that
+moderators of teen communities can choose, and it tells them about dangerous messages. It departs
+from three commitments in section 8:
+
+- "Offer a parent, teacher or any other adult a way to ... receive alerts." Server mode sends
+  moderators alerts.
+- "Read messages from other apps automatically." Server mode reads every new message in a server
+  that switched it on, from members who never chose Ward.
+- "Send a child's chats ... name ... to any ... person." For threats, sexual pressure and exposure,
+  an alert quotes a member's message and names its sender to the moderators.
+
+On 2026-10-31 the project owner decided to keep server mode as an opt-in moderator tool under
+this section rather than remove it. It changes nothing in the app. Section 8 asks for a public
+discussion and the safeguarding lead's agreement before a commitment changes. There is no lead
+yet, so the exception to each of these three commitments holds only while server mode stays off
+by default and is not offered publicly (see below).
+
+**Off by default.** Server mode runs only when the person hosting the bot sets
+`WARD_SERVER_MODE=on`, and then only in a server whose moderators create a private
+`#ward-alerts` channel. Without that setting the bot does not ask Discord for message content, so
+it cannot read server messages at all. The project's own hosting file (`render.yaml`) keeps it
+off. It is off by default because it reads messages from people who never chose Ward, and because
+an alert to adults is the thing we promise children the app will never do.
+
+**What it sends, and to whom.**
+
+- **To the moderators, in `#ward-alerts`:** an alert for a dangerous message (a threat, urging
+  self-harm, sexual pressure, or a threat to share private images or details), with a link to the
+  message, the channel and the kind. For threats, sexual pressure and exposure, the alert also
+  quotes the message and names its sender. For self-harm, or when Ward cannot tell the kind, it
+  never copies the words or names anyone: the message may be a child telling someone what is
+  happening to them.
+- **To the moderators, when the writer is telling what happened to them or standing up for
+  someone:** "someone may need support", with the link, the channel and what it mentions. Ward
+  looks for this before any nudge or check-in, in English, Roman Urdu, Hinglish and Bangla (for
+  example "someone told me to kys", "usne mujhe bola", "আমাকে বলেছে", "stop telling Sara to
+  kys"). It never names the writer as the sender of abuse. A message that also speaks to "you"
+  ("tu", "তোকে") or carries a condition ("or else", "warna", "নইলে") never counts, because that
+  is how a threat reads ("don't tell your mum or I'll leak your pics"). It alerts as usual.
+- **To the sender of a hurtful but not dangerous message:** a private nudge to edit or delete it.
+  Moderators can turn this off.
+- **To the person a hurtful message was aimed at** (by mention or reply): a short, kind check-in
+  pointing to saving evidence and `/ward help`. Moderators can turn this off.
+
+**What it never does.**
+
+- Delete, mute, kick or ban anyone, or punish anyone in any other way. A person decides.
+- Nudge the sender of a dangerous message. A nudge would tip off someone making threats.
+- DM a child to edit or delete a message in which they tell what happened to them or stand up for
+  someone. It also sends no check-in to the people such a message mentions, because they are
+  often the person being reported.
+- Store messages. The bot has no database, and its log records what it did (ids, kinds and
+  outcomes), never what anyone wrote.
+
+**Alerts persist.** Ward keeps nothing itself, but an alert is an ordinary Discord message. It
+stays in `#ward-alerts`, readable by everyone who can see that channel, until a moderator deletes
+it, and Discord holds it under Discord's own terms. Moderators should keep the channel private
+and delete alerts once they have acted.
+
+**Members are told.** `/ward server` explains all of this to moderators and gives them a notice
+to pin for members ("This server uses Ward..."), so members know Ward reads the server, what goes
+to moderators, and that telling what happened to them will not get them in trouble.
+
+**Its limits.** The check for someone telling what happened, or standing up for someone, is
+deliberately narrow: a bare "someone said", quotation marks alone, or a message that also says
+"you" or "or else" never count, because a bully could wrap anything in them. It will miss some
+disclosures, and those alert as usual: a child who quotes the abuse ("he said you should die")
+can be named to moderators as its sender. When a missed disclosure might be one, Ward still never
+nudges its writer. It reads only English, Roman Urdu, Hinglish and Bangla, and it can be gamed
+the other way too. A message Ward reads as a report reaches moderators without the sender's name
+or words, and nobody it mentions gets a check-in, so a bully who dresses a threat up as a report
+hides who sent it and silences the target's check-in. Moderators must open the link and read the
+message in place, every time. Ward can be wrong both ways, and someone can test messages until
+Ward stops flagging them. See [HARMS.md](HARMS.md#ward-for-discord).
+
+**Before it is offered publicly.** Server mode must not be switched on in any instance that
+others can install, listed or advertised anywhere, or offered to a server beyond the
+maintainers' own test servers, until a safeguarding reviewer has read this section, the alert and
+check-in wording and the member notice, and signed off in the [Review status](#review-status)
+table. Until then, any public Ward instance runs personal mode only.
+
 ## Review status
 
 | Item | Status |

@@ -1,10 +1,12 @@
 // Ward for Discord. Two ways in:
 //   Personal: a teen installs Ward to their own account and right-clicks any message to check it
 //   or save it as evidence. Ward reads only that message and replies only to them.
-//   Server mode: a server that wants it creates a private #ward-alerts channel. Ward then reads
+//   Server mode: a moderator tool, off unless the host sets WARD_SERVER_MODE=on and a server
+//   creates a private #ward-alerts channel (docs/SAFEGUARDING.md section 13). Ward then reads
 //   messages there as they arrive, tells moderators about dangerous ones, quietly checks on the
-//   person they were aimed at, and gives the sender a private chance to edit or delete. It never
-//   deletes, mutes or bans anyone itself.
+//   person they were aimed at, and gives the sender of a hurtful one a private chance to edit or
+//   delete. Someone telling what happened to them, or standing up for someone, is never treated
+//   as the sender. It never deletes, mutes or bans anyone itself.
 // Ward keeps nothing itself: no database, no message logs. Evidence lives in the teen's own DMs,
 // and server-mode alerts stay in #ward-alerts like any other Discord message.
 
@@ -13,7 +15,6 @@ import {
   ChannelType,
   Client,
   Events,
-  GatewayIntentBits,
   MessageFlags,
   Partials,
   type ChatInputCommandInteraction,
@@ -27,13 +28,14 @@ import { ELSEWHERE, REGIONS, TAKE_IT_DOWN, type Region } from "../../web/src/lib
 import { CHECK, SAVE } from "./commands.ts";
 import { fingerprint, fromEmbed, reportFrom, toEmbed, type Evidence } from "./evidence.ts";
 import { WardLiteJudge, loadLite } from "./lite.ts";
-import { ABOUT, CATEGORY, SAVED_DM_FAILED, VERDICT, checkEmbed } from "./text.ts";
+import { intentsFor, plan, serverModeOn } from "./server.ts";
+import { ABOUT, ALERTS, CATEGORY, MEMBER_NOTICE, SAVED_DM_FAILED, alertEmbed, checkEmbed, serverInfo } from "./text.ts";
 import { read, type Around } from "./ward.ts";
 
 const token = process.env.DISCORD_TOKEN;
 if (!token) throw new Error("Set DISCORD_TOKEN (see apps/discord/README.md).");
-/** Server mode needs Discord's Message Content intent, switched on in the Developer Portal. */
-const serverMode = process.env.WARD_SERVER_MODE !== "off";
+/** Off unless WARD_SERVER_MODE=on. It needs Discord's Message Content intent, switched on in the Developer Portal. */
+const serverMode = serverModeOn();
 /** Quiet periods so a burst of messages means one DM, not ten. Shorten them for testing. */
 const NUDGE_MS = Number(process.env.WARD_NUDGE_MINUTES ?? 10) * 60_000;
 const CHECKIN_MS = Number(process.env.WARD_CHECKIN_MINUTES ?? 60) * 60_000;
@@ -42,7 +44,6 @@ const CHECKIN_MS = Number(process.env.WARD_CHECKIN_MINUTES ?? 60) * 60_000;
 function log(...parts: unknown[]) {
   console.log(new Date().toISOString(), ...parts);
 }
-const ALERTS = "ward-alerts";
 const VIEWER = "https://github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html";
 
 let judges: Judge[] = [];
@@ -73,7 +74,7 @@ async function readInContext(m: Message) {
 const ephemeral = MessageFlags.Ephemeral;
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages, ...(serverMode ? [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] : [])],
+  intents: intentsFor(serverMode),
   partials: [Partials.Channel],
 });
 
@@ -198,24 +199,9 @@ async function onHelp(i: ChatInputCommandInteraction) {
 
 async function onServer(i: ChatInputCommandInteraction) {
   const alerts = i.guild?.channels.cache.find((c) => c.name === ALERTS && c.type === ChannelType.GuildText) as TextChannel | undefined;
-  const status = !i.guild
-    ? "Ward isn't added to this server, so server mode is off here. Personal mode (right-click → Apps) still works for you."
-    : alerts
-      ? `Server mode is **on** here: dangerous messages go to <#${alerts.id}>.`
-      : `Server mode is **off** here. To switch it on, create a private text channel called **#${ALERTS}** that only moderators and Ward can see.`;
-  await i.reply({
-    flags: ephemeral,
-    content: [
-      status,
-      "",
-      "**What server mode does**",
-      "• Reads new messages as they arrive, with the same open engine as the app. Nothing is stored or logged.",
-      `• Dangerous messages (threats, urging self-harm, sexual pressure, threats to share private images or details) go to #${ALERTS} with a link, so a person decides what to do. Ward never deletes, mutes or bans. Alerts stay in that channel like any message.`,
-      "• The sender of a hurtful (not dangerous) message gets a private nudge to edit or delete it. Add `ward: no-nudge` to the alerts channel's topic to turn this off.",
-      "• The person it was aimed at (by mention or reply) gets a private, kind check-in. Add `ward: no-checkin` to the topic to turn this off.",
-      serverMode ? "" : "\n_This copy of Ward runs with server mode switched off by whoever hosts it._",
-    ].join("\n"),
-  });
+  await i.reply({ flags: ephemeral, content: serverInfo({ hostOn: serverMode, inServer: Boolean(i.guild), alertsId: alerts?.id }) });
+  // The notice on its own, so moderators can copy it whole.
+  await i.followUp({ flags: ephemeral, content: `**A notice to pin for members**\n\`\`\`\n${MEMBER_NOTICE}\n\`\`\`` });
 }
 
 client.on(Events.InteractionCreate, async (i) => {
@@ -259,36 +245,21 @@ async function onMessage(m: Message) {
   const r = await readInContext(m);
   if (r.severity === 0) return;
   const did: string[] = [];
-  const topic = alerts.topic?.toLowerCase() ?? "";
   const kinds = r.categories.map((c) => CATEGORY[c]).join(", ");
+  // Before any nudge or check-in: is the writer telling what happened to them, or standing up
+  // for someone? Then they are never treated as the sender (src/server.ts).
+  const p = plan(r, m.content, alerts.topic ?? "");
 
-  if (r.dangerous) {
-    await alerts.send({
-      embeds: [
-        {
-          title: `${VERDICT[r.severity]} in #${m.channel.name}`,
-          description: `> ${m.content.slice(0, 1500).replace(/\n/g, "\n> ")}`,
-          color: 0xe05c5c,
-          fields: [
-            { name: "From", value: `${m.author} (@${m.author.username})`, inline: true },
-            { name: "Kind", value: kinds || "flagged by Ward Lite", inline: true },
-            { name: "Message", value: m.url },
-            { name: "Why", value: (r.why || "—").slice(0, 1024) },
-          ],
-          footer: { text: "Ward never acts on its own. A person decides. Ward can be wrong." },
-        },
-      ],
-      allowedMentions: { parse: [] },
-    });
-    did.push("alerted mods");
+  if (p.alert) {
+    const from = `${m.author} (@${m.author.username})`;
+    await alerts.send({ embeds: [alertEmbed(r, p.alert, { channel: m.channel.name, url: m.url, from, text: m.content })], allowedMentions: { parse: [] } });
+    did.push(`alerted mods (${p.alert})`);
   }
 
   if (r.unsure) return void log(`server message: severity ${r.severity}, not sure (only Ward Lite, nothing around it): nothing sent`);
-  // Never nudge on a dangerous message: it would tip off someone making threats, and a child
-  // disclosing harm ("someone told me to kys") must never be told to delete it.
-  const nudge = r.severity >= 2 && !r.dangerous && !topic.includes("ward: no-nudge");
-  if (nudge && !due(lastNudge, `${m.guildId}:${m.author.id}`, NUDGE_MS)) did.push("nudge skipped (sent one recently)");
-  else if (nudge) {
+  if (p.frame) return void log(`server message: severity ${r.severity}, ${p.frame}: ${did.join(", ") || "nothing sent"}; no nudge, no check-in`);
+  if (p.nudge && !due(lastNudge, `${m.guildId}:${m.author.id}`, NUDGE_MS)) did.push("nudge skipped (sent one recently)");
+  else if (p.nudge) {
     did.push("nudged sender");
     await m.author
       .send(
@@ -297,7 +268,7 @@ async function onMessage(m: Message) {
       .catch(() => {});
   }
 
-  if (r.severity >= 2 && !topic.includes("ward: no-checkin")) {
+  if (p.checkIn) {
     const replyTo = m.reference?.messageId ? await m.channel.messages.fetch(m.reference.messageId).catch(() => null) : null;
     const targets = new Map<string, User>();
     for (const u of m.mentions.users.values()) if (!u.bot && u.id !== m.author.id) targets.set(u.id, u);
