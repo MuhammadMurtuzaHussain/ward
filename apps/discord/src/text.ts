@@ -3,7 +3,10 @@
 // Hinglish and Bangla in the messages themselves.
 
 import type { Category, Severity } from "@ward/engine";
+import type { Alert } from "./server.ts";
 import type { Reading } from "./ward.ts";
+
+export const ALERTS = "ward-alerts";
 
 export const VERDICT: Record<Severity, string> = {
   0: "Ward doesn't see anything hurtful here",
@@ -71,6 +74,88 @@ export function checkEmbed(r: Reading, author: string) {
   };
 }
 
+const ALERT_FOOTER = { text: "Ward never acts on its own. A person decides. Ward can be wrong. This alert stays here until a moderator deletes it." };
+
+/** What moderators see in #ward-alerts. Only "full" alerts copy the words or name the sender. */
+export function alertEmbed(r: Reading, kind: Alert, m: { channel: string; url: string; from: string; text: string }) {
+  const kinds = r.categories.map((c) => CATEGORY[c]).join(", ") || "not sure (only Ward Lite flagged it)";
+  if (kind === "full")
+    return {
+      title: `${VERDICT[r.severity]} in #${m.channel}`,
+      description: `> ${m.text.slice(0, 1500).replace(/\n/g, "\n> ")}`,
+      color: COLOR[3],
+      fields: [
+        { name: "From", value: m.from, inline: true },
+        { name: "Kind", value: kinds, inline: true },
+        { name: "Message", value: m.url },
+        { name: "Why", value: (r.why || "-").slice(0, 1024) },
+      ],
+      footer: ALERT_FOOTER,
+    };
+  if (kind === "support")
+    return {
+      title: `Someone in #${m.channel} may need support`,
+      description:
+        "This looks like someone telling what happened to them, or standing up for someone. Ward hasn't copied the words or named anyone, and it sent nobody a DM about it. Open the link to read it in place, and please don't ask them to delete it.",
+      color: COLOR[3],
+      fields: [
+        { name: "Channel", value: `#${m.channel}`, inline: true },
+        { name: "What it mentions", value: kinds, inline: true },
+        { name: "Message", value: m.url },
+      ],
+      footer: ALERT_FOOTER,
+    };
+  return {
+    title: `${VERDICT[r.severity]} in #${m.channel}`,
+    description:
+      "Ward doesn't copy the words or name anyone when a message may be about self-harm: it could be someone asking for help. Open the link to read it in place. If it is someone telling what happened to them, please don't ask them to delete it.",
+    color: COLOR[3],
+    fields: [
+      { name: "Channel", value: `#${m.channel}`, inline: true },
+      { name: "Kind", value: kinds, inline: true },
+      { name: "Message", value: m.url },
+    ],
+    footer: ALERT_FOOTER,
+  };
+}
+
+/** `/ward server`: what server mode is, for moderators. Under Discord's 2,000 characters. */
+export function serverInfo(o: { hostOn: boolean; inServer: boolean; alertsId?: string }): string {
+  const status = !o.hostOn
+    ? "Server mode is **off** in this copy of Ward: whoever hosts it hasn't switched it on (`WARD_SERVER_MODE=on`), so Ward doesn't read this server's messages. Personal mode (right-click → Apps) still works."
+    : !o.inServer
+      ? "Ward isn't added to this server, so server mode is off here. Personal mode (right-click → Apps) still works for you."
+      : o.alertsId
+        ? `Server mode is **on** here: dangerous messages go to <#${o.alertsId}>.`
+        : `Server mode is **off** here. To switch it on, create a private text channel called **#${ALERTS}** that only moderators and Ward can see.`;
+  return [
+    status,
+    "",
+    "**What it is.** A tool for moderators of teen communities who choose it. The Ward app never alerts adults; this is the one exception, so it's off unless the host and the server both switch it on.",
+    "**What it does**",
+    `• Reads new messages as they arrive, on the computer that runs Ward. Ward keeps no copy, but its alerts are ordinary messages: they stay in #${ALERTS} until you delete them.`,
+    "• Dangerous messages (threats, urging self-harm, sexual pressure, threats to share private images or details) get an alert with a link. For self-harm, only the link, channel and kind: it may be someone asking for help.",
+    "• Someone telling what happened to them, or standing up for someone, is never treated as the sender: the alert only says someone may need support, and nobody gets a DM.",
+    "• The sender of a hurtful (not dangerous) message gets a private nudge to edit or delete it. `ward: no-nudge` in the alerts channel's topic turns this off.",
+    "• Whoever it was aimed at gets a short, kind check-in. `ward: no-checkin` turns this off.",
+    "**What it never does.** Delete, mute, ban or punish anyone. Nudge the sender of a dangerous message. Ask anyone to delete a message telling what happened to them.",
+    "**Its limits.** Ward can be wrong both ways, and someone can test messages until Ward stops noticing. A person decides, every time. Its safeguarding review isn't done yet.",
+    "Tell your members: pin the notice below where everyone can read it.",
+  ].join("\n");
+}
+
+/** For moderators to pin, so members know what Ward reads and sends. */
+export const MEMBER_NOTICE = [
+  "This server uses Ward, a free, open-source helper for bullying online: https://github.com/MuhammadMurtuzaHussain/ward",
+  "",
+  "• Ward reads new messages here as they arrive. It keeps no copy and never deletes, mutes or bans anyone.",
+  "• If a message looks dangerous (threats, telling someone to hurt themselves, sexual pressure, threats to share private photos or details), Ward tells our moderators in a private channel. Those alerts stay there until a moderator deletes them. A person decides what happens, and Ward can be wrong.",
+  "• If you tell us what happened to you, or stand up for someone, you won't get in trouble. Ward won't ask you to delete it.",
+  "• If something rough is sent your way, Ward may DM you a short check-in. If a message of yours might hurt someone, it may DM you a private nudge.",
+  "• To check or save any message yourself: right-click it → Apps → Check with Ward, or Save as evidence.",
+  "• Free, private people to talk to: /ward help",
+].join("\n");
+
 export const SAVED_DM_FAILED =
   "Ward couldn't DM you, so here's the saved copy instead. Download the file to keep it. To let Ward keep evidence in your DMs, allow direct messages from apps in Discord's privacy settings.";
 
@@ -81,4 +166,5 @@ export const ABOUT = [
   "• **/ward report**: turns everything you saved into a report a counsellor, helpline or the Ward app can check.",
   "• **/ward help**: people you can talk to, free and private.",
   "Ward reads only the message you pick. It keeps nothing: no logs, no database. Your saved evidence lives in your own DMs.",
+  "In a server whose moderators chose Ward's server mode, Ward also reads new messages there and tells moderators about dangerous ones. `/ward server` explains.",
 ].join("\n");
