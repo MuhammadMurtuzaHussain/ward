@@ -88,7 +88,8 @@ export async function reportFrom(saved: Evidence[], o: ReportOptions) {
     participants: [...new Set(items.map((e) => e.from))],
   };
   // No "self": the teen saved each of these because it was aimed at them, so all of it counts.
-  const analysis = await analyze(chat, { self: null, judges: o.judges });
+  // And no context needed: the teen picking a message is the backing a small model's flag needs.
+  const analysis = await analyze(chat, { self: null, judges: o.judges, requireContext: false });
   const savedAt = items.map((e) => e.savedAt).sort()[0] ?? new Date().toISOString();
   return buildReport({
     chat,

@@ -124,7 +124,7 @@ export function VaultScreen() {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-display text-lg font-semibold">{it.title}</span>
                   <span className="text-sm text-dim">
-                    {t.vault.summary(it.analysis.findings.filter((f) => f.severity > 0).length, it.chat.messages.length, new Date(it.savedAt).toLocaleDateString(locale()))}
+                    {t.vault.summary(it.analysis.findings.filter((f) => f.severity > 0 && !f.unsure).length, it.chat.messages.length, new Date(it.savedAt).toLocaleDateString(locale()))}
                   </span>
                 </span>
                 <LevelPill level={it.analysis.level} />

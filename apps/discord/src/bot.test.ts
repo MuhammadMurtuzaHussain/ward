@@ -21,6 +21,22 @@ test("Ward reads Discord messages with the app's engine", async () => {
   assert.match(checkEmbed(r, "Bilal").footer.text, /Nothing was kept/);
 });
 
+test("a flag only a small model raised needs the chat around it", async () => {
+  // A stand-in for Ward Lite that flags one friendly message as dangerous.
+  const lite = {
+    name: "Ward Lite",
+    async judge(chat: { messages: { id: number; text: string }[] }) {
+      return new Map(chat.messages.filter((m) => m.text.includes("find you")).map((m) => [m.id, { hostile: true, severity: 3 as const, categories: [], model: "Ward Lite", authority: "raise-only" as const }]));
+    },
+  };
+  const alone = await read("ill find you at the mela", "zara", new Date(), [lite]);
+  assert.ok(alone.unsure && !alone.dangerous);
+  assert.match(checkEmbed(alone, "Zara").title, /isn't sure/);
+  const t = new Date();
+  const pileOn = await read("ill find you at the mela", "zara", t, [lite], { before: [{ sender: "bilal", text: "ugly loser nobody wants you here", at: t }] });
+  assert.ok(!pileOn.unsure && pileOn.dangerous);
+});
+
 test("evidence survives the round trip through a DM", () => {
   const e = saved("bilal_07", "2026-10-30T19:02:11.000Z", "nobody wants you here\nleave the server");
   assert.deepEqual(fromEmbed(toEmbed(e)), e);

@@ -21,13 +21,13 @@ import {
   type TextChannel,
   type User,
 } from "discord.js";
-import { REPORT_SCHEMA, type Judge, type Want } from "@ward/engine";
+import { CAN_CLEAR, GemmaSecondLook, ollamaTransport, REPORT_SCHEMA, type Judge, type SecondLook, type Want } from "@ward/engine";
 import { ELSEWHERE, REGIONS, TAKE_IT_DOWN } from "../../web/src/lib/help.ts";
 import { CHECK, SAVE } from "./commands.ts";
 import { fingerprint, fromEmbed, reportFrom, toEmbed, type Evidence } from "./evidence.ts";
 import { WardLiteJudge, loadLite } from "./lite.ts";
 import { ABOUT, CATEGORY, SAVED_DM_FAILED, VERDICT, checkEmbed } from "./text.ts";
-import { read } from "./ward.ts";
+import { read, type Around } from "./ward.ts";
 
 const token = process.env.DISCORD_TOKEN;
 if (!token) throw new Error("Set DISCORD_TOKEN (see apps/discord/README.md).");
@@ -45,6 +45,30 @@ const ALERTS = "ward-alerts";
 const VIEWER = "https://github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html";
 
 let judges: Judge[] = [];
+// Gemma on the host, if it runs one, takes a second look at messages only Ward Lite flagged.
+// It may clear a flag only if that model passed eval/secondlook (CAN_CLEAR); otherwise it confirms.
+const gemma = process.env.WARD_GEMMA_MODEL;
+const secondLook: SecondLook | undefined = gemma
+  ? new GemmaSecondLook(ollamaTransport(gemma, process.env.WARD_OLLAMA_URL || undefined), gemma, CAN_CLEAR.includes(gemma))
+  : undefined;
+
+/** The messages before one, for context; empty where Ward can't read the channel. */
+async function before(m: Message, n = 8): Promise<Around[]> {
+  try {
+    const got = await m.channel.messages.fetch({ limit: n, before: m.id });
+    return [...got.values()].reverse().filter((x) => x.content.trim()).map((x) => ({ sender: x.author.username, text: x.content, at: x.createdAt }));
+  } catch {
+    return [];
+  }
+}
+
+/** Reads a message alone first; only when Ward Lite alone flagged it does Ward fetch context. */
+async function readInContext(m: Message) {
+  const alone = await read(m.content, m.author.username, m.createdAt, judges, { secondLook });
+  if (!alone.unsure) return alone;
+  const ctx = await before(m);
+  return ctx.length ? read(m.content, m.author.username, m.createdAt, judges, { before: ctx, secondLook }) : alone;
+}
 const ephemeral = MessageFlags.Ephemeral;
 
 const client = new Client({
@@ -61,7 +85,7 @@ client.once(Events.ClientReady, async (c) => {
       log("Ward Lite didn't load; reading with the word lists only.", (e as Error).message);
     }
   }
-  log(`Ward is up as ${c.user.tag}: ${judges.length ? "word lists + Ward Lite" : "word lists"}, server mode ${serverMode ? "on" : "off"}.`);
+  log(`Ward is up as ${c.user.tag}: ${judges.length ? "word lists + Ward Lite" : "word lists"}, server mode ${serverMode ? "on" : "off"}, second look ${secondLook ? `${secondLook.name}${secondLook.canClear ? "" : " (confirm only)"}` : "off"}.`);
 });
 
 function where(i: MessageContextMenuCommandInteraction) {
@@ -75,7 +99,7 @@ async function onCheck(i: MessageContextMenuCommandInteraction) {
   await i.deferReply({ flags: ephemeral });
   const m = i.targetMessage;
   if (!m.content.trim()) return void (await i.editReply("Ward reads words, and this message has none (only images or files)."));
-  const r = await read(m.content, m.author.username, m.createdAt, judges);
+  const r = await readInContext(m);
   await i.editReply({ embeds: [checkEmbed(r, m.author.displayName)] });
 }
 
@@ -229,7 +253,7 @@ async function onMessage(m: Message) {
   if (!m.inGuild() || m.author.bot || !m.content.trim()) return;
   const alerts = m.guild.channels.cache.find((c) => c.name === ALERTS && c.type === ChannelType.GuildText) as TextChannel | undefined;
   if (!alerts) return;
-  const r = await read(m.content, m.author.username, m.createdAt, judges);
+  const r = await readInContext(m);
   if (r.severity === 0) return;
   const did: string[] = [];
   const topic = alerts.topic?.toLowerCase() ?? "";
@@ -256,6 +280,7 @@ async function onMessage(m: Message) {
     did.push("alerted mods");
   }
 
+  if (r.unsure) return void log(`server message: severity ${r.severity}, not sure (only Ward Lite, nothing around it): nothing sent`);
   const nudge = r.severity >= 2 && !topic.includes("ward: no-nudge");
   if (nudge && !due(lastNudge, `${m.guildId}:${m.author.id}`, NUDGE_MS)) did.push("nudge skipped (sent one recently)");
   else if (nudge) {

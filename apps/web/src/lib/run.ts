@@ -6,8 +6,9 @@ import { unzipSync, strFromU8 } from "fflate";
 import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/engine";
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
 import { liteAvailable, WardLiteJudge } from "./lite.ts";
+import { phoneSecondLook } from "./phoneGemma.ts";
 import { BUILT_IN_GEMMA, desktopReady, desktopTransport } from "./desktopGemma.ts";
-import type { Judge } from "@ward/engine";
+import type { Judge, SecondLook } from "@ward/engine";
 import { t } from "../i18n/index.ts";
 
 export async function readChatFile(file: File): Promise<{ text: string; title: string }> {
@@ -44,7 +45,7 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   putSession(id, { chat, analysis: quick, title, self, refining: true });
   updateProfile((p) => ({
     checks: [
-      { id, at: Date.now(), title, level: quick.level, hostile: quick.findings.filter((f) => f.severity > 0).length, saved: false },
+      { id, at: Date.now(), title, level: quick.level, hostile: quick.findings.filter((f) => f.severity > 0 && !f.unsure).length, saved: false },
       ...p.checks,
     ].slice(0, 50),
   }));
@@ -53,13 +54,20 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   // Tiers: Gemma 4 on this computer (or the paired family computer) reads closest, with authority
   // to clear friendly banter: through Ollama if it's there, else built into Ward for desktop
   // (llama.cpp, same prompt and schema). Everywhere else Ward Lite reads, inside the app,
-  // raise-only. (The phone's Gemma 4 E2B writes but doesn't judge: see phoneGemma.ts.)
+  // raise-only. (The phone's Gemma 4 E2B doesn't judge whole chats: it writes, and takes a
+  // confirm-only second look at Ward Lite's flags; see phoneGemma.ts.)
   const status = await modelStatus();
   const language = t().draft.gemmaLanguage;
   let judge: Judge | null = null;
+  let secondLook: SecondLook | null = null;
   if (status.ok && status.via === "ollama") judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16, language });
   else if (status.ok) judge = new GemmaJudge({ transport: desktopTransport, name: BUILT_IN_GEMMA, batch: 16, language });
-  else if (await liteAvailable()) judge = new WardLiteJudge();
+  else if (await liteAvailable()) {
+    judge = new WardLiteJudge();
+    // Ward Lite reads one message at a time; the phone's Gemma, if downloaded, re-reads the ones
+    // only Ward Lite flagged with the messages around them (confirm-only, see phoneGemma.ts).
+    secondLook = await phoneSecondLook();
+  }
   if (!judge) {
     patchSession(id, { refining: false, modelError: status.ok ? undefined : status.reason });
     return id;
@@ -68,11 +76,12 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
     const full = await analyze(chat, {
       self,
       judges: [judge],
+      secondLook: secondLook ?? undefined,
       onProgress: (d, t) => patchSession(id, { progress: [d, t] }),
     });
     patchSession(id, { analysis: full, refining: false, progress: undefined });
     updateProfile((p) => ({
-      checks: p.checks.map((c) => (c.id === id ? { ...c, level: full.level, hostile: full.findings.filter((f) => f.severity > 0).length } : c)),
+      checks: p.checks.map((c) => (c.id === id ? { ...c, level: full.level, hostile: full.findings.filter((f) => f.severity > 0 && !f.unsure).length } : c)),
     }));
   } catch (e) {
     patchSession(id, { refining: false, modelError: e instanceof Error ? e.message : String(e) });

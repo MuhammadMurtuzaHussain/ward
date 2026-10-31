@@ -129,6 +129,10 @@ export const en = {
     liteHurtful: "Reads as hurtful.",
     liteMaybe: "Might be unkind. You know how it was meant better than I do.",
     liteDanger: "Reads as dangerous: a threat, pressure, or telling someone to hurt themselves.",
+    unsure: "I'm not sure about this one. Only my small model noticed it, and nothing around it looks unkind. You know this chat better than I do.",
+    unsureHelp: "If it was meant seriously, it is serious. These people can help, any time.",
+    unsureTitle: "I'm not sure about one message.",
+    unsureLine: "Most of this looks fine. One message could be serious if it was meant that way. Read it below, and trust how it felt.",
   },
   patterns: {
     danger: (kinds: string[]) => `This chat has ${kinds.length ? list(kinds) : "messages that could put you in danger"}. That is never okay, and it's not your fault.`,

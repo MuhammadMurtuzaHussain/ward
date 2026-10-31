@@ -7,7 +7,7 @@ import type { AgeBand } from "./store.ts";
 
 export function suggestLessons(a: Analysis, self: string | null, age: AgeBand, lang: Lang, done: string[], max = 3) {
   const kinds = new Set(a.patterns.map((p) => p.kind));
-  const images = a.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const images = a.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
   const want: string[] = [];
   if (!self) want.push("upstand-1");
   if (images) want.push("lock-2", "lock-1");

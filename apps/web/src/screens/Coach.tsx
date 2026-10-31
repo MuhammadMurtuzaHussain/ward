@@ -34,7 +34,7 @@ export function Coach({ id }: { id: string }) {
   if (!s) return <Screen><BackBar /></Screen>;
   if (!s.self) return <FriendCoach id={id} s={s} />;
   const danger = s.analysis.level === "urgent";
-  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
 
   return (
     <Screen>
@@ -204,7 +204,7 @@ function FriendCoach({ id, s }: { id: string; s: Session }) {
   const t = useT();
   const [app, setApp] = useState<AppName>("WhatsApp");
   const danger = s.analysis.level === "urgent";
-  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
   const pileon = s.analysis.patterns.some((p) => p.kind === "pileon");
 
   return (

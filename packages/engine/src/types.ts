@@ -93,6 +93,14 @@ export interface Finding {
   /** Aimed at the child (by name, reply, or a model's call), as far as Ward can tell. */
   atSelf: boolean;
   why: string;
+  /**
+   * Only a small raise-only model flagged it, and nothing around it backs that up (no hurtful
+   * words nearby, the sender isn't hurtful elsewhere, the child didn't react). Shown, but it
+   * doesn't raise the verdict or go in a report.
+   */
+  unsure?: boolean;
+  /** A bigger model's second look at a message only the small model flagged, with context. */
+  secondLook?: { by: string; hostile: boolean; why?: string };
 }
 
 export type PatternKind =

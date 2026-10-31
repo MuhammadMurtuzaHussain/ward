@@ -2,6 +2,7 @@
 // prompt and schema as the computer's Gemma 4; the reply never leaves the phone.
 
 import { Capacitor, registerPlugin, type PluginListenerHandle } from "@capacitor/core";
+import { GemmaSecondLook, type Transport } from "@ward/engine";
 
 export interface PhoneStatus {
   ramBytes: number;
@@ -64,4 +65,19 @@ export async function phoneWrite(prompt: string): Promise<string | null> {
   } catch {
     return null;
   }
+}
+
+/**
+ * The phone's Gemma as a second look at messages only Ward Lite flagged, with the messages
+ * around them. Confirm-only: on eval/secondlook, Gemma 4 E2B cleared real abuse (a dangerous
+ * message among it), so its "yes" backs a flag up and its "no" changes nothing.
+ */
+export async function phoneSecondLook(): Promise<GemmaSecondLook | null> {
+  const s = await phoneStatus();
+  if (!s?.downloaded) return null;
+  const transport: Transport = async (system, prompt, schema) => {
+    await GemmaPhone.load();
+    return (await GemmaPhone.generate({ system, prompt: `${prompt}\n\nReply with only this JSON shape, no other text: ${JSON.stringify(schema)}`, schema: JSON.stringify(schema) })).text;
+  };
+  return new GemmaSecondLook(transport, "Gemma 4 E2B (phone)", false);
 }

@@ -237,3 +237,90 @@ export class ShieldGemmaJudge implements Judge {
     return out;
   }
 }
+
+/** A Transport to Ollama's chat API, for anything that takes one (e.g. GemmaSecondLook). */
+export function ollamaTransport(model: string, baseUrl = DEFAULT_URL, f: typeof fetch = globalThis.fetch.bind(globalThis)): Transport {
+  const post = (system: string, user: string, format?: object) =>
+    f(`${baseUrl}/api/chat`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        model,
+        stream: false,
+        think: false,
+        ...(format ? { format } : {}),
+        options: { temperature: 0, num_ctx: 4096 },
+        messages: [
+          { role: "system", content: system },
+          { role: "user", content: user },
+        ],
+      }),
+    });
+  return async (system, user, schema) => {
+    let r = await post(system, user, schema);
+    // Some model builds (gemma4:e2b in Ollama) can't constrain output; ask for the JSON in words.
+    if (r.status === 501) r = await post(system, `${user}\n\nReply with only this JSON shape, no other text: ${JSON.stringify(schema)}`);
+    if (!r.ok) throw new Error(`Ollama ${model}: ${r.status} ${await r.text()}`);
+    return ((await r.json()) as { message: { content: string } }).message.content;
+  };
+}
+
+const LOOK_SCHEMA = {
+  type: "object",
+  properties: { hostile: { type: "boolean" }, why: { type: "string" } },
+  required: ["hostile", "why"],
+};
+
+export const SECOND_LOOK_SYSTEM = `A small model flagged one chat message as possibly hurtful. It reads messages one at a time and often mistakes ordinary chat for threats. You can see the messages around it.
+Messages may be in English, Roman Urdu, Hinglish, Bangla, or a mix. Read them as a native speaker would.
+
+Decide whether the message marked CHECK is meant to hurt, mock, shame, threaten, exclude, pressure or expose someone in this chat.
+NOT hostile: plans, goodbyes and everyday chat; friends teasing each other when both are clearly joking; game trash talk that isn't aimed at hurting anyone; standing up for someone; someone quoting what was said to them, to ask for help.
+Hostile even if phrased politely, sweetly or as a joke: threats; telling someone to hurt themselves; pressure for photos; threats to share private things; shutting a named person out on purpose (a new group, a plan or a game "without X", "don't add X"); backhanded compliments about someone's body, looks, family or background ("pretty for your size"); sarcasm or "energy" jokes that mock a person.
+If it could really be a threat to someone's safety and you can't tell, answer hostile.
+Reply as JSON: "hostile" (true or false) and "why" (under 15 words, plain English a 10-year-old understands; never guess anyone's gender).`;
+
+/** Models measured to clear Ward Lite's false alarms without clearing real abuse (eval/secondlook). */
+export const CAN_CLEAR = ["gemma4:e4b"];
+
+/**
+ * Gemma's second look at messages only Ward Lite flagged: one message at a time, with up to six
+ * messages before it and two after. Small Gemma models judge a long list poorly but answer one
+ * focused question well, and this is the question Ward Lite can't answer: what's around it.
+ */
+export class GemmaSecondLook {
+  private transport: Transport;
+  readonly name: string;
+  readonly canClear: boolean;
+  private around: { before: number; after: number };
+
+  /** canClear: see SecondLook. True only for a model that passed eval/secondlook (Gemma 4 E4B). */
+  constructor(transport: Transport, name: string, canClear: boolean, around = { before: 6, after: 2 }) {
+    this.transport = transport;
+    this.name = name;
+    this.canClear = canClear;
+    this.around = around;
+  }
+
+  async review(chat: Chat, ids: number[], self: string | null) {
+    const out = new Map<number, { hostile: boolean; why?: string }>();
+    for (const id of ids) {
+      const at = chat.messages.findIndex((m) => m.id === id);
+      if (at < 0) continue;
+      const near = chat.messages.slice(Math.max(0, at - this.around.before), at + 1 + this.around.after);
+      const prompt = [
+        `Participants: ${chat.participants.join(", ")}.${self ? ` The child using this app is "${self}".` : ""}`,
+        "",
+        ...near.map((m) => `${m.id === id ? ">>> CHECK" : "context"} ${m.sender}: ${m.media ? "<photo or video>" : m.text}`),
+      ].join("\n");
+      try {
+        const text = await this.transport(SECOND_LOOK_SYSTEM, prompt, LOOK_SCHEMA);
+        const j = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)) as { hostile?: unknown; why?: unknown };
+        if (typeof j.hostile === "boolean") out.set(id, { hostile: j.hostile, why: typeof j.why === "string" ? j.why : undefined });
+      } catch {
+        // No answer is no verdict: the context rules decide instead.
+      }
+    }
+    return out;
+  }
+}

@@ -42,6 +42,17 @@ export function steps(r: Reading): string[] {
 
 export function checkEmbed(r: Reading, author: string) {
   const kinds = r.categories.map((c) => CATEGORY[c]);
+  if (r.unsure)
+    return {
+      title: "Ward isn't sure about this one",
+      description: [
+        "Only Ward's small model noticed something here, and Ward can't see enough of the chat around it to be sure. You know how it was meant better than Ward does.",
+        r.severity >= 3 ? "\nIf it was meant seriously, it **is** serious: tell an adult you trust, and `/ward help` lists free, private helplines." : "",
+        "\nIf it hurt: right-click it → **Apps** → **Save as evidence**, and block or report them on Discord.",
+      ].join("\n"),
+      color: COLOR[1],
+      footer: { text: `Read by ${r.readBy.join(" + ")}, on Ward's own server. Only you can see this. Nothing was kept. Message from ${author}.`.slice(0, 2048) },
+    };
   const lines =
     r.severity === 0
       ? ["Nothing in the words Ward knows, in English, Roman Urdu, Hinglish or Bangla. If it still hurt, that counts: tone and history matter, and Ward only sees this one message."]

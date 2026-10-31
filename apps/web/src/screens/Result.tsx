@@ -77,10 +77,14 @@ export function Result({ id }: { id: string }) {
   }
 
   const a = s.analysis;
-  const v = verdict(a.level, age, s.self, t);
   const danger = a.patterns.find((p) => p.kind === "danger");
-  const imageRisk = a.findings.some((f) => f.severity >= 3 && (f.categories.includes("sexual") || f.categories.includes("exposure")));
-  const hostile = a.findings.filter((f) => f.severity > 0 && f.message.sender !== s.self);
+  // A dangerous-sounding message Ward isn't sure about doesn't raise the alarm, but it doesn't
+  // get "this looks okay" either: Ward says it isn't sure, and the help stays close.
+  const unsureDanger = !danger && a.findings.some((f) => f.unsure && f.severity >= 3 && f.message.sender !== s.self);
+  const base = verdict(a.level, age, s.self, t);
+  const v = unsureDanger && (a.level === "calm" || a.level === "watch") ? { ...base, title: t.result.unsureTitle, line: t.result.unsureLine } : base;
+  const imageRisk = a.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const hostile = a.findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== s.self);
   // The child's own messages that could land hard: often anger after being hurt. Named gently.
   const ownHarsh = s.self ? a.findings.some((f) => f.severity >= 2 && f.message.sender === s.self) : false;
 
@@ -104,6 +108,12 @@ export function Result({ id }: { id: string }) {
           </motion.section>
 
           {danger && <HelpNow images={imageRisk} />}
+          {unsureDanger && (
+            <div className="grid gap-3">
+              <p className="text-sm text-dim">{t.result.unsureHelp}</p>
+              <HelpNow images={false} />
+            </div>
+          )}
           {danger && age === "14" && s.self && (
             <Button tone="quiet" onClick={() => go({ name: "plan" })}>
               <Lifebuoy size={20} weight="bold" /> {t.plan.open}
@@ -373,12 +383,14 @@ function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string;
   const flagged = f.severity > 0 && !mine;
   // The child's correction can quiet a message down, but never a dangerous one (corrections.ts).
   const view = correctedView(f, correction);
-  const loud = flagged && view.keepWarning;
+  // Only the small model flagged it and nothing around it backs that up: shown, quietly.
+  const unsure = flagged && f.unsure && !correction;
+  const loud = flagged && view.keepWarning && !unsure;
   const late = m.at && (m.at.getHours() >= 23 || m.at.getHours() < 5);
   const edge = f.severity >= 3 ? "border-alarm bg-alarm-soft" : f.severity === 2 ? "border-glow/70 bg-glow-soft" : f.severity === 1 ? "border-line bg-raised" : "border-transparent bg-raised/60";
   return (
     <li className={`flex flex-col ${mine ? "items-end" : "items-start"}`}>
-      <div className={`max-w-[88%] rounded-[calc(var(--r-card)-6px)] border px-4 py-2.5 ${mine ? "border-transparent bg-glow-soft" : loud ? edge : "border-transparent bg-raised/60"}`}>
+      <div className={`max-w-[88%] rounded-[calc(var(--r-card)-6px)] border px-4 py-2.5 ${mine ? "border-transparent bg-glow-soft" : loud ? edge : unsure ? "border-dashed border-line bg-raised/60" : "border-transparent bg-raised/60"}`}>
         <div className="flex items-center gap-2 text-xs">
           <span className={`font-bold ${loud ? "text-ink" : "text-dim"}`}>{mine ? t.result.youSender : m.sender}</span>
           {m.at && (
@@ -396,6 +408,7 @@ function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string;
           {why}
         </p>
       )}
+      {unsure && <p className="mt-1 max-w-[88%] px-1 text-sm text-dim">{t.result.unsure}</p>}
       {flagged && fp && <Correct f={f} fp={fp} c={correction} view={view} help={help} />}
     </li>
   );

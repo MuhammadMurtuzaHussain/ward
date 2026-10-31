@@ -11,12 +11,53 @@ export interface Judge {
   judge(chat: Chat, opts: { self: string | null; onProgress?: (done: number, total: number) => void }): Promise<Map<number, ModelJudgement>>;
 }
 
+/**
+ * A bigger model reading, with the messages around it, each message that only a small raise-only
+ * model flagged. Its answer can clear such a flag; it never touches what the word lists found.
+ */
+export interface SecondLook {
+  name: string;
+  /**
+   * Whether a "not hostile" answer may clear the flag. Only for models measured to do this
+   * safely (eval/secondlook): Gemma 4 E4B does; Gemma 4 E2B cleared real abuse, so on phones
+   * its "yes" backs a flag up and its "no" is ignored.
+   */
+  canClear: boolean;
+  review(chat: Chat, ids: number[], self: string | null): Promise<Map<number, { hostile: boolean; why?: string }>>;
+}
+
 export interface AnalyzeOptions {
   /** Which participant is the child using Ward. */
   self: string | null;
   packs?: PackMatcher;
   judges?: Judge[];
+  secondLook?: SecondLook;
+  /**
+   * A message only the small model flagged needs the chat around it to back it up (default).
+   * Off when every message was picked by the child on purpose, like evidence they saved.
+   */
+  requireContext?: boolean;
   onProgress?: (done: number, total: number) => void;
+}
+
+/** The child reacting as if hurt: "stop", "please", "why", crying. Across Ward's languages. */
+const DISTRESS =
+  /(^|[^\p{L}])(stop|please|pls|plz|leave me alone|not funny|why (are|r) (you|u)|bas karo|band karo|mat karo|mat bolo|rehne do|chhod do|chup kar|kyun|kyu)([^\p{L}]|$)|😢|😭|💔|🥺|بس کرو|مت کرو|مت بولو|کیوں|থামো|প্লিজ|কেন/iu;
+
+/** Flagged by a small raise-only model alone: no word-list hit behind it. */
+const smallModelOnly = (f: Finding) => f.severity > 0 && f.hits.length === 0 && f.model?.authority === "raise-only";
+
+/**
+ * Whether the chat around a small-model-only flag backs it up: hurtful words close by (a
+ * pile-on), the same sender being hurtful elsewhere, or the child reacting as if hurt.
+ */
+function backedUp(chat: Chat, findings: Finding[], f: Finding, self: string | null): boolean {
+  const i = f.message.id;
+  const words = (g: Finding) => g.severity > 0 && g.hits.length > 0 && g.message.sender !== self;
+  if (findings.some((g) => words(g) && g.message.sender === f.message.sender)) return true;
+  if (findings.some((g) => words(g) && Math.abs(g.message.id - i) <= 5)) return true;
+  if (self) return chat.messages.slice(i + 1, i + 5).some((m) => m.sender === self && DISTRESS.test(m.text));
+  return false;
 }
 
 const HOUR = 3_600_000;
@@ -98,7 +139,22 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
     return { message: m, ...c, model, atSelf };
   });
 
-  const hostile = findings.filter((f) => f.severity > 0 && f.message.sender !== opts.self);
+  // Small-model-only flags get a second look with context where a bigger model is available,
+  // and must be backed up by the chat itself where it isn't (or where it didn't answer).
+  const flagged = findings.filter(smallModelOnly);
+  if (opts.secondLook && flagged.length) {
+    const verdicts = await opts.secondLook.review(chat, flagged.map((f) => f.message.id), opts.self);
+    for (const f of flagged) {
+      const v = verdicts.get(f.message.id);
+      if (!v || (!v.hostile && !opts.secondLook.canClear)) continue;
+      f.secondLook = { by: opts.secondLook.name, hostile: v.hostile, why: v.why };
+      if (!v.hostile) Object.assign(f, { severity: 0, categories: [], why: "", atSelf: false });
+    }
+  }
+  if (opts.requireContext !== false)
+    for (const f of flagged) if (f.severity > 0 && !f.secondLook?.hostile && !backedUp(chat, findings, f, opts.self)) f.unsure = true;
+
+  const hostile = findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== opts.self);
   const toSelf = hostile.filter((f) => f.atSelf || !opts.self);
   const patterns = findPatterns(chat, hostile, toSelf, opts.self);
 

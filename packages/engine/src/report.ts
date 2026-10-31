@@ -90,7 +90,8 @@ const DANGER: Category[] = ["threat", "selfharm", "sexual", "exposure"];
 export async function buildReport(input: ReportInput): Promise<WardReport> {
   const { chat, analysis: a, fingerprints } = input;
   const self = a.self;
-  const hurtful = a.findings.filter((f) => f.severity > 0 && f.message.sender !== self);
+  // Messages Ward isn't sure about (only the small model, nothing backing it up) stay out.
+  const hurtful = a.findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== self);
   const fp = new Map(chat.messages.map((m, i) => [m.id, fingerprints[i] ?? ""]));
   const incidents: ReportIncident[] = hurtful.map((f) => ({
     at: f.message.at?.toISOString() ?? null,

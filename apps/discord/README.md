@@ -69,6 +69,14 @@ so a burst of messages isn't a burst of DMs. While testing, set `WARD_NUDGE_MINU
 `WARD_CHECKIN_MINUTES=0`, or it will look as if Ward stopped after the first one. The bot logs
 what it did (never what anyone wrote) to the terminal.
 
+**Context.** Ward Lite reads one message at a time, so on its own it can mistake "I'll find you at
+the fair" for a threat. When only Ward Lite flagged a message, the bot reads the eight messages
+before it (where it can see the channel): if nothing around it backs the flag up, Ward says it
+isn't sure and server mode stays quiet. If the host runs Gemma through Ollama
+(`WARD_GEMMA_MODEL=gemma4:e4b`), Gemma takes a second look with that context and can clear false
+alarms; on the everyday and red-team sets it cleared 22 of 24 false alarms and 2 of 46 hurtful
+messages, and no dangerous ones ([eval/secondlook](../../eval/secondlook/results.md)).
+
 `WARD_SERVER_MODE=off` runs personal mode only (no Message Content intent needed).
 `WARD_LITE=off` reads with the word lists only.
 
