@@ -6,6 +6,7 @@ import { unzipSync, strFromU8 } from "fflate";
 import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/engine";
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
 import { liteAvailable, WardLiteJudge } from "./lite.ts";
+import { BUILT_IN_GEMMA, desktopReady, desktopTransport } from "./desktopGemma.ts";
 import type { Judge } from "@ward/engine";
 import { t } from "../i18n/index.ts";
 
@@ -25,14 +26,16 @@ export function parse(text: string): Chat {
   return parseChat(text);
 }
 
-export type ModelStatus = { ok: true; model: string } | { ok: false; reason: string };
+export type ModelStatus = { ok: true; model: string; via: "ollama" | "builtIn" } | { ok: false; reason: string };
 
+/** The strongest Gemma on this computer: Ollama's if it's there, else the one built into Ward for desktop. */
 export async function modelStatus(): Promise<ModelStatus> {
   const { ollamaUrl, model } = getState().profile;
   const models = await ollamaModels(ollamaUrl);
+  if (models.includes(model)) return { ok: true, model, via: "ollama" };
+  if (await desktopReady()) return { ok: true, model: BUILT_IN_GEMMA, via: "builtIn" };
   if (!models.length) return { ok: false, reason: "No model running on this device" };
-  if (!models.includes(model)) return { ok: false, reason: `${model} isn't downloaded` };
-  return { ok: true, model };
+  return { ok: false, reason: `${model} isn't downloaded` };
 }
 
 export async function startCheck(chat: Chat, self: string | null, title: string) {
@@ -48,11 +51,14 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   go({ name: "result", id });
 
   // Tiers: Gemma 4 on this computer (or the paired family computer) reads closest, with authority
-  // to clear friendly banter. Everywhere else Ward Lite reads, inside the app, raise-only. (The
-  // phone's Gemma 4 E2B writes but doesn't judge: see phoneGemma.ts.)
+  // to clear friendly banter: through Ollama if it's there, else built into Ward for desktop
+  // (llama.cpp, same prompt and schema). Everywhere else Ward Lite reads, inside the app,
+  // raise-only. (The phone's Gemma 4 E2B writes but doesn't judge: see phoneGemma.ts.)
   const status = await modelStatus();
+  const language = t().draft.gemmaLanguage;
   let judge: Judge | null = null;
-  if (status.ok) judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16, language: t().draft.gemmaLanguage });
+  if (status.ok && status.via === "ollama") judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16, language });
+  else if (status.ok) judge = new GemmaJudge({ transport: desktopTransport, name: BUILT_IN_GEMMA, batch: 16, language });
   else if (await liteAvailable()) judge = new WardLiteJudge();
   if (!judge) {
     patchSession(id, { refining: false, modelError: status.ok ? undefined : status.reason });
@@ -74,7 +80,10 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   return id;
 }
 
-/** Screenshots: Gemma's vision reads them into "Name: message" lines. Desktop with Ollama only for now. */
+/**
+ * Screenshots: Gemma's vision reads them into "Name: message" lines. Desktop with Ollama only for
+ * now: the Gemma built into Ward reads text, not images (node-llama-cpp has no vision support yet).
+ */
 export async function readScreenshots(files: File[]): Promise<string> {
   const { ollamaUrl, model } = getState().profile;
   const images = await Promise.all(
