@@ -168,11 +168,15 @@ that comes before any pilot.
 
 ```bash
 pnpm install
+node apps/web/scripts/copy-ort.mjs  # Ward Lite's offline runtime (not in git); rerun after updating packages
 ollama pull gemma4:e4b          # the close read; Ward still works without it
 pnpm dev                        # http://localhost:5199
 pnpm test                       # every package, plus the viewer, corrections and red-team leak check
 pnpm eval                       # the scorecard (also needs: ollama pull shieldgemma:2b)
 ```
+
+Skip the `copy-ort` step and the app still runs, but without Ward Lite, in the dev server and in
+every build below: where Gemma isn't set up, Ward reads with the word lists alone.
 
 - **Desktop:** `pnpm --filter @ward/desktop start`. No Ollama? Me → "Gemma inside Ward" downloads
   Gemma 4 once (4.6 GB) and runs it through llama.cpp inside the app. `--lab` (or the switch in
