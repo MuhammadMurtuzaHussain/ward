@@ -354,7 +354,7 @@ function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string;
           <span className={`font-bold ${loud ? "text-ink" : "text-dim"}`}>{mine ? t.result.youSender : m.sender}</span>
           {m.at && (
             <span className="text-dim">
-              {m.at.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" })}
+              <bdi>{m.at.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" })}</bdi>
               {late && <MoonStars size={12} weight="fill" className="ms-1 inline text-glow" aria-label={t.result.lateNight} />}
             </span>
           )}
