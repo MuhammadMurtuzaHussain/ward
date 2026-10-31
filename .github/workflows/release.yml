@@ -1,0 +1,128 @@
+# A release, from a v* tag the owner pushes (docs/RELEASING.md). Builds the signed Android APKs
+# (android.yml, including the emulator launch test) and the desktop installers (desktop.yml,
+# each launch-tested), then publishes them as a GitHub prerelease with SHA256SUMS and the
+# signing certificate's SHA-256 in the release notes: the fingerprint Ward shows under "Give
+# Ward to a friend". Fails before building anything if a signing secret is missing.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Signing secrets
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          missing=""
+          for s in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            [ -n "${!s}" ] || missing="$missing $s"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Can't release without the signing secrets. Missing:$missing. Add them with gh secret set (docs/RELEASING.md), then delete and push the tag again."
+            exit 1
+          fi
+          echo "All four signing secrets are set."
+      - name: Tag is a version
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || {
+            echo "::error::The tag $GITHUB_REF_NAME isn't a version like v0.1.0 or v0.1.0-rc.1"; exit 1; }
+
+  android:
+    needs: check
+    uses: ./.github/workflows/android.yml
+    with:
+      release: true
+    secrets: inherit
+
+  desktop:
+    needs: check
+    uses: ./.github/workflows/desktop.yml
+
+  publish:
+    needs: [android, desktop]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: ward-android
+          path: files
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: ward-desktop-*
+          path: files
+          merge-multiple: true
+      - name: Check the files
+        id: cert
+        working-directory: files
+        run: |
+          expected="Ward-android-gemma.apk Ward-android.apk Ward-linux.AppImage Ward-mac-arm64.dmg Ward-mac-x64.dmg Ward-windows-setup.exe"
+          [ "$(ls | sort | xargs)" = "$expected" ] || { echo "::error::Expected $expected, got $(ls | xargs)"; exit 1; }
+          tools="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)"
+          version="${GITHUB_REF_NAME#v}"
+          certs=""
+          for apk in Ward-android.apk Ward-android-gemma.apk; do
+            out=$("$tools"/apksigner verify --print-certs "$apk")
+            echo "$out"
+            ! echo "$out" | grep -q "CN=Android Debug" || { echo "::error::$apk is signed with a debug key"; exit 1; }
+            certs="$certs $(echo "$out" | sed -n 's/^.*[Ss]igner.*certificate SHA-256 digest: //p' | head -1)"
+            name=$("$tools"/aapt2 dump badging "$apk" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")
+            case "$name" in "$version"|"$version-gemma") ;; *) echo "::error::$apk is version $name, the tag says $version"; exit 1 ;; esac
+          done
+          set -- $certs
+          [ -n "$1" ] && [ "$1" = "$2" ] || { echo "::error::The two APKs aren't signed with the same certificate ($certs)"; exit 1; }
+          echo "sha256=$1" >> "$GITHUB_OUTPUT"
+          sha256sum * > ../SHA256SUMS
+          cat ../SHA256SUMS
+      - name: Publish the prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CERT: ${{ steps.cert.outputs.sha256 }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          groups=$(echo "$CERT" | tr 'a-f' 'A-F' | fold -w4 | xargs)
+          run="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          cat > notes.md <<EOF
+          **A preview.** Before you put Ward in front of a child, read the [safeguarding policy](https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_REF_NAME/docs/SAFEGUARDING.md): parts of Ward haven't been reviewed by a child-protection professional yet.
+
+          ### Which file?
+
+          | File | For |
+          |---|---|
+          | \`Ward-android.apk\` | Android 7 and later, any phone, 32-bit ones included. Ward Lite reads chats on the phone. Start here. |
+          | \`Ward-android-gemma.apk\` | Android phones with a 64-bit (arm64) chip. Adds the choice to download Gemma 4 E2B (2 GB), which helps write, on phones with 6 GB of RAM or more. |
+          | \`Ward-mac-arm64.dmg\` | Macs with Apple Silicon |
+          | \`Ward-mac-x64.dmg\` | Intel Macs |
+          | \`Ward-windows-setup.exe\` | Windows, 64-bit |
+          | \`Ward-linux.AppImage\` | Linux, 64-bit |
+
+          Both APKs are the same app signed with the same key, so either can replace the other. The desktop installers aren't signed yet: see [opening an unsigned build](https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_REF_NAME/README.md#opening-an-unsigned-build).
+
+          ### Is it the real Ward?
+
+          Ward's signing certificate (SHA-256). Ward shows the same boxes under "Give Ward to a friend"; every one should match.
+
+          \`\`\`
+          $groups
+          \`\`\`
+
+          On a computer: \`apksigner verify --print-certs Ward-android.apk\` should print \`$CERT\`.
+
+          Every file's SHA-256 is in \`SHA256SUMS\`. Check a download with \`sha256sum -c --ignore-missing SHA256SUMS\` (Linux), \`shasum -a 256 <file>\` (macOS) or \`Get-FileHash <file>\` (Windows PowerShell), and compare with its line.
+
+          Built by [this workflow run]($run) from commit \`$GITHUB_SHA\`.
+          EOF
+          gh release create "$GITHUB_REF_NAME" files/* SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" --verify-tag --prerelease \
+            --title "Ward $version (preview)" --notes-file notes.md

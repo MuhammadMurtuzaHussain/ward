@@ -1,15 +1,17 @@
 # Desktop installers for macOS (Apple Silicon and Intel), Windows and Linux. Run by hand from
-# the Actions tab (kept 14 days), or by pushing a v* tag, which publishes them on the Release.
+# the Actions tab (kept 14 days). release.yml calls this on a v* tag and publishes them.
 # Each packaged app is launched once (WARD_SMOKE, which also opens Ward Lite) before it's kept.
-# Unsigned for now.
+# Unsigned for now (README, "Opening an unsigned build").
 # Gemma's model is never in the installer (Ward downloads it on request); llama.cpp's binaries
 # for the runner's platform are, minus CUDA (Vulkan and CPU cover Windows and Linux).
 name: Desktop installers
 
 on:
   workflow_dispatch:
-  push:
-    tags: ["v*"]
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -39,18 +41,22 @@ jobs:
             resources: release/linux-unpacked/resources
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @ward/web build
-      - run: pnpm exec electron-builder ${{ matrix.target }} --publish never
+      # On a tag the app's version is the tag's (v0.1.0 -> 0.1.0); a hand run keeps package.json's.
+      - name: Package
+        shell: bash
         working-directory: desktop
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: pnpm exec electron-builder ${{ matrix.target }} --publish never ${TAG:+"-c.extraMetadata.version=${TAG#v}"}
       # Ward Lite reads in the app only if ONNX Runtime's wasm and the model were packaged; the
       # launch test below then opens the model with that runtime inside the app's own page.
       - name: Ward Lite is in the app
@@ -79,28 +85,13 @@ jobs:
           else
             WARD_SMOKE=llama "${{ matrix.app }}" --lab
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: ward-${{ matrix.name }}
+          name: ward-desktop-${{ matrix.name }}
           path: |
             release/*.dmg
             release/*.exe
             release/*.AppImage
-          if-no-files-found: ignore
+          if-no-files-found: error
           retention-days: 14
 
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: installers
-          merge-multiple: true
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: installers/*
-          generate_release_notes: true
