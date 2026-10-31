@@ -27,6 +27,7 @@ export type Screen =
   | { name: "story"; id: string }
   | { name: "kit" }
   | { name: "counsel" }
+  | { name: "give" }
   | { name: "mean" }
   | { name: "plan" };
 
