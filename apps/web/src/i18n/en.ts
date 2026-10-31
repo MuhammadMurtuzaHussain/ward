@@ -516,7 +516,7 @@ export const en = {
     accounts: "Accounts that sent hurtful messages",
     incidents: (n: number) => `Hurtful messages (${n})`,
     unconfirmed: (n: number) => `Not confirmed by Ward (${n})`,
-    unconfirmedLine: "Only Ward's small model flagged these, and nothing else in the chat backed it up, so they aren't counted above. Read them yourself: if one was meant seriously, it is serious.",
+    unconfirmedLine: "Only Ward's small model flagged these, and Ward couldn't confirm them: nothing else in the chat backed them up, or a second look by a bigger model read them differently. They aren't counted above. Read them yourself: if one was meant seriously, it is serious.",
     unconfirmedDanger: (n: number) => `Also ${n} possibly dangerous ${n === 1 ? "message" : "messages"} Ward couldn't confirm. See "Not confirmed by Ward" below.`,
     severity: ["", "Unkind", "Bullying", "Dangerous"],
     notes: "Case notes",

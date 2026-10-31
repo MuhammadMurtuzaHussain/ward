@@ -290,7 +290,7 @@ function render(r, check) {
   // Kept apart from the incidents: not counted in the accounts, patterns or Ward's reading above.
   const unconfirmed = unsure.length
     ? h("section", null, h("h2", null, `Not confirmed by Ward (${unsure.length})`),
-        h("p", { class: "dim", style: "margin:-4px 0 10px;max-width:80ch" }, "Only Ward's small model flagged these, and nothing else in the chat backed it up, so they aren't counted above. Read them yourself: if one was meant seriously, it is serious."),
+        h("p", { class: "dim", style: "margin:-4px 0 10px;max-width:80ch" }, "Only Ward's small model flagged these, and Ward couldn't confirm them: nothing else in the chat backed them up, or a second look by a bigger model read them differently. They aren't counted above. Read them yourself: if one was meant seriously, it is serious."),
         table(unsure, check.unconfirmed))
     : null;
 

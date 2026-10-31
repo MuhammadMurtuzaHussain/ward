@@ -59,7 +59,7 @@ ${r.accounts.map((a) => `<tr><td>${esc(a.name)}</td><td>${a.hurtfulMessages}</td
 ${rows(r.incidents)}
 </tbody></table>
 ${unsure.length ? `<h2>Not confirmed by Ward</h2>
-<p class="meta">Only Ward's small model flagged these, and nothing else in the chat backed it up, so they aren't counted above. Read them yourself: if one was meant seriously, it is serious.</p>
+<p class="meta">Only Ward's small model flagged these, and Ward couldn't confirm them: nothing else in the chat backed them up, or a second look by a bigger model read them differently. They aren't counted above. Read them yourself: if one was meant seriously, it is serious.</p>
 <table><thead><tr><th>When</th><th>From</th><th>Message</th><th>Fingerprint</th></tr></thead><tbody>
 ${rows(unsure)}
 </tbody></table>` : ""}

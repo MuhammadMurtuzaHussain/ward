@@ -69,7 +69,8 @@ export interface WardReport {
   incidents: ReportIncident[];
   /**
    * Hurtful-looking messages Ward isn't sure about (Finding.unsure): only its small model caught
-   * them and nothing in the chat backed that up. Kept apart from the incidents and out of the
+   * them, and either nothing in the chat backed that up or a second look by a bigger model read
+   * them differently. Kept apart from the incidents and out of the
    * accounts, patterns and level. Left out when there are none, so older v2 reports check as before.
    */
   unconfirmed?: ReportIncident[];
@@ -99,8 +100,9 @@ const DANGER: Category[] = ["threat", "selfharm", "sexual", "exposure"];
 export async function buildReport(input: ReportInput): Promise<WardReport> {
   const { chat, analysis: a, fingerprints } = input;
   const self = a.self;
-  // Messages Ward isn't sure about (only the small model, nothing backing it up) go in their
-  // own list: a caseworker sees them, but they never count towards the case itself.
+  // Messages Ward isn't sure about (only the small model, and either nothing backing it up or a
+  // second look disagreeing) go in their own list: a caseworker sees them, but they never count
+  // towards the case itself.
   const others = a.findings.filter((f) => f.severity > 0 && f.message.sender !== self);
   const hurtful = others.filter((f) => !f.unsure);
   const fp = new Map(chat.messages.map((m, i) => [m.id, fingerprints[i] ?? ""]));
