@@ -21,12 +21,14 @@ Related documents: [HARMS.md](HARMS.md) (what can go wrong in the app),
 **The child leads.** The child owns Ward. They choose what to check, what to save, who to tell
 and when. Ward suggests; it does not decide for them and it does not act behind their back.
 
-**Everything stays on the device.** Chats are read on the device. Ward has no account, no server
-of ours, no analytics and no telemetry. Unsaved checks are forgotten when Ward closes. Saved
-evidence is encrypted under a PIN only the child knows. The only network calls in the app are
-ones the child sets up or chooses: asking their own Ollama computer to read a chat, downloading
-the optional phone model, and opening a helpline site or Take It Down link. None of them carries
-a chat to us.
+**Nothing comes to us.** Chats are read on the device, or on the family's own computer if a
+phone is paired with it; then the chats the phone checks cross the home network to that
+computer, unencrypted, and the README says so. Ward has no account, no server of ours, no
+analytics and no telemetry. Unsaved checks are forgotten when Ward closes. Saved evidence is
+encrypted under a PIN only the child knows. The only network calls in the app are ones the
+child sets up or chooses: asking their own Ollama computer to read a chat, downloading the
+optional phone model, and opening a helpline site or Take It Down link. None of them carries a
+chat to us.
 
 **No data collection means nothing to leak, and nothing to hand over.** We cannot read a child's
 chats, so we cannot be asked to share them and we cannot lose them. This is also why Ward cannot
@@ -58,9 +60,11 @@ What changes by band, as the app works today:
   test fails if that stops being true. One lesson (`lock-2`) is teen-only and a test checks it
   stays out of the 8 to 10 path. Branching stories exist for each band, with endings that are
   kind, mixed or hard and never a telling-off.
-- **Wording and look.** The verdict, the coach and the look of the app are written for the band.
-  The youngest band gets bigger buttons, more of Ward the ghost, and read-aloud on by default.
-  The 14 to 17 band gets plainer language and "This is bullying, not banter."
+- **Wording and look.** The look of the app changes by band: the youngest band gets bigger text,
+  rounder buttons, a bigger Ward the ghost, and read-aloud on by default. The 11 to 13 and 14 to
+  17 bands see "This is bullying, not banter." as the bullying verdict. Apart from that, the
+  verdict and the coach use the same words for every band today. **Planned:** verdict and coach
+  wording written for each band.
 - **Safety plan.** The teen safety plan (warning signs, things that help, people, safe places) is
   shown to the 14 to 17 band only. It is sealed in the vault under the child's PIN.
 - **Gemma's writing.** When Gemma drafts a message to a trusted adult or gives feedback on a
@@ -175,16 +179,21 @@ The intended process, which is **planned**:
    consent.
 
 **Not to be turned on more widely until the professional review is done:** the safety plan, the
-"Was I mean?" repair steps, and every crisis path. The phases document already says this for the
-safety plan.
+"Was I mean?" repair steps, and every crisis path. All three are in the app today, unreviewed:
+treat them as previews, and do not promote them to children more widely (in a campaign, a
+school roll-out or a store listing) until the review is done. The phases document already says
+this for the safety plan.
 
 **Slang packs** are plain JSON, so anyone can propose a word. A word may only be added with its
 meaning, a severity and a note on why it is there. **Planned:** two-person review on every added
 word, one of them the language maintainer, and a published list of what each word means.
 
-**Gemma and other models.** Models only read, draft and give feedback. They cannot change a
-verdict downwards where the word lists call it dangerous, cannot send anything and cannot reach
-the network except the child's own Ollama computer. Prompts sent to a model are in the open
+**Gemma and other models.** Models only read, draft and give feedback. Ward Lite can only raise
+a warning. Gemma can clear a word-list hit it reads as harmless, except a dangerous one, which
+stays visible with "How did it feel?" ([section 4](#4-what-ward-does-when-it-sees-danger)). When
+Gemma takes a second look at a message only Ward Lite flagged, it can clear a hurtful flag, but a
+dangerous one it can at most mark as unsure, never clear. Models cannot send anything and cannot
+reach the network except the child's own Ollama computer. Prompts sent to a model are in the open
 source code and are part of content review. Model output is shown to the child as a suggestion
 they can edit or ignore.
 
