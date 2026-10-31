@@ -5,15 +5,23 @@
 <p align="center">
 A guardian that lives on a child's own device. It spots cyberbullying in English, Roman Urdu,<br/>
 Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids to bounce back.<br/>
-<b>Open-weight Gemma, running locally. A child's messages never leave the device.</b>
+<b>Open-weight Gemma, running locally. No server and no account: a child's messages never go to us or to any AI company.</b>
 </p>
 
+<!-- Download badges, for when the first release is tagged:
 <p align="center">
 <a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/latest/download/Ward-android.apk"><img src="https://img.shields.io/badge/Android-APK-0f1024?style=for-the-badge&logo=android&logoColor=ffb547" alt="Download for Android" /></a>
 <a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/latest"><img src="https://img.shields.io/badge/Desktop-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-0f1024?style=for-the-badge&logoColor=ffb547" alt="Desktop installers" /></a>
 </p>
+-->
+<p align="center"><b>No release yet.</b> Until the first version is published, <a href="#run-it">build Ward from source</a>.</p>
 
 The bully is the ghost haunting the chat. Ward is the ghost on your side.
+
+Before you put Ward in front of a child, read the draft
+[safeguarding policy](docs/SAFEGUARDING.md): what Ward will never do, what hasn't been reviewed by
+a child-protection professional yet, and
+[how to raise a concern](docs/SAFEGUARDING.md#10-raising-a-concern-about-the-project-itself).
 
 ## What this is, and what it isn't
 
@@ -42,8 +50,8 @@ they tell, their class, and helplines.
 
 | | |
 | --- | --- |
-| **Share to Ward** | In WhatsApp, *Export chat* and pick Ward from the share list (Android). Or paste messages, or drop screenshots on desktop. Say which person is you. |
-| **Reads on any phone** | Ward Lite, a 38 MB model inside the app, reads every message offline. On a computer, Gemma 4 reads with context and can tell banter from bullying. On Android phones with 6 GB+, Gemma 4 E2B can be downloaded to help write. |
+| **Share to Ward** | In WhatsApp, *Export chat* and pick Ward from the share list (Android). Or paste messages, or drop screenshots on a computer running Gemma through Ollama. Say which person is you. |
+| **Reads on the phone** | Ward Lite, a 38 MB model inside the app, reads every message offline. On a computer, Gemma 4 reads with context and can tell banter from bullying. On Android phones with 6 GB+, Gemma 4 E2B can be downloaded to help write. |
 | **See the pattern** | One mean message is rude; bullying is a pattern. Ward finds the same person again and again, pile-ons, accounts added to a group just to attack ("ghost accounts"), exclusion, attacks after 11pm, and dangerous messages (threats, telling someone to hurt themselves, sexual pressure, threats to share photos). |
 | **The Haunting** | The chat with the attacks lit up and every ordinary stretch folded away, a verdict in plain words for the child's age, and who is doing it (and who isn't). |
 | **Coach** | Don't reply, save it, block/report/mute with steps for WhatsApp, Instagram, TikTok, Snapchat and Discord, and a message to a trusted adult that Gemma drafts in a kid's voice. Ward never sends anything itself. |
@@ -55,7 +63,7 @@ they tell, their class, and helplines.
 | **English and اردو** | The whole app, lessons included, in English or Urdu (right to left, Nastaliq script). Switch any time in Me. |
 | **Read aloud** | A Listen button on lessons, onboarding, verdicts and coach steps, on by default for the youngest children. English is narrated with ElevenLabs and bundled, so it works offline. |
 | **This is wrong** | A correction under every flagged message. Kept on the phone (no words), never hides the help for a dangerous message, and shared only if the child chooses. |
-| **Give Ward to a friend** | On Android, Ward sends itself to another phone over Bluetooth or Quick Share, no internet, with a fingerprint to check. On desktop and web, a QR code to the download. |
+| **Give Ward to a friend** | On Android, Ward sends itself to another phone over Bluetooth or Quick Share, no internet, with a fingerprint to check. On desktop and web, a QR code to the download (once a release is published). |
 | **Shared phones** | Each person gets their own Ward behind an optional PIN. Quick exit (a button, or Escape twice) locks it instantly and hides it from the recents screen. |
 
 ### The child's circle
@@ -71,8 +79,8 @@ they tell, their class, and helplines.
 | | |
 | --- | --- |
 | **Check with Ward** | Right-click any message → Apps. Is it bullying, what kind, and what to do on Discord. Only the teen sees it. Works in any server or DM, because the teen installs Ward to their own account. |
-| **Save as evidence** | Ward DMs the teen a fingerprinted copy. The DMs are the evidence store: the bot has no database. `/ward report` turns them into a `ward.report/v2` a counsellor can verify. |
-| **Server mode** | Opt-in with a private `#ward-alerts` channel: dangerous messages go to moderators, the sender gets a private nudge to edit or delete, the target a kind check-in. Never deletes, mutes or bans. |
+| **Save as evidence** | Ward DMs the teen a fingerprinted copy. The DMs are the evidence store: the bot has no database. `/ward report` turns them into a `ward.report/v2` a counsellor can check. |
+| **Server mode** | Opt-in with a private `#ward-alerts` channel: dangerous messages go to moderators, the sender of a hurtful but not dangerous message gets a private nudge to edit or delete it, the target a kind check-in. Never deletes, mutes or bans. |
 
 Same engine and Ward Lite, on the CPU, no closed AI service. Self-host it in a few steps, or on
 Render with [`render.yaml`](render.yaml): [apps/discord/README.md](apps/discord/README.md).
@@ -82,7 +90,7 @@ Render with [`render.yaml`](render.yaml): [apps/discord/README.md](apps/discord/
 | | |
 | --- | --- |
 | **A helpline-ready report** | The child picks who it's for and what they want to happen; details about them are optional. They get a readable page plus `ward-report.json` in a documented format ([docs/REPORT.md](docs/REPORT.md)) with a digest a helpline can check. Only hurtful messages go in. The rest of the chat stays private. |
-| **Case viewer** | [`viewer/ward-viewer.html`](viewer/ward-viewer.html): one offline file a caseworker double-clicks. It checks the report wasn't edited (digest and every message's fingerprint), puts safety and the child's wishes first, and exports a summary, a CSV or a print view. No network, nothing uploaded. |
+| **Case viewer** | [`viewer/ward-viewer.html`](viewer/ward-viewer.html): one offline file a caseworker double-clicks. It checks the report against its own digest and every message's fingerprint (this catches accidental damage and casual edits, not a determined forger), puts safety and the child's wishes first, and exports a summary, a CSV or a print view. No network, nothing uploaded. |
 | **Counsellor mode** | A counsellor's Ward that takes a child's report by file or by QR codes from the child's screen (no internet needed), checks it, and keeps case notes. Locked with a PIN, on that device. No server. |
 
 ## Does the approach work? The scorecard
@@ -91,21 +99,34 @@ Same balanced sample for every system, 200 messages per language, half abusive b
 own labels. All run locally through Ollama. Method in
 [`eval/results/scorecard.md`](eval/results/scorecard.md); rerun with `pnpm eval`.
 
-| Caught (precision) | Word lists only | ShieldGemma 2B | **A phone: word lists + Ward Lite** | Gemma 4 E2B (phone size) | **A computer: Gemma 4 E4B** |
+| Caught (precision) | Word lists only | ShieldGemma 2B | **A phone: word lists + Ward Lite** | Gemma 4 E2B (phone size)\* | **A computer: Gemma 4 E4B**\* |
 | --- | --- | --- | --- | --- | --- |
-| **Roman Urdu** | 59% (94%) | 14% (70%) | **83% (86%)** | 33% (75%) | **86% (86%)** |
+| **Roman Urdu** | 59% (94%) | 14% (70%) | **83% (86%)**† | 33% (75%) | **86% (86%)** |
 | **Bangla** (abuse aimed at a person) | 10% (83%) | 14% (93%) | **46% (79%)** | 34% (71%) | **65% (78%)** |
-| **English** (tweet dataset) | 10% (91%) | 19% (73%) | **85% (67%)** | 33% (69%) | **36% (72%)** |
+| **English** (tweet dataset) | 10% (91%) | 19% (73%) | **85% (67%)**† | 33% (69%) | **36% (72%)** |
+
+† **In distribution.** For Roman Urdu and English, Ward Lite was trained on the *train* splits of
+the same two datasets the scorecard tests on (it never sees the test messages themselves). The
+other systems never saw either dataset. So these two cells show Ward Lite learned those datasets,
+not that a phone reads new kinds of chat better than Gemma. **Bangla is the fair comparison:**
+Ward Lite's Bangla came from other datasets, and there the computer's Gemma 4 E4B leads, 65% to
+46%.
+
+\* **The Gemma rows are from an earlier run** and will be rerun. They were scored before Ward
+started asking Gemma again about messages it skipped; in that version Gemma 4 E4B left some
+messages without a verdict (81 of 275 on the [red-team set](docs/REDTEAM.md)), and a missing
+verdict counts as not caught, so these rows may undercount.
 
 **Ward Lite** is a small classifier we distilled for phones ([`train/`](train/)): 37.7 MB, about 8 ms
-per message on one CPU thread, fully offline. It was trained only on data the scorecard never
-sees (a leak check dropped 97 overlapping messages), and in the app it can only *add* warnings,
-never clear one. On a phone it brings Roman Urdu close to the computer's Gemma 4. Bangla is
-still the weak spot: the next step is more real, non-abusive Bangla chat to train on.
+per message on one CPU thread of the laptop that ran the scorecard, fully offline. A leak check
+dropped 98 training messages that also appear in the scorecard's test sets
+([`train/DATA.md`](train/DATA.md)), and in the app it can only *add* warnings, never clear one.
+Bangla is still the weak spot: the next step is more real, non-abusive Bangla chat to train on.
 
-Catching abuse isn't enough; ordinary chat has to stay calm. A held-out set of 329 everyday
-messages ("see you tomorrow", "gate pe milo, samosay") is now part of the check: Ward Lite flags
-5% of them, and marks 2% dangerous ([`eval/everyday`](eval/everyday)). The first release scored
+Catching abuse isn't enough; ordinary chat has to stay calm. A set of 329 everyday messages
+("see you tomorrow", "gate pe milo, samosay"), kept out of training, is now part of the check:
+Ward Lite flags 5% of them, and marks 2% dangerous ([`eval/everyday`](eval/everyday)). It was
+written while fixing that exact problem, so read it as a development check, not a sealed test. The first release scored
 "see you tomorrow" as dangerous; the story is in [docs/PHASES.md](docs/PHASES.md). The
 [red-team set](docs/REDTEAM.md) tests disguises, sarcasm, coded slang and tricky banter, and
 publishes the failures.
@@ -115,9 +136,10 @@ question needs a pilot in schools; the plan is in [docs/ROADMAP.md](docs/ROADMAP
 
 What the numbers do and don't show:
 
-- **English is low for every system.** That dataset is mostly tweets *about* gender and other
-  topics rather than aimed at one person. Ward's pattern engine is tested on the chats in
-  [`packages/engine/fixtures`](packages/engine/fixtures).
+- **English is low for every system that didn't train on it.** That dataset is mostly tweets
+  *about* gender and other topics rather than aimed at one person: word lists catch 10% and
+  Gemma 4 E4B 36%. Ward Lite's 85% is the in-distribution case above. Ward's pattern engine is
+  tested on the chats in [`packages/engine/fixtures`](packages/engine/fixtures).
 - **Small generative models are poor judges.** Gemma 3 1B cleared real insults as harmless.
   Gemma 4 E2B (phone-sized, run natively through LiteRT-LM) caught about a third, and it loses
   track of lists longer than 5 messages. So on phones Ward Lite reads the chats, and Gemma 4 E2B,
@@ -148,20 +170,39 @@ that comes before any pilot.
 pnpm install
 ollama pull gemma4:e4b          # the close read; Ward still works without it
 pnpm dev                        # http://localhost:5199
-pnpm -r test                    # engine, report format and lessons
+pnpm test                       # every package, plus the viewer, corrections and red-team leak check
 pnpm eval                       # the scorecard (also needs: ollama pull shieldgemma:2b)
 ```
 
 - **Desktop:** `pnpm --filter @ward/desktop start`. No Ollama? Me → "Gemma inside Ward" downloads
   Gemma 4 once (4.6 GB) and runs it through llama.cpp inside the app. `--lab` (or the switch in
-  Me) makes Ward forget everything on close, for shared school computers. Installers for macOS, Windows and Linux are
-  built and launch-tested in GitHub Actions (`desktop.yml`). Unsigned for now: on macOS,
-  right-click Ward.app and choose Open the first time.
+  Me) makes Ward forget everything on close, for shared school computers.
+  `pnpm --filter @ward/desktop dist` builds an installer for your own computer into `release/`.
+  GitHub Actions (`desktop.yml`) builds and launch-tests installers for macOS, Windows and Linux
+  when run by hand; none has been published as a release yet.
 - **Android:** `mobile/` is a Capacitor shell with the app bundled inside and a small native
-  plugin for Share to Ward, built and launch-tested on an emulator with Wi-Fi off
-  (`android.yml`). Cloud backup is off, so the vault never leaves the phone.
+  plugin for Share to Ward. `pnpm --filter @ward/web build && pnpm --filter @ward/mobile apk`
+  builds a debug APK (needs the Android SDK and JDK 21). `android.yml` builds it and
+  launch-tests it on an emulator with Wi-Fi off. Cloud backup is off, so the vault never leaves
+  the phone.
 - **Phone + family computer:** start Ollama on the computer with `OLLAMA_HOST=0.0.0.0`, then put
-  `http://<computer's address>:11434` in Ward's Me screen on the phone.
+  `http://<computer's address>:11434` in Ward's Me screen on the phone. The phone then sends the
+  chats it checks to that computer over your home network, unencrypted, so only do this on a
+  network you trust. `OLLAMA_HOST=0.0.0.0` lets anyone on that network use the computer's
+  Ollama: never set it on school or public Wi-Fi.
+
+### Opening an unsigned build
+
+Ward's installers aren't signed yet, so the first time you open one your computer warns you.
+
+- **macOS 15 and later:** open Ward once and click Done on the warning. Then open System
+  Settings → Privacy & Security, scroll down to Security, and click **Open Anyway** next to the
+  line about Ward. Confirm with your password, and Ward opens. (Right-click → Open no longer skips
+  the check on macOS 15.) If there's no Open Anyway button, run
+  `xattr -dr com.apple.quarantine /Applications/Ward.app` in Terminal, then open Ward.
+- **Windows:** if SmartScreen says "Windows protected your PC", click **More info**, then
+  **Run anyway**.
+- **Linux:** make the AppImage runnable with `chmod +x Ward-linux.AppImage`, then open it.
 
 ## How it's built
 
@@ -174,7 +215,7 @@ desktop            Electron, served from app://ward (one of Ollama's allowed ori
 mobile             Capacitor Android with the ShareIn and Give Ward plugins
 apps/discord       the Discord bot (discord.js), same engine and Ward Lite in Node
 eval               datasets, baselines and the scorecard
-docs               PLAN, HARMS, REPORT, ROADMAP
+docs               PLAN, HARMS, SAFEGUARDING, REPORT, REDTEAM, ROADMAP, DPG
 ```
 
 The drop zone's travelling rim light is adapted from the idea in cult-ui's Halo Dropzone on
