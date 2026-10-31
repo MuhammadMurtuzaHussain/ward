@@ -51,7 +51,7 @@ they tell, their class, and helplines.
 | | |
 | --- | --- |
 | **Share to Ward** | In WhatsApp, *Export chat* and pick Ward from the share list (Android). Or paste messages, or drop screenshots on a computer running Gemma through Ollama. Say which person is you. |
-| **Reads on the phone** | Ward Lite, a 38 MB model inside the app, reads every message offline. On a computer, Gemma 4 reads with context and can tell banter from bullying. On Android phones with 6 GB+, Gemma 4 E2B can be downloaded to help write. |
+| **Reads on the phone** | Ward Lite, a 38 MB model inside the app, reads every message offline. On a computer, Gemma 4 reads with context and can tell banter from bullying. On 64-bit Android phones with 6 GB+, the Gemma build of the app can download Gemma 4 E2B to help write. |
 | **See the pattern** | One mean message is rude; bullying is a pattern. Ward finds the same person again and again, pile-ons, accounts added to a group just to attack ("ghost accounts"), exclusion, attacks after 11pm, and dangerous messages (threats, telling someone to hurt themselves, sexual pressure, threats to share photos). |
 | **The Haunting** | The chat with the attacks lit up and every ordinary stretch folded away, a verdict in plain words for the child's age, and who is doing it (and who isn't). |
 | **Coach** | Don't reply, save it, block/report/mute with steps for WhatsApp, Instagram, TikTok, Snapchat and Discord, and a message to a trusted adult that Gemma drafts in a kid's voice. Ward never sends anything itself. |
@@ -185,10 +185,16 @@ every build below: where Gemma isn't set up, Ward reads with the word lists alon
   GitHub Actions (`desktop.yml`) builds and launch-tests installers for macOS, Windows and Linux
   when run by hand; none has been published as a release yet.
 - **Android:** `mobile/` is a Capacitor shell with the app bundled inside and a small native
-  plugin for Share to Ward. `pnpm --filter @ward/web build && pnpm --filter @ward/mobile apk`
-  builds a debug APK (needs the Android SDK and JDK 21). `android.yml` builds it and
-  launch-tests it on an emulator with Wi-Fi off. Cloud backup is off, so the vault never leaves
-  the phone.
+  plugin for Share to Ward. There are two flavours: **lite**, the default, with no native code,
+  so it installs on any phone including 32-bit ones; and **gemma**, which adds on-phone Gemma 4
+  E2B and installs only on 64-bit (arm64) phones. `pnpm --filter @ward/web build && pnpm --filter
+  @ward/mobile apk` builds a lite debug APK (`apk:gemma` for the other; needs the Android SDK and
+  JDK 21). Debug builds install as a separate app, `org.ward.app.debug`. `android.yml` builds both
+  flavours, checks their native libraries, and launch-tests the lite one on an emulator with
+  Wi-Fi off. Cloud backup is off, so the vault never leaves the phone.
+- **Releases:** pushing a `v*` tag runs `release.yml`, which publishes signed APKs, the
+  installers and `SHA256SUMS` as a prerelease. Only the owner can, since it needs the signing
+  key: [docs/RELEASING.md](docs/RELEASING.md).
 - **Phone + family computer:** start Ollama on the computer with `OLLAMA_HOST=0.0.0.0`, then put
   `http://<computer's address>:11434` in Ward's Me screen on the phone. The phone then sends the
   chats it checks to that computer over your home network, unencrypted, so only do this on a

@@ -17,3 +17,8 @@ train/results-train.log
 eval/results-e2b.log
 .claude/
 train/data-2026-10-29/
+
+# Signing keys never go in git (docs/RELEASING.md)
+*.p12
+*.jks
+*.keystore
