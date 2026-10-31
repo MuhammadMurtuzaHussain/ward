@@ -26,7 +26,8 @@ const GemmaPhone = registerPlugin<{
   addListener(e: "progress", fn: (p: { loaded: number; total: number }) => void): Promise<PluginListenerHandle>;
 }>("GemmaPhone");
 
-export const phoneGemmaPossible = () => Capacitor.getPlatform() === "android";
+// Only the gemma APK has the plugin; in the default lite APK the "Gemma on this phone" card stays hidden.
+export const phoneGemmaPossible = () => Capacitor.getPlatform() === "android" && Capacitor.isPluginAvailable("GemmaPhone");
 
 export async function phoneStatus(): Promise<PhoneStatus | null> {
   if (!phoneGemmaPossible()) return null;

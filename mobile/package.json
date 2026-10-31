@@ -6,7 +6,8 @@
   "description": "Ward for Android: the app bundled inside the APK, so it works offline",
   "scripts": {
     "sync": "rm -rf www && cp -R ../apps/web/dist www && cap sync android",
-    "apk": "pnpm sync && cd android && ./gradlew assembleDebug"
+    "apk": "pnpm sync && cd android && ./gradlew assembleLiteDebug",
+    "apk:gemma": "pnpm sync && cd android && ./gradlew assembleGemmaDebug"
   },
   "dependencies": {
     "@capacitor/android": "8.5.2",

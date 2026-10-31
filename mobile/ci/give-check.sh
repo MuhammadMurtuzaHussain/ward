@@ -17,14 +17,16 @@
 set -euo pipefail
 
 APK="${1:-Ward-debug.apk}"
-PKG=org.ward.app
+# A debug build is org.ward.app.debug; its classes stay in org.ward.app.
+tools="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)"
+PKG=$("$tools"/aapt2 dump packagename "$APK")
 fail() { echo "::error::give-check: $*"; adb logcat -d > give-logcat.txt || true; exit 1; }
 
 adb uninstall "$PKG" > /dev/null 2>&1 || true
 adb install "$APK"
-adb shell am start -W -n "$PKG/.MainActivity" > /dev/null
+adb shell am start -W -n "$PKG/org.ward.app.MainActivity" > /dev/null
 adb logcat -c
-adb shell am broadcast -n "$PKG/.GiveCheckReceiver"
+adb shell am broadcast -n "$PKG/org.ward.app.GiveCheckReceiver"
 
 line=""
 for _ in $(seq 1 60); do
@@ -44,7 +46,7 @@ name=$(field file)
 on_disk=$(adb shell run-as "$PKG" sha256sum "cache/give/$name" | awk '{print $1}')
 # build-tools label it "Signer #1", "V2 Signer:" or "Signer (minSdkVersion=…)"; print what we
 # got so a format change is easy to see.
-apksigner_out=$("$ANDROID_HOME"/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)/apksigner verify --print-certs "$APK" 2>/dev/null)
+apksigner_out=$("$tools"/apksigner verify --print-certs "$APK" 2>/dev/null)
 echo "$apksigner_out" | grep -i "sha-256" || true
 signer=$(echo "$apksigner_out" | sed -n 's/^.*[Ss]igner.*certificate SHA-256 digest: //p' | head -1 | norm)
 
@@ -72,7 +74,7 @@ adb exec-out run-as "$PKG" cat "cache/give/$name" > friend.apk
 adb uninstall "$PKG"
 adb install friend.apk
 adb logcat -c
-adb shell am start -W -n "$PKG/.MainActivity"
+adb shell am start -W -n "$PKG/org.ward.app.MainActivity"
 sleep 8
 adb logcat -d > give-logcat.txt
 adb shell pidof "$PKG" > /dev/null || fail "the friend's copy didn't stay open"

@@ -1,30 +1,39 @@
 # The Android app (mobile/): the web build bundled inside a Capacitor shell, so Ward works with
-# the internet off. Run by hand from the Actions tab (APK kept 14 days), or by pushing a v* tag,
-# which attaches Ward-android.apk to that GitHub Release. The name never changes, so
-# releases/latest/download/Ward-android.apk always points at the newest one.
+# the internet off. Two APKs (mobile/android/app/build.gradle):
+#   Ward-android.apk        "lite", the default: no native code, installs on any phone, 32-bit too
+#   Ward-android-gemma.apk  adds on-phone Gemma 4 E2B (LiteRT-LM), arm64 phones only
+# Run by hand from the Actions tab (APKs kept 14 days). release.yml calls this on a v* tag and
+# publishes the APKs; the names never change.
 #
 # Signing: the keystore lives only in repository secrets (ANDROID_KEYSTORE_BASE64,
-# ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD). Without them a hand run
-# builds a debug-signed APK instead (installable, but updates must be signed the same way),
-# and a tag run fails.
+# ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD; docs/RELEASING.md). Without
+# them a hand run builds debug APKs instead (app id org.ward.app.debug, so they install beside a
+# release rather than over it), and a release run fails.
 name: Android app
 
 on:
   workflow_dispatch:
-  push:
-    tags: ["v*"]
+  workflow_call:
+    inputs:
+      release:
+        description: Build signed release APKs, versioned from the tag
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: pnpm
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: temurin
           java-version: 21
@@ -37,15 +46,16 @@ jobs:
         id: keystore
         env:
           KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          RELEASE: ${{ inputs.release }}
         run: |
           if [ -n "$KEYSTORE" ]; then
             echo "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/ward.p12"
             echo "path=$RUNNER_TEMP/ward.p12" >> "$GITHUB_OUTPUT"
-          elif [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            echo "::error::A release needs the signing secrets (ANDROID_KEYSTORE_BASE64 and the rest)."
+          elif [ "$RELEASE" = true ]; then
+            echo "::error::A release needs the signing secrets (ANDROID_KEYSTORE_BASE64 and the rest, docs/RELEASING.md)."
             exit 1
           else
-            echo "::warning::No signing secrets, so this is a debug build."
+            echo "::warning::No signing secrets, so these are debug builds."
           fi
       - name: Build
         working-directory: mobile/android
@@ -54,59 +64,77 @@ jobs:
           WARD_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           WARD_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           WARD_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          # The tag (v0.1.0) sets versionName and versionCode; a hand run is 0.0.0-dev.
+          WARD_VERSION: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
         run: |
           mkdir -p ../../release
-          if [ -n "$WARD_KEYSTORE" ]; then
-            ./gradlew --no-daemon assembleRelease
-            cp app/build/outputs/apk/release/app-release.apk ../../release/Ward-android.apk
-          else
-            ./gradlew --no-daemon assembleDebug
-            cp app/build/outputs/apk/debug/app-debug.apk ../../release/Ward-android.apk
-          fi
-          "$ANDROID_HOME"/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)/apksigner verify --print-certs ../../release/Ward-android.apk | head -3
+          if [ -n "$WARD_KEYSTORE" ]; then type=release; else type=debug; fi
+          ./gradlew --no-daemon assembleLite${type^} assembleGemma${type^}
+          cp app/build/outputs/apk/lite/$type/app-lite-$type.apk ../../release/Ward-android.apk
+          cp app/build/outputs/apk/gemma/$type/app-gemma-$type.apk ../../release/Ward-android-gemma.apk
+          tools="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)"
+          for apk in ../../release/*.apk; do
+            echo "== $(basename "$apk"): $("$tools"/aapt2 dump badging "$apk" | head -1)"
+            "$tools"/apksigner verify --print-certs "$apk" | grep -i "SHA-256"
+          done
+      # Lite must have no native code at all: that is what lets it install on 32-bit and any other
+      # ABI. Gemma carries LiteRT-LM's libraries for arm64 and nothing else.
+      - name: Native libraries
+        run: |
+          for apk in Ward-android Ward-android-gemma; do
+            unzip -l release/$apk.apk | awk '{ print $4 }' | grep '^lib/' | sort > $apk-libs.txt || true
+            echo "== $apk.apk native libraries:"; cat $apk-libs.txt
+          done
+          [ ! -s Ward-android-libs.txt ] || { echo "::error::The lite APK has native libraries, so it won't install on every phone"; exit 1; }
+          diff -u - Ward-android-gemma-libs.txt <<'EOF' || { echo "::error::The gemma APK's native libraries changed (expected above, got below)"; exit 1; }
+          lib/arm64-v8a/liblitertlm_jni.so
+          EOF
       # Ward Lite reads on the phone only if ONNX Runtime's wasm and the model are in the APK;
       # without them Ward quietly falls back to word lists alone.
-      - name: Ward Lite is in the APK
+      - name: Ward Lite is in both APKs
         run: |
-          unzip -l release/Ward-android.apk | awk '$1 > 0 { print $4 }' > apk-files.txt
-          for f in ort/ort-wasm-simd-threaded.asyncify.wasm ort/ort-wasm-simd-threaded.asyncify.mjs models/ward-lite/ward-lite.json models/ward-lite/config.json models/ward-lite/tokenizer.json models/ward-lite/tokenizer_config.json models/ward-lite/onnx/model_quantized.onnx; do
-            grep -qxF "assets/public/$f" apk-files.txt || { echo "::error::$f is missing from the APK"; exit 1; }
+          for apk in release/*.apk; do
+            unzip -l "$apk" | awk '$1 > 0 { print $4 }' > apk-files.txt
+            for f in ort/ort-wasm-simd-threaded.asyncify.wasm ort/ort-wasm-simd-threaded.asyncify.mjs models/ward-lite/ward-lite.json models/ward-lite/config.json models/ward-lite/tokenizer.json models/ward-lite/tokenizer_config.json models/ward-lite/onnx/model_quantized.onnx; do
+              grep -qxF "assets/public/$f" apk-files.txt || { echo "::error::$f is missing from $apk"; exit 1; }
+            done
           done
-          echo "Ward Lite: runtime and model are in the APK"
-      - uses: actions/upload-artifact@v4
+          echo "Ward Lite: runtime and model are in both APKs"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ward-android
-          path: release/Ward-android.apk
+          path: release/*.apk
           retention-days: 14
       # The emulator's "Give Ward to a friend" check needs a debug build: only it has the check
       # receiver. A run without signing secrets has just built one, so this costs nothing there.
       - name: Debug build for the give-a-friend check
         working-directory: mobile/android
         run: |
-          [ -f app/build/outputs/apk/debug/app-debug.apk ] || ./gradlew --no-daemon assembleDebug
-          mkdir -p ../../give && cp app/build/outputs/apk/debug/app-debug.apk ../../give/Ward-debug.apk
-      - uses: actions/upload-artifact@v4
+          [ -f app/build/outputs/apk/lite/debug/app-lite-debug.apk ] || ./gradlew --no-daemon assembleLiteDebug
+          mkdir -p ../../give && cp app/build/outputs/apk/lite/debug/app-lite-debug.apk ../../give/Ward-debug.apk
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ward-android-debug
           path: give/Ward-debug.apk
           retention-days: 3
 
-  # Install the APK on an emulator, open it, and keep a screenshot and the log: Ward starts,
+  # Install the lite APK on an emulator, open it, and keep a screenshot and the log: Ward starts,
   # shows onboarding from the bundle with no network, and doesn't crash. Then "Give Ward to a
   # friend": the copy it shares is exactly the installed APK and installs on a wiped phone.
+  # (The emulator is x86_64, so the arm64-only gemma APK can't be launched here.)
   launch:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           sparse-checkout: |
             packages/engine/fixtures
             mobile/ci
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: ward-android
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: ward-android-debug
       - name: Enable KVM
@@ -114,7 +142,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - uses: reactivecircus/android-emulator-runner@v2
+      - uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
           api-level: 34
           arch: x86_64
@@ -122,27 +150,9 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            adb install -r Ward-android.apk
-            adb shell svc wifi disable; adb shell svc data disable
-            adb logcat -c
-            adb shell am start -W -n org.ward.app/.MainActivity
-            sleep 30
-            adb exec-out screencap -p > launch.png
-            adb logcat -d > logcat.txt
-            adb shell pidof org.ward.app
-            # Share to Ward: hand it a WhatsApp export the way WhatsApp's share sheet does.
-            adb push packages/engine/fixtures/pileon-roman-urdu.txt "/data/local/tmp/WhatsApp Chat with 8B Science.txt"
-            adb shell chmod 644 "'/data/local/tmp/WhatsApp Chat with 8B Science.txt'"
-            adb shell am start -W -a android.intent.action.SEND -t text/plain --eu android.intent.extra.STREAM "'file:///data/local/tmp/WhatsApp Chat with 8B Science.txt'" -n org.ward.app/.MainActivity
-            sleep 10
-            adb exec-out screencap -p > share.png
-            adb logcat -d > logcat.txt
-            adb shell pidof org.ward.app
-            ! grep -E "FATAL EXCEPTION.*org\.ward\.app|AndroidRuntime.*org\.ward\.app" logcat.txt
-            # Give Ward to a friend: copy the installed APK as the share sheet would, check it's
-            # byte for byte the same, then install that copy on a wiped "friend's phone".
+            bash mobile/ci/launch-check.sh Ward-android.apk
             bash mobile/ci/give-check.sh Ward-debug.apk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: ward-android-launch
@@ -152,17 +162,3 @@ jobs:
             logcat.txt
             give-logcat.txt
           retention-days: 14
-
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build, launch]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: ward-android
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: Ward-android.apk

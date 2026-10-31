@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.core.content.FileProvider
 
 /**
- * Debug builds only. `adb shell am broadcast -n org.ward.app/.GiveCheckReceiver` makes the same
+ * Debug builds only. `adb shell am broadcast -n org.ward.app.debug/org.ward.app.GiveCheckReceiver` makes the same
  * copy "Give Ward to a friend" shares, reads it back through the FileProvider the share sheet
  * uses, and logs every fingerprint on one line (tag WardGive) for mobile/ci/give-check.sh to
  * compare with the installed APK.

@@ -1,6 +1,24 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 
+// The version comes from the release tag: CI sets WARD_VERSION to the tag (v0.1.0), and a local
+// build on a tagged commit reads it from git. Anything else is a dev build, version 0.0.0.
+// versionCode = major * 10000 + minor * 100 + patch, so 0.1.0 is 100 and every tag goes up.
+def wardVersion = {
+    def v = System.getenv('WARD_VERSION') ?: ''
+    if (!v) {
+        try {
+            def p = ['git', 'describe', '--tags', '--exact-match', '--match', 'v[0-9]*'].execute(null, rootDir)
+            if (p.waitFor() == 0) v = p.text.trim()
+        } catch (Exception ignored) {}
+    }
+    def m = v =~ /^v?(\d+)\.(\d+)\.(\d+)(.*)$/
+    if (!m) return [name: '0.0.0-dev', code: 1]
+    def (major, minor, patch) = [m[0][1] as int, m[0][2] as int, m[0][3] as int]
+    if (minor > 99 || patch > 99) throw new GradleException("Version $v: minor and patch must be under 100")
+    return [name: "${major}.${minor}.${patch}${m[0][4]}", code: Math.max(1, major * 10000 + minor * 100 + patch)]
+}()
+
 android {
     namespace = "org.ward.app"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -8,8 +26,8 @@ android {
         applicationId "org.ward.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode wardVersion.code
+        versionName wardVersion.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -30,7 +48,29 @@ android {
             }
         }
     }
+    // Two downloads. "lite" (the default) has no native code at all, so it installs on any phone,
+    // 32-bit Android Go included. "gemma" adds on-phone Gemma 4 E2B through LiteRT-LM, whose
+    // native library is arm64 only (and the model needs a 6 GB phone anyway). Same app id, so
+    // either can replace the other with the same signing key and keep the vault.
+    flavorDimensions = ["model"]
+    productFlavors {
+        lite {
+            dimension "model"
+            isDefault = true
+        }
+        gemma {
+            dimension "model"
+            versionNameSuffix "-gemma"
+            ndk { abiFilters "arm64-v8a" }
+        }
+    }
     buildTypes {
+        // A debug build is a separate app (org.ward.app.debug), so trying one never means
+        // uninstalling a release, which would wipe the vault.
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
         release {
             if (keystore) signingConfig signingConfigs.release
             minifyEnabled false
@@ -51,8 +91,8 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation project(':capacitor-android')
-    // On-phone Gemma 4 E2B (GemmaPhonePlugin). The 2 GB model is downloaded by the child's choice, not bundled.
-    implementation "com.google.ai.edge.litertlm:litertlm-android:0.18.1"
+    // On-phone Gemma 4 E2B (GemmaPhonePlugin, gemma flavour only). The 2 GB model is downloaded by the child's choice, not bundled.
+    gemmaImplementation "com.google.ai.edge.litertlm:litertlm-android:0.18.1"
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
