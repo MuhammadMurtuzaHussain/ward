@@ -8,6 +8,11 @@ Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids 
 <b>Open-weight Gemma, running locally. No server and no account: a child's messages never go to us or to any AI company.</b>
 </p>
 
+<p align="center">
+<a href="https://ward-w8cd.onrender.com"><img src="https://img.shields.io/badge/Try_it-in_your_browser-0f1024?style=for-the-badge&logoColor=ffb547" alt="Try Ward in your browser" /></a>
+</p>
+<p align="center"><sub>The demo runs entirely in your browser: Ward Lite and the word lists load from the page, and the chat you paste is never sent anywhere.</sub></p>
+
 <!-- Download badges, for when the first release is tagged:
 <p align="center">
 <a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/latest/download/Ward-android.apk"><img src="https://img.shields.io/badge/Android-APK-0f1024?style=for-the-badge&logo=android&logoColor=ffb547" alt="Download for Android" /></a>
