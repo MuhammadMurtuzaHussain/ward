@@ -32,8 +32,8 @@ collection.
 
 | # | Indicator | Status | One line |
 | --- | --- | --- | --- |
-| 1 | SDG relevance | **Met** | SDG 16.2, with 4.a and 3.4. Target and indicator wording to confirm against the UN list. |
-| 2 | Approved open licence | **Partly met** | Software is MIT. Lesson, story and audio content, and the licences of the AI models and datasets we rely on, need clarifying. |
+| 1 | SDG relevance | **Met** | SDG 16.2, with 4.a (indicator 4.a.2, students experiencing bullying) and 3.4. |
+| 2 | Approved open licence | **Partly met** | Software is MIT; Gemma 4 is Apache 2.0 and Ward Lite's base is MIT. Content and audio licences are undecided, and three training datasets don't clearly allow Ward Lite to be shared. |
 | 3 | Clear ownership | **Partly met** | Copyright holder is named in `LICENSE`. No trademark policy, no contributor terms, audio and synthetic data ownership not yet written down. |
 | 4 | Platform independence | **Partly met** | The core runs with no closed component. Gemma's licence terms, the Hugging Face download and the bundled ElevenLabs audio need a written answer. |
 | 5 | Documentation | **Partly met** | README, plan, harms, report format and training data card exist. No contributor guide or per-platform build and release guide. |
@@ -57,10 +57,13 @@ Goals, linked to specific targets.
   and torture of children. Ward helps a child recognise online abuse, keep evidence, reach a
   trusted adult or helpline, and recover. This is the primary goal.
 - **SDG 4, target 4.a**: build and upgrade education facilities that provide safe, inclusive
-  and effective learning environments. The SDG indicator under this target measures students
-  experiencing bullying. Ward's class mode, lessons and school kit are made for schools.
-  *Confirm the exact indicator number and wording from the UN SDG indicator list before
-  submitting.*
+  and effective learning environments. Its **indicator 4.a.2** is the percentage of students
+  experiencing bullying in the last 12 months, in primary and lower secondary education
+  (definition and metadata from its custodian, the
+  [UNESCO Institute for Statistics](https://uis.unesco.org/en/glossary-term/percentage-students-experiencing-bullying-last-12-months-primary-and-b-lower-secondary)).
+  That is the problem Ward works on. Ward's class mode, lessons and school kit are made for
+  schools. Ward doesn't measure the indicator or report data for it, and has no evidence yet that
+  it moves it.
 - **SDG 3, target 3.4**: promote mental health and wellbeing. Ward's "Bounce back" unit, safety
   plan and helpline links.
 
@@ -87,25 +90,48 @@ licence. Data under an Open Data Commons licence.
   `package.json` also declares `MIT`.
 - **Content: unclear.** The lessons, stories, adult guide, school kit and the pack word lists
   are in the same repository under the MIT licence. MIT is a software licence and does not cover
-  creative text well. `[Decision needed: keep MIT for everything, or add a Creative Commons
-  licence (for example CC BY-SA 4.0) for lessons, stories, the school kit and translations, so
-  schools and translators know what they can do.]`
+  creative text well.
+
+  > **Proposal, for the owner to decide. Not applied.** License the lessons, stories, adult
+  > guide, school kit, translations and slang packs under
+  > [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), and keep the code under MIT.
+  > CC BY 4.0 is on the DPG list of approved content licences, lets schools, helplines and
+  > translators copy and adapt the material with credit, and doesn't force them to share their
+  > own versions under the same terms (CC BY-SA would). Applying it would mean a `LICENSE-CONTENT`
+  > file, a line in the README naming which folders it covers, and a line in
+  > [CONTRIBUTING.md](../CONTRIBUTING.md) telling contributors their content is under it. Content
+  > already written by the copyright holder can be relicensed by them; any outside contributions
+  > to those folders would need their authors' agreement.
+  > `[Decision needed: accept, choose another licence, or keep MIT.]`
 - **Audio: unclear.** The English read-aloud clips (107) were generated with ElevenLabs and are
   bundled. Their licence terms under the plan used must permit open redistribution.
   `[Decision needed: check ElevenLabs' terms; state the licence for the audio files.]`
-- **AI models.** Ward does not ship Gemma. A person installs Gemma 4 through Ollama, or the phone
-  downloads the 2 GB Gemma 4 E2B file by choice. Earlier Gemma releases used Google's Gemma
-  Terms of Use, which are not OSI-approved. `[Decision needed: confirm the licence of the Gemma
-  4 and ShieldGemma versions Ward uses before claiming anything about them.]`
-- **Ward Lite model.** 37.7 MB, built on `intfloat/multilingual-e5-small`
-  ([`apps/web/public/models/ward-lite/ward-lite.json`](../apps/web/public/models/ward-lite/ward-lite.json)).
-  `[Decision needed: confirm that model's licence and state the licence of Ward Lite itself.]`
-- **Training data.** The model is trained on public datasets and synthetic chats; the sources
-  are listed in [`train/DATA.md`](../train/DATA.md). `[Decision needed: record each dataset's
-  licence, and confirm that using it to train and then redistributing the resulting model is
-  allowed.]`
+- **Gemma 4: Apache 2.0.** Ward does not ship Gemma. A person installs Gemma 4 through Ollama,
+  the desktop app downloads Gemma 4 E4B (a GGUF file) on request, or the phone downloads the 2 GB
+  Gemma 4 E2B file by choice. The Gemma 4 models and those converted files are published under
+  the Apache License 2.0, which is OSI-approved (checked on their Hugging Face pages on
+  2026-10-31: `google/gemma-4-E2B-it`, `ggml-org/gemma-4-E4B-it-GGUF`,
+  `litert-community/gemma-4-E2B-it-litert-lm`).
+- **ShieldGemma: Gemma Terms of Use.** ShieldGemma 2B is released under Google's Gemma Terms of
+  Use, which are not an OSI-approved licence and add use restrictions. Ward uses it only as a
+  baseline in the scorecard (`pnpm eval`); the app doesn't use it. The engine has an optional
+  ShieldGemma judge class, which nothing in the app calls.
+- **Ward Lite model.** About 38 MB, fine-tuned from
+  [`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small),
+  which is **MIT** licensed. Its model card is [`train/MODEL_CARD.md`](../train/MODEL_CARD.md).
+  The licence of Ward Lite itself is undecided because of its training data (next item).
+  `[Decision needed: state the licence of Ward Lite once the training data question is settled.]`
+- **Training data.** Each dataset's licence is now listed in
+  [`train/DATA.md`](../train/DATA.md#licences). Roman Urdu and Hinglish data are MIT. **SentNoB
+  is CC BY-ND 4.0** (no derivatives), the English CB1 dataset's licence is "unknown", and the
+  `mteb/bengali_hate_speech` copy declares none. Until SentNoB is replaced and the other two are
+  cleared or replaced, we can't say Ward Lite may be redistributed under an open licence. The
+  data card says what replacing SentNoB would take. `[Decision needed: replace SentNoB; ask the
+  CB1 and mteb authors for a licence or replace them; get a legal read on model weights trained
+  on restricted data.]`
 
-**Evidence.** [`LICENSE`](../LICENSE).
+**Evidence.** [`LICENSE`](../LICENSE), [`train/DATA.md`](../train/DATA.md#licences),
+[`train/MODEL_CARD.md`](../train/MODEL_CARD.md).
 
 **Status: partly met.** The software qualifies. The application should not be submitted until the
 content, audio, model and training data questions have a written answer.
@@ -119,11 +145,10 @@ sets.
 **Ward.**
 - **Copyright.** [`LICENSE`](../LICENSE) names the holder: "Copyright (c) 2026 Muhammad Murtuza
   Hussain".
-- **Contributions.** There is no `CONTRIBUTING.md`, no contributor licence agreement and no
-  Developer Certificate of Origin. In practice contributions are accepted under the repository's
-  MIT licence, but that is not written down. `[Decision needed: add a CONTRIBUTING.md saying
-  contributors keep their copyright and license their work under the repository licence, or adopt
-  the DCO.]`
+- **Contributions.** [`CONTRIBUTING.md`](../CONTRIBUTING.md) asks for a Developer Certificate
+  of Origin sign-off on every commit and says contributors keep their copyright and license their
+  work under the repository's licence. The sign-off is checked by hand; there is no automatic
+  check yet.
 - **Name and mark.** "Ward" is a common word and may already be in use by others as a product
   name. No trademark search has been done and there is no trademark policy. `[Decision needed:
   search; decide whether to register or to state that the name is used descriptively; write a
@@ -151,9 +176,10 @@ changes to the core product.
 | Component | Open or closed | Mandatory? | Notes |
 | --- | --- | --- | --- |
 | Engine: parser, slang packs, pattern engine, report builder (`packages/engine`) | Open (MIT, TypeScript) | Yes, and sufficient | Runs on any phone with no network and no model. |
-| Ward Lite (ONNX, via Transformers.js and ONNX Runtime Web) | Open model, open runtimes | No | Adds warnings only; the app works without it. |
-| Gemma 4 and ShieldGemma via Ollama | Open weights, licence to confirm; Ollama is open source | No | Optional "close read" on a computer. Any model Ollama can run can be set in Me. |
-| Gemma 4 E2B on Android via LiteRT-LM | Open weights, licence to confirm; runtime from Google's AI Edge project | No | Optional download by the child; drafts and lesson feedback only. |
+| Ward Lite (ONNX, via Transformers.js and ONNX Runtime Web) | Base model MIT; licence of the fine-tuned weights undecided ([DATA.md](../train/DATA.md#licences)); open runtimes | No | Adds warnings only; the app works without it. |
+| Gemma 4 via Ollama, or downloaded by the desktop app | Open weights, Apache 2.0; Ollama and llama.cpp are open source | No | Optional "close read" on a computer. Any model Ollama can run can be set in Me. |
+| ShieldGemma 2B via Ollama | Open weights under the Gemma Terms of Use (not OSI-approved) | No | Scorecard baseline only; not used by the app. |
+| Gemma 4 E2B on Android via LiteRT-LM | Open weights, Apache 2.0; runtime from Google's AI Edge project | No | Optional download by the child; drafts and lesson feedback only. |
 | Hugging Face | Hosting service | No | Hosts the optional 2 GB phone model file. `[Decision needed: whether to mirror it elsewhere.]` |
 | ElevenLabs | Closed service | **No, at runtime** | Used once to make 107 English audio clips, which are bundled as plain MP3 files. The app makes no call to ElevenLabs. Replacements: device text-to-speech (already used for Urdu) or any open TTS. |
 | Android and Capacitor, Electron | Open source frameworks | Yes, for each shell | The web app also runs in a browser. A fork could use any shell. |
@@ -167,8 +193,8 @@ patterns, lessons, stories, vault, report and viewer need none of them.
 (which lists what each partner technology is for and what is "not used, on purpose"),
 `packages/engine/package.json`, `apps/web/package.json`.
 
-**Gap.** A written statement, by someone technical, on Gemma's licence and on the
-ElevenLabs-generated audio. Also, a few partner services in PHASES.md are "planned" (DigitalOcean,
+**Gap.** A written statement on the ElevenLabs-generated audio, and a decision on Ward Lite's
+licence (see indicator 2). Gemma 4's licence is Apache 2.0. Also, a few partner services in PHASES.md are "planned" (DigitalOcean,
 Render, Browserbase, SerpApi) and must be kept optional if they are adopted.
 
 **Status: partly met.**
@@ -189,8 +215,9 @@ projects: describe the fields, how the data was collected and how to interpret i
 - **Risks:** [HARMS.md](HARMS.md).
 - **Data formats:** [REPORT.md](REPORT.md) documents `ward.report/v2` field by field, including
   how to verify the digest by hand.
-- **Training data:** [`train/DATA.md`](../train/DATA.md) lists sources, split, counts, labels and
-  known weaknesses; [`train/README.md`](../train/README.md) covers the pipeline.
+- **Training data and model:** [`train/DATA.md`](../train/DATA.md) lists sources, licences,
+  split, counts, labels and known weaknesses; [`train/MODEL_CARD.md`](../train/MODEL_CARD.md) is
+  Ward Lite's model card; [`train/README.md`](../train/README.md) covers the pipeline.
 - **Evaluation:** [`eval/results/scorecard.md`](../eval/results/scorecard.md) and
   `pnpm eval`.
 - **Slang packs:** each pack states its source in its `about` field.
@@ -199,8 +226,9 @@ projects: describe the fields, how the data was collected and how to interpret i
   installers and the APK when run by hand or on a version tag. No release has been tagged yet.
 
 **Gaps.**
-- No `CONTRIBUTING.md`, no guide for adding a slang pack or a language, and no guide for
-  translating lessons. (A language-maintainer guide is implied by [GOVERNANCE.md](GOVERNANCE.md).)
+- [`CONTRIBUTING.md`](../CONTRIBUTING.md) covers setup, tests and how slang-pack and lesson
+  changes are reviewed, and [`LANGUAGES.md`](../LANGUAGES.md) lists each language and its
+  (so far missing) maintainer. There is still no step-by-step guide for adding a new language.
 - No step-by-step release or signing guide for the desktop and Android builds.
 - No end-user manual beyond the in-app text.
 - No documented learning outcomes for the lessons.
@@ -377,8 +405,9 @@ also contains slang packs and test fixtures that include abusive words. Where it
 - The ways the app can contain harmful content of its own are covered by content rules, a review
   process and the models' limits in [SAFEGUARDING.md](SAFEGUARDING.md#5-how-content-is-written-and-reviewed).
 
-**Gaps.** These are drafts, not published and not reviewed. No issue templates yet warn people
-not to paste real chats. No named safeguarding lead to act on a report. No tested process.
+**Gaps.** These are drafts, not published and not reviewed. The issue forms now warn people
+never to paste a real child's chat, and point safety concerns to SAFEGUARDING.md instead of a
+public issue. No named safeguarding lead to act on a report. No tested process.
 
 **Status: partly met.**
 
@@ -416,9 +445,9 @@ In order of how much they block the application:
    authorised representative (indicator 7, and the submitter role).
 3. Settle licensing: content licence, audio, the Gemma and Ward Lite models, training-data
    licences (indicator 2, 4).
-4. Add `CONTRIBUTING.md`, a trademark and name statement, and a plain statement of ownership
-   (indicator 3, 5).
-5. Switch on GitHub private vulnerability reporting; add issue templates (9b).
+4. Add a trademark and name statement and a plain statement of ownership (indicator 3).
+   `CONTRIBUTING.md` with a DCO sign-off is done.
+5. Switch on GitHub private vulnerability reporting (9b). Issue forms are done.
 6. Run the eligibility test on the DPGA site, then re-read the current standard and form.
 7. Fill in the online application using this document as source material. Keep the answers
    public-safe: the DPGA publishes them.
@@ -426,8 +455,9 @@ In order of how much they block the application:
 ## Placeholders in this file
 
 - Authorised representative for the application: name, title, contact.
-- Licence decisions: content (lessons, stories, kit), audio, Ward Lite, Gemma and ShieldGemma
-  versions, each training dataset.
+- Licence decisions: content (lessons, stories, kit; CC BY 4.0 proposed), audio, Ward Lite,
+  and the three training datasets without a clear licence (SentNoB, CB1, mteb). Gemma 4 (Apache
+  2.0), ShieldGemma (Gemma Terms, scorecard only) and e5-small (MIT) are recorded above.
 - Trademark search and name policy.
 - Whether and where to host the repository in an organisation.
 - Which laws apply, and a legal reviewer.
