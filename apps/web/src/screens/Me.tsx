@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Briefcase, ChalkboardTeacher, Cpu, HandHeart, LockKey, SpeakerHigh, Translate, Trash, UserCircle, UsersThree } from "@phosphor-icons/react";
+import { ArrowRight, Briefcase, ChalkboardTeacher, Cpu, Gift, HandHeart, LockKey, SpeakerHigh, Translate, Trash, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { STARTER_PACKS } from "@ward/engine";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { PinPad } from "../components/PinPad.tsx";
@@ -155,6 +155,20 @@ export function Me() {
         </Card>
         <PhoneGemmaCard />
       </div>
+
+      <section className="mt-10">
+        <h2 className="font-display text-xl font-bold tracking-tight">{t.give.section}</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <button onClick={() => go({ name: "give" })} className="flex items-center gap-4 rounded-card border border-line bg-surface p-5 text-start hover:border-dim/40">
+            <Gift size={28} weight="bold" className="shrink-0 text-glow" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-lg font-bold">{t.give.card[0]}</span>
+              <span className="text-sm text-dim">{t.give.card[1]}</span>
+            </span>
+            <ArrowRight size={18} weight="bold" className="flip-rtl text-glow" />
+          </button>
+        </div>
+      </section>
 
       <section className="mt-10">
         <h2 className="font-display text-xl font-bold tracking-tight">{t.me.adults}</h2>
