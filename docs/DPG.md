@@ -194,8 +194,9 @@ projects: describe the fields, how the data was collected and how to interpret i
 - **Evaluation:** [`eval/results/scorecard.md`](../eval/results/scorecard.md) and
   `pnpm eval`.
 - **Slang packs:** each pack states its source in its `about` field.
-- **Tests and CI:** `.github/workflows/ci.yml` runs typecheck, tests and a build on every push;
-  `desktop.yml` and `android.yml` build and launch-test the installers and the APK.
+- **Tests and CI:** `.github/workflows/ci.yml` runs typecheck, tests and a build on every push to
+  `main` and every pull request; `desktop.yml` and `android.yml` build and launch-test the
+  installers and the APK when run by hand or on a version tag. No release has been tagged yet.
 
 **Gaps.**
 - No `CONTRIBUTING.md`, no guide for adding a slang pack or a language, and no guide for
@@ -241,10 +242,23 @@ their title, name and contact information. The submission guide asks, if persona
 collected, for a link to the privacy policy or terms, and encourages listing the laws that
 apply.
 
-**Ward.** By design, Ward collects no personal data: no account, no server, no analytics, no
-telemetry. A child's chats are read on the device and forgotten unless saved, and saved
-evidence is encrypted. This is the strongest privacy position available, and it is described in
-[README.md](../README.md), [HARMS.md](HARMS.md) and [SAFEGUARDING.md](SAFEGUARDING.md).
+**Ward.** By design, Ward collects no personal data: no account, no server of ours, no
+analytics, no telemetry. A child's chats are read on the device and forgotten unless saved, and
+saved evidence is encrypted. There are two exceptions, each chosen by whoever sets it up:
+
+- **A paired phone.** A phone can be paired with the family's own computer running Ollama, and
+  then the chats it checks are sent to that computer, over the home network and unencrypted, to
+  be read there.
+- **The optional Discord bot** (`apps/discord`) runs on a computer its operator hosts. In server
+  mode (on unless the operator turns it off) it receives the messages of the servers it is added
+  to, reads them in any server with a `#ward-alerts` channel, and posts dangerous ones, quoted,
+  to that private moderators' channel. If the operator sets `WARD_GEMMA_MODEL`, a message only
+  Ward Lite flagged is also sent to the operator's Ollama for a second look, with the messages
+  just before it.
+
+Nothing goes to the project in either case. Collecting nothing is the strongest privacy position
+available, and it is described in [README.md](../README.md), [HARMS.md](HARMS.md) and
+[SAFEGUARDING.md](SAFEGUARDING.md).
 
 **What is missing.**
 - **No privacy policy or terms of use** document. Even an app that collects nothing should say
@@ -258,8 +272,11 @@ evidence is encrypted. This is the strongest privacy position available, and it 
   at. Do not assert compliance with any law until a lawyer has said so.]`
 - **No statement from an authorised person**, which the indicator requires. `[Authorised
   representative: name, title and contact to be supplied.]`
-- Some network calls exist (the optional Ollama computer, the optional model download, helpline
-  links). They carry no chat, but a privacy policy must describe them.
+- Some network calls exist: the optional Ollama computer (which receives the chats it is asked
+  to read, as above), the optional model download and helpline links (which carry no chat), and
+  the Discord bot, which talks to Discord and, if set up, to its operator's Ollama (as above). A
+  privacy policy must describe all of them, and the bot's operator is responsible for the
+  messages it reads on their server.
 
 **Status: not yet met.** The design supports it; the paperwork does not exist. This indicator
 needs work before submission.
@@ -275,8 +292,9 @@ principles.
   standard WhatsApp exports.
 - **Engineering practice:** TypeScript with strict typechecking, unit tests (engine, lessons,
   stories, report, viewer, school kit, QR transfer), CI on every push, installers built and
-  launch-tested in CI, a content-security policy and permission handler in the desktop app, and
-  a case viewer that cannot make network requests.
+  launch-tested in CI, a permission handler in the desktop app that refuses everything but the
+  camera, and a case viewer whose content-security policy blocks every network request. The web
+  and desktop app themselves have no content-security policy yet.
 - **Privacy by design and data minimisation:** the "never do" list in
   [SAFEGUARDING.md](SAFEGUARDING.md#8-what-ward-will-never-do), reflecting practice in the UN
   Convention on the Rights of the Child (the child's best interests and right to privacy).
@@ -297,8 +315,12 @@ principles.
 - Safe-messaging guidance for suicide and self-harm content is not yet named or checked by a
   qualified person ([SAFEGUARDING.md](SAFEGUARDING.md#5-how-content-is-written-and-reviewed)).
 - No content review by a child-protection professional yet.
-- Ward Annotate (community labelling) and the red-team set, which would strengthen best practice
-  on model evaluation, are not yet built ([PHASES.md](PHASES.md#phase-5-proof-and-staying-alive)).
+- Ward Annotate (community labelling), which would strengthen best practice on model
+  evaluation, is not yet built ([PHASES.md](PHASES.md#phase-5-proof-and-staying-alive)). The
+  red-team set is built and its failures are published ([REDTEAM.md](REDTEAM.md)); its labels are
+  still one author's, with no native-speaker review.
+- No content-security policy in the web and desktop app, and Electron's hardening fuses are not
+  set. `[Planned.]`
 
 **Status: partly met.**
 
@@ -321,7 +343,8 @@ and integrity are ensured.
   desktop, can be triggered by pressing Escape twice;
 - Android cloud backup is off (`android:allowBackup="false"`);
 - the desktop app refuses every permission except the camera for scanning;
-- reports carry a SHA-256 digest and a per-message fingerprint, so tampering is detectable
+- reports carry a SHA-256 digest and a per-message fingerprint. These catch accidental damage
+  and casual edits; they are unkeyed, so they don't stop a determined forger who recomputes them
   ([REPORT.md](REPORT.md#checking-a-report)).
 
 [HARMS.md](HARMS.md) lists what can go wrong with Ward's own data and what we do about it,
