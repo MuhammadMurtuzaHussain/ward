@@ -1,0 +1,1109 @@
+{
+ "model_sha256": "9bf7f692d6ed938289057fcc89c47d618454f1237e8089b4ead4957cae8b8a94",
+ "labels": [
+  "hurtful",
+  "danger"
+ ],
+ "probs": {
+  "BGMI mein aaj poori squad ko maar diya 🔥": [
+   0.0472,
+   0.0035
+  ],
+  "BKL chal hat": [
+   0.229,
+   0.0018
+  ],
+  "Free Fire e aaj puro squad ke mere disi 🔥": [
+   0.0306,
+   0.0073
+  ],
+  "IDK yaar, sir ne homework mein kya kaha tha?": [
+   0.0336,
+   0.0333
+  ],
+  "NPC একটা, মাথায় কিছু নাই": [
+   0.0682,
+   0.0032
+  ],
+  "PUBG mein aaj sab ko maar diya 🔥 chicken dinner": [
+   0.0365,
+   0.0063
+  ],
+  "W fit, no cap 🔥": [
+   0.2248,
+   0.0253
+  ],
+  "aaj FIFA mein tera game over pakka 😤": [
+   0.0384,
+   0.0045
+  ],
+  "aaj ashte parbo na, cousin er biye 😩": [
+   0.0892,
+   0.0027
+  ],
+  "aaj ka plan kya hai? scene set?": [
+   0.0346,
+   0.0116
+  ],
+  "aaj nahi aa paunga, cousin ki shaadi hai 😩": [
+   0.8665,
+   0.0051
+  ],
+  "aaj nahi aa sakti, nani ke ghar jana hai 😩": [
+   0.0565,
+   0.0062
+  ],
+  "aaj paper mein maar dalenge, full tayari hai 💪": [
+   0.031,
+   0.0324
+  ],
+  "aaj plan ki? scene ase?": [
+   0.0319,
+   0.012
+  ],
+  "aaj raat Ludo mein tumhe dho daalunga 😤": [
+   0.056,
+   0.0029
+  ],
+  "aap please doosri table pe beth jayen, yahan jagah nahi hai, kabhi bhi nahi": [
+   0.0484,
+   0.0046
+  ],
+  "abal!!": [
+   0.9115,
+   0.0077
+  ],
+  "abay gadhay, phir apna bag bhool gaya 😂 chal koi baat nahi": [
+   0.8945,
+   0.008
+  ],
+  "abe gadhe phir se bag bhool gaya 😂 chal koi na": [
+   0.9282,
+   0.0097
+  ],
+  "abhi jagah full hai, kal tere liye seat rakhenge pakka!": [
+   0.9439,
+   0.9868
+  ],
+  "abhi jagah nahi hai magar kal tumhare liye seat rakh lenge!": [
+   0.0719,
+   0.0031
+  ],
+  "acha bhai, brb, ammi bula rahi hain": [
+   0.9459,
+   0.9862
+  ],
+  "acha hua tu nahi aaya, party mein bahut mazza aaya 🙂": [
+   0.0296,
+   0.0142
+  ],
+  "agar koi mazaq mein kuttay kahe to kya woh bullying hai?": [
+   0.0923,
+   0.002
+  ],
+  "ami moti, tao ei dress e amake darun lagche": [
+   0.1768,
+   0.0028
+  ],
+  "ammi ne maar dena hai agar late hui": [
+   0.0297,
+   0.0096
+  ],
+  "as a fat girl i love how this outfit looks on me": [
+   0.7682,
+   0.0048
+  ],
+  "aww did the baby get upset again? 🍼": [
+   0.0743,
+   0.0044
+  ],
+  "b o l o d kothakar": [
+   0.7568,
+   0.0035
+  ],
+  "b'day pe p@rty pakki? 🎉": [
+   0.0251,
+   0.0164
+  ],
+  "b3wak00f insaan, dimagh ghar chor aaya?": [
+   0.1904,
+   0.0049
+  ],
+  "beghairat!": [
+   0.9682,
+   0.0326
+  ],
+  "beshi kotha bolle tor chat leak kore dibo": [
+   0.9778,
+   0.1404
+  ],
+  "bhaiii kya mast scene tha 😂😂": [
+   0.0422,
+   0.0044
+  ],
+  "bohat bara scientist hai na tu, Einstein ki aulaad": [
+   0.0987,
+   0.003
+  ],
+  "brb, mummy bula rahi hai": [
+   0.953,
+   0.7226
+  ],
+  "brb, আম্মু ডাকছে": [
+   0.097,
+   0.0157
+  ],
+  "bro is literally an NPC, zero thoughts behind those eyes": [
+   0.8719,
+   0.0066
+  ],
+  "bro tu NPC hai, kabhi apna dimaag bhi use kar": [
+   0.9359,
+   0.5174
+  ],
+  "burger bacha, mummy se pooch ke aaya hai 😂": [
+   0.1241,
+   0.0039
+  ],
+  "burger khane chalein? 🍔": [
+   0.044,
+   0.0073
+  ],
+  "c o n g r a t s yaar 🎉": [
+   0.0531,
+   0.0041
+  ],
+  "can someone tell Sam the table is full. every day.": [
+   0.5696,
+   0.0126
+  ],
+  "can't come today sorry, family dinner 😩": [
+   0.7535,
+   0.9877
+  ],
+  "chakka hai kya? chal ke dikha": [
+   0.5313,
+   0.0024
+  ],
+  "chal nikal BC": [
+   0.256,
+   0.0016
+  ],
+  "chapri lag raha hai pura, uske baal dekho 😂": [
+   0.5541,
+   0.003
+  ],
+  "chhutti ke baad bahar mil, phir batata hu": [
+   0.9729,
+   0.2976
+  ],
+  "chup kar kameenay, kal match pe milte hain": [
+   0.9537,
+   0.8343
+  ],
+  "chup kar kamine, kal cricket pe milte hai": [
+   0.4082,
+   0.7293
+  ],
+  "chutir pore gate e dekha korish, tarpor dekhabo": [
+   0.9654,
+   0.4648
+  ],
+  "chutti ke baad gate pe milna, phir batate hain": [
+   0.9749,
+   0.0685
+  ],
+  "congrats bhai, aakhir kisi ne tujhe birthday pe bulaya 🥹": [
+   0.1164,
+   0.3076
+  ],
+  "darun, kal abar exam 🙄": [
+   0.2408,
+   0.0018
+  ],
+  "dekh dekh 🐒 ta hashche": [
+   0.1516,
+   0.0026
+  ],
+  "dekh lena kal kya hota hai tere saath": [
+   0.0425,
+   0.0048
+  ],
+  "dekho 🐄 aa rahi hai": [
+   0.3872,
+   0.0019
+  ],
+  "deri hole ammu mere felbe": [
+   0.3862,
+   0.0023
+  ],
+  "do everyone a favour and unalive yourself": [
+   0.4063,
+   0.3514
+  ],
+  "do the world a favour and don't wake up": [
+   0.1075,
+   0.2326
+  ],
+  "dost tui ashlei ekta gadha 😂 love you": [
+   0.0448,
+   0.0046
+  ],
+  "duniya pe bojh hai tu, hamesha ke liye chala ja": [
+   0.9632,
+   0.8352
+  ],
+  "everyone knows ur a w0rthl3ss fr3ak": [
+   0.8765,
+   0.7892
+  ],
+  "everyone would honestly be happier if you just disappeared": [
+   0.9449,
+   0.9869
+  ],
+  "fokinnir moto jama pore ashe": [
+   0.4173,
+   0.0018
+  ],
+  "g a d h a kahin ka": [
+   0.1405,
+   0.002
+  ],
+  "gate pe mil 4 baje, golgappe khane chalte hai": [
+   0.8349,
+   0.6519
+  ],
+  "gate pe milo 4 bajay, samosay khane chalte hain": [
+   0.9119,
+   0.914
+  ],
+  "gg ez, rematch?": [
+   0.25,
+   0.2111
+  ],
+  "go k!ll urs3lf": [
+   0.0478,
+   0.0072
+  ],
+  "gr8 game m8, c u l8r": [
+   0.0511,
+   0.0328
+  ],
+  "gr8 khela hoise, k@l abar": [
+   0.0606,
+   0.0047
+  ],
+  "great idea genius, just like all your other ideas": [
+   0.0978,
+   0.08
+  ],
+  "great, another maths test tomorrow 🙄": [
+   0.0491,
+   0.0052
+  ],
+  "great, kal phir maths ka test 🙄": [
+   0.1379,
+   0.0019
+  ],
+  "h a p p y b i r t h d a y 🎉": [
+   0.039,
+   0.0075
+  ],
+  "haan main moti hu aur mujhe ye dress bahut pasand hai": [
+   0.0917,
+   0.0023
+  ],
+  "hijra naki? chheleder moto hat": [
+   0.9521,
+   0.0178
+  ],
+  "hum padhaku log hi asli heroes hain 🤓": [
+   0.0419,
+   0.0043
+  ],
+  "hum padhaku log hi topper banenge 🤓": [
+   0.7048,
+   0.0176
+  ],
+  "i would die for this pizza honestly": [
+   0.0616,
+   0.0073
+  ],
+  "i'm going to kill this exam tomorrow 💪": [
+   0.0265,
+   0.034
+  ],
+  "i'm gonna destroy you in fifa tonight 😤": [
+   0.6657,
+   0.9709
+  ],
+  "idk ngl tbh i'm just tired": [
+   0.0865,
+   0.0031
+  ],
+  "idk vai, sir homework e ki bolse?": [
+   0.0335,
+   0.0221
+  ],
+  "ily guys, best squad ever": [
+   0.0834,
+   0.0034
+  ],
+  "imagine being this much of a 🤡 every single day": [
+   0.4992,
+   0.0025
+  ],
+  "is biryani ke liye jaan bhi de dun 😋": [
+   0.1588,
+   0.0018
+  ],
+  "is it bullying if they say 'go die' as a joke?": [
+   0.2164,
+   0.0041
+  ],
+  "is pizza ke liye toh jaan de du 😋": [
+   0.035,
+   0.0058
+  ],
+  "isko birthday pe fair and lovely gift karo 😂": [
+   0.03,
+   0.01
+  ],
+  "isko dekho 🐘 chal rahi hai": [
+   0.292,
+   0.002
+  ],
+  "isko group se remove kar do, koi kuch nahi kahega": [
+   0.9156,
+   0.3435
+  ],
+  "isse kaho thori fair and lovely laga le 😂": [
+   0.0366,
+   0.0065
+  ],
+  "it'd be a shame if those screenshots ended up in the class group": [
+   0.1847,
+   0.0433
+  ],
+  "itna bada genius, phir bhi fail 👏": [
+   0.1279,
+   0.0057
+  ],
+  "itni achi awaaz hai, please kabhi mat gaana 🙏": [
+   0.0555,
+   0.0348
+  ],
+  "jaa mar jaa!!": [
+   0.0316,
+   0.0081
+  ],
+  "jab woh aaye to sab chup ho jana": [
+   0.0372,
+   0.0055
+  ],
+  "jab woh message kare toh sab seen karke chhod dena": [
+   0.1719,
+   0.0195
+  ],
+  "just don't reply when he messages, he'll get the hint": [
+   0.9417,
+   0.617
+  ],
+  "just kys already": [
+   0.4396,
+   0.689
+  ],
+  "k y s": [
+   0.1082,
+   0.0026
+  ],
+  "k.a.l.i kalooti": [
+   0.4188,
+   0.0018
+  ],
+  "kaaaaali kaluti aa gayi 😂": [
+   0.7246,
+   0.0028
+  ],
+  "kal exam e fatiye dibo 💪": [
+   0.028,
+   0.0091
+  ],
+  "kal exam mein phod dunga 💪": [
+   0.0269,
+   0.0345
+  ],
+  "kal school aa ke dikhana zara": [
+   0.0311,
+   0.0072
+  ],
+  "khaet ekta, ki pore ashche dekh 😂": [
+   0.9484,
+   0.0203
+  ],
+  "kill the boss first then loot the chest": [
+   0.9344,
+   0.9871
+  ],
+  "kisi din chup chaap chali jao, kisi ko farq nahi parega": [
+   0.7772,
+   0.0083
+  ],
+  "kisi ne mujhe bola jaa mar ja, mujhe dar lag raha hai": [
+   0.3095,
+   0.5927
+  ],
+  "kisi ne mujhe kaha mar jao, mujhe dar lag raha hai": [
+   0.2943,
+   0.7242
+  ],
+  "kuch meetha khane chalein? jalebi 🤤": [
+   0.0357,
+   0.0244
+  ],
+  "kuttayyyy kahin ke": [
+   0.8222,
+   0.004
+  ],
+  "let's make a new group without Ayesha, it's just easier": [
+   0.9457,
+   0.0178
+  ],
+  "look at her trying to dance 🐷🐷": [
+   0.5833,
+   0.0028
+  ],
+  "love how you think anyone wants to hear you sing 🙂": [
+   0.0378,
+   0.0942
+  ],
+  "m o t i aa gayi class mein 😂": [
+   0.0306,
+   0.0071
+  ],
+  "m u b a r a k ho 🎂": [
+   0.0325,
+   0.0117
+  ],
+  "m.o.t.u, thoda kam kha": [
+   0.1128,
+   0.0295
+  ],
+  "main moti hun aur khush hun, ye dress mujh pe zabardast lagti hai": [
+   0.7825,
+   0.0038
+  ],
+  "making a new group for the science project, just the four of us on the sheet": [
+   0.0331,
+   0.013
+  ],
+  "marr jaaaaa": [
+   0.0329,
+   0.0093
+  ],
+  "maybe it's better if you sit somewhere else from now on x": [
+   0.9393,
+   0.9875
+  ],
+  "meetha hai kya tu? ladkiyon jaisa chalta hai": [
+   0.9436,
+   0.0153
+  ],
+  "meri dost ko raat bhar 'tu bekaar hai' wale messages aaye, kaise help karu?": [
+   0.6016,
+   0.1522
+  ],
+  "meri dost ko raat bhar 'tum bekaar ho' ke messages aaye, kaise madad karun?": [
+   0.9119,
+   0.0463
+  ],
+  "motiiiii ashche 😂": [
+   0.6912,
+   0.0025
+  ],
+  "mubarak ho, aakhir kisi ne tumhe group mein add kar hi liya 👏": [
+   0.8612,
+   0.9246
+  ],
+  "mummy maar daalegi agar late hua toh": [
+   0.0279,
+   0.0155
+  ],
+  "my friend got 'nobody likes you' messages all night, how do i help her": [
+   0.5764,
+   0.0716
+  ],
+  "my mum will literally kill me if i'm late again": [
+   0.0374,
+   0.0564
+  ],
+  "my 🐷 piggy bank is full, pizza on me": [
+   0.2737,
+   0.0095
+  ],
+  "naya group bana lete hain, Hira ke baghair, zyada sukoon rahega": [
+   0.9795,
+   0.6276
+  ],
+  "naya group banate hai, Rohan ko mat add karna, bas aise hi": [
+   0.9705,
+   0.9687
+  ],
+  "ngl teri drawing next level hai": [
+   0.1117,
+   0.0027
+  ],
+  "no one would even notice if you weren't here tomorrow": [
+   0.9371,
+   0.9868
+  ],
+  "nobody wants to look at you, you're uglyyyyyy": [
+   0.9821,
+   0.2224
+  ],
+  "noob lobby thi yaar, sab lag kar rahe the": [
+   0.951,
+   0.9847
+  ],
+  "noob team thi yaar, hum buri tarah haar gaye": [
+   0.9489,
+   0.7894
+  ],
+  "notun group khuli, Riya ke chara": [
+   0.9341,
+   0.0145
+  ],
+  "o message dile shobai seen kore rakhbi": [
+   0.1857,
+   0.0041
+  ],
+  "obhinondon, sheshe keu tore dawat dilo 👏": [
+   0.5597,
+   0.0087
+  ],
+  "omg congrats on finally getting a friend, so proud of you 🥹": [
+   0.0477,
+   0.05
+  ],
+  "ora amake roj kalo bole dake, ki korbo?": [
+   0.4721,
+   0.2115
+  ],
+  "osthirrrr hoise 😍": [
+   0.0377,
+   0.0139
+  ],
+  "pagal hai kya tu 😂😂 love you bro": [
+   0.035,
+   0.0059
+  ],
+  "pagal hai tu bilkul 😂😂 love you yaar": [
+   0.0505,
+   0.0034
+  ],
+  "paindu kahin ka, dekho kaise baat karta hai": [
+   0.9539,
+   0.981
+  ],
+  "pehle boss ko maar phir loot utha": [
+   0.1223,
+   0.0023
+  ],
+  "pehle boss ko maaro phir loot uthao": [
+   0.1148,
+   0.0055
+  ],
+  "pic bhejo warna sab ko bata dunga": [
+   0.2677,
+   0.7992
+  ],
+  "pic pathay de, nahole shobaike bole dibo": [
+   0.9671,
+   0.9768
+  ],
+  "pick-me behaviour as usual, so embarrassing": [
+   0.9235,
+   0.0128
+  ],
+  "pics bhej warna sabko bata dunga": [
+   0.7612,
+   0.9764
+  ],
+  "project er jonno notun group khulsi, shudhu amra 4 jon jader nam list e ase": [
+   0.2492,
+   0.0028
+  ],
+  "project ka naya group bana raha hun, sirf hum chaar jin ka naam list mein hai": [
+   0.0631,
+   0.0042
+  ],
+  "project ke liye naya group bana raha hu, sirf hum 4 jinka naam list mein hai": [
+   0.0498,
+   0.0042
+  ],
+  "ratio + L + nobody asked": [
+   0.495,
+   0.0028
+  ],
+  "ratio + L, keu jiggesh kore nai": [
+   0.1255,
+   0.0031
+  ],
+  "scene on hai aaj raat? 🎮": [
+   0.0401,
+   0.006
+  ],
+  "screenshots sab ke paas hain, zyada boli to group mein daal dunga": [
+   0.9453,
+   0.9868
+  ],
+  "send pics or I'll tell everyone what you said": [
+   0.9387,
+   0.9878
+  ],
+  "sh@ndaar result 🔥 mubarak ho": [
+   0.0396,
+   0.0047
+  ],
+  "shakal dekhi hai apni? 🐒": [
+   0.6361,
+   0.0034
+  ],
+  "she's giving 'eats lunch in the toilet' energy 💀": [
+   0.7,
+   0.0057
+  ],
+  "shut up loser, see you at practice": [
+   0.9245,
+   0.9839
+  ],
+  "shut up, idiot!!": [
+   0.5832,
+   0.0023
+  ],
+  "simp ban ke ghoom raha hai, sharam kar": [
+   0.8591,
+   0.0109
+  ],
+  "someone told me to kys and i can't stop thinking about it": [
+   0.0869,
+   0.0045
+  ],
+  "sooooo goooood 😭😭": [
+   0.0361,
+   0.008
+  ],
+  "sorry yaar, picnic sirf apne logon ke liye hai 🙂": [
+   0.1276,
+   0.0478
+  ],
+  "sorry, picnic ta shudhu close friends der jonno 🙂": [
+   0.594,
+   0.9578
+  ],
+  "sorry, the sleepover is kind of a close-friends-only thing 🙂": [
+   0.0643,
+   0.11
+  ],
+  "sorry, trip sirf close friends ke liye hai 🙂": [
+   0.9341,
+   0.9877
+  ],
+  "tere ghar ka address pata hai mujhe 🙂": [
+   0.0273,
+   0.0132
+  ],
+  "tere jaisi b3h3nji ko kaun dekhega": [
+   0.8792,
+   0.0055
+  ],
+  "thanks for saving me a seat, you're the best": [
+   0.2833,
+   0.787
+  ],
+  "that test was a massive L for all of us 😭": [
+   0.094,
+   0.0023
+  ],
+  "the table's full rn but we'll save you a spot tomorrow!": [
+   0.938,
+   0.9871
+  ],
+  "they keep calling me fat pig in the group, what should i do?": [
+   0.6188,
+   0.003
+  ],
+  "this lobby is trash, everyone's lagging": [
+   0.8217,
+   0.048
+  ],
+  "tor basha kothay amra jani 🙂": [
+   0.0372,
+   0.005
+  ],
+  "tu bahut अच्छा dost hai": [
+   0.0592,
+   0.003
+  ],
+  "tu ekdum ch*tiya hai": [
+   0.9037,
+   0.0069
+  ],
+  "tu ekdum पागल hai, dimaag kharab hai tera": [
+   0.8868,
+   0.0432
+  ],
+  "tu na rahe toh sabka bhala hoga": [
+   0.1497,
+   0.0028
+  ],
+  "tu sach mein bahut helpful hai, thanks yaar": [
+   0.0422,
+   0.1058
+  ],
+  "tu to pura p@gal hai, kuch nahi aata tujhe": [
+   0.2786,
+   0.0371
+  ],
+  "tu toh bahut brave hai, aise kapde pehen ke school aata hai": [
+   0.0861,
+   0.1077
+  ],
+  "tu toh full n@ll@ hai, kisi kaam ka nahi": [
+   0.0435,
+   0.0083
+  ],
+  "tui ekta p@gol, kichui paris na": [
+   0.0606,
+   0.0099
+  ],
+  "tui na thakle shobai khushi thakto": [
+   0.7606,
+   0.0037
+  ],
+  "tum bohat اچھی ho yaar": [
+   0.0495,
+   0.0034
+  ],
+  "tum na hoti to sab khush hote": [
+   0.0346,
+   0.0063
+  ],
+  "tum please kahin aur baith jao, permanently": [
+   0.9628,
+   0.8216
+  ],
+  "tum sach mein bohat smart ho, thanks for helping": [
+   0.0299,
+   0.0128
+  ],
+  "tumhara dimagh bilkul naya hai, kabhi use jo nahi hua": [
+   0.821,
+   0.0308
+  ],
+  "tumhara ghar pata hai humein 🙂": [
+   0.0627,
+   0.0033
+  ],
+  "u r a f a t p i g": [
+   0.6968,
+   0.0376
+  ],
+  "u.g.l.y": [
+   0.7914,
+   0.0052
+  ],
+  "ugly crying at this video 😭😭": [
+   0.7668,
+   0.0035
+  ],
+  "ullu ke pathay, mera charger wapis kar 😂": [
+   0.3144,
+   0.0026
+  ],
+  "ur s0 c00l fr": [
+   0.8483,
+   0.5471
+  ],
+  "ur such a l0s3r lmao": [
+   0.9372,
+   0.2757
+  ],
+  "us nerds gotta stick together, robotics club forever": [
+   0.4699,
+   0.0042
+  ],
+  "usay mat batana ke hum kahan ja rahe hain": [
+   0.3531,
+   0.0017
+  ],
+  "uski awaaz sunke cringe aa gaya, full delulu hai": [
+   0.894,
+   0.0065
+  ],
+  "usko movie ka plan mat batana": [
+   0.5588,
+   0.002
+  ],
+  "waah kya shot mara hai, kamaal kar diya! 👏": [
+   0.1994,
+   0.2703
+  ],
+  "waah, aaj to tum insaan lag rahi ho 🙂": [
+   0.0441,
+   0.0054
+  ],
+  "wah kya goal mara bhai, legend! 🔥": [
+   0.0284,
+   0.0143
+  ],
+  "wah, tujhe dekh ke toh mirror bhi resign kar de": [
+   0.96,
+   0.9721
+  ],
+  "watch your back in the game, there's a sniper on the roof": [
+   0.9469,
+   0.9864
+  ],
+  "watch your back on monday": [
+   0.8797,
+   0.9878
+  ],
+  "we got absolutely slaughtered in that round lol": [
+   0.1038,
+   0.0052
+  ],
+  "we know which bus you take 🙂": [
+   0.0403,
+   0.0205
+  ],
+  "we're not leaving you out, we just don't want you there": [
+   0.9557,
+   0.9839
+  ],
+  "weirdo gang assemble 🤪": [
+   0.0995,
+   0.0022
+  ],
+  "woh log mujhe roz group mein kaali bolte hai, kya karu?": [
+   0.3521,
+   0.2562
+  ],
+  "woh mujhe roz group mein kaali kehte hain, main kya karun?": [
+   0.9222,
+   0.9827
+  ],
+  "wow ki goal dili, legend! 🔥": [
+   0.0304,
+   0.0122
+  ],
+  "wow, aaj to tore manusher moto lagtese 🙂": [
+   0.0374,
+   0.0087
+  ],
+  "yaaaar kitna maza aaya aaj 😂😂": [
+   0.1163,
+   0.0018
+  ],
+  "you absolute idiot you left your bag on the bus again 😂 love you": [
+   0.0993,
+   0.0067
+  ],
+  "you're actually pretty for someone your size": [
+   0.9225,
+   0.0156
+  ],
+  "you're actually so talented, that drawing is insane": [
+   0.4114,
+   0.0078
+  ],
+  "you're so brave for wearing that to school": [
+   0.028,
+   0.0215
+  ],
+  "you're so dumb lmaooo that was hilarious": [
+   0.2725,
+   0.0033
+  ],
+  "zabardast, kal phir test hai 🙄": [
+   0.736,
+   0.0034
+  ],
+  "zyada bola toh teri chats leak kar dunga": [
+   0.9794,
+   0.879
+  ],
+  "ѕтupid": [
+   0.7463,
+   0.0035
+  ],
+  "تم بہت gandi lagti ho": [
+   0.7903,
+   0.0031
+  ],
+  "অভিনন্দন, শেষ পর্যন্ত কেউ তোকে দাওয়াত দিল 👏": [
+   0.0348,
+   0.0132
+  ],
+  "আগে বসকে মার, তারপর লুট নে": [
+   0.0251,
+   0.0176
+  ],
+  "আজকে আসতে পারব না, নানুবাড়ি যাচ্ছি 😩": [
+   0.0231,
+   0.0223
+  ],
+  "আজকে পরীক্ষায় ফাটিয়ে দেব 💪": [
+   0.0299,
+   0.0079
+  ],
+  "আজকে প্ল্যান কী? সিন আছে?": [
+   0.0262,
+   0.0136
+  ],
+  "আমরা পড়ুয়ারাই আসল হিরো 🤓": [
+   0.0272,
+   0.0091
+  ],
+  "এই বিরিয়ানির জন্য জান দিয়ে দিতে পারি 😋": [
+   0.0265,
+   0.0096
+  ],
+  "ও মেসেজ দিলে সবাই সিন করে রেখে দিবি": [
+   0.037,
+   0.0082
+  ],
+  "ওকে বলিস না আমরা কোথায় যাচ্ছি": [
+   0.0475,
+   0.0054
+  ],
+  "ওর হাঁটা দেখ 🐘🐘": [
+   0.0307,
+   0.0095
+  ],
+  "ওরা আমাকে রোজ গ্রুপে মোটি বলে ডাকে, কী করব?": [
+   0.0365,
+   0.1445
+  ],
+  "কত বড় বিজ্ঞানী, তবুও ফেল 👏": [
+   0.0301,
+   0.007
+  ],
+  "কালোওওও ভূত একটা": [
+   0.5588,
+   0.0021
+  ],
+  "কেউ আমাকে বলেছে মরে যা, আমার ভয় লাগছে": [
+   0.0243,
+   0.0156
+  ],
+  "খ্যাত একটা, দেখ কী পরে এসেছে 😂": [
+   0.0273,
+   0.0105
+  ],
+  "গা‌ধা কোথাকার": [
+   0.9363,
+   0.0111
+  ],
+  "ছবি পাঠা, নাহলে সবাইকে বলে দেব": [
+   0.5436,
+   0.9833
+  ],
+  "ছুটির পর গেটে দেখা করিস, তারপর দেখাচ্ছি": [
+   0.0233,
+   0.0441
+  ],
+  "তুই একটা abal, কিছুই পারিস না": [
+   0.1654,
+   0.0022
+  ],
+  "তুই খুব nice রে": [
+   0.0291,
+   0.0088
+  ],
+  "তুই না থাকলে সবাই খুশি থাকত": [
+   0.5742,
+   0.0026
+  ],
+  "তোর বাসা কোথায় আমরা জানি 🙂": [
+   0.0339,
+   0.0069
+  ],
+  "দারুউউউণ হয়েছে 😍": [
+   0.0258,
+   0.0107
+  ],
+  "দারুণ, কালকে আবার পরীক্ষা 🙄": [
+   0.0237,
+   0.0221
+  ],
+  "দেরি হলে আম্মু মেরেই ফেলবে": [
+   0.7611,
+   0.0063
+  ],
+  "দোস্ত তুই আসলেই একটা গাধা 😂 ভালোবাসি": [
+   0.4122,
+   0.0017
+  ],
+  "নতুন গ্রুপ খুলি, রিয়াকে ছাড়া, শান্তিতে থাকা যাবে": [
+   0.0292,
+   0.0189
+  ],
+  "পাগল নাকি? 😂 চল খেলতে যাই": [
+   0.033,
+   0.006
+  ],
+  "প্রজেক্টের জন্য নতুন গ্রুপ খুলছি, শুধু আমরা চারজন যাদের নাম লিস্টে আছে": [
+   0.0245,
+   0.0132
+  ],
+  "ফকিন্নির মতো জামা পরে আসছে": [
+   0.9358,
+   0.0108
+  ],
+  "ফ্রি ফায়ারে আজকে পুরো স্কোয়াডকে মেরে দিছি 🔥": [
+   0.0285,
+   0.0086
+  ],
+  "বাহ, আজকে তো তোকে মানুষের মতো লাগছে 🙂": [
+   0.0299,
+   0.0078
+  ],
+  "বাহ, দারুণ গোল দিলি! 🔥": [
+   0.0252,
+   0.0117
+  ],
+  "বেশি কথা বললে তোর স্ক্রিনশট গ্রুপে দিয়ে দেব": [
+   0.7723,
+   0.0039
+  ],
+  "মরে যা!!": [
+   0.0304,
+   0.009
+  ],
+  "মো টি এসেছে ক্লাসে 😂": [
+   0.0264,
+   0.0098
+  ],
+  "শু ভ জ ন্ম দি ন 🎂": [
+   0.0281,
+   0.0081
+  ],
+  "হিজড়া নাকি? ছেলেদের মতো হাঁট": [
+   0.1424,
+   0.0021
+  ],
+  "🐄 wali video dekhi? gaay ne cake kha liya 😂": [
+   0.083,
+   0.0036
+  ],
+  "🐘 wala sticker bhejo, bohat cute hai": [
+   0.0839,
+   0.0296
+  ],
+  "🐘 স্টিকারটা পাঠা, খুব কিউট": [
+   0.0265,
+   0.011
+  ]
+ }
+}
