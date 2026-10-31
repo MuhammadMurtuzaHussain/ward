@@ -387,6 +387,25 @@ export const en = {
     confirmOn: "Turn on lab mode? When Ward closes, everything in it on this computer is deleted, including saved evidence.",
     banner: "Lab mode: Ward forgets everything when you close it. Save nothing here you need to keep.",
   },
+  // The hosted web demo only (VITE_WARD_DEMO): no Gemma, no share sheet.
+  demo: {
+    banner: "Demo: word lists and Ward Lite, in your browser. Nothing you paste leaves this page.",
+    drop: "Drop a WhatsApp export",
+    dropHint: "Or tap to choose the file (.txt or .zip)",
+    noScreens: "Reading screenshots needs Gemma running on a computer, through Ollama. Here, export the chat as a file, or paste the messages.",
+    samplesTitle: "Try a sample chat",
+    samplesLine: "Made-up chats, one tap each. Ward Lite (about 38 MB) downloads the first time you check a chat.",
+    samples: {
+      banter: ["Friends joking", "Roman Urdu, two friends"],
+      pileon: ["A group pile-on", "Roman Urdu, a class group"],
+      dm: ["A DM that turns into a threat", "English, one to one"],
+    } as Record<"banter" | "pileon" | "dm", [string, string]>,
+    exportSteps: [
+      "Open the chat in WhatsApp.",
+      "iPhone: tap the name at the top, then Export chat, then Without media, then Save to Files. Android: tap the three dots, then More, then Export chat, then Without media, and save the file.",
+      "Come back to this page and tap the box above to choose the file. On a computer, drop it in.",
+    ],
+  },
   speak: { listen: "Listen", stop: "Stop" },
   teach: {
     title: "Teach a class",

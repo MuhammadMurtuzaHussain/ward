@@ -100,9 +100,35 @@ const caseworkerViewer: Plugin = {
   },
 };
 
-// base "./" so the same build loads from Electron's ward:// origin and Capacitor's bundle.
+// The hosted demo (VITE_WARD_DEMO=1, .github/workflows/pages.yml) gets a strict CSP: everything
+// from its own origin, nothing third-party, and WebAssembly allowed for Ward Lite. The app and the
+// desktop build are untouched. (frame-ancestors can't be set from a meta tag, so it isn't here.)
+const DEMO_CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "style-src 'self'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "media-src 'self' blob:",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+].join("; ");
+const demoCsp: Plugin = {
+  name: "ward-demo-csp",
+  apply: "build",
+  transformIndexHtml() {
+    if (process.env.VITE_WARD_DEMO !== "1") return;
+    return [{ tag: "meta", attrs: { "http-equiv": "Content-Security-Policy", content: DEMO_CSP }, injectTo: "head-prepend" }];
+  },
+};
+
+// base "./" so the same build loads from Electron's ward:// origin and Capacitor's bundle (and the
+// demo from GitHub Pages under /ward/).
 export default defineConfig({
   base: "./",
-  plugins: [react(), tailwindcss(), ortRuntime, liteCheck, caseworkerViewer],
+  plugins: [react(), tailwindcss(), ortRuntime, liteCheck, caseworkerViewer, demoCsp],
   server: { port: 5199, strictPort: true },
 });

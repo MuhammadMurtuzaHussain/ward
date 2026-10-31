@@ -5,12 +5,12 @@
 import { unzipSync, strFromU8 } from "fflate";
 import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/engine";
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
-import { liteAvailable, WardLiteJudge } from "./lite.ts";
 import { phoneSecondLook } from "./phoneGemma.ts";
 import { BUILT_IN_GEMMA, desktopReady, desktopTransport } from "./desktopGemma.ts";
 import { historyLevel } from "./helpPaths.ts";
 import type { Judge, SecondLook } from "@ward/engine";
 import { t } from "../i18n/index.ts";
+import { DEMO } from "../demo/demo.ts";
 
 export async function readChatFile(file: File): Promise<{ text: string; title: string }> {
   const base = file.name.replace(/\.(txt|zip)$/i, "");
@@ -33,6 +33,8 @@ export type ModelStatus = { ok: true; model: string; via: "ollama" | "builtIn" }
 /** The strongest Gemma on this computer: Ollama's if it's there, else the one built into Ward for desktop. */
 export async function modelStatus(): Promise<ModelStatus> {
   const { ollamaUrl, model } = getState().profile;
+  // The hosted demo never reaches for the visitor's own computer (its CSP wouldn't let it).
+  if (DEMO) return { ok: false, reason: "No model running on this device" };
   const models = await ollamaModels(ollamaUrl);
   if (models.includes(model)) return { ok: true, model, via: "ollama" };
   if (await desktopReady()) return { ok: true, model: BUILT_IN_GEMMA, via: "builtIn" };
@@ -64,8 +66,9 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   let secondLook: SecondLook | null = null;
   if (status.ok && status.via === "ollama") judge = new GemmaJudge({ baseUrl: getState().profile.ollamaUrl, model: status.model, batch: 16, language });
   else if (status.ok) judge = new GemmaJudge({ transport: desktopTransport, name: BUILT_IN_GEMMA, batch: 16, language });
-  else if (await liteAvailable()) {
-    judge = new WardLiteJudge();
+  else if (await (await import("./lite.ts")).liteAvailable()) {
+    // Loaded on the first check, not at startup: transformers.js, ONNX Runtime and the model.
+    judge = new (await import("./lite.ts")).WardLiteJudge();
     // Ward Lite reads one message at a time; the phone's Gemma, if downloaded, re-reads the ones
     // only Ward Lite flagged with the messages around them (confirm-only, see phoneGemma.ts).
     secondLook = await phoneSecondLook();

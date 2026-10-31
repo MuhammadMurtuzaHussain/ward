@@ -11,6 +11,8 @@ import { Button, Screen } from "../components/ui.tsx";
 import { parse, readChatFile, readScreenshots, startCheck } from "../lib/run.ts";
 import { setState, useStore } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
+import { DEMO } from "../demo/demo.ts";
+import { DemoSamples } from "../demo/DemoSamples.tsx";
 
 type Stage = { at: "input" } | { at: "who"; chat: Chat; title: string };
 
@@ -48,6 +50,8 @@ export function Check() {
     setError(null);
     try {
       if (files.every((f) => f.type.startsWith("image/"))) {
+        // Reading screenshots takes Gemma, which the hosted demo doesn't have.
+        if (DEMO) return setError(t.demo.noScreens);
         setBusy(t.check.readingScreens);
         const text = await readScreenshots(files);
         setBusy(null);
@@ -69,6 +73,7 @@ export function Check() {
     <Screen>
       <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t.check.title}</h1>
       <p className="mt-2 max-w-[48ch] text-dim">{t.check.line}</p>
+      {DEMO && !busy && <DemoSamples />}
 
       <div className="mt-6">
         {busy ? (
@@ -77,9 +82,9 @@ export function Check() {
             <p className="font-display text-lg font-semibold">{busy}…</p>
           </div>
         ) : (
-          <HaloDrop accept=".txt,.zip,image/*" multiple onFiles={onFiles}>
-            <span className="font-display text-xl font-semibold">{t.check.drop}</span>
-            <span className="text-sm text-dim">{t.check.dropHint}</span>
+          <HaloDrop accept={DEMO ? ".txt,.zip" : ".txt,.zip,image/*"} multiple onFiles={onFiles}>
+            <span className="font-display text-xl font-semibold">{DEMO ? t.demo.drop : t.check.drop}</span>
+            <span className="text-sm text-dim">{DEMO ? t.demo.dropHint : t.check.dropHint}</span>
           </HaloDrop>
         )}
       </div>
@@ -91,7 +96,7 @@ export function Check() {
         </button>
         {howOpen && (
           <ol className="mt-2 grid list-decimal gap-1.5 ps-5 text-dim marker:font-bold marker:text-glow">
-            {t.check.exportSteps.map((step) => (
+            {(DEMO ? t.demo.exportSteps : t.check.exportSteps).map((step) => (
               <li key={step}>{step}</li>
             ))}
           </ol>
@@ -123,6 +128,7 @@ export function Check() {
         </p>
       )}
 
+      {!DEMO && (
       <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-line pt-6">
         <span className="flex items-center gap-2 text-dim">
           <ImageSquare size={20} /> {t.check.lookingAround}
@@ -131,6 +137,7 @@ export function Check() {
           <Sparkle size={18} weight="bold" /> {t.check.tryExample}
         </Button>
       </div>
+      )}
     </Screen>
   );
 }

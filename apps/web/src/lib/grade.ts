@@ -6,6 +6,7 @@ import { getState } from "./store.ts";
 import { phoneWrite } from "./phoneGemma.ts";
 import { desktopWrite } from "./desktopGemma.ts";
 import { t } from "../i18n/index.ts";
+import { DEMO } from "../demo/demo.ts";
 
 export async function gradeWriting(ex: Extract<Exercise, { kind: "write" }>, text: string, age: string): Promise<string> {
   const fallback = t().lesson.oneWay(ex.example);
@@ -15,7 +16,7 @@ Task they were given: ${ex.prompt}
 A good answer: ${ex.goal}
 Their answer: """${text.slice(0, 600)}"""
 Give two short sentences of feedback in plain words: first what they did well, then one specific thing that would make it even stronger. If their answer is unkind or unsafe, gently say why and suggest a better way. No lists, no quotes around your reply. Reply in ${t().draft.gemmaLanguage}.`;
-  try {
+  if (!DEMO) try {
     const r = await fetch(`${ollamaUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },

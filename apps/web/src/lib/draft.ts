@@ -7,6 +7,7 @@ import { getState } from "./store.ts";
 import { phoneWrite } from "./phoneGemma.ts";
 import { desktopWrite } from "./desktopGemma.ts";
 import { t } from "../i18n/index.ts";
+import { DEMO } from "../demo/demo.ts";
 
 export function templateDraft(a: Analysis, where: string, adult: string): string {
   const d = t().draft;
@@ -30,7 +31,7 @@ export async function gemmaDraft(a: Analysis, where: string, adult: string, age:
   ].join("\n");
   const content = `Write a short text message (3 or 4 sentences) from a child aged ${age === "8" ? "8 to 10" : age === "11" ? "11 to 13" : "14 to 17"} to ${adult || "a trusted adult"}, asking for help because they are being bullied in "${where}". Use simple, honest words a child that age would use. Do not quote any insults. Mention they saved the messages. Write it in ${t().draft.gemmaLanguage}. Facts:\n${facts}\nReply with only the message.`;
   const clean = (t: string | null) => t?.trim().replace(/^"|"$/g, "") || null;
-  try {
+  if (!DEMO) try {
     const r = await fetch(`${ollamaUrl}/api/chat`, {
       method: "POST",
       headers: { "content-type": "application/json" },
