@@ -117,6 +117,10 @@
   --alarm: #ff6f6f;
   --alarm-soft: rgb(255 111 111 / 0.13);
   --safe: #7fe0a8;
+  /* The glow as text, and the focus ring. On a dark room the glow itself reads; Daylight needs
+     a deeper amber (contrast.test.ts holds every look to WCAG AA). */
+  --glow-text: var(--glow);
+  --focus: var(--glow);
   --r-card: 22px;
   --r-btn: 16px;
   font-size: 17px;
@@ -125,6 +129,8 @@
   --alarm: #c42b2b;
   --alarm-soft: rgb(196 43 43 / 0.1);
   --safe: #1f7a49;
+  --glow-text: #8a5400;
+  --focus: #8a5400;
 }
 
 [data-age="8"] {
@@ -174,8 +180,29 @@ body[data-look="daylight"]::before {
 }
 
 :focus-visible {
-  outline: 3px solid var(--glow);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
+}
+/* Headings that take focus when the screen changes (so screen readers announce it) don't ring. */
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* bg-glow stays the bright glow (dark ink sits on it); glow-coloured text, list markers and focus
+   borders use the readable tokens. Same layer as Tailwind's utilities and later, so these win
+   over text-glow while hover:/focus: variants of other colours still win over them. */
+@layer utilities {
+  .text-glow,
+  .marker\:text-glow ::marker,
+  .marker\:text-glow::marker {
+    color: var(--glow-text);
+  }
+  .focus\:border-glow:focus {
+    border-color: var(--focus);
+  }
+  .ring-glow {
+    --tw-ring-color: var(--focus);
+  }
 }
 
 .font-display {
