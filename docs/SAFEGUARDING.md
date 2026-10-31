@@ -108,12 +108,10 @@ When Ward finds one:
 3. If the danger involves images, Ward adds **Take It Down**, which helps remove nude or sexual
    images of under-18s, including ones the child sent themselves. The coach says in bold: stop
    replying, and never pay.
-4. When Gemma reads dangerous words as a joke, the message stays visible but is lowered from
-   dangerous to hurtful, with "It may be a joke, but these words are serious. How did it feel?"
-   That message on its own then does not make the result **Get help now** and does not bring up
-   the help block (`packages/engine/src/analyze.ts`). We chose a gentle, visible flag over
-   silence; the safeguarding review should check whether such a message should still show the
-   help block.
+4. When Gemma reads dangerous words as a joke, the message stays dangerous, so the help block
+   stays on screen, with the note "It may be a joke, but these words are serious. How did it
+   feel?" (`packages/engine/src/analyze.ts`). A model can lower ordinary hurtful words it reads as
+   banter, never dangerous ones.
 5. A small model such as Ward Lite can raise a warning but can never lower one the word lists
    call dangerous.
 6. For the 14 to 17 band, an urgent result about their own chat points to the safety plan.

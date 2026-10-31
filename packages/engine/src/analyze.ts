@@ -106,8 +106,9 @@ function combine(m: Message, matcher: PackMatcher, model: ModelJudgement | undef
       severity = Math.max(model.severity, packSev >= 3 ? 3 : 1) as Severity;
       why = model.why ?? why;
     } else if (packSev >= 3) {
-      // The model reads it as a joke, but the words are dangerous ones: keep it visible, don't panic.
-      severity = 2;
+      // The model reads it as a joke, but the words are dangerous ones. Safety only goes up: it
+      // stays dangerous, so the help stays on screen, and the note says it may be a joke.
+      severity = 3;
       why = `${why}. It may be a joke, but these words are serious. How did it feel?`;
     } else {
       severity = 0;

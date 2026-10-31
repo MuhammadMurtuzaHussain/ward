@@ -76,6 +76,16 @@ test("an English DM with sextortion and kys is urgent", async () => {
   assert.match(danger.summary, /share photos|hurt yourself/);
 });
 
+test("a model reading dangerous words as a joke never lowers them", async () => {
+  const chat = parseChat(`Zara: kys lol 😂
+Sam: hahaha`);
+  const joke = { name: "gemma4:e4b", judge: async () => new Map([[0, { hostile: false, severity: 0 as const, categories: [], model: "gemma4:e4b", authority: "full" as const }]]) };
+  const a = await analyze(chat, { self: "Sam", judges: [joke] });
+  assert.equal(a.findings[0]!.severity, 3);
+  assert.match(a.findings[0]!.why, /may be a joke/);
+  assert.equal(a.level, "urgent");
+});
+
 test("a model that reads banter as friendly turns the pack hits off", async () => {
   const chat = parseChat(fixture("banter-friends.txt"));
   const friendly = {
