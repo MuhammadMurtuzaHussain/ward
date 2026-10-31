@@ -283,8 +283,8 @@ function DeleteEverything() {
         {needsPin(locks) ? (
           forgot ? (
             <div className="text-center">
-              <h2 dir="auto" className="font-display text-2xl font-bold tracking-tight">{t.me.forgotPin[0]}</h2>
-              <p dir="auto" className="mt-3 text-dim">{t.me.forgotPin[1]}</p>
+              <h2 className="font-display text-2xl font-bold tracking-tight">{t.me.forgotPin[0]}</h2>
+              <p className="mt-3 text-dim">{t.me.forgotPin[1]}</p>
               <Button tone="quiet" className="mt-6 w-full" data-autofocus onClick={() => setForgot(false)}>
                 {t.common.back}
               </Button>
@@ -299,8 +299,8 @@ function DeleteEverything() {
           )
         ) : (
           <div className="text-center">
-            <h2 id="delete-title" dir="auto" className="font-display text-2xl font-bold tracking-tight">{t.me.deleteAll}</h2>
-            <p dir="auto" className="mt-3 text-dim">{t.me.deleteConfirm}</p>
+            <h2 id="delete-title" className="font-display text-2xl font-bold tracking-tight">{t.me.deleteAll}</h2>
+            <p className="mt-3 text-dim">{t.me.deleteConfirm}</p>
             <div className="mt-6 grid gap-3">
               <Button tone="quiet" data-autofocus onClick={close}>
                 {t.me.keepAll}

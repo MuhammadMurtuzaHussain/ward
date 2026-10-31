@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useAnimationControls } from "motion/react";
 import { Backspace } from "@phosphor-icons/react";
 import { useT } from "../i18n/index.ts";
+import { useStore } from "../lib/store.ts";
 
 /** Four big digits and a keypad that works with touch and a keyboard alike. */
 export function PinPad({ title, hint, onDone }: { title: string; hint?: string; onDone: (pin: string) => Promise<boolean | void> | boolean | void }) {
   const t = useT();
+  const dir = useStore((s) => s.profile.lang) === "ur" ? "rtl" : "ltr";
   const [pin, setPin] = useState("");
   const [busy, setBusy] = useState(false);
   const controls = useAnimationControls();
@@ -44,10 +46,12 @@ export function PinPad({ title, hint, onDone }: { title: string; hint?: string; 
         if (/^\d$/.test(e.key)) press(e.key);
         if (e.key === "Backspace") setPin((p) => p.slice(0, -1));
       }}
-      dir="ltr" className="mx-auto flex max-w-xs flex-col items-center outline-none"
+      dir="ltr" className="mx-auto flex w-full max-w-xs flex-col items-center outline-none"
     >
-      <h2 dir="auto" className="text-center font-display text-2xl font-bold tracking-tight">{title}</h2>
-      {hint && <p dir="auto" className="mt-2 text-center text-dim">{hint}</p>}
+      {/* The keypad is laid out left to right; the words read in the page's own direction
+          ("auto" would read "Sara کا PIN" as English, from its first letter). */}
+      <h2 dir={dir} className="text-center font-display text-2xl font-bold tracking-tight">{title}</h2>
+      {hint && <p dir={dir} className="mt-2 text-center text-dim">{hint}</p>}
       <motion.div animate={controls} className="my-7 flex gap-4" aria-live="polite" aria-label={t.vault.pinDigits(pin.length)}>
         {[0, 1, 2, 3].map((i) => (
           <span key={i} className={`size-4 rounded-full transition-colors ${i < pin.length ? "bg-glow" : "bg-raised"}`} />

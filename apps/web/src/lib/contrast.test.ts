@@ -71,8 +71,9 @@ for (const look of LOOKS) {
     need("alarm", 4.5, surfaces.slice(0, 2));
     need("safe", 4.5, surfaces.slice(0, 2));
     need("focus", 3, surfaces.slice(0, 3));
-    // Button text on the bright glow.
+    // Button text on the bright glow, and on the alarm red.
     need("glow-ink", 4.5, [["glow", c("glow")]]);
+    need("alarm-ink", 4.5, [["alarm", c("alarm")]]);
     assert.deepEqual(fails, []);
   });
 }

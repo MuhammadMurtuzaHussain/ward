@@ -12,7 +12,7 @@ export function Button({ tone = "glow", className = "", children, ...rest }: But
   const tones: Record<Tone, string> = {
     glow: "bg-glow text-glow-ink shadow-[0_8px_30px_-10px_var(--halo)] hover:brightness-105",
     quiet: "bg-raised text-ink hover:bg-[color-mix(in_srgb,var(--raised),var(--ink)_6%)]",
-    alarm: "bg-alarm text-[#1c0505] hover:brightness-105",
+    alarm: "bg-alarm text-alarm-ink hover:brightness-105",
     ghost: "text-ink hover:bg-raised",
   };
   return (

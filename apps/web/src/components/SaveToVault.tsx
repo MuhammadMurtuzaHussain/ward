@@ -112,10 +112,10 @@ export function SaveToVault({ id }: { id: string }) {
         {step === "lockToo" && (
           <div className="flex flex-col items-center text-center">
             <CheckCircle size={40} weight="fill" className="text-safe" />
-            <h2 id="lock-too" dir="auto" className="mt-3 font-display text-2xl font-bold tracking-tight">
+            <h2 id="lock-too" className="mt-3 font-display text-2xl font-bold tracking-tight">
               {t.vault.lockToo[0]}
             </h2>
-            <p dir="auto" className="mt-2 text-dim">{t.vault.lockToo[1]}</p>
+            <p className="mt-2 text-dim">{t.vault.lockToo[1]}</p>
             <div className="mt-6 grid w-full gap-3">
               <Button
                 data-autofocus

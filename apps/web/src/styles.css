@@ -27,6 +27,7 @@
   --color-glow-soft: var(--glow-soft);
   --color-alarm: var(--alarm);
   --color-alarm-soft: var(--alarm-soft);
+  --color-alarm-ink: var(--alarm-ink);
   --color-safe: var(--safe);
 
   --radius-card: var(--r-card);
@@ -121,6 +122,8 @@
      a deeper amber (contrast.test.ts holds every look to WCAG AA). */
   --glow-text: var(--glow);
   --focus: var(--glow);
+  /* Text on an alarm-red button. */
+  --alarm-ink: #1c0505;
   --r-card: 22px;
   --r-btn: 16px;
   font-size: 17px;
@@ -131,6 +134,7 @@
   --safe: #1f7a49;
   --glow-text: #8a5400;
   --focus: #8a5400;
+  --alarm-ink: #ffffff;
 }
 
 [data-age="8"] {

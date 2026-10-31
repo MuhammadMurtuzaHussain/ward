@@ -61,7 +61,7 @@ export function ReportDialog({ item, onClose }: { item: VaultItem; onClose: () =
             [true, t.report.yes],
             [false, t.report.no],
           ].map(([v, l]) => (
-            <button key={String(v)} onClick={() => setDanger(v as boolean)} aria-pressed={danger === v} className={`min-h-11 rounded-btn text-sm font-bold ${danger === v ? (v ? "bg-alarm text-[#1c0505]" : "bg-glow text-glow-ink") : "bg-raised text-dim hover:text-ink"}`}>
+            <button key={String(v)} onClick={() => setDanger(v as boolean)} aria-pressed={danger === v} className={`min-h-11 rounded-btn text-sm font-bold ${danger === v ? (v ? "bg-alarm text-alarm-ink" : "bg-glow text-glow-ink") : "bg-raised text-dim hover:text-ink"}`}>
               {l as string}
             </button>
           ))}
