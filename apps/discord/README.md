@@ -64,6 +64,11 @@ Commands can take a few minutes to appear the first time.
 **On Render:** [`render.yaml`](../../render.yaml) at the repo root describes a background worker.
 New → Blueprint → this repo, then set `DISCORD_TOKEN` and `DISCORD_APP_ID` in the dashboard.
 
+Server mode sends one nudge per sender every 10 minutes and one check-in per person every hour,
+so a burst of messages isn't a burst of DMs. While testing, set `WARD_NUDGE_MINUTES=0` and
+`WARD_CHECKIN_MINUTES=0`, or it will look as if Ward stopped after the first one. The bot logs
+what it did (never what anyone wrote) to the terminal.
+
 `WARD_SERVER_MODE=off` runs personal mode only (no Message Content intent needed).
 `WARD_LITE=off` reads with the word lists only.
 

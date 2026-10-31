@@ -33,6 +33,14 @@ const token = process.env.DISCORD_TOKEN;
 if (!token) throw new Error("Set DISCORD_TOKEN (see apps/discord/README.md).");
 /** Server mode needs Discord's Message Content intent, switched on in the Developer Portal. */
 const serverMode = process.env.WARD_SERVER_MODE !== "off";
+/** Quiet periods so a burst of messages means one DM, not ten. Shorten them for testing. */
+const NUDGE_MS = Number(process.env.WARD_NUDGE_MINUTES ?? 10) * 60_000;
+const CHECKIN_MS = Number(process.env.WARD_CHECKIN_MINUTES ?? 60) * 60_000;
+
+/** What Ward did, never what anyone wrote: ids, kinds and outcomes only. */
+function log(...parts: unknown[]) {
+  console.log(new Date().toISOString(), ...parts);
+}
 const ALERTS = "ward-alerts";
 const VIEWER = "https://github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html";
 
@@ -50,10 +58,10 @@ client.once(Events.ClientReady, async (c) => {
       await loadLite();
       judges = [new WardLiteJudge()];
     } catch (e) {
-      console.warn("Ward Lite didn't load; reading with the word lists only.", (e as Error).message);
+      log("Ward Lite didn't load; reading with the word lists only.", (e as Error).message);
     }
   }
-  console.log(`Ward is up as ${c.user.tag}: ${judges.length ? "word lists + Ward Lite" : "word lists"}, server mode ${serverMode ? "on" : "off"}.`);
+  log(`Ward is up as ${c.user.tag}: ${judges.length ? "word lists + Ward Lite" : "word lists"}, server mode ${serverMode ? "on" : "off"}.`);
 });
 
 function where(i: MessageContextMenuCommandInteraction) {
@@ -184,6 +192,8 @@ async function onServer(i: ChatInputCommandInteraction) {
 }
 
 client.on(Events.InteractionCreate, async (i) => {
+  const what = i.isCommand() ? `${i.commandName}${i.isChatInputCommand() ? ` ${i.options.getSubcommand(false) ?? ""}` : ""}` : i.type;
+  log(`interaction: ${what} (${i.guildId ? "server" : "DM"})`);
   try {
     if (i.isMessageContextMenuCommand()) {
       if (i.commandName === CHECK) await onCheck(i);
@@ -196,7 +206,7 @@ client.on(Events.InteractionCreate, async (i) => {
       else await i.reply({ content: ABOUT, flags: ephemeral });
     }
   } catch (e) {
-    console.error("interaction failed:", (e as Error).message);
+    log(`interaction failed: ${what}:`, (e as Error).message);
     if (i.isRepliable()) {
       const msg = { content: "Something went wrong on Ward's side. Try again in a moment.", flags: ephemeral } as const;
       await (i.deferred || i.replied ? i.editReply(msg.content) : i.reply(msg)).catch(() => {});
@@ -221,6 +231,7 @@ async function onMessage(m: Message) {
   if (!alerts) return;
   const r = await read(m.content, m.author.username, m.createdAt, judges);
   if (r.severity === 0) return;
+  const did: string[] = [];
   const topic = alerts.topic?.toLowerCase() ?? "";
   const kinds = r.categories.map((c) => CATEGORY[c]).join(", ");
 
@@ -242,9 +253,13 @@ async function onMessage(m: Message) {
       ],
       allowedMentions: { parse: [] },
     });
+    did.push("alerted mods");
   }
 
-  if (r.severity >= 2 && !topic.includes("ward: no-nudge") && due(lastNudge, `${m.guildId}:${m.author.id}`, 10 * 60_000)) {
+  const nudge = r.severity >= 2 && !topic.includes("ward: no-nudge");
+  if (nudge && !due(lastNudge, `${m.guildId}:${m.author.id}`, NUDGE_MS)) did.push("nudge skipped (sent one recently)");
+  else if (nudge) {
+    did.push("nudged sender");
     await m.author
       .send(
         `Hey, Ward here (the helper in **${m.guild.name}**). Your message in #${m.channel.name} might land harder than you meant${kinds ? ` (${kinds})` : ""}. You can still edit or delete it: ${m.url}\nIf something's going on with you, \`/ward help\` has people to talk to.`,
@@ -258,7 +273,11 @@ async function onMessage(m: Message) {
     for (const u of m.mentions.users.values()) if (!u.bot && u.id !== m.author.id) targets.set(u.id, u);
     if (replyTo && !replyTo.author.bot && replyTo.author.id !== m.author.id) targets.set(replyTo.author.id, replyTo.author);
     for (const u of targets.values()) {
-      if (!due(lastCheckIn, `${m.guildId}:${u.id}`, 60 * 60_000)) continue;
+      if (!due(lastCheckIn, `${m.guildId}:${u.id}`, CHECKIN_MS)) {
+        did.push("check-in skipped (sent one recently)");
+        continue;
+      }
+      did.push("checked in on target");
       await u
         .send(
           `Hi, Ward here (the helper in **${m.guild.name}**). Someone sent something rough your way in #${m.channel.name}. It isn't your fault.\n• To keep proof: right-click the message → **Apps** → **Save as evidence**.\n• \`/ward help\` lists free, private people to talk to.\n• The server's moderators ${r.dangerous ? "have been told" : "can help"}.`,
@@ -266,9 +285,18 @@ async function onMessage(m: Message) {
         .catch(() => {});
     }
   }
+  log(`server message: severity ${r.severity}${r.dangerous ? ", dangerous" : ""}: ${did.join(", ") || "nothing to send (unkind, or nobody to check in on)"}`);
 }
 
-if (serverMode) client.on(Events.MessageCreate, (m) => void onMessage(m).catch((e) => console.error("message check failed:", (e as Error).message)));
+if (serverMode) client.on(Events.MessageCreate, (m) => void onMessage(m).catch((e) => log("message check failed:", (e as Error).message)));
+
+// Keep running through Discord hiccups, and say so, instead of dying or going silent.
+client.on(Events.Error, (e) => log("discord error:", e.message));
+client.on(Events.Warn, (w) => log("discord warning:", w));
+client.on(Events.ShardDisconnect, (e, id) => log(`disconnected (shard ${id}, code ${e.code}); reconnecting`));
+client.on(Events.ShardResume, (id) => log(`reconnected (shard ${id})`));
+client.rest.on("rateLimited", (r) => log(`rate limited on ${r.route} for ${r.timeToReset} ms`));
+process.on("unhandledRejection", (e) => log("unhandled:", (e as Error)?.message ?? e));
 
 process.on("SIGTERM", () => void client.destroy().then(() => process.exit(0)));
 await client.login(token);
