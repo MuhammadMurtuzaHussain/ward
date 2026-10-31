@@ -16,8 +16,14 @@ const FOR: Record<WardReport["recipient"], string> = {
 
 const SEVERITY = ["", "Unkind", "Bullying", "Dangerous"];
 
+const rows = (list: WardReport["incidents"]) =>
+  list.map((i) => `<tr class="s${i.severity}"><td>${esc(when(i.at))}</td><td>${esc(i.from)}</td><td>${esc(i.text)}${i.why ? `<div class="why">${esc(i.why)}</div>` : ""}</td><td class="mono">${esc(i.sha256.slice(0, 16))}</td></tr>`).join("\n");
+
 export function reportHtml(r: WardReport): string {
-  const who = [r.reporter.firstName, r.reporter.ageBand && `age ${r.reporter.ageBand === "8" ? "8 to 10" : r.reporter.ageBand === "11" ? "11 to 13" : "14 to 17"}`, r.reporter.city, r.reporter.country].filter(Boolean).join(", ");
+  // Messages Ward isn't sure about: listed on their own, never counted with the incidents.
+  const unsure = r.unconfirmed ?? [];
+  const unsureDanger = unsure.filter((i) => i.severity >= 3).length;
+  const who =[r.reporter.firstName, r.reporter.ageBand && `age ${r.reporter.ageBand === "8" ? "8 to 10" : r.reporter.ageBand === "11" ? "11 to 13" : "14 to 17"}`, r.reporter.city, r.reporter.country].filter(Boolean).join(", ");
   const danger = r.safety.inDangerNow === true;
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Report: ${esc(r.conversation.title)}</title>
@@ -35,9 +41,10 @@ export function reportHtml(r: WardReport): string {
 <p class="meta">${esc(FOR[r.recipient])}. Made with Ward on ${esc(when(r.createdAt))}.</p>
 <h1>Online bullying report: ${esc(r.conversation.title)}</h1>
 ${who ? `<p>From: <b>${esc(who)}</b></p>` : ""}
-<div class="box ${danger || r.safety.dangerous.length ? "alarm" : ""}">
+<div class="box ${danger || r.safety.dangerous.length || unsureDanger ? "alarm" : ""}">
   <b>${danger ? "The child says they are in danger right now." : r.safety.inDangerNow === false ? "The child says they are not in immediate danger." : "The child didn't say whether they are in danger now."}</b>
   ${r.safety.dangerous.length ? `<br>The messages include: ${esc(r.safety.dangerous.map((c) => ({ threat: "threats of violence", selfharm: "telling them to hurt or kill themselves", sexual: "sexual messages or pressure for photos", exposure: "threats to share photos or private information" })[c as string] ?? c).join("; "))}.` : ""}
+  ${unsureDanger ? `<br>Ward also flagged ${unsureDanger} possibly dangerous ${unsureDanger === 1 ? "message" : "messages"} it couldn't confirm. See "Not confirmed by Ward" below.` : ""}
 </div>
 ${r.wants.length ? `<h2>What they want to happen</h2><ul>${r.wants.map((w) => `<li>${esc(w.label)}</li>`).join("")}</ul>` : ""}
 <h2>What happened</h2>
@@ -49,8 +56,13 @@ ${r.accounts.map((a) => `<tr><td>${esc(a.name)}</td><td>${a.hurtfulMessages}</td
 </tbody></table>
 <h2>Every hurtful message</h2>
 <table><thead><tr><th>When</th><th>From</th><th>Message</th><th>Fingerprint</th></tr></thead><tbody>
-${r.incidents.map((i) => `<tr class="s${i.severity}"><td>${esc(when(i.at))}</td><td>${esc(i.from)}</td><td>${esc(i.text)}${i.why ? `<div class="why">${esc(i.why)}</div>` : ""}</td><td class="mono">${esc(i.sha256.slice(0, 16))}</td></tr>`).join("\n")}
+${rows(r.incidents)}
 </tbody></table>
+${unsure.length ? `<h2>Not confirmed by Ward</h2>
+<p class="meta">Only Ward's small model flagged these, and nothing else in the chat backed it up, so they aren't counted above. Read them yourself: if one was meant seriously, it is serious.</p>
+<table><thead><tr><th>When</th><th>From</th><th>Message</th><th>Fingerprint</th></tr></thead><tbody>
+${rows(unsure)}
+</tbody></table>` : ""}
 <h2>About this evidence</h2>
 <p class="meta">Exported from ${r.conversation.source === "whatsapp" ? "WhatsApp's own Export chat" : r.conversation.source === "discord" ? "messages saved one by one in Discord with Ward's bot" : "a pasted copy of the chat"} and kept in Ward's encrypted vault on the child's device from ${esc(when(r.integrity.savedAt))}. Each message has a SHA-256 fingerprint taken when it was saved; the whole report's digest is below, and the attached ward-report.json can be checked against it with the free, offline Ward case viewer (github.com/MuhammadMurtuzaHussain/ward/blob/main/viewer/ward-viewer.html; format: ward.report/v2, docs/REPORT.md). Ward runs on the device; nothing was uploaded. Ward's notes under each message were written by ${esc(r.tool.models.join(", ") || "word lists")}, not by a person, and can be wrong.</p>
 <p class="mono">Digest: ${esc(r.integrity.digest)}</p>

@@ -22,6 +22,14 @@ async function contentId(r: WardReport) {
 
 const when = (iso: string | number | null) => (iso == null ? "" : new Date(iso).toLocaleString(locale(), { dateStyle: "medium", timeStyle: "short" }));
 
+/** Fingerprint matches for a report's unconfirmed messages; a case saved without them counts as not matching. */
+function unconfirmedOk(c: CaseRecord): boolean[] {
+  const check: CaseRecord["check"] & { unconfirmed?: boolean[] } = c.check;
+  return (c.report.unconfirmed ?? []).map((_, k) => check.unconfirmed?.[k] === true);
+}
+
+const allMatch = (c: CaseRecord) => c.check.digestOk && c.check.perMessage.every(Boolean) && unconfirmedOk(c).every(Boolean);
+
 export function Counsel() {
   const t = useT();
   const [gate, setGate] = useState<"create" | "confirm" | "unlock" | null>(() => (!hasPin() ? "create" : !isUnlocked() ? "unlock" : null));
@@ -150,7 +158,7 @@ function Cases() {
       ) : (
         <ul className="grid gap-3">
           {cases.map((c) => {
-            const ok = c.check.digestOk && c.check.perMessage.every(Boolean);
+            const ok = allMatch(c);
             return (
               <li key={c.id}>
                 <button onClick={() => setOpen(c.id)} className="flex w-full items-center gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
@@ -174,6 +182,25 @@ function Cases() {
   );
 }
 
+function Incidents({ list, ok, unconfirmed }: { list: WardReport["incidents"]; ok: boolean[]; unconfirmed?: boolean }) {
+  const t = useT();
+  return (
+    <ol className="mt-2 grid gap-2">
+      {list.map((i, k) => (
+        <li key={k} className={`rounded-btn border bg-surface px-4 py-3 ${unconfirmed ? "border-dashed" : ""} ${i.severity >= 3 ? "border-alarm/50" : "border-line"}`}>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-dim">
+            <b className="text-ink" dir="auto">{i.from}</b>
+            <span>{when(i.at)}</span>
+            <span className={`rounded-full px-2 py-0.5 font-bold ${i.severity >= 3 ? "bg-alarm-soft text-alarm" : "bg-raised"}`}>{t.counsel.severity[i.severity]}</span>
+            {ok[k] ? <CheckCircle size={14} weight="fill" className="ms-auto text-safe" aria-label={t.counsel.verified} /> : <WarningOctagon size={14} weight="fill" className="ms-auto text-alarm" aria-label={t.counsel.changed} />}
+          </div>
+          <p dir="auto" className="mt-1 whitespace-pre-wrap break-words font-semibold">{i.text}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBack: () => void; onChange: (c: CaseRecord) => void; onDelete: () => void; note: string | null }) {
   const t = useT();
   const lang = useStore((s) => s.profile.lang);
@@ -181,8 +208,13 @@ function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBa
   const sheet = useRef<HTMLDivElement>(null);
   const r = c.report;
   const n = r.incidents.length;
-  const okCount = c.check.perMessage.filter(Boolean).length;
-  const ok = c.check.digestOk && okCount === n;
+  const unsure = r.unconfirmed ?? [];
+  const unsureOk = unconfirmedOk(c);
+  const unsureDanger = unsure.filter((i) => i.severity >= 3).length;
+  // Every fingerprinted message counts towards the check, confirmed or not.
+  const all = n + unsure.length;
+  const okCount = [...c.check.perMessage, ...unsureOk].filter(Boolean).length;
+  const ok = allMatch(c);
   const rep = r.reporter;
 
   return (
@@ -207,7 +239,7 @@ function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBa
       <div ref={sheet} className="grid gap-5">
         <div className={`rounded-card border p-4 ${ok ? "border-safe/40 bg-[color-mix(in_srgb,var(--surface),var(--safe)_12%)]" : "border-alarm/50 bg-alarm-soft"}`} role={ok ? "status" : "alert"}>
           <p className={`font-display text-lg font-bold ${ok ? "text-safe" : "text-alarm"}`}>{ok ? t.counsel.verified : t.counsel.changed}</p>
-          <p className="text-sm">{ok ? t.counsel.verifiedLine(n, when(r.integrity.savedAt)) : t.counsel.changedLine(n - okCount, n)}</p>
+          <p className="text-sm">{ok ? t.counsel.verifiedLine(all, when(r.integrity.savedAt)) : t.counsel.changedLine(all - okCount, all)}</p>
           {r.schema === "ward.report/v1" && <p className="mt-2 text-sm text-dim">{t.counsel.olderReport}</p>}
         </div>
 
@@ -225,6 +257,7 @@ function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBa
               {r.safety.inDangerNow === true ? t.counsel.danger.yes : r.safety.inDangerNow === false ? t.counsel.danger.no : t.counsel.danger.skip}
             </p>
             <p className="mt-1 text-sm">{t.counsel.reading(t.level[r.safety.level])}</p>
+            {unsureDanger > 0 && <p className="mt-1 text-sm font-semibold text-alarm">{t.counsel.unconfirmedDanger(unsureDanger)}</p>}
           </section>
           <section className="rounded-card border border-line bg-surface p-4">
             <h2 className="text-xs font-bold uppercase tracking-wider text-dim">{t.counsel.wants}</h2>
@@ -271,20 +304,17 @@ function CaseView({ c, onBack, onChange, onDelete, note }: { c: CaseRecord; onBa
 
         <section>
           <h2 className="font-display text-lg font-bold">{t.counsel.incidents(n)}</h2>
-          <ol className="mt-2 grid gap-2">
-            {r.incidents.map((i, k) => (
-              <li key={k} className={`rounded-btn border bg-surface px-4 py-3 ${i.severity >= 3 ? "border-alarm/50" : "border-line"}`}>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-dim">
-                  <b className="text-ink" dir="auto">{i.from}</b>
-                  <span>{when(i.at)}</span>
-                  <span className={`rounded-full px-2 py-0.5 font-bold ${i.severity >= 3 ? "bg-alarm-soft text-alarm" : "bg-raised"}`}>{t.counsel.severity[i.severity]}</span>
-                  {c.check.perMessage[k] ? <CheckCircle size={14} weight="fill" className="ms-auto text-safe" aria-label={t.counsel.verified} /> : <WarningOctagon size={14} weight="fill" className="ms-auto text-alarm" aria-label={t.counsel.changed} />}
-                </div>
-                <p dir="auto" className="mt-1 whitespace-pre-wrap break-words font-semibold">{i.text}</p>
-              </li>
-            ))}
-          </ol>
+          <Incidents list={r.incidents} ok={c.check.perMessage} />
         </section>
+
+        {/* Kept apart from the incidents: not counted in the accounts, patterns or Ward's reading. */}
+        {unsure.length > 0 && (
+          <section>
+            <h2 className="font-display text-lg font-bold">{t.counsel.unconfirmed(unsure.length)}</h2>
+            <p className="mt-1 max-w-[70ch] text-sm text-dim">{t.counsel.unconfirmedLine}</p>
+            <Incidents list={unsure} ok={unsureOk} unconfirmed />
+          </section>
+        )}
 
         <section>
           <h2 className="font-display text-lg font-bold">{t.counsel.notes}</h2>
