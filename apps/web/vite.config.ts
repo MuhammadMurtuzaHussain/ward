@@ -57,13 +57,23 @@ const ortRuntime: Plugin = {
 };
 
 let outDir = path.join(web, "dist");
+let written = false;
 const liteCheck: Plugin = {
   name: "ward-lite-check",
   apply: "build",
   configResolved(config) {
     outDir = path.resolve(config.root, config.build.outDir);
   },
-  closeBundle() {
+  buildStart() {
+    written = false;
+  },
+  writeBundle() {
+    written = true;
+  },
+  closeBundle(error) {
+    // closeBundle runs after a failed build too, and Vite doesn't always hand it the error. Only
+    // check output that was actually written, so the real error is the one that gets reported.
+    if (error || !written) return;
     const missing = LITE_FILES.filter((f) => {
       const p = path.join(outDir, f);
       return !existsSync(p) || statSync(p).size === 0;
