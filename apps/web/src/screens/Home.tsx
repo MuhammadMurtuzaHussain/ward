@@ -5,13 +5,16 @@ import { Ghost, type Mood } from "../components/Ghost.tsx";
 import { HelpNow } from "../components/HelpNow.tsx";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { LevelPill } from "../components/LevelPill.tsx";
-import { go, liveStreak, tab, useStore } from "../lib/store.ts";
+import { forgetChecks, go, liveStreak, tab, useStore } from "../lib/store.ts";
+import { historyLevel } from "../lib/helpPaths.ts";
 import { UnitIcon } from "../components/UnitIcon.tsx";
 import { Speak } from "../components/Speak.tsx";
 import { locale, useT } from "../i18n/index.ts";
 
 export function Home() {
   const p = useStore((s) => s.profile);
+  // Names and verdicts live only in the open sessions (memory), never in the stored list.
+  const sessions = useStore((s) => s.sessions);
   const t = useT();
   const [help, setHelp] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
@@ -21,7 +24,11 @@ export function Home() {
   const streak = liveStreak(p);
   const up = nextLesson(p.age, p.done, p.lang);
   const late = new Date().getHours() >= 23 || new Date().getHours() < 5;
-  const lastBad = p.checks.find((c) => c.level === "bullying" || c.level === "urgent");
+  const levelOf = (id: string) => {
+    const s = sessions[id];
+    return s ? historyLevel(s.analysis, s.self) : null;
+  };
+  const lastBad = p.checks.find((c) => ["bullying", "urgent"].includes(levelOf(c.id) ?? ""));
 
   let mood: Mood = "happy";
   let line = t.home.lineDefault;
@@ -111,23 +118,43 @@ export function Home() {
         <div className="flex items-end justify-between">
           <h2 className="font-display text-xl font-bold tracking-tight">{t.home.recent}</h2>
           {p.checks.length > 0 && (
-            <button className="text-sm font-bold text-glow" onClick={() => tab({ name: "vault" })}>
-              {t.nav.vault}
-            </button>
+            <div className="flex items-center gap-4">
+              <button className="min-h-11 text-sm font-bold text-dim hover:text-ink" onClick={forgetChecks}>
+                {t.home.forget}
+              </button>
+              <button className="min-h-11 text-sm font-bold text-glow" onClick={() => tab({ name: "vault" })}>
+                {t.nav.vault}
+              </button>
+            </div>
           )}
         </div>
         {p.checks.length === 0 ? (
           <p className="mt-3 max-w-[50ch] text-dim">{t.home.recentEmpty}</p>
         ) : (
           <ul className="mt-3 grid gap-2">
-            {p.checks.slice(0, 5).map((c) => (
-              <li key={c.id} className="flex items-center gap-4 rounded-card border border-line bg-surface px-4 py-3.5">
-                <LevelPill level={c.level} />
-                <span className="min-w-0 flex-1 truncate font-semibold">{c.title}</span>
-                {c.saved && <LockKey size={18} className="shrink-0 text-dim" aria-label={t.home.savedInVault} />}
-                <span className="shrink-0 text-sm text-dim">{new Date(c.at).toLocaleDateString(locale(), { day: "numeric", month: "short" })}</span>
-              </li>
-            ))}
+            {p.checks.slice(0, 5).map((c) => {
+              const open = sessions[c.id];
+              const level = levelOf(c.id);
+              const row = (
+                <>
+                  {level && <LevelPill level={level} />}
+                  <span dir="auto" className={`min-w-0 flex-1 truncate font-semibold ${open ? "" : "text-dim"}`}>{open ? open.title : t.home.aCheck}</span>
+                  {c.saved && <LockKey size={18} className="shrink-0 text-dim" aria-label={t.home.savedInVault} />}
+                  <span className="shrink-0 text-sm text-dim">{new Date(c.at).toLocaleDateString(locale(), { day: "numeric", month: "short" })}</span>
+                </>
+              );
+              return (
+                <li key={c.id}>
+                  {open ? (
+                    <button onClick={() => go({ name: "result", id: c.id })} className="flex w-full items-center gap-4 rounded-card border border-line bg-surface px-4 py-3.5 text-start hover:border-dim/40">
+                      {row}
+                    </button>
+                  ) : (
+                    <div className="flex items-center gap-4 rounded-card border border-line bg-surface px-4 py-3.5">{row}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>

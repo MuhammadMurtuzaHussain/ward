@@ -5,8 +5,9 @@
 // corrections are kept here by message fingerprint only, never the words (corrections.ts).
 
 import { useSyncExternalStore } from "react";
-import type { Analysis, Chat, Level } from "@ward/engine";
+import type { Analysis, Chat } from "@ward/engine";
 import { withCorrection, type Correction } from "./corrections.ts";
+import { neutral, type CheckSummary } from "./history.ts";
 
 export type LookId = "lantern" | "moonlit" | "firefly" | "ember" | "aurora" | "daylight";
 export type AgeBand = "8" | "11" | "14";
@@ -31,14 +32,7 @@ export type Screen =
   | { name: "mean" }
   | { name: "plan" };
 
-export interface CheckSummary {
-  id: string;
-  at: number;
-  title: string;
-  level: Level;
-  hostile: number;
-  saved: boolean;
-}
+export type { CheckSummary };
 
 export interface Profile {
   onboarded: boolean;
@@ -139,7 +133,9 @@ function loadIndex(): ProfileIndex {
 }
 
 function loadProfile(id: string): Profile {
-  return { ...DEFAULTS, ...(read<Profile>(profileKey(id)) ?? {}) };
+  const p = { ...DEFAULTS, ...(read<Profile>(profileKey(id)) ?? {}) };
+  // Older lists kept chat names and verdicts in plain text; they're cleaned on the next write.
+  return { ...p, checks: neutral(p.checks) };
 }
 
 /** Work in progress: the open chat and its analysis, in memory only. */
@@ -167,6 +163,12 @@ interface State {
 }
 
 const index0 = loadIndex();
+// Every profile on the phone, not just the one opening: lists from before history.ts kept chat
+// names and verdicts in plain text.
+for (const { id } of index0.list) {
+  const stored = read<Profile>(profileKey(id));
+  if (stored?.checks?.some((c) => Object.keys(c).some((k) => !["id", "at", "saved"].includes(k)))) write(profileKey(id), { ...stored, checks: neutral(stored.checks) });
+}
 const firstLocked = index0.list.length > 1 || !!index0.list.find((p) => p.id === index0.active)?.pinHash;
 let state: State = {
   profile: loadProfile(index0.active),
@@ -283,6 +285,11 @@ export function finishStory(storyId: string, endId: string, xp = 10) {
 export function liveStreak(p: Profile) {
   const y = today(new Date(Date.now() - 86_400_000));
   return p.lastLessonDay === today() || p.lastLessonDay === y ? p.streak : 0;
+}
+
+/** "Forget this list": the recent-checks lines go. Saved chats stay in the vault. */
+export function forgetChecks() {
+  updateProfile({ checks: [] });
 }
 
 /** Remember (or, with null, forget) the child's correction to one message. */

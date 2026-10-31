@@ -7,7 +7,7 @@ import { analyze, GemmaJudge, ollamaModels, parseChat, type Chat } from "@ward/e
 import { getState, go, patchSession, putSession, uid, updateProfile } from "./store.ts";
 import { phoneSecondLook } from "./phoneGemma.ts";
 import { BUILT_IN_GEMMA, desktopReady, desktopTransport } from "./desktopGemma.ts";
-import { historyLevel } from "./helpPaths.ts";
+import { recorded } from "./history.ts";
 import type { Judge, SecondLook } from "@ward/engine";
 import { t } from "../i18n/index.ts";
 import { DEMO } from "../demo/demo.ts";
@@ -46,13 +46,8 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   const id = uid();
   const quick = await analyze(chat, { self });
   putSession(id, { chat, analysis: quick, title, self, refining: true });
-  // The history line never says "Looks okay" over a dangerous message Ward isn't sure about.
-  updateProfile((p) => ({
-    checks: [
-      { id, at: Date.now(), title, level: historyLevel(quick, self), hostile: quick.findings.filter((f) => f.severity > 0 && !f.unsure).length, saved: false },
-      ...p.checks,
-    ].slice(0, 50),
-  }));
+  // The stored line says only when: no chat name and no verdict for a sibling to read (history.ts).
+  updateProfile((p) => ({ checks: recorded(p.checks, id) }));
   go({ name: "result", id });
 
   // Tiers: Gemma 4 on this computer (or the paired family computer) reads closest, with authority
@@ -85,9 +80,6 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
       onProgress: (d, t) => patchSession(id, { progress: [d, t] }),
     });
     patchSession(id, { analysis: full, refining: false, progress: undefined });
-    updateProfile((p) => ({
-      checks: p.checks.map((c) => (c.id === id ? { ...c, level: historyLevel(full, self), hostile: full.findings.filter((f) => f.severity > 0 && !f.unsure).length } : c)),
-    }));
   } catch (e) {
     patchSession(id, { refining: false, modelError: e instanceof Error ? e.message : String(e) });
   }
