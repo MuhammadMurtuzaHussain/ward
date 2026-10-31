@@ -48,6 +48,15 @@
             android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Give Ward to a friend: shares only the APK copy in cache/give/ (res/xml/give_paths.xml). -->
+        <provider
+            android:name=".GiveFileProvider"
+            android:authorities="${applicationId}.give"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/give_paths" />
+        </provider>
     </application>
 
     <!-- Permissions -->

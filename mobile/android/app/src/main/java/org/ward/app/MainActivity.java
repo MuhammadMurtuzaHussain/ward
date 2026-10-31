@@ -9,6 +9,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(ShareInPlugin.class);
         registerPlugin(GemmaPhonePlugin.class);
         registerPlugin(PrivacyPlugin.class);
+        registerPlugin(GiveWardPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }
