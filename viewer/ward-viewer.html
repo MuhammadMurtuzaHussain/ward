@@ -123,7 +123,7 @@
       <p><b>The digest</b> is SHA-256 over the whole report: every message, the conversation facts, the accounts and patterns, and the child's own answers (whether they're in danger now, what they want, who it's for, the details they shared). If anything in this file was changed after Ward made it, the digest won't match. Reports from before October 2026 (<code>ward.report/v1</code>) cover only the messages and conversation facts; the viewer says so when it opens one.</p>
       <p><b>Each message's fingerprint</b> is SHA-256 of sender, time and text, taken when the child saved the chat in Ward's locked vault. A match means that message is exactly as saved.</p>
       <p><b>What neither proves:</b> that the chat export itself was genuine. If it matters, ask the child to show you the conversation in the app. Times come from the child's chat export and are shown in this computer's time zone.</p>
-      <p>Only hurtful messages from others are in a report. The rest of the chat, the child's own messages, and anyone who stood up for them stay on the child's phone.</p>
+      <p>Only hurtful messages from others are in a report. The rest of the chat, the child's own messages, and anyone who stood up for them stay on the child's phone. Messages Ward couldn't confirm are listed on their own, under "Not confirmed by Ward", and covered by the same checks.</p>
     </div>
   </details>
 </main>
@@ -143,20 +143,22 @@ function problem(r) {
   if (r.schema !== "ward.report/v1" && r.schema !== "ward.report/v2") return `This isn't a Ward report this viewer knows (schema: ${String(r.schema ?? "none")}).`;
   for (const k of ["conversation", "incidents", "integrity", "safety"]) if (!r[k]) return `The report is missing its "${k}" section.`;
   if (!Array.isArray(r.incidents)) return "The report's incidents aren't a list.";
+  if (r.unconfirmed !== undefined && !Array.isArray(r.unconfirmed)) return "The report's unconfirmed messages aren't a list.";
   return null;
 }
 
 // v2 covers the child's own answers too, in a fixed order; v1 covered only the messages.
+// A report with no "unconfirmed" list gives the same text as before it existed.
 function digestText(r) {
   if (r.schema === "ward.report/v1") return JSON.stringify({ conversation: r.conversation, incidents: r.incidents });
-  const { createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents } = r;
-  return JSON.stringify({ createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, savedAt: r.integrity.savedAt });
+  const { createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, unconfirmed } = r;
+  return JSON.stringify({ createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, unconfirmed, savedAt: r.integrity.savedAt });
 }
 
 async function checkReport(r) {
   const digestOk = (await sha256(digestText(r))) === r.integrity.digest;
-  const perMessage = await Promise.all(r.incidents.map(async (i) => (await sha256(`${i.from}|${i.at ?? ""}|${i.text}`)) === i.sha256));
-  return { digestOk, perMessage };
+  const matches = (list) => Promise.all(list.map(async (i) => (await sha256(`${i.from}|${i.at ?? ""}|${i.text}`)) === i.sha256));
+  return { digestOk, perMessage: await matches(r.incidents), unconfirmed: await matches(r.unconfirmed ?? []) };
 }
 /* </verify> */
 
@@ -188,6 +190,7 @@ function h(tag, attrs, ...kids) {
 }
 
 const when = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "No time");
+const unsureDanger = (r) => (r.unconfirmed || []).filter((i) => i.severity >= 3).length;
 const pill = (text, cls) => h("span", { class: `pill ${cls || ""}` }, text);
 const catPills = (cats) => (cats || []).map((c) => pill(CATEGORY[c] || c, DANGER.includes(c) ? "cat-danger" : ""));
 
@@ -217,14 +220,16 @@ async function open(text, name) {
 }
 
 function render(r, check) {
-  const c = r.conversation, s = r.safety;
-  const okMsgs = check.perMessage.filter(Boolean).length, n = r.incidents.length;
-  const allOk = check.digestOk && okMsgs === n;
+  const c = r.conversation, s = r.safety, unsure = r.unconfirmed || [];
+  const n = r.incidents.length;
+  // The banner counts every fingerprinted message, confirmed or not.
+  const all = n + unsure.length, okMsgs = [...check.perMessage, ...check.unconfirmed].filter(Boolean).length;
+  const allOk = check.digestOk && okMsgs === all;
 
   const banner = allOk
-    ? h("div", { class: "banner ok", role: "status" }, h("div", null, h("strong", null, "Unchanged since it was saved"), h("p", null, `The digest matches, and all ${n} messages match the fingerprints taken when the child saved them on ${when(r.integrity.savedAt)}.`)))
+    ? h("div", { class: "banner ok", role: "status" }, h("div", null, h("strong", null, "Unchanged since it was saved"), h("p", null, `The digest matches, and all ${all} messages match the fingerprints taken when the child saved them on ${when(r.integrity.savedAt)}.`)))
     : h("div", { class: "banner bad", role: "alert" }, h("div", null, h("strong", null, "This report was changed after Ward made it"),
-        h("p", null, `${check.digestOk ? "The digest matches, but " : `The digest doesn't match${okMsgs < n ? ", and " : ". "}`}${okMsgs < n ? `${n - okMsgs} of ${n} message${n - okMsgs === 1 ? " doesn't" : "s don't"} match the fingerprints taken when it was saved. ` : ""}Treat the content below with care, and ask the child for the original file or to show you the chat.`)));
+        h("p", null, `${check.digestOk ? "The digest matches, but " : `The digest doesn't match${okMsgs < all ? ", and " : ". "}`}${okMsgs < all ? `${all - okMsgs} of ${all} message${all - okMsgs === 1 ? " doesn't" : "s don't"} match the fingerprints taken when it was saved. ` : ""}Treat the content below with care, and ask the child for the original file or to show you the chat.`)));
   const legacy = r.schema === "ward.report/v1"
     ? h("p", { class: "dim", style: "margin-top:-4px" }, "Older report (ward.report/v1): the check covers the messages and conversation facts, not the child's answers below (danger, wishes, details). Confirm those with the child.")
     : null;
@@ -234,7 +239,8 @@ function render(r, check) {
     h("div", { class: "label" }, "Safety"),
     h("p", { class: `big ${danger ? "alarm" : ""}` }, s.inDangerNow === true ? "Child says they're in danger now" : s.inDangerNow === false ? "Child says they're not in danger now" : "Child skipped the danger question"),
     h("p", { class: s.level === "urgent" ? "alarm" : "dim", style: "margin-top:6px;font-weight:600" }, `Ward's reading: ${LEVEL[s.level] || s.level}`),
-    s.dangerous?.length ? h("p", { style: "margin-top:6px" }, catPills(s.dangerous)) : null);
+    s.dangerous?.length ? h("p", { style: "margin-top:6px" }, catPills(s.dangerous)) : null,
+    unsureDanger(r) ? h("p", { class: "alarm small", style: "margin-top:6px;font-weight:600" }, `Also ${unsureDanger(r)} possibly dangerous message${unsureDanger(r) === 1 ? "" : "s"} Ward couldn't confirm. See "Not confirmed by Ward".`) : null);
 
   const wants = h("div", { class: "card" }, h("div", { class: "label" }, "The child wants"),
     r.wants?.length ? h("ul", { class: "facts" }, r.wants.map((w) => h("li", null, w.label || w.id))) : h("p", { class: "dim" }, "Not said"));
@@ -272,21 +278,27 @@ function render(r, check) {
     ? h("section", null, h("h2", null, "Patterns Ward found"), h("div", { class: "card" }, h("ul", { class: "facts" }, r.patterns.map((p) => h("li", { title: PATTERN[p.kind] || p.kind }, p.fact)))))
     : null;
 
-  const incidents = h("section", null, h("h2", null, `Every hurtful message (${n})`),
-    h("div", { class: "card table-wrap" }, h("table", null,
-      h("thead", null, h("tr", null, h("th", null, "When"), h("th", null, "From"), h("th", null, "Message"), h("th", null, "How bad"), h("th", null, "Fingerprint"))),
-      h("tbody", null, r.incidents.map((i, k) => h("tr", { class: `s${i.severity}` },
-        h("td", { class: "time" }, when(i.at)),
-        h("td", { dir: "auto", style: "font-weight:600" }, i.from),
-        h("td", { class: "msg" }, h("p", { dir: "auto" }, i.text), i.why ? h("p", { class: "note", dir: "auto" }, i.why) : null),
-        h("td", null, pill(SEVERITY[i.severity] || i.severity, `s${i.severity}`), h("div", null, catPills(i.categories))),
-        h("td", { class: "fp" }, check.perMessage[k] ? h("span", { class: "ok", title: i.sha256 }, "✓ Matches") : h("span", { class: "alarm", title: i.sha256 }, "✗ Changed"))))))));
+  const table = (list, oks) => h("div", { class: "card table-wrap" }, h("table", null,
+    h("thead", null, h("tr", null, h("th", null, "When"), h("th", null, "From"), h("th", null, "Message"), h("th", null, "How bad"), h("th", null, "Fingerprint"))),
+    h("tbody", null, list.map((i, k) => h("tr", { class: `s${i.severity}` },
+      h("td", { class: "time" }, when(i.at)),
+      h("td", { dir: "auto", style: "font-weight:600" }, i.from),
+      h("td", { class: "msg" }, h("p", { dir: "auto" }, i.text), i.why ? h("p", { class: "note", dir: "auto" }, i.why) : null),
+      h("td", null, pill(SEVERITY[i.severity] || i.severity, `s${i.severity}`), h("div", null, catPills(i.categories))),
+      h("td", { class: "fp" }, oks[k] ? h("span", { class: "ok", title: i.sha256 }, "✓ Matches") : h("span", { class: "alarm", title: i.sha256 }, "✗ Changed")))))));
+  const incidents = h("section", null, h("h2", null, `Every hurtful message (${n})`), table(r.incidents, check.perMessage));
+  // Kept apart from the incidents: not counted in the accounts, patterns or Ward's reading above.
+  const unconfirmed = unsure.length
+    ? h("section", null, h("h2", null, `Not confirmed by Ward (${unsure.length})`),
+        h("p", { class: "dim", style: "margin:-4px 0 10px;max-width:80ch" }, "Only Ward's small model flagged these, and nothing else in the chat backed it up, so they aren't counted above. Read them yourself: if one was meant seriously, it is serious."),
+        table(unsure, check.unconfirmed))
+    : null;
 
   const tool = h("p", { class: "dim small", style: "margin-top:14px" },
     `Made with Ward ${r.tool?.version || ""}. Read by: ${(r.tool?.models || []).length ? r.tool.models.join(", ") + " and " : ""}word lists (${(r.tool?.languages || []).join(", ")}). Ward's notes help you scan; the messages themselves are the evidence.`);
 
   const el = document.getElementById("case");
-  el.replaceChildren(...[banner, legacy, h("div", { class: "grid four" }, safety, wants, about, convo), accounts, patterns, incidents, tool].filter(Boolean));
+  el.replaceChildren(...[banner, legacy, h("div", { class: "grid four" }, safety, wants, about, convo), accounts, patterns, incidents, unconfirmed, tool].filter(Boolean));
   show(el);
   hide(document.getElementById("empty"));
   show(document.getElementById("caseTools"));
@@ -295,8 +307,8 @@ function render(r, check) {
 }
 
 function summary({ r, check }) {
-  const c = r.conversation, s = r.safety, rep = r.reporter || {};
-  const n = r.incidents.length, ok = check.digestOk && check.perMessage.every(Boolean);
+  const c = r.conversation, s = r.safety, rep = r.reporter || {}, unsure = r.unconfirmed || [];
+  const n = r.incidents.length, ok = check.digestOk && check.perMessage.every(Boolean) && check.unconfirmed.every(Boolean);
   return [
     `Ward report: ${c.title} (${c.platform})`,
     `Integrity: ${ok ? "unchanged since saved (digest and all message fingerprints match)" : "CHANGED after it was made, do not rely on it without the original"}${r.schema === "ward.report/v1" ? " [older v1 report: the child's answers aren't covered by the check]" : ""}`,
@@ -307,6 +319,7 @@ function summary({ r, check }) {
     `${n} hurtful messages over ${c.days} day(s), ${when(c.firstIncident)} to ${when(c.lastIncident)}`,
     `Accounts: ${(r.accounts || []).map((a) => `${a.name} (${a.hurtfulMessages}${a.onlyAttacked ? ", only attacked" : ""})`).join(", ")}`,
     ...(r.patterns || []).map((p) => `- ${p.fact}`),
+    ...(unsure.length ? [`Not confirmed by Ward, not counted above: ${unsure.length} message(s)${unsureDanger(r) ? `, ${unsureDanger(r)} possibly dangerous` : ""}. Read them in the report.`] : []),
     `Digest (SHA-256): ${r.integrity.digest}`,
   ].join("\n");
 }
@@ -318,8 +331,9 @@ function cell(v) {
 }
 
 function csv({ r, check }) {
-  const head = ["time_iso", "from", "severity", "severity_label", "categories", "message", "ward_note", "sha256", "fingerprint_ok"];
-  const rows = r.incidents.map((i, k) => [i.at ?? "", i.from, i.severity, SEVERITY[i.severity] || "", (i.categories || []).join(";"), i.text, i.why, i.sha256, check.perMessage[k] ? "yes" : "no"]);
+  const head = ["time_iso", "from", "severity", "severity_label", "categories", "message", "ward_note", "sha256", "fingerprint_ok", "confirmed_by_ward"];
+  const row = (i, ok, confirmed) => [i.at ?? "", i.from, i.severity, SEVERITY[i.severity] || "", (i.categories || []).join(";"), i.text, i.why, i.sha256, ok ? "yes" : "no", confirmed ? "yes" : "no"];
+  const rows = [...r.incidents.map((i, k) => row(i, check.perMessage[k], true)), ...(r.unconfirmed || []).map((i, k) => row(i, check.unconfirmed[k], false))];
   return "﻿" + [head, ...rows].map((row) => row.map(cell).join(",")).join("\r\n") + "\r\n";
 }
 
