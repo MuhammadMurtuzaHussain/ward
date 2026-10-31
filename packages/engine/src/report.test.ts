@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { analyze, buildReport, checkReport, fingerprintMessages, parseChat, reportProblem, verifyReport } from "./index.ts";
+import { analyze, buildReport, checkReport, digestText, fingerprintMessages, parseChat, reportProblem, verifyReport, type Chat, type Judge, type ModelJudgement, type WardReport } from "./index.ts";
 
 const chat = parseChat(readFileSync(new URL("../fixtures/pileon-roman-urdu.txt", import.meta.url), "utf8"));
 
@@ -95,4 +95,84 @@ test("a v1 report, whose digest covers only the messages, still checks", async (
   assert.ok(await verifyReport(r));
   r.incidents[0]!.text = "x";
   assert.ok(!(await verifyReport(r)));
+});
+
+/** A stand-in for Ward Lite: flags the messages given, raise-only, dangerous. */
+const lite: Judge = {
+  name: "Ward Lite",
+  async judge(c: Chat) {
+    const out = new Map<number, ModelJudgement>();
+    for (const m of c.messages)
+      if (m.text.includes("dhoondh")) out.set(m.id, { hostile: true, severity: 3, categories: ["threat"], why: "Ward Lite reads this", model: "Ward Lite", authority: "raise-only" });
+    return out;
+  },
+};
+
+// A group chat with one message the word lists catch and, well away from it, one only the
+// small model flags, with nothing around it to back it up.
+const mixed = parseChat(`Bilal: ayesha moti bhains
+Zara: kal test hai
+Hira: kal cricket?
+Ayesha: haan
+Zara: main bhi
+Hira: theek hai
+Ayesha: ok
+Hamza: dhoondh lunga tujhe mele me
+Ayesha: haha ok`);
+
+async function mixedReport() {
+  const analysis = await analyze(mixed, { self: "Ayesha", judges: [lite] });
+  return buildReport({ chat: mixed, analysis, fingerprints: await fingerprintMessages(mixed), savedAt: new Date("2026-10-15T10:00:00Z"), title: "t", platform: "WhatsApp", reporter: {}, inDangerNow: null, wants: [], recipient: "helpline" });
+}
+
+test("messages Ward isn't sure about go in their own list, never among the incidents", async () => {
+  const r = await mixedReport();
+  assert.deepEqual(r.incidents.map((i) => i.from), ["Bilal"]);
+  assert.deepEqual(r.unconfirmed!.map((i) => [i.from, i.severity, i.categories]), [["Hamza", 3, ["threat"]]]);
+  assert.match(r.unconfirmed![0]!.sha256, /^[0-9a-f]{64}$/);
+  // The case itself is read from the confirmed incidents only.
+  assert.deepEqual(r.accounts.map((a) => a.name), ["Bilal"]);
+  assert.notEqual(r.safety.level, "urgent");
+  assert.deepEqual(r.safety.dangerous, []);
+  assert.ok(!r.patterns.some((p) => p.kind === "danger"));
+  assert.equal(r.conversation.firstIncident, r.incidents[0]!.at);
+  const c = await checkReport(r);
+  assert.ok(c.digestOk && c.perMessage.every(Boolean));
+  assert.deepEqual(c.unconfirmed, [true]);
+});
+
+test("the digest and fingerprints cover unconfirmed messages too", async () => {
+  const edited = await mixedReport();
+  edited.unconfirmed![0]!.text = "see you at the fair";
+  const c = await checkReport(edited);
+  assert.equal(c.digestOk, false);
+  assert.deepEqual(c.perMessage, [true]);
+  assert.deepEqual(c.unconfirmed, [false]);
+
+  const dropped = await mixedReport();
+  delete dropped.unconfirmed;
+  assert.equal(await verifyReport(dropped), false);
+
+  const promoted = await mixedReport();
+  promoted.incidents.push(promoted.unconfirmed!.pop()!);
+  assert.equal(await verifyReport(promoted), false);
+
+  const bad = await mixedReport();
+  (bad as { unconfirmed: unknown }).unconfirmed = "none";
+  assert.equal(reportProblem(bad), "incomplete");
+});
+
+test("with nothing unconfirmed the field is left out, and older v2 reports check exactly as before", async () => {
+  const r = await report();
+  assert.ok(!("unconfirmed" in r));
+  // The committed sample was made before "unconfirmed" existed: same digest text, still verifies.
+  const sample = JSON.parse(readFileSync(new URL("../../../viewer/sample-report.json", import.meta.url), "utf8")) as WardReport;
+  assert.ok(!("unconfirmed" in sample));
+  const { createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents } = sample;
+  const before = JSON.stringify({ createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, savedAt: sample.integrity.savedAt });
+  assert.equal(digestText(sample), before);
+  assert.equal(createHash("sha256").update(before).digest("hex"), sample.integrity.digest);
+  const c = await checkReport(sample);
+  assert.ok(c.digestOk && c.perMessage.every(Boolean));
+  assert.deepEqual(c.unconfirmed, []);
 });
