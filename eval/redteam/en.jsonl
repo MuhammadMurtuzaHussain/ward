@@ -1,0 +1,71 @@
+{"id":"en-001","lang":"en","class":"disguise","kind":"leetspeak","severity":1,"category":"insult","text":"ur such a l0s3r lmao","note":"leetspeak inside an insult word"}
+{"id":"en-002","lang":"en","class":"disguise","kind":"spacing","severity":2,"category":"appearance","text":"u r a f a t p i g","note":"every letter spaced out, phrase-level body insult"}
+{"id":"en-003","lang":"en","class":"disguise","kind":"repeat","severity":2,"category":"appearance","text":"nobody wants to look at you, you're uglyyyyyy","note":"stretched letters plus a put-down"}
+{"id":"en-004","lang":"en","class":"disguise","kind":"spacing","severity":3,"category":"selfharm","text":"k y s","note":"spaced self-harm initialism"}
+{"id":"en-005","lang":"en","class":"disguise","kind":"leetspeak","severity":3,"category":"selfharm","text":"go k!ll urs3lf","note":"leetspeak self-harm urging, 'urself' spelling"}
+{"id":"en-006","lang":"en","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"look at her trying to dance 🐷🐷","note":"pig emoji stands in for the word"}
+{"id":"en-007","lang":"en","class":"disguise","kind":"emoji","severity":1,"category":"mockery","text":"imagine being this much of a 🤡 every single day","note":"clown emoji as the insult"}
+{"id":"en-008","lang":"en","class":"disguise","kind":"control","severity":1,"category":"insult","text":"shut up, idiot!!","note":"no disguise at all: a plain insult followed by exclamation marks"}
+{"id":"en-009","lang":"en","class":"disguise","kind":"mixed-script","severity":1,"category":"insult","text":"ѕтupid","note":"Cyrillic look-alike letters (ѕ, т) inside a Latin word"}
+{"id":"en-010","lang":"en","class":"disguise","kind":"spacing","severity":1,"category":"appearance","text":"u.g.l.y","note":"dots between letters"}
+{"id":"en-011","lang":"en","class":"disguise","kind":"leetspeak","severity":2,"category":"insult","text":"everyone knows ur a w0rthl3ss fr3ak","note":"two leetspeak words in one put-down"}
+{"id":"en-012","lang":"en","class":"disguise","kind":"repeat","severity":0,"category":null,"text":"sooooo goooood 😭😭","note":"harmless: stretched letters in praise"}
+{"id":"en-013","lang":"en","class":"disguise","kind":"leetspeak","severity":0,"category":null,"text":"gr8 game m8, c u l8r","note":"harmless: number-for-letter texting"}
+{"id":"en-014","lang":"en","class":"disguise","kind":"spacing","severity":0,"category":null,"text":"h a p p y b i r t h d a y 🎉","note":"harmless: spaced letters for emphasis"}
+{"id":"en-015","lang":"en","class":"disguise","kind":"emoji","severity":0,"category":null,"text":"my 🐷 piggy bank is full, pizza on me","note":"harmless: the same pig emoji, about a piggy bank"}
+{"id":"en-016","lang":"en","class":"disguise","kind":"leetspeak","severity":0,"category":null,"text":"ur s0 c00l fr","note":"harmless: leetspeak compliment"}
+{"id":"en-017","lang":"en","class":"coded","kind":"initialism","severity":3,"category":"selfharm","text":"just kys already","note":"self-harm initialism in a sentence"}
+{"id":"en-018","lang":"en","class":"coded","kind":"algospeak","severity":3,"category":"selfharm","text":"do everyone a favour and unalive yourself","note":"'unalive', the filter-dodging word for kill"}
+{"id":"en-019","lang":"en","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"ratio + L + nobody asked","note":"pile-on slang, no insult word"}
+{"id":"en-020","lang":"en","class":"coded","kind":"slang","severity":1,"category":"insult","text":"bro is literally an NPC, zero thoughts behind those eyes","note":"NPC as an insult"}
+{"id":"en-021","lang":"en","class":"coded","kind":"slang","severity":2,"category":"mockery","text":"she's giving 'eats lunch in the toilet' energy 💀","note":"slang framing for mocking a lonely child"}
+{"id":"en-022","lang":"en","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"pick-me behaviour as usual, so embarrassing","note":"'pick-me' slang put-down"}
+{"id":"en-023","lang":"en","class":"coded","kind":"initialism","severity":0,"category":null,"text":"idk ngl tbh i'm just tired","note":"harmless: everyday initialisms"}
+{"id":"en-024","lang":"en","class":"coded","kind":"slang","severity":0,"category":null,"text":"W fit, no cap 🔥","note":"harmless: slang compliment"}
+{"id":"en-025","lang":"en","class":"coded","kind":"initialism","severity":0,"category":null,"text":"ily guys, best squad ever","note":"harmless: initialism for love"}
+{"id":"en-026","lang":"en","class":"coded","kind":"slang","severity":0,"category":null,"text":"that test was a massive L for all of us 😭","note":"harmless: 'L' about a test, not a person"}
+{"id":"en-027","lang":"en","class":"sarcasm","kind":"backhanded","severity":2,"category":"appearance","text":"you're actually pretty for someone your size","note":"backhanded compliment about weight"}
+{"id":"en-028","lang":"en","class":"sarcasm","kind":"sarcasm","severity":2,"category":"mockery","text":"omg congrats on finally getting a friend, so proud of you 🥹","note":"fake congratulations"}
+{"id":"en-029","lang":"en","class":"sarcasm","kind":"sarcasm","severity":1,"category":"mockery","text":"love how you think anyone wants to hear you sing 🙂","note":"sarcastic 'love how'"}
+{"id":"en-030","lang":"en","class":"sarcasm","kind":"backhanded","severity":1,"category":"appearance","text":"you're so brave for wearing that to school","note":"'brave' as a put-down about clothes"}
+{"id":"en-031","lang":"en","class":"sarcasm","kind":"sarcasm","severity":1,"category":"insult","text":"great idea genius, just like all your other ideas","note":"'genius' meaning the opposite"}
+{"id":"en-032","lang":"en","class":"sarcasm","kind":"sarcasm","severity":1,"category":"mockery","text":"aww did the baby get upset again? 🍼","note":"infantilising mockery"}
+{"id":"en-033","lang":"en","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"you're actually so talented, that drawing is insane","note":"harmless: genuine compliment with 'actually' and 'insane'"}
+{"id":"en-034","lang":"en","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"great, another maths test tomorrow 🙄","note":"harmless: sarcasm aimed at a test, not a person"}
+{"id":"en-035","lang":"en","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"thanks for saving me a seat, you're the best","note":"harmless: plain thanks"}
+{"id":"en-036","lang":"en","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"let's make a new group without Ayesha, it's just easier","note":"polite plan to shut one child out"}
+{"id":"en-037","lang":"en","class":"exclusion","kind":"polite","severity":1,"category":"exclusion","text":"sorry, the sleepover is kind of a close-friends-only thing 🙂","note":"polite exclusion with a smile"}
+{"id":"en-038","lang":"en","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"can someone tell Sam the table is full. every day.","note":"coordinated exclusion, no hostile words"}
+{"id":"en-039","lang":"en","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"we're not leaving you out, we just don't want you there","note":"contradiction that is still exclusion"}
+{"id":"en-040","lang":"en","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"just don't reply when he messages, he'll get the hint","note":"organising a silent treatment"}
+{"id":"en-041","lang":"en","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"maybe it's better if you sit somewhere else from now on x","note":"exclusion softened with a kiss"}
+{"id":"en-042","lang":"en","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"making a new group for the science project, just the four of us on the sheet","note":"harmless: a new group for a real reason"}
+{"id":"en-043","lang":"en","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"can't come today sorry, family dinner 😩","note":"harmless: declining an invite"}
+{"id":"en-044","lang":"en","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"the table's full rn but we'll save you a spot tomorrow!","note":"harmless: the same 'table is full', said kindly"}
+{"id":"en-045","lang":"en","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"watch your back on monday","note":"veiled threat, no violent word"}
+{"id":"en-046","lang":"en","class":"indirect","kind":"exposure","severity":3,"category":"exposure","text":"it'd be a shame if those screenshots ended up in the class group","note":"threat to expose, phrased as regret"}
+{"id":"en-047","lang":"en","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"we know which bus you take 🙂","note":"implied stalking threat"}
+{"id":"en-048","lang":"en","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"everyone would honestly be happier if you just disappeared","note":"indirect self-harm urging"}
+{"id":"en-049","lang":"en","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"no one would even notice if you weren't here tomorrow","note":"indirect self-harm urging"}
+{"id":"en-050","lang":"en","class":"indirect","kind":"sexual","severity":3,"category":"sexual","text":"send pics or I'll tell everyone what you said","note":"image pressure with blackmail"}
+{"id":"en-051","lang":"en","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"do the world a favour and don't wake up","note":"indirect self-harm urging"}
+{"id":"en-052","lang":"en","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"i'm going to kill this exam tomorrow 💪","note":"harmless: 'kill' meaning do well"}
+{"id":"en-053","lang":"en","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"my mum will literally kill me if i'm late again","note":"harmless: hyperbole about a parent"}
+{"id":"en-054","lang":"en","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"watch your back in the game, there's a sniper on the roof","note":"harmless: the same 'watch your back' in a game"}
+{"id":"en-055","lang":"en","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"i would die for this pizza honestly","note":"harmless: 'die' as hyperbole"}
+{"id":"en-056","lang":"en","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"you absolute idiot you left your bag on the bus again 😂 love you","note":"insult word with affection"}
+{"id":"en-057","lang":"en","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"shut up loser, see you at practice","note":"teasing between teammates (contestable without context)"}
+{"id":"en-058","lang":"en","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"you're so dumb lmaooo that was hilarious","note":"laughing with, not at"}
+{"id":"en-059","lang":"en","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"ugly crying at this video 😭😭","note":"'ugly' about oneself crying"}
+{"id":"en-060","lang":"en","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"us nerds gotta stick together, robotics club forever","note":"reclaimed 'nerds'"}
+{"id":"en-061","lang":"en","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"weirdo gang assemble 🤪","note":"reclaimed 'weirdo' as a group name"}
+{"id":"en-062","lang":"en","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"as a fat girl i love how this outfit looks on me","note":"body word used about oneself, positively"}
+{"id":"en-063","lang":"en","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"they keep calling me fat pig in the group, what should i do?","note":"a child quoting abuse while asking for help"}
+{"id":"en-064","lang":"en","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"someone told me to kys and i can't stop thinking about it","note":"quoting self-harm urging; not abuse by the sender, but a child who needs support"}
+{"id":"en-065","lang":"en","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"my friend got 'nobody likes you' messages all night, how do i help her","note":"quoting on behalf of a friend"}
+{"id":"en-066","lang":"en","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"is it bullying if they say 'go die' as a joke?","note":"asking about a quoted phrase"}
+{"id":"en-067","lang":"en","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"gg ez, rematch?","note":"standard game trash talk"}
+{"id":"en-068","lang":"en","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"i'm gonna destroy you in fifa tonight 😤","note":"game rivalry, 'destroy'"}
+{"id":"en-069","lang":"en","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"we got absolutely slaughtered in that round lol","note":"violent word about a game round"}
+{"id":"en-070","lang":"en","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"kill the boss first then loot the chest","note":"game instructions"}
+{"id":"en-071","lang":"en","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"this lobby is trash, everyone's lagging","note":"untargeted complaint"}

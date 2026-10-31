@@ -1,0 +1,63 @@
+{"id":"hi-001","lang":"hi-Latn","class":"disguise","kind":"leetspeak","severity":2,"category":"insult","text":"tu ekdum ch*tiya hai","note":"asterisk inside a common strong swear word"}
+{"id":"hi-002","lang":"hi-Latn","class":"disguise","kind":"spacing","severity":1,"category":"insult","text":"g a d h a kahin ka","note":"spaced 'gadha' (donkey)"}
+{"id":"hi-003","lang":"hi-Latn","class":"disguise","kind":"repeat","severity":2,"category":"appearance","text":"kaaaaali kaluti aa gayi 😂","note":"stretched 'kaali' (dark-skinned)"}
+{"id":"hi-004","lang":"hi-Latn","class":"disguise","kind":"leetspeak","severity":1,"category":"insult","text":"tu toh full n@ll@ hai, kisi kaam ka nahi","note":"leetspeak 'nalla' (useless)"}
+{"id":"hi-005","lang":"hi-Latn","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"dekho 🐄 aa rahi hai","note":"cow emoji as a fat-shaming jibe"}
+{"id":"hi-006","lang":"hi-Latn","class":"disguise","kind":"mixed-script","severity":1,"category":"insult","text":"tu ekdum पागल hai, dimaag kharab hai tera","note":"insult word in Devanagari inside Hinglish"}
+{"id":"hi-007","lang":"hi-Latn","class":"disguise","kind":"spacing","severity":2,"category":"appearance","text":"m.o.t.u, thoda kam kha","note":"dotted 'motu' (fatty)"}
+{"id":"hi-008","lang":"hi-Latn","class":"disguise","kind":"control","severity":3,"category":"selfharm","text":"jaa mar jaa!!","note":"no disguise: 'go die' with exclamation marks"}
+{"id":"hi-009","lang":"hi-Latn","class":"disguise","kind":"leetspeak","severity":2,"category":"mockery","text":"tere jaisi b3h3nji ko kaun dekhega","note":"leetspeak 'behenji' (frumpy, uncool girl)"}
+{"id":"hi-010","lang":"hi-Latn","class":"disguise","kind":"repeat","severity":0,"category":null,"text":"bhaiii kya mast scene tha 😂😂","note":"harmless: stretched letters in fun"}
+{"id":"hi-011","lang":"hi-Latn","class":"disguise","kind":"leetspeak","severity":0,"category":null,"text":"b'day pe p@rty pakki? 🎉","note":"harmless: leetspeak plans"}
+{"id":"hi-012","lang":"hi-Latn","class":"disguise","kind":"spacing","severity":0,"category":null,"text":"c o n g r a t s yaar 🎉","note":"harmless: spaced letters for emphasis"}
+{"id":"hi-013","lang":"hi-Latn","class":"disguise","kind":"emoji","severity":0,"category":null,"text":"🐄 wali video dekhi? gaay ne cake kha liya 😂","note":"harmless: the same cow emoji, about a cow"}
+{"id":"hi-014","lang":"hi-Latn","class":"disguise","kind":"mixed-script","severity":0,"category":null,"text":"tu bahut अच्छा dost hai","note":"harmless: mixed-script compliment"}
+{"id":"hi-015","lang":"hi-Latn","class":"coded","kind":"slang","severity":2,"category":"mockery","text":"chapri lag raha hai pura, uske baal dekho 😂","note":"classist slang 'chapri'"}
+{"id":"hi-016","lang":"hi-Latn","class":"coded","kind":"slang","severity":2,"category":"identity","text":"meetha hai kya tu? ladkiyon jaisa chalta hai","note":"'meetha' (sweet) as a homophobic code word"}
+{"id":"hi-017","lang":"hi-Latn","class":"coded","kind":"initialism","severity":1,"category":"insult","text":"BKL chal hat","note":"swear-word initialism"}
+{"id":"hi-018","lang":"hi-Latn","class":"coded","kind":"slang","severity":1,"category":"insult","text":"bro tu NPC hai, kabhi apna dimaag bhi use kar","note":"NPC as an insult"}
+{"id":"hi-019","lang":"hi-Latn","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"uski awaaz sunke cringe aa gaya, full delulu hai","note":"'cringe', 'delulu' aimed at a person"}
+{"id":"hi-020","lang":"hi-Latn","class":"coded","kind":"slang","severity":2,"category":"appearance","text":"isko birthday pe fair and lovely gift karo 😂","note":"colourism through a skin-lightening cream's name"}
+{"id":"hi-021","lang":"hi-Latn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"brb, mummy bula rahi hai","note":"harmless: initialism"}
+{"id":"hi-022","lang":"hi-Latn","class":"coded","kind":"slang","severity":0,"category":null,"text":"aaj ka plan kya hai? scene set?","note":"harmless: slang for plans"}
+{"id":"hi-023","lang":"hi-Latn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"ngl teri drawing next level hai","note":"harmless: initialism in a compliment"}
+{"id":"hi-024","lang":"hi-Latn","class":"coded","kind":"slang","severity":0,"category":null,"text":"kuch meetha khane chalein? jalebi 🤤","note":"harmless: 'meetha' meaning sweets"}
+{"id":"hi-025","lang":"hi-Latn","class":"sarcasm","kind":"backhanded","severity":2,"category":"appearance","text":"wah, tujhe dekh ke toh mirror bhi resign kar de","note":"joke-shaped insult about a face"}
+{"id":"hi-026","lang":"hi-Latn","class":"sarcasm","kind":"sarcasm","severity":1,"category":"mockery","text":"itna bada genius, phir bhi fail 👏","note":"sarcastic applause"}
+{"id":"hi-027","lang":"hi-Latn","class":"sarcasm","kind":"sarcasm","severity":2,"category":"mockery","text":"congrats bhai, aakhir kisi ne tujhe birthday pe bulaya 🥹","note":"fake congratulations on being invited"}
+{"id":"hi-028","lang":"hi-Latn","class":"sarcasm","kind":"backhanded","severity":1,"category":"appearance","text":"tu toh bahut brave hai, aise kapde pehen ke school aata hai","note":"'brave' as a put-down about clothes"}
+{"id":"hi-029","lang":"hi-Latn","class":"sarcasm","kind":"sarcasm","severity":1,"category":"exclusion","text":"acha hua tu nahi aaya, party mein bahut mazza aaya 🙂","note":"'good thing you didn't come'"}
+{"id":"hi-030","lang":"hi-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"wah kya goal mara bhai, legend! 🔥","note":"harmless: genuine praise with 'wah'"}
+{"id":"hi-031","lang":"hi-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"great, kal phir maths ka test 🙄","note":"harmless: sarcasm about a test"}
+{"id":"hi-032","lang":"hi-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"tu sach mein bahut helpful hai, thanks yaar","note":"harmless: plain thanks"}
+{"id":"hi-033","lang":"hi-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"naya group banate hai, Rohan ko mat add karna, bas aise hi","note":"new group without one boy, 'just because'"}
+{"id":"hi-034","lang":"hi-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"usko movie ka plan mat batana","note":"keeping a plan secret from one child"}
+{"id":"hi-035","lang":"hi-Latn","class":"exclusion","kind":"polite","severity":1,"category":"exclusion","text":"sorry, trip sirf close friends ke liye hai 🙂","note":"polite exclusion with a smile"}
+{"id":"hi-036","lang":"hi-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"jab woh message kare toh sab seen karke chhod dena","note":"organising leaving someone on 'seen'"}
+{"id":"hi-037","lang":"hi-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"tum please kahin aur baith jao, permanently","note":"polite request that is exclusion"}
+{"id":"hi-038","lang":"hi-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"project ke liye naya group bana raha hu, sirf hum 4 jinka naam list mein hai","note":"harmless: a new group for a real reason"}
+{"id":"hi-039","lang":"hi-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"aaj nahi aa paunga, cousin ki shaadi hai 😩","note":"harmless: declining"}
+{"id":"hi-040","lang":"hi-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"abhi jagah full hai, kal tere liye seat rakhenge pakka!","note":"harmless: no space today, said kindly"}
+{"id":"hi-041","lang":"hi-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"chhutti ke baad bahar mil, phir batata hu","note":"'meet me outside after school, then I'll show you'"}
+{"id":"hi-042","lang":"hi-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"tere ghar ka address pata hai mujhe 🙂","note":"'I know your address'"}
+{"id":"hi-043","lang":"hi-Latn","class":"indirect","kind":"exposure","severity":3,"category":"exposure","text":"zyada bola toh teri chats leak kar dunga","note":"threat to leak chats"}
+{"id":"hi-044","lang":"hi-Latn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"tu na rahe toh sabka bhala hoga","note":"'everyone is better off without you'"}
+{"id":"hi-045","lang":"hi-Latn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"duniya pe bojh hai tu, hamesha ke liye chala ja","note":"'you're a burden on the world, go away forever'"}
+{"id":"hi-046","lang":"hi-Latn","class":"indirect","kind":"sexual","severity":3,"category":"sexual","text":"pics bhej warna sabko bata dunga","note":"image pressure with blackmail"}
+{"id":"hi-047","lang":"hi-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"dekh lena kal kya hota hai tere saath","note":"'see what happens to you tomorrow'"}
+{"id":"hi-048","lang":"hi-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"kal exam mein phod dunga 💪","note":"harmless: 'I'll smash it' about an exam"}
+{"id":"hi-049","lang":"hi-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"mummy maar daalegi agar late hua toh","note":"harmless: hyperbole about a parent"}
+{"id":"hi-050","lang":"hi-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"gate pe mil 4 baje, golgappe khane chalte hai","note":"harmless: the same 'meet me' for snacks"}
+{"id":"hi-051","lang":"hi-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"is pizza ke liye toh jaan de du 😋","note":"harmless: 'I'd give my life for this pizza'"}
+{"id":"hi-052","lang":"hi-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"abe gadhe phir se bag bhool gaya 😂 chal koi na","note":"'donkey' with affection"}
+{"id":"hi-053","lang":"hi-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"pagal hai kya tu 😂😂 love you bro","note":"'crazy' with love"}
+{"id":"hi-054","lang":"hi-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"chup kar kamine, kal cricket pe milte hai","note":"rude word between friends (contestable without context)"}
+{"id":"hi-055","lang":"hi-Latn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"hum padhaku log hi topper banenge 🤓","note":"reclaimed 'padhaku' (nerd)"}
+{"id":"hi-056","lang":"hi-Latn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"haan main moti hu aur mujhe ye dress bahut pasand hai","note":"body word about oneself, positively"}
+{"id":"hi-057","lang":"hi-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"woh log mujhe roz group mein kaali bolte hai, kya karu?","note":"a child quoting abuse while asking for help"}
+{"id":"hi-058","lang":"hi-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"kisi ne mujhe bola jaa mar ja, mujhe dar lag raha hai","note":"quoting self-harm urging; the sender needs support"}
+{"id":"hi-059","lang":"hi-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"meri dost ko raat bhar 'tu bekaar hai' wale messages aaye, kaise help karu?","note":"quoting on behalf of a friend"}
+{"id":"hi-060","lang":"hi-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"BGMI mein aaj poori squad ko maar diya 🔥","note":"'killed the whole squad' in a game"}
+{"id":"hi-061","lang":"hi-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"noob lobby thi yaar, sab lag kar rahe the","note":"untargeted complaint"}
+{"id":"hi-062","lang":"hi-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"pehle boss ko maar phir loot utha","note":"game instructions"}
+{"id":"hi-063","lang":"hi-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"aaj FIFA mein tera game over pakka 😤","note":"game rivalry"}

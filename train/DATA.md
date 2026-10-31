@@ -13,6 +13,8 @@ Built by `build-data.ts`. 25984 messages after removing duplicates and **97 that
 
 The scorecard's own splits (Roman Urdu validation, Bangla blindspot test, CB1 test) are never used for training.
 
+The red-team set (`eval/redteam/`, see [docs/REDTEAM.md](../docs/REDTEAM.md)) is a test set too. **Nothing in `train/` may read `eval/redteam/`**, and no red-team message may be copied or paraphrased into training data or the synthetic-data prompts. `eval/redteam/leak.test.ts`, part of `pnpm test`, fails if any red-team text turns up in `train/data` or the training scripts, or if code here opens that folder.
+
 ## Labels
 
 - **hurtful**: the dataset's own abusive/bullying label, or the kind the synthetic message was written as.
