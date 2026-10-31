@@ -13,9 +13,11 @@ permissions:
   pages: write
   id-token: write
 
+# A deploy in progress always finishes; only the newest push waits behind it. (Cancelling would
+# let a busy stretch of pushes keep the demo from ever deploying.)
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
