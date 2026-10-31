@@ -1,0 +1,53 @@
+name: Helpline update
+description: A helpline number in Ward is wrong, out of date, or missing for your country.
+title: "Helpline: "
+labels: ["helpline"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real child's chat, name, photo, school or phone number here.** This issue is public.
+        If a child is in danger right now, contact your local emergency number or a child helpline first.
+  - type: input
+    id: country
+    attributes:
+      label: Country
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What needs to change?
+      options:
+        - A number is wrong or no longer works
+        - A helpline is missing
+        - The hours, cost or description are wrong
+        - The emergency number is wrong
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: The helpline
+      description: Its name, number, who it is for, hours, and whether it is free to call.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to the helpline's own site, Child Helpline International, or a government page. Ward doesn't add numbers found only on list sites.
+    validations:
+      required: true
+  - type: input
+    id: checked
+    attributes:
+      label: When you checked it
+      placeholder: "2026-10-31"
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: This issue contains no real child's messages, name, photo, school or contact details.
+          required: true

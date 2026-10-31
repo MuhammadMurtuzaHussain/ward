@@ -1,0 +1,55 @@
+name: Bug
+description: Something in Ward doesn't work as it should.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real child's chat, name, photo, school or phone number here.** This issue is public. Use a made-up chat to show the problem, and crop or blur screenshots.
+        If the bug could expose a child's data (the vault, a PIN, a report), don't open an issue: report it privately as [SECURITY.md](https://github.com/MuhammadMurtuzaHussain/ward/blob/main/SECURITY.md) describes.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: With a made-up chat if one is needed.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Where
+      options:
+        - Android app
+        - Desktop app (macOS)
+        - Desktop app (Windows)
+        - Desktop app (Linux)
+        - Web (pnpm dev)
+        - Discord bot
+        - Case viewer
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: The release, or the commit you built from.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error messages or logs
+      description: Check they contain no chat text before you paste them.
+      render: text
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: This issue contains no real child's messages, name, photo, school or contact details.
+          required: true

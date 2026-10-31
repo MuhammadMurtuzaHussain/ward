@@ -1,0 +1,83 @@
+name: Slang word
+description: Suggest a word or phrase children use to bully, so Ward's word lists can catch it.
+title: "Slang: "
+labels: ["slang-pack"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real child's chat, name, photo, school or phone number here.** This issue is public.
+        Write a made-up example that shows how the word is used. Don't copy a real message, even with names removed.
+
+        Every word is reviewed by a second speaker of the language before it goes in. See [how slang-pack changes are reviewed](https://github.com/MuhammadMurtuzaHussain/ward/blob/main/CONTRIBUTING.md#how-slang-pack-changes-are-reviewed).
+  - type: dropdown
+    id: lang
+    attributes:
+      label: Language or script
+      options:
+        - English (en)
+        - Roman Urdu (ur-Latn)
+        - Hinglish (hi-Latn)
+        - Bangla, either script (bn)
+        - Another language (say which below)
+    validations:
+      required: true
+  - type: input
+    id: word
+    attributes:
+      label: The word or phrase
+      description: Written the way children most often type it. Add other spellings below.
+    validations:
+      required: true
+  - type: input
+    id: meaning
+    attributes:
+      label: What it means, in English
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - insult (name-calling, put-downs)
+        - appearance (body, face, skin, clothes)
+        - identity (religion, caste, ethnicity, gender, sexuality, disability)
+        - exclusion
+        - threat
+        - selfharm (telling someone to hurt themselves)
+        - sexual (comments, pressure, image requests)
+        - exposure (leaking photos, address, number)
+        - mockery
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How bad is it?
+      description: Severity 3 puts helplines first in the app, so it needs the most care.
+      options:
+        - "1: rude"
+        - "2: bullying"
+        - "3: dangerous"
+    validations:
+      required: true
+  - type: textarea
+    id: usage
+    attributes:
+      label: How it's used
+      description: Other spellings, where children use it (which platforms, which ages), and a made-up example sentence.
+    validations:
+      required: true
+  - type: textarea
+    id: innocent
+    attributes:
+      label: Is it ever friendly or ordinary?
+      description: Many insults are also everyday words or banter between friends. If this one is, say how, so Ward doesn't raise false alarms.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: My example is made up. This issue contains no real child's messages, name, photo, school or contact details.
+          required: true

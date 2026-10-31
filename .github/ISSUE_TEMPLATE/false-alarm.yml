@@ -1,0 +1,66 @@
+name: False alarm
+description: Ward flagged something friendly or ordinary as bullying or as dangerous.
+title: "False alarm: "
+labels: ["false-alarm"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real child's chat, name, photo, school or phone number here.** This issue is public.
+        Don't copy the message that was flagged. Write a made-up message that Ward flags in the same way, and check that it does before you send it.
+  - type: textarea
+    id: example
+    attributes:
+      label: A made-up message that Ward flags
+      description: Short, with made-up names. If it only happens in a conversation, write a short made-up conversation.
+    validations:
+      required: true
+  - type: dropdown
+    id: verdict
+    attributes:
+      label: What did Ward say?
+      options:
+        - Hurtful
+        - Dangerous (helplines shown first)
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it's harmless
+      description: For example, friends teasing, a game, a quote, or a word that also has an ordinary meaning.
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did you see it?
+      options:
+        - Android app
+        - Desktop app
+        - Web (pnpm dev)
+        - Discord bot
+    validations:
+      required: true
+  - type: dropdown
+    id: reader
+    attributes:
+      label: What was reading the chat?
+      description: Not sure? Pick "I don't know".
+      options:
+        - Word lists only
+        - Word lists and Ward Lite (a phone, or a computer without Gemma)
+        - Gemma on a computer
+        - I don't know
+  - type: input
+    id: language
+    attributes:
+      label: Language
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: My example is made up. This issue contains no real child's messages, name, photo, school or contact details.
+          required: true

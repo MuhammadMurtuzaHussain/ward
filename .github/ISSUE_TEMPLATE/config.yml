@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A safeguarding concern about the project or someone in it
+    url: https://github.com/MuhammadMurtuzaHussain/ward/blob/main/docs/SAFEGUARDING.md#10-raising-a-concern-about-the-project-itself
+    about: Don't open a public issue. SAFEGUARDING.md section 10 says who to tell and how.
+  - name: A security flaw (something that could expose a child's data)
+    url: https://github.com/MuhammadMurtuzaHussain/ward/blob/main/SECURITY.md
+    about: Report it privately, as SECURITY.md describes. Never in a public issue.
+  - name: A child is in danger right now
+    url: https://findahelpline.com
+    about: Contact your local emergency number or a child helpline first. This repository is not watched around the clock.

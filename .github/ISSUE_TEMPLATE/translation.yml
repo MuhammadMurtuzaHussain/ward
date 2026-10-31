@@ -1,0 +1,54 @@
+name: Translation
+description: Offer to translate Ward, review a translation, or report a wrong or unnatural word.
+title: "Translation: "
+labels: ["translation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real child's chat, name, photo, school or phone number here.** This issue is public.
+        See [LANGUAGES.md](https://github.com/MuhammadMurtuzaHussain/ward/blob/main/LANGUAGES.md) for what exists in each language today.
+  - type: input
+    id: language
+    attributes:
+      label: Language and script
+      placeholder: "Urdu (Urdu script), Bangla (Bangla script), ..."
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is this about?
+      options:
+        - I'd like to translate Ward into a new language
+        - I'd like to review an existing translation
+        - A word or sentence is wrong, unnatural or could hurt a child
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part of Ward?
+      multiple: true
+      options:
+        - The app's screens and buttons
+        - Lessons (Resilience Path)
+        - Stories
+        - Coach steps and verdicts
+        - The page for the adult a child tells
+        - School kit (lesson plans, letter home, survey)
+        - Something else
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: For a wrong word, quote the current text, say where it appears, and suggest a fix. For an offer, say how you know the language and how children type it.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: This issue contains no real child's messages, name, photo, school or contact details.
+          required: true
