@@ -19,11 +19,14 @@ export function quickExit() {
   if (android()) void Privacy.leave().catch(() => {});
 }
 
-/** Desktop: pressing Escape twice quickly is the quick exit. */
+/**
+ * Desktop: pressing Escape twice quickly is the quick exit. An Escape that already did something
+ * (closed a dialog, see Dialog.tsx) doesn't count, so closing a dialog never half-arms it.
+ */
 export function listenForQuickExitKey() {
   let last = 0;
   window.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
+    if (e.key !== "Escape" || e.defaultPrevented) return;
     const now = Date.now();
     if (now - last < 600) quickExit();
     last = now;

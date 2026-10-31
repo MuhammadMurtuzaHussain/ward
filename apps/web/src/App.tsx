@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { HouseSimple, MagnifyingGlass, Path, SignOut, UserCircle, Vault } from "@phosphor-icons/react";
 import { Ghost } from "./components/Ghost.tsx";
 import { applyLook, tab, useStore, type Screen } from "./lib/store.ts";
@@ -51,6 +51,27 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
   plan: "vault",
 };
 
+/**
+ * When the screen changes, focus moves to its heading, so a screen reader says where you are and
+ * Tab starts from the top of the new screen instead of from a button that no longer exists.
+ */
+function useScreenFocus(screen: Screen | "locked") {
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    const id = requestAnimationFrame(() => {
+      const h = document.querySelector<HTMLElement>("#root main h1, #root main h2, #root h1");
+      if (!h) return;
+      if (!h.hasAttribute("tabindex")) h.setAttribute("tabindex", "-1");
+      h.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [screen]);
+}
+
 /** Always in reach: one tap hides Ward and locks it (and on Android drops to the home screen). */
 function QuickExit() {
   const t = useT();
@@ -74,6 +95,7 @@ export function App() {
 
   useEffect(() => applyLook(profile), [profile.look, profile.age, profile.lang]);
   useEffect(() => applyPrivacy(), [hideRecents]);
+  useScreenFocus(locked ? "locked" : screen);
 
   if (locked) return <Who />;
   if (!profile.onboarded) return <Onboarding />;
