@@ -19,8 +19,16 @@ export function PinPad({ title, hint, onDone }: { title: string; hint?: string; 
     setPin(next);
     if (next.length === 4) {
       setBusy(true);
-      const ok = await onDone(next);
-      setBusy(false);
+      let ok: boolean | void;
+      try {
+        ok = await onDone(next);
+      } catch (e) {
+        setPin("");
+        throw e;
+      } finally {
+        // Whatever onDone does, the pad never stays frozen with four dots in it.
+        setBusy(false);
+      }
       if (ok === false) {
         await controls.start({ x: [0, -10, 10, -6, 6, 0], transition: { duration: 0.35 } });
         setPin("");
