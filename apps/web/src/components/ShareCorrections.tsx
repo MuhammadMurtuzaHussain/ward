@@ -1,4 +1,4 @@
-// "Help make Ward better": the child's corrections for this chat as a small file they can keep,
+// "Keep my corrections": the child's corrections for this chat as a small file they can keep,
 // and give to their teacher if their school joins a Ward pilot. The dialog shows the file itself,
 // exactly as it will be saved. Children never get the words of the messages in it: the "include
 // the words" box is only for a future counsellor flow (`allowText`), and nothing passes it yet.

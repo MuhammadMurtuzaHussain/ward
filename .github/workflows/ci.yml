@@ -18,6 +18,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r typecheck
-      - run: pnpm -r test
-      - run: node --test --experimental-strip-types viewer/viewer.test.ts apps/web/src/lib/kitResults.test.ts apps/web/src/lib/qrTransfer.test.ts
+      # The root test script: every package's tests plus the loose test files, so CI never drifts from it.
+      - run: pnpm test
       - run: pnpm --filter @ward/web build

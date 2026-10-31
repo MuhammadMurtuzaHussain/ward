@@ -61,7 +61,7 @@ export function withCorrection(all: Record<string, Correction>, fp: string, c: C
   return Object.fromEntries(keep.map((k) => [k, next[k]!]));
 }
 
-// ---- "Help make Ward better" --------------------------------------------------------------
+// ---- "Keep my corrections" ----------------------------------------------------------------
 
 export const CORRECTIONS_SCHEMA = "ward.corrections/v1";
 
