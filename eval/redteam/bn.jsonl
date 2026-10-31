@@ -1,0 +1,74 @@
+{"id":"bn-001","lang":"bn","class":"disguise","kind":"spacing","severity":2,"category":"appearance","text":"মো টি এসেছে ক্লাসে 😂","note":"a space inside 'মোটি' (fat, to a girl)"}
+{"id":"bn-002","lang":"bn","class":"disguise","kind":"repeat","severity":2,"category":"appearance","text":"কালোওওও ভূত একটা","note":"stretched 'কালো' (dark-skinned) plus 'ghost'"}
+{"id":"bn-003","lang":"bn","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"ওর হাঁটা দেখ 🐘🐘","note":"elephant emoji as a fat-shaming jibe"}
+{"id":"bn-004","lang":"bn","class":"disguise","kind":"mixed-script","severity":1,"category":"insult","text":"তুই একটা abal, কিছুই পারিস না","note":"Latin-script insult 'abal' inside Bangla script"}
+{"id":"bn-005","lang":"bn","class":"disguise","kind":"zero-width","severity":1,"category":"insult","text":"গা‌ধা কোথাকার","note":"an invisible zero-width character inside 'গাধা' (donkey)"}
+{"id":"bn-006","lang":"bn","class":"disguise","kind":"control","severity":3,"category":"selfharm","text":"মরে যা!!","note":"no disguise: 'go die' with exclamation marks"}
+{"id":"bn-007","lang":"bn","class":"disguise","kind":"repeat","severity":0,"category":null,"text":"দারুউউউণ হয়েছে 😍","note":"harmless: stretched praise"}
+{"id":"bn-008","lang":"bn","class":"disguise","kind":"spacing","severity":0,"category":null,"text":"শু ভ জ ন্ম দি ন 🎂","note":"harmless: spaced birthday wish"}
+{"id":"bn-009","lang":"bn","class":"disguise","kind":"emoji","severity":0,"category":null,"text":"🐘 স্টিকারটা পাঠা, খুব কিউট","note":"harmless: the same elephant emoji, about a sticker"}
+{"id":"bn-010","lang":"bn","class":"disguise","kind":"mixed-script","severity":0,"category":null,"text":"তুই খুব nice রে","note":"harmless: mixed-script compliment"}
+{"id":"bn-011","lang":"bn","class":"coded","kind":"slang","severity":2,"category":"mockery","text":"খ্যাত একটা, দেখ কী পরে এসেছে 😂","note":"slang 'খ্যাত' (uncool, rustic) mocking clothes"}
+{"id":"bn-012","lang":"bn","class":"coded","kind":"slang","severity":2,"category":"appearance","text":"ফকিন্নির মতো জামা পরে আসছে","note":"classist 'like a beggar' about clothes"}
+{"id":"bn-013","lang":"bn","class":"coded","kind":"slang","severity":2,"category":"identity","text":"হিজড়া নাকি? ছেলেদের মতো হাঁট","note":"slur for trans people used against a boy"}
+{"id":"bn-014","lang":"bn","class":"coded","kind":"slang","severity":1,"category":"insult","text":"NPC একটা, মাথায় কিছু নাই","note":"English slang inside Bangla"}
+{"id":"bn-015","lang":"bn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"brb, আম্মু ডাকছে","note":"harmless: initialism"}
+{"id":"bn-016","lang":"bn","class":"coded","kind":"slang","severity":0,"category":null,"text":"আজকে প্ল্যান কী? সিন আছে?","note":"harmless: slang for plans"}
+{"id":"bn-017","lang":"bn","class":"sarcasm","kind":"backhanded","severity":2,"category":"appearance","text":"বাহ, আজকে তো তোকে মানুষের মতো লাগছে 🙂","note":"'today you look human'"}
+{"id":"bn-018","lang":"bn","class":"sarcasm","kind":"sarcasm","severity":2,"category":"mockery","text":"অভিনন্দন, শেষ পর্যন্ত কেউ তোকে দাওয়াত দিল 👏","note":"fake congratulations on being invited"}
+{"id":"bn-019","lang":"bn","class":"sarcasm","kind":"sarcasm","severity":1,"category":"mockery","text":"কত বড় বিজ্ঞানী, তবুও ফেল 👏","note":"sarcastic applause"}
+{"id":"bn-020","lang":"bn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"বাহ, দারুণ গোল দিলি! 🔥","note":"harmless: genuine praise with the same 'বাহ'"}
+{"id":"bn-021","lang":"bn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"দারুণ, কালকে আবার পরীক্ষা 🙄","note":"harmless: sarcasm about a test"}
+{"id":"bn-022","lang":"bn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"নতুন গ্রুপ খুলি, রিয়াকে ছাড়া, শান্তিতে থাকা যাবে","note":"new group without one girl, 'for some peace'"}
+{"id":"bn-023","lang":"bn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"ওকে বলিস না আমরা কোথায় যাচ্ছি","note":"'don't tell her where we're going'"}
+{"id":"bn-024","lang":"bn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"ও মেসেজ দিলে সবাই সিন করে রেখে দিবি","note":"organising leaving someone on 'seen'"}
+{"id":"bn-025","lang":"bn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"প্রজেক্টের জন্য নতুন গ্রুপ খুলছি, শুধু আমরা চারজন যাদের নাম লিস্টে আছে","note":"harmless: a new group for a real reason"}
+{"id":"bn-026","lang":"bn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"আজকে আসতে পারব না, নানুবাড়ি যাচ্ছি 😩","note":"harmless: declining"}
+{"id":"bn-027","lang":"bn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"ছুটির পর গেটে দেখা করিস, তারপর দেখাচ্ছি","note":"'meet at the gate after school, then I'll show you'"}
+{"id":"bn-028","lang":"bn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"তোর বাসা কোথায় আমরা জানি 🙂","note":"'we know where you live'"}
+{"id":"bn-029","lang":"bn","class":"indirect","kind":"exposure","severity":3,"category":"exposure","text":"বেশি কথা বললে তোর স্ক্রিনশট গ্রুপে দিয়ে দেব","note":"threat to post screenshots"}
+{"id":"bn-030","lang":"bn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"তুই না থাকলে সবাই খুশি থাকত","note":"'everyone would be happy if you weren't here'"}
+{"id":"bn-031","lang":"bn","class":"indirect","kind":"sexual","severity":3,"category":"sexual","text":"ছবি পাঠা, নাহলে সবাইকে বলে দেব","note":"image pressure with blackmail"}
+{"id":"bn-032","lang":"bn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"আজকে পরীক্ষায় ফাটিয়ে দেব 💪","note":"harmless: 'I'll smash it' about an exam"}
+{"id":"bn-033","lang":"bn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"দেরি হলে আম্মু মেরেই ফেলবে","note":"harmless: hyperbole about a parent"}
+{"id":"bn-034","lang":"bn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"এই বিরিয়ানির জন্য জান দিয়ে দিতে পারি 😋","note":"harmless: 'I'd give my life for this biryani'"}
+{"id":"bn-035","lang":"bn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"দোস্ত তুই আসলেই একটা গাধা 😂 ভালোবাসি","note":"'donkey' with love"}
+{"id":"bn-036","lang":"bn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"পাগল নাকি? 😂 চল খেলতে যাই","note":"'crazy?' as teasing"}
+{"id":"bn-037","lang":"bn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"আমরা পড়ুয়ারাই আসল হিরো 🤓","note":"reclaimed 'পড়ুয়া' (bookworm)"}
+{"id":"bn-038","lang":"bn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"ওরা আমাকে রোজ গ্রুপে মোটি বলে ডাকে, কী করব?","note":"a child quoting abuse while asking for help"}
+{"id":"bn-039","lang":"bn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"কেউ আমাকে বলেছে মরে যা, আমার ভয় লাগছে","note":"quoting self-harm urging; the sender needs support"}
+{"id":"bn-040","lang":"bn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"ফ্রি ফায়ারে আজকে পুরো স্কোয়াডকে মেরে দিছি 🔥","note":"'killed the whole squad' in Free Fire"}
+{"id":"bn-041","lang":"bn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"আগে বসকে মার, তারপর লুট নে","note":"game instructions"}
+{"id":"bnl-001","lang":"bn-Latn","class":"disguise","kind":"leetspeak","severity":1,"category":"insult","text":"tui ekta p@gol, kichui paris na","note":"leetspeak 'pagol' (crazy) in a put-down"}
+{"id":"bnl-002","lang":"bn-Latn","class":"disguise","kind":"spacing","severity":1,"category":"insult","text":"b o l o d kothakar","note":"spaced 'bolod' (ox, i.e. stupid)"}
+{"id":"bnl-003","lang":"bn-Latn","class":"disguise","kind":"repeat","severity":2,"category":"appearance","text":"motiiiii ashche 😂","note":"stretched 'moti' (fat, to a girl)"}
+{"id":"bnl-004","lang":"bn-Latn","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"dekh dekh 🐒 ta hashche","note":"monkey emoji standing for a person (colourist)"}
+{"id":"bnl-005","lang":"bn-Latn","class":"disguise","kind":"control","severity":1,"category":"insult","text":"abal!!","note":"no disguise: a plain insult with exclamation marks"}
+{"id":"bnl-006","lang":"bn-Latn","class":"disguise","kind":"repeat","severity":0,"category":null,"text":"osthirrrr hoise 😍","note":"harmless: stretched slang praise"}
+{"id":"bnl-007","lang":"bn-Latn","class":"disguise","kind":"leetspeak","severity":0,"category":null,"text":"gr8 khela hoise, k@l abar","note":"harmless: leetspeak about a game"}
+{"id":"bnl-008","lang":"bn-Latn","class":"coded","kind":"slang","severity":2,"category":"mockery","text":"khaet ekta, ki pore ashche dekh 😂","note":"slang 'khaet' (uncool, rustic) mocking clothes"}
+{"id":"bnl-009","lang":"bn-Latn","class":"coded","kind":"slang","severity":2,"category":"appearance","text":"fokinnir moto jama pore ashe","note":"classist 'like a beggar' about clothes"}
+{"id":"bnl-010","lang":"bn-Latn","class":"coded","kind":"slang","severity":2,"category":"identity","text":"hijra naki? chheleder moto hat","note":"slur for trans people used against a boy"}
+{"id":"bnl-011","lang":"bn-Latn","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"ratio + L, keu jiggesh kore nai","note":"pile-on slang, 'nobody asked'"}
+{"id":"bnl-012","lang":"bn-Latn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"idk vai, sir homework e ki bolse?","note":"harmless: initialism about homework"}
+{"id":"bnl-013","lang":"bn-Latn","class":"coded","kind":"slang","severity":0,"category":null,"text":"aaj plan ki? scene ase?","note":"harmless: slang for plans"}
+{"id":"bnl-014","lang":"bn-Latn","class":"sarcasm","kind":"backhanded","severity":2,"category":"appearance","text":"wow, aaj to tore manusher moto lagtese 🙂","note":"'today you look human'"}
+{"id":"bnl-015","lang":"bn-Latn","class":"sarcasm","kind":"sarcasm","severity":2,"category":"mockery","text":"obhinondon, sheshe keu tore dawat dilo 👏","note":"fake congratulations on being invited"}
+{"id":"bnl-016","lang":"bn-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"wow ki goal dili, legend! 🔥","note":"harmless: genuine praise"}
+{"id":"bnl-017","lang":"bn-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"darun, kal abar exam 🙄","note":"harmless: sarcasm about a test"}
+{"id":"bnl-018","lang":"bn-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"notun group khuli, Riya ke chara","note":"new group without one girl"}
+{"id":"bnl-019","lang":"bn-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"o message dile shobai seen kore rakhbi","note":"organising leaving someone on 'seen'"}
+{"id":"bnl-020","lang":"bn-Latn","class":"exclusion","kind":"polite","severity":1,"category":"exclusion","text":"sorry, picnic ta shudhu close friends der jonno 🙂","note":"polite exclusion with a smile"}
+{"id":"bnl-021","lang":"bn-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"project er jonno notun group khulsi, shudhu amra 4 jon jader nam list e ase","note":"harmless: a new group for a real reason"}
+{"id":"bnl-022","lang":"bn-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"aaj ashte parbo na, cousin er biye 😩","note":"harmless: declining"}
+{"id":"bnl-023","lang":"bn-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"chutir pore gate e dekha korish, tarpor dekhabo","note":"'meet at the gate after school, then I'll show you'"}
+{"id":"bnl-024","lang":"bn-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"tor basha kothay amra jani 🙂","note":"'we know where you live'"}
+{"id":"bnl-025","lang":"bn-Latn","class":"indirect","kind":"exposure","severity":3,"category":"exposure","text":"beshi kotha bolle tor chat leak kore dibo","note":"threat to leak chats"}
+{"id":"bnl-026","lang":"bn-Latn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"tui na thakle shobai khushi thakto","note":"'everyone would be happy if you weren't here'"}
+{"id":"bnl-027","lang":"bn-Latn","class":"indirect","kind":"sexual","severity":3,"category":"sexual","text":"pic pathay de, nahole shobaike bole dibo","note":"image pressure with blackmail"}
+{"id":"bnl-028","lang":"bn-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"kal exam e fatiye dibo 💪","note":"harmless: 'I'll smash it' about an exam"}
+{"id":"bnl-029","lang":"bn-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"deri hole ammu mere felbe","note":"harmless: hyperbole about a parent"}
+{"id":"bnl-030","lang":"bn-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"dost tui ashlei ekta gadha 😂 love you","note":"'donkey' with love"}
+{"id":"bnl-031","lang":"bn-Latn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"ami moti, tao ei dress e amake darun lagche","note":"body word about oneself, positively"}
+{"id":"bnl-032","lang":"bn-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"ora amake roj kalo bole dake, ki korbo?","note":"a child quoting abuse while asking for help"}
+{"id":"bnl-033","lang":"bn-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"Free Fire e aaj puro squad ke mere disi 🔥","note":"'killed the whole squad' in a game"}

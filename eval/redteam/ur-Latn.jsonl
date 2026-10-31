@@ -1,0 +1,67 @@
+{"id":"ur-001","lang":"ur-Latn","class":"disguise","kind":"leetspeak","severity":1,"category":"insult","text":"tu to pura p@gal hai, kuch nahi aata tujhe","note":"leetspeak 'pagal' (crazy) in a put-down"}
+{"id":"ur-002","lang":"ur-Latn","class":"disguise","kind":"spacing","severity":2,"category":"appearance","text":"m o t i aa gayi class mein 😂","note":"spaced 'moti' (fat, to a girl)"}
+{"id":"ur-003","lang":"ur-Latn","class":"disguise","kind":"repeat","severity":2,"category":"insult","text":"kuttayyyy kahin ke","note":"stretched 'kuttay' (dog)"}
+{"id":"ur-004","lang":"ur-Latn","class":"disguise","kind":"leetspeak","severity":1,"category":"insult","text":"b3wak00f insaan, dimagh ghar chor aaya?","note":"leetspeak 'bewakoof' (idiot)"}
+{"id":"ur-005","lang":"ur-Latn","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"isko dekho 🐘 chal rahi hai","note":"elephant emoji for a fat-shaming jibe"}
+{"id":"ur-006","lang":"ur-Latn","class":"disguise","kind":"emoji","severity":2,"category":"appearance","text":"shakal dekhi hai apni? 🐒","note":"monkey emoji aimed at someone's face (colourist)"}
+{"id":"ur-007","lang":"ur-Latn","class":"disguise","kind":"spacing","severity":2,"category":"appearance","text":"k.a.l.i kalooti","note":"dotted 'kali' (dark-skinned) plus a variant"}
+{"id":"ur-008","lang":"ur-Latn","class":"disguise","kind":"mixed-script","severity":2,"category":"appearance","text":"تم بہت gandi lagti ho","note":"Urdu script and Roman Urdu in one message ('you look really ugly')"}
+{"id":"ur-009","lang":"ur-Latn","class":"disguise","kind":"control","severity":2,"category":"insult","text":"beghairat!","note":"no disguise: a plain insult with an exclamation mark"}
+{"id":"ur-010","lang":"ur-Latn","class":"disguise","kind":"repeat","severity":3,"category":"selfharm","text":"marr jaaaaa","note":"stretched 'mar ja' (go die)"}
+{"id":"ur-011","lang":"ur-Latn","class":"disguise","kind":"repeat","severity":0,"category":null,"text":"yaaaar kitna maza aaya aaj 😂😂","note":"harmless: stretched letters in joy"}
+{"id":"ur-012","lang":"ur-Latn","class":"disguise","kind":"leetspeak","severity":0,"category":null,"text":"sh@ndaar result 🔥 mubarak ho","note":"harmless: leetspeak praise"}
+{"id":"ur-013","lang":"ur-Latn","class":"disguise","kind":"spacing","severity":0,"category":null,"text":"m u b a r a k ho 🎂","note":"harmless: spaced letters for a birthday"}
+{"id":"ur-014","lang":"ur-Latn","class":"disguise","kind":"emoji","severity":0,"category":null,"text":"🐘 wala sticker bhejo, bohat cute hai","note":"harmless: the same elephant emoji, about a sticker"}
+{"id":"ur-015","lang":"ur-Latn","class":"disguise","kind":"mixed-script","severity":0,"category":null,"text":"tum bohat اچھی ho yaar","note":"harmless: mixed script compliment ('you're really nice')"}
+{"id":"ur-016","lang":"ur-Latn","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"burger bacha, mummy se pooch ke aaya hai 😂","note":"'burger' as slang for a posh, soft kid"}
+{"id":"ur-017","lang":"ur-Latn","class":"coded","kind":"slang","severity":2,"category":"mockery","text":"paindu kahin ka, dekho kaise baat karta hai","note":"classist 'paindu' (villager) mocking how someone talks"}
+{"id":"ur-018","lang":"ur-Latn","class":"coded","kind":"initialism","severity":1,"category":"insult","text":"chal nikal BC","note":"swear-word initialism"}
+{"id":"ur-019","lang":"ur-Latn","class":"coded","kind":"slang","severity":2,"category":"appearance","text":"isse kaho thori fair and lovely laga le 😂","note":"colourism through a skin-lightening cream's name"}
+{"id":"ur-020","lang":"ur-Latn","class":"coded","kind":"slang","severity":2,"category":"identity","text":"chakka hai kya? chal ke dikha","note":"slur for trans people used against a boy"}
+{"id":"ur-021","lang":"ur-Latn","class":"coded","kind":"slang","severity":1,"category":"mockery","text":"simp ban ke ghoom raha hai, sharam kar","note":"English slang inside Roman Urdu"}
+{"id":"ur-022","lang":"ur-Latn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"acha bhai, brb, ammi bula rahi hain","note":"harmless: initialism"}
+{"id":"ur-023","lang":"ur-Latn","class":"coded","kind":"slang","severity":0,"category":null,"text":"scene on hai aaj raat? 🎮","note":"harmless: slang for plans"}
+{"id":"ur-024","lang":"ur-Latn","class":"coded","kind":"slang","severity":0,"category":null,"text":"burger khane chalein? 🍔","note":"harmless: 'burger' meaning food"}
+{"id":"ur-025","lang":"ur-Latn","class":"coded","kind":"initialism","severity":0,"category":null,"text":"IDK yaar, sir ne homework mein kya kaha tha?","note":"harmless: initialism about homework"}
+{"id":"ur-026","lang":"ur-Latn","class":"sarcasm","kind":"backhanded","severity":2,"category":"appearance","text":"waah, aaj to tum insaan lag rahi ho 🙂","note":"'today you look human'"}
+{"id":"ur-027","lang":"ur-Latn","class":"sarcasm","kind":"sarcasm","severity":1,"category":"insult","text":"bohat bara scientist hai na tu, Einstein ki aulaad","note":"sarcastic praise"}
+{"id":"ur-028","lang":"ur-Latn","class":"sarcasm","kind":"sarcasm","severity":2,"category":"mockery","text":"mubarak ho, aakhir kisi ne tumhe group mein add kar hi liya 👏","note":"fake congratulations on being included"}
+{"id":"ur-029","lang":"ur-Latn","class":"sarcasm","kind":"sarcasm","severity":1,"category":"mockery","text":"itni achi awaaz hai, please kabhi mat gaana 🙏","note":"compliment that is an insult"}
+{"id":"ur-030","lang":"ur-Latn","class":"sarcasm","kind":"backhanded","severity":1,"category":"insult","text":"tumhara dimagh bilkul naya hai, kabhi use jo nahi hua","note":"'your brain is brand new, never been used'"}
+{"id":"ur-031","lang":"ur-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"waah kya shot mara hai, kamaal kar diya! 👏","note":"harmless: genuine praise with the same 'waah'"}
+{"id":"ur-032","lang":"ur-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"zabardast, kal phir test hai 🙄","note":"harmless: sarcasm about a test"}
+{"id":"ur-033","lang":"ur-Latn","class":"sarcasm","kind":"genuine","severity":0,"category":null,"text":"tum sach mein bohat smart ho, thanks for helping","note":"harmless: plain thanks"}
+{"id":"ur-034","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"naya group bana lete hain, Hira ke baghair, zyada sukoon rahega","note":"new group without one girl, 'more peaceful'"}
+{"id":"ur-035","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"usay mat batana ke hum kahan ja rahe hain","note":"'don't tell her where we're going'"}
+{"id":"ur-036","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":1,"category":"exclusion","text":"sorry yaar, picnic sirf apne logon ke liye hai 🙂","note":"polite exclusion with a smile"}
+{"id":"ur-037","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"jab woh aaye to sab chup ho jana","note":"organising a silent treatment"}
+{"id":"ur-038","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"aap please doosri table pe beth jayen, yahan jagah nahi hai, kabhi bhi nahi","note":"formal 'aap' used to exclude"}
+{"id":"ur-039","lang":"ur-Latn","class":"exclusion","kind":"polite","severity":2,"category":"exclusion","text":"isko group se remove kar do, koi kuch nahi kahega","note":"remove from group, calmly"}
+{"id":"ur-040","lang":"ur-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"project ka naya group bana raha hun, sirf hum chaar jin ka naam list mein hai","note":"harmless: a new group for a real reason"}
+{"id":"ur-041","lang":"ur-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"aaj nahi aa sakti, nani ke ghar jana hai 😩","note":"harmless: declining"}
+{"id":"ur-042","lang":"ur-Latn","class":"exclusion","kind":"lookalike","severity":0,"category":null,"text":"abhi jagah nahi hai magar kal tumhare liye seat rakh lenge!","note":"harmless: no space today, said kindly"}
+{"id":"ur-043","lang":"ur-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"chutti ke baad gate pe milna, phir batate hain","note":"'meet at the gate after school, then we'll show you'"}
+{"id":"ur-044","lang":"ur-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"tumhara ghar pata hai humein 🙂","note":"'we know where you live'"}
+{"id":"ur-045","lang":"ur-Latn","class":"indirect","kind":"exposure","severity":3,"category":"exposure","text":"screenshots sab ke paas hain, zyada boli to group mein daal dunga","note":"threat to expose screenshots"}
+{"id":"ur-046","lang":"ur-Latn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"tum na hoti to sab khush hote","note":"'everyone would be happy if you weren't here'"}
+{"id":"ur-047","lang":"ur-Latn","class":"indirect","kind":"selfharm","severity":3,"category":"selfharm","text":"kisi din chup chaap chali jao, kisi ko farq nahi parega","note":"'just quietly go one day, nobody will care'"}
+{"id":"ur-048","lang":"ur-Latn","class":"indirect","kind":"sexual","severity":3,"category":"sexual","text":"pic bhejo warna sab ko bata dunga","note":"image pressure with blackmail"}
+{"id":"ur-049","lang":"ur-Latn","class":"indirect","kind":"threat","severity":3,"category":"threat","text":"kal school aa ke dikhana zara","note":"'just try coming to school tomorrow'"}
+{"id":"ur-050","lang":"ur-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"aaj paper mein maar dalenge, full tayari hai 💪","note":"harmless: 'we'll kill it' about an exam"}
+{"id":"ur-051","lang":"ur-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"ammi ne maar dena hai agar late hui","note":"harmless: hyperbole about a parent"}
+{"id":"ur-052","lang":"ur-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"gate pe milo 4 bajay, samosay khane chalte hain","note":"harmless: the same 'meet at the gate' for snacks"}
+{"id":"ur-053","lang":"ur-Latn","class":"indirect","kind":"lookalike","severity":0,"category":null,"text":"is biryani ke liye jaan bhi de dun 😋","note":"harmless: 'I'd give my life for this biryani'"}
+{"id":"ur-054","lang":"ur-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"abay gadhay, phir apna bag bhool gaya 😂 chal koi baat nahi","note":"'donkey' with affection"}
+{"id":"ur-055","lang":"ur-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"pagal hai tu bilkul 😂😂 love you yaar","note":"'crazy' with love"}
+{"id":"ur-056","lang":"ur-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"chup kar kameenay, kal match pe milte hain","note":"rude word between friends (contestable without context)"}
+{"id":"ur-057","lang":"ur-Latn","class":"hard-negative","kind":"banter","severity":0,"category":null,"text":"ullu ke pathay, mera charger wapis kar 😂","note":"'son of an owl' (fool) as teasing"}
+{"id":"ur-058","lang":"ur-Latn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"hum padhaku log hi asli heroes hain 🤓","note":"reclaimed 'padhaku' (nerd)"}
+{"id":"ur-059","lang":"ur-Latn","class":"hard-negative","kind":"reclaimed","severity":0,"category":null,"text":"main moti hun aur khush hun, ye dress mujh pe zabardast lagti hai","note":"body word about oneself, positively"}
+{"id":"ur-060","lang":"ur-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"woh mujhe roz group mein kaali kehte hain, main kya karun?","note":"a child quoting abuse while asking for help"}
+{"id":"ur-061","lang":"ur-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"kisi ne mujhe kaha mar jao, mujhe dar lag raha hai","note":"quoting self-harm urging; the sender needs support"}
+{"id":"ur-062","lang":"ur-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"meri dost ko raat bhar 'tum bekaar ho' ke messages aaye, kaise madad karun?","note":"quoting on behalf of a friend"}
+{"id":"ur-063","lang":"ur-Latn","class":"hard-negative","kind":"quoting","severity":0,"category":null,"text":"agar koi mazaq mein kuttay kahe to kya woh bullying hai?","note":"asking about a quoted word"}
+{"id":"ur-064","lang":"ur-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"PUBG mein aaj sab ko maar diya 🔥 chicken dinner","note":"'killed everyone' in a game"}
+{"id":"ur-065","lang":"ur-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"noob team thi yaar, hum buri tarah haar gaye","note":"untargeted complaint about a team"}
+{"id":"ur-066","lang":"ur-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"pehle boss ko maaro phir loot uthao","note":"game instructions"}
+{"id":"ur-067","lang":"ur-Latn","class":"hard-negative","kind":"gaming","severity":0,"category":null,"text":"aaj raat Ludo mein tumhe dho daalunga 😤","note":"'I'll wash you' (beat you) at Ludo"}
