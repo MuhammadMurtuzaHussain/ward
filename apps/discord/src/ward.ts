@@ -23,7 +23,9 @@ export async function read(text: string, sender: string, at: Date, judges: Judge
     severity: f.severity,
     categories: f.categories,
     why: f.why,
-    dangerous: f.severity >= 3 || f.categories.some((c) => DANGER.includes(c)),
+    // A word like "after school" is only a possible threat on its own (severity 1); one message
+    // in a server is all Ward sees, so it takes more than that to alert moderators.
+    dangerous: f.severity >= 3 || (f.severity >= 2 && f.categories.some((c) => DANGER.includes(c))),
     readBy: ["word lists", ...a.layers.models],
   };
 }

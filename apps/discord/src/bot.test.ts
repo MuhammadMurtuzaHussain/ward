@@ -16,6 +16,8 @@ test("Ward reads Discord messages with the app's engine", async () => {
   assert.ok(r.dangerous && r.categories.includes("selfharm"));
   assert.match(steps(r).join(" "), /helpline/);
   assert.equal((await read("see you at practice tomorrow", "zara", new Date())).severity, 0);
+  assert.equal((await read("ok bye, see you at the gate after school", "zara", new Date())).dangerous, false);
+  assert.equal((await read("kal school ke baad bahar milna", "bilal_07", new Date())).dangerous, true);
   assert.match(checkEmbed(r, "Bilal").footer.text, /Nothing was kept/);
 });
 
