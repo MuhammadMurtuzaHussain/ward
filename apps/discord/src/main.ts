@@ -23,7 +23,7 @@ import {
   type User,
 } from "discord.js";
 import { CAN_CLEAR, GemmaSecondLook, ollamaTransport, REPORT_SCHEMA, type Judge, type SecondLook, type Want } from "@ward/engine";
-import { ELSEWHERE, REGIONS, TAKE_IT_DOWN } from "../../web/src/lib/help.ts";
+import { ELSEWHERE, REGIONS, TAKE_IT_DOWN, type Region } from "../../web/src/lib/help.ts";
 import { CHECK, SAVE } from "./commands.ts";
 import { fingerprint, fromEmbed, reportFrom, toEmbed, type Evidence } from "./evidence.ts";
 import { WardLiteJudge, loadLite } from "./lite.ts";
@@ -184,9 +184,11 @@ async function onReport(i: ChatInputCommandInteraction) {
 
 async function onHelp(i: ChatInputCommandInteraction) {
   const region = REGIONS.find((r) => r.id === i.options.getString("country")) ?? null;
+  // Some countries have no confirmed emergency number in help.ts; never print a guess.
+  const sos = (r: Region) => r.emergency ?? "your local emergency number";
   const lines = region
-    ? [`**${region.name}** · emergency: **${region.emergency}**`, ...region.lines.map((l) => `• **${l.name}**: ${l.number}. ${l.note}`)]
-    : REGIONS.map((r) => `**${r.name}**: ${r.lines.map((l) => `${l.name} ${l.number}`).join(" · ")} · emergency ${r.emergency}`);
+    ? [`**${region.name}** · emergency: **${sos(region)}**`, ...region.lines.map((l) => `• **${l.name}**: ${l.number}. ${l.note}`)]
+    : REGIONS.map((r) => `**${r.name}**: ${r.lines.map((l) => `${l.name} ${l.number}`).join(" · ")} · emergency ${sos(r)}`);
   lines.push(`• Anywhere else: **${ELSEWHERE.name}**, ${ELSEWHERE.url}. ${ELSEWHERE.note}`);
   lines.push(`• **${TAKE_IT_DOWN.name}**: ${TAKE_IT_DOWN.url}. ${TAKE_IT_DOWN.note}`);
   lines.push("• Discord's own safety help: https://discord.com/safety");

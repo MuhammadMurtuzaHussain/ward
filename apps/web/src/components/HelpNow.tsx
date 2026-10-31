@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Phone, Lifebuoy } from "@phosphor-icons/react";
-import { ELSEWHERE, guessRegion, REGIONS, TAKE_IT_DOWN } from "../lib/help.ts";
-import { useStore } from "../lib/store.ts";
+import { Phone, Lifebuoy, Globe } from "@phosphor-icons/react";
+import { chooseRegion, ELSEWHERE, OTHER, regionById, REGIONS, TAKE_IT_DOWN } from "../lib/help.ts";
+import { updateProfile, useStore } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
 
 /** The crisis block. Shown at the top of any urgent result, and always reachable from Coach. */
 export function HelpNow({ images = false }: { images?: boolean }) {
   const t = useT();
   const ur = useStore((s) => s.profile.lang) === "ur";
-  const [region, setRegion] = useState(guessRegion().id);
-  const r = REGIONS.find((x) => x.id === region)!;
+  // The child's own pick is saved in their profile and wins over the time-zone guess next time.
+  const region = chooseRegion(useStore((s) => s.profile.region));
+  const r = regionById(region);
   return (
     <section aria-labelledby="help-now" className="rounded-card border border-alarm/40 bg-alarm-soft p-5 sm:p-6">
       <div className="flex items-center gap-3">
@@ -18,9 +18,22 @@ export function HelpNow({ images = false }: { images?: boolean }) {
           {t.help.title}
         </h2>
       </div>
-      <p className="mt-2 max-w-[52ch]">{t.help.line(r.emergency)}</p>
+      <p className="mt-2 max-w-[52ch]">{!r ? t.help.lineOther : r.emergency ? t.help.line(r.emergency, r.free !== false) : t.help.lineLocal}</p>
       <ul className="mt-4 grid gap-2">
-        {r.lines.map((l) => (
+        {!r && (
+          <li>
+            <a href={ELSEWHERE.url} target="_blank" rel="noreferrer" className="flex min-h-14 items-center gap-4 rounded-btn bg-surface px-4 py-3 hover:bg-raised">
+              <Globe size={22} weight="fill" className="shrink-0 text-alarm" />
+              <span className="min-w-0 flex-1">
+                <span className="block font-display text-lg font-bold">{t.help.find}</span>
+                <span className="text-sm text-dim">
+                  <span dir="ltr">{ELSEWHERE.url.replace("https://", "")}</span> · {t.help.findNote}
+                </span>
+              </span>
+            </a>
+          </li>
+        )}
+        {r?.lines.map((l) => (
           <li key={l.number}>
             <a href={`tel:${l.number.replace(/\s/g, "")}`} className="flex min-h-14 items-center gap-4 rounded-btn bg-surface px-4 py-3 hover:bg-raised">
               <Phone size={22} weight="fill" className="shrink-0 text-alarm" />
@@ -46,17 +59,29 @@ export function HelpNow({ images = false }: { images?: boolean }) {
         <label htmlFor="region" className="text-dim">
           {t.help.where}
         </label>
-        <select id="region" value={region} onChange={(e) => setRegion(e.target.value)} className="rounded-btn border border-line bg-surface px-3 py-2 text-ink">
-          {REGIONS.map((x) => (
-            <option key={x.id} value={x.id}>
-              {ur && x.nameUr ? x.nameUr : x.name}
-            </option>
-          ))}
-        </select>
-        <a href={ELSEWHERE.url} target="_blank" rel="noreferrer" className="font-bold text-glow">
-          {t.help.elsewhere}
-        </a>
+        <RegionSelect id="region" value={region} onChange={(id) => updateProfile({ region: id })} />
+        {r && (
+          <a href={ELSEWHERE.url} target="_blank" rel="noreferrer" className="font-bold text-glow">
+            {t.help.otherCountries}
+          </a>
+        )}
       </div>
     </section>
+  );
+}
+
+/** Every country Ward has helplines for, then "Somewhere else". Also used by the school kit. */
+export function RegionSelect({ id, value, onChange }: { id: string; value: string; onChange: (id: string) => void }) {
+  const t = useT();
+  const ur = useStore((s) => s.profile.lang) === "ur";
+  return (
+    <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-btn border border-line bg-surface px-3 py-2 text-ink">
+      {REGIONS.map((x) => (
+        <option key={x.id} value={x.id}>
+          {ur && x.nameUr ? x.nameUr : x.name}
+        </option>
+      ))}
+      <option value={OTHER}>{t.help.elsewhere}</option>
+    </select>
   );
 }
