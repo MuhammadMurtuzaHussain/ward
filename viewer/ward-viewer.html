@@ -253,7 +253,7 @@ function render(r, check) {
   const convo = h("div", { class: "card" }, h("div", { class: "label" }, "Conversation"),
     h("dl", null,
       h("dt", null, "Chat"), h("dd", { dir: "auto" }, c.title),
-      h("dt", null, "App"), h("dd", null, `${c.platform}${c.source === "whatsapp" ? " (exported chat)" : c.source === "paste" ? " (pasted)" : ""}`),
+      h("dt", null, "App"), h("dd", null, `${c.platform}${c.source === "whatsapp" ? " (exported chat)" : c.source === "paste" ? " (pasted)" : c.source === "discord" ? " (saved message by message with Ward's bot)" : ""}`),
       h("dt", null, "Size"), h("dd", null, `${c.messages} messages, ${c.participants} people`),
       h("dt", null, "Hurtful"), h("dd", null, `${n} messages over ${c.days} day${c.days === 1 ? "" : "s"}`),
       h("dt", null, "From"), h("dd", null, when(c.firstIncident)),

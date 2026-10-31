@@ -1,0 +1,20 @@
+{
+  "name": "@ward/discord",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --experimental-strip-types src/main.ts",
+    "register": "node --env-file-if-exists=.env --experimental-strip-types src/register.ts",
+    "test": "node --test --experimental-strip-types src/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2",
+    "@ward/engine": "workspace:*",
+    "discord.js": "14.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  }
+}

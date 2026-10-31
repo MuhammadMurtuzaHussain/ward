@@ -1,0 +1,18 @@
+# Ward's Discord bot as a Render background worker. It holds a gateway connection open, so it
+# needs an always-on instance; it serves no web traffic. Set DISCORD_TOKEN and DISCORD_APP_ID in
+# the Render dashboard (never in this file).
+services:
+  - type: worker
+    name: ward-discord
+    runtime: node
+    plan: starter
+    region: frankfurt
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --filter "@ward/discord..."
+    startCommand: pnpm --filter @ward/discord start
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: DISCORD_APP_ID
+        sync: false

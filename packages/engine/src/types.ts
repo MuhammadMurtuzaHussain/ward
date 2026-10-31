@@ -50,7 +50,8 @@ export interface ChatEvent {
 }
 
 export interface Chat {
-  source: "whatsapp" | "paste";
+  /** "discord": messages a teen saved one by one with Ward's Discord bot (apps/discord). */
+  source: "whatsapp" | "paste" | "discord";
   messages: Message[];
   events: ChatEvent[];
   participants: string[];
