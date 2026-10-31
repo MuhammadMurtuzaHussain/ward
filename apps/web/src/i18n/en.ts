@@ -237,6 +237,8 @@ export const en = {
     againHint: "Type the same PIN again.",
     pinDigits: (n: number) => `${n} of 4 digits entered`,
     del1: "Delete",
+    saveFailed: "I couldn't save that just now. The chat is still here, so nothing is lost. Try again in a moment.",
+    tryAgain: "Try again",
   },
   report: {
     title: "Make a report",
