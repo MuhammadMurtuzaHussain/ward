@@ -57,18 +57,20 @@ const TAB_OF: Record<Screen["name"], Screen["name"]> = {
  */
 function useScreenFocus(screen: Screen | "locked") {
   const first = useRef(true);
+  const placed = useRef<Element | null>(null);
   useEffect(() => {
     if (first.current) {
       first.current = false;
       return;
     }
-    const id = requestAnimationFrame(() => {
-      const h = document.querySelector<HTMLElement>("#root main h1, #root main h2, #root h1");
-      if (!h) return;
-      if (!h.hasAttribute("tabindex")) h.setAttribute("tabindex", "-1");
-      h.focus({ preventScroll: true });
-    });
-    return () => cancelAnimationFrame(id);
+    // The new screen already put focus somewhere (the PIN pad does): leave it there.
+    const at = document.activeElement;
+    if (at && at !== document.body && at !== placed.current && at.closest("#root main, [role=dialog]")) return;
+    const to = document.querySelector<HTMLElement>("#root main h1") ?? document.querySelector<HTMLElement>("#root main");
+    if (!to) return;
+    if (!to.hasAttribute("tabindex")) to.setAttribute("tabindex", "-1");
+    to.focus({ preventScroll: true });
+    placed.current = to;
   }, [screen]);
 }
 

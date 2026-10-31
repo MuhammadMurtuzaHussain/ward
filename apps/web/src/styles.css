@@ -183,8 +183,11 @@ body[data-look="daylight"]::before {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
-/* Headings that take focus when the screen changes (so screen readers announce it) don't ring. */
-[tabindex="-1"]:focus:not(:focus-visible) {
+/* Things that take focus only from code don't ring after a tap: the PIN pad, a dialog. The
+   heading (or main) that takes focus when the screen changes, so a screen reader says where you
+   are, never rings: there's nothing to press there. */
+[tabindex="-1"]:focus:not(:focus-visible),
+:is(h1, main)[tabindex="-1"]:focus {
   outline: none;
 }
 
