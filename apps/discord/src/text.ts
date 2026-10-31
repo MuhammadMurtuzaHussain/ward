@@ -135,7 +135,7 @@ export function serverInfo(o: { hostOn: boolean; inServer: boolean; alertsId?: s
     "**What it does**",
     `• Reads new messages as they arrive, on the computer that runs Ward. Ward keeps no copy, but its alerts are ordinary messages: they stay in #${ALERTS} until you delete them.`,
     "• Dangerous messages (threats, urging self-harm, sexual pressure, threats to share private images or details) get an alert with a link. For self-harm, only the link, channel and kind: it may be someone asking for help.",
-    "• Someone telling what happened to them, or standing up for someone, is never treated as the sender: the alert only says someone may need support, and nobody gets a DM.",
+    "• Someone telling what happened to them, or standing up for someone, is never named as the sender: the alert only says someone may need support, without their name, and nobody gets a DM. So open the link. If the message also says \"you\" or \"or else\", Ward can't tell it from a threat and alerts as usual.",
     "• The sender of a hurtful (not dangerous) message gets a private nudge to edit or delete it. `ward: no-nudge` in the alerts channel's topic turns this off.",
     "• Whoever it was aimed at gets a short, kind check-in. `ward: no-checkin` turns this off.",
     "**What it never does.** Delete, mute, ban or punish anyone. Nudge the sender of a dangerous message. Ask anyone to delete a message telling what happened to them.",

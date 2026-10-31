@@ -3,7 +3,7 @@
 // 13): the Ward app never alerts adults, and this is the one place Ward does.
 
 import { GatewayIntentBits } from "discord.js";
-import { frameOf, type Frame } from "./frame.ts";
+import { frameOf, maybeFramed, type Frame } from "./frame.ts";
 import type { Reading } from "./ward.ts";
 
 /** Only an explicit "on" switches it on. Unset, empty, "off" or anything else: personal mode only. */
@@ -30,7 +30,7 @@ export type Alert = "full" | "withheld" | "support";
 export interface Plan {
   frame: Frame | null;
   alert: Alert | null;
-  /** A private nudge to the sender to edit or delete. Never for a dangerous message or a report. */
+  /** A private nudge to the sender to edit or delete. Never for a dangerous message, or one that may be a report. */
   nudge: boolean;
   /** A kind check-in for whoever it was aimed at. Not for a report: the people it names are often the bully. */
   checkIn: boolean;
@@ -46,8 +46,10 @@ export function plan(r: Reading, text: string, topic = ""): Plan {
   return {
     frame,
     alert,
-    // Never nudge on a dangerous message: it would tip off someone making threats.
-    nudge: act && !r.dangerous && !t.includes("ward: no-nudge"),
+    // Never nudge on a dangerous message: it would tip off someone making threats. Nor on one that
+    // may be a report Ward couldn't be sure of ("usne mujhe kaha tu moti hai"): a child telling
+    // what happened is never asked to delete it, and skipping a nudge hides nothing from anyone.
+    nudge: act && !r.dangerous && !maybeFramed(text) && !t.includes("ward: no-nudge"),
     checkIn: act && !t.includes("ward: no-checkin"),
   };
 }

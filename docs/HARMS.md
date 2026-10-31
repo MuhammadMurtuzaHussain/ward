@@ -108,8 +108,11 @@ telling Sara to kys" carry the same words as the abuse, so the word lists flag t
   "mujhe kaha", "আমাকে বলেছে") or standing up for someone ("stop telling ..."). Then the writer
   gets no nudge, nobody they mention gets a check-in (they are often the bully), and moderators
   only hear that someone may need support, with the link.
-- The check is narrow and misses some. Ward never nudges the sender of a dangerous message at
-  all, so a disclosure Ward misses is still never told to delete itself.
+- The check is narrow, because a match hides the writer: a message that also says "you" or "or
+  else" ("warna", "নইলে") never counts, since that is how threats read. So it misses some
+  disclosures, and a child who quotes the abuse can be named to moderators as its sender. Ward
+  never nudges the sender of a dangerous message at all, and it never nudges a hurtful one that
+  might be a report, so a disclosure Ward misses is still never told to delete itself.
 
 **A disclosure is copied to adults.** A message about self-harm may be a child asking for help.
 Those alerts carry the link, the channel and the kind only, never the words or a name, and so do
@@ -122,10 +125,14 @@ dangerous messages Ward can't name a kind for.
 never dangerous ones, so nobody making a threat is warned to delete the proof.
 
 **A bully games it.** Someone can test messages against a server running Ward until it stops
-flagging them, or dress abuse up as a report to avoid a nudge. Ward ignores a bare "someone said",
-quotation marks, and "told me to tell you", and a dangerous message still reaches moderators
-whichever way it is framed. `/ward server` tells moderators Ward can be gamed and that a person
-decides, every time.
+flagging them, or dress abuse up as a report. A dangerous message still reaches moderators
+whichever way it is framed, but one Ward reads as a report reaches them without the sender's name
+or words, as "someone may need support", and nobody it mentions gets a check-in. So a bully who
+gets a threat past as a report hides who sent it and silences the target's check-in. Ward ignores
+a bare "someone said", quotation marks, and any message that also says "you" or "or else", which
+closes the common ways ("don't tell your mum or I'll leak your pics"), not all of them. Moderators
+must open the link and read the message in place. `/ward server` tells them this, that Ward can
+be gamed, and that a person decides, every time.
 
 **Members don't know they are being read.** `/ward server` gives moderators a notice to pin for
 members: what Ward reads, what goes to moderators, and that telling what happened won't get

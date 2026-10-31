@@ -34,8 +34,11 @@ Discord for the Message Content intent and can't read server messages at all.
 - Before any nudge or check-in, Ward checks whether the writer is telling what happened to them
   ("someone told me to kys", "usne mujhe bola", "আমাকে বলেছে") or standing up for someone ("stop
   telling Sara to kys"). Then nobody gets a DM, and a dangerous one reaches moderators only as
-  "someone may need support", with the link. A bare "someone said", or quotation marks alone,
-  don't count.
+  "someone may need support", with the link and without the writer's name. Because that hides
+  who wrote it, the check is narrow: a bare "someone said", or quotation marks alone, don't count,
+  and nor does a message that also says "you" ("tu", "তোকে") or "or else" ("warna", "নইলে"),
+  because that is how threats read. Those alert as usual, but if they might be a report, the
+  writer still never gets a nudge.
 - The sender of a hurtful (not dangerous) message gets a private nudge to edit or delete it
   (`ward: no-nudge` in the channel topic turns this off). Never for a dangerous message: it would
   tip off someone making threats.

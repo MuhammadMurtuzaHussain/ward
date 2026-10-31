@@ -345,14 +345,22 @@ evidence lives in their own DMs with Ward. Ward reads only the message they pick
 from the app: the bot runs on the computer of whoever hosts it, not on the teen's phone, so the
 message passes through that computer while it is read. It is not stored there.
 
-**Server mode is a moderator tool, and the one place Ward alerts adults.** Section 8 says Ward
-never offers an adult a way to receive alerts. Server mode does exactly that: it is a tool that
-moderators of teen communities can choose, and it tells them about dangerous messages. On
-2026-10-31 the project owner decided to keep it as an opt-in moderator tool under this section
-rather than remove it. It changes nothing in the app. Section 8 asks for a public discussion and
-the safeguarding lead's agreement before a commitment changes. There is no lead yet, so this
-exception holds only while server mode stays off by default and is not offered publicly (see
-below).
+**Server mode is a moderator tool, and the one place Ward alerts adults.** It is a tool that
+moderators of teen communities can choose, and it tells them about dangerous messages. It departs
+from three commitments in section 8:
+
+- "Offer a parent, teacher or any other adult a way to ... receive alerts." Server mode sends
+  moderators alerts.
+- "Read messages from other apps automatically." Server mode reads every new message in a server
+  that switched it on, from members who never chose Ward.
+- "Send a child's chats ... name ... to any ... person." For threats, sexual pressure and exposure,
+  an alert quotes a member's message and names its sender to the moderators.
+
+On 2026-10-31 the project owner decided to keep server mode as an opt-in moderator tool under
+this section rather than remove it. It changes nothing in the app. Section 8 asks for a public
+discussion and the safeguarding lead's agreement before a commitment changes. There is no lead
+yet, so the exception to each of these three commitments holds only while server mode stays off
+by default and is not offered publicly (see below).
 
 **Off by default.** Server mode runs only when the person hosting the bot sets
 `WARD_SERVER_MODE=on`, and then only in a server whose moderators create a private
@@ -373,7 +381,9 @@ an alert to adults is the thing we promise children the app will never do.
   someone:** "someone may need support", with the link, the channel and what it mentions. Ward
   looks for this before any nudge or check-in, in English, Roman Urdu, Hinglish and Bangla (for
   example "someone told me to kys", "usne mujhe bola", "আমাকে বলেছে", "stop telling Sara to
-  kys"). It never names the writer as the sender of abuse.
+  kys"). It never names the writer as the sender of abuse. A message that also speaks to "you"
+  ("tu", "তোকে") or carries a condition ("or else", "warna", "নইলে") never counts, because that
+  is how a threat reads ("don't tell your mum or I'll leak your pics"). It alerts as usual.
 - **To the sender of a hurtful but not dangerous message:** a private nudge to edit or delete it.
   Moderators can turn this off.
 - **To the person a hurtful message was aimed at** (by mention or reply): a short, kind check-in
@@ -399,10 +409,16 @@ to pin for members ("This server uses Ward..."), so members know Ward reads the 
 to moderators, and that telling what happened to them will not get them in trouble.
 
 **Its limits.** The check for someone telling what happened, or standing up for someone, is
-deliberately narrow: a bare "someone said", or quotation marks alone, never count, because a
-bully could wrap anything in them. It will miss some disclosures, it reads only English, Roman Urdu,
-Hinglish and Bangla, and it can be gamed. Ward can be wrong both ways, and someone can test messages until Ward
-stops flagging them. See [HARMS.md](HARMS.md#ward-for-discord).
+deliberately narrow: a bare "someone said", quotation marks alone, or a message that also says
+"you" or "or else" never count, because a bully could wrap anything in them. It will miss some
+disclosures, and those alert as usual: a child who quotes the abuse ("he said you should die")
+can be named to moderators as its sender. When a missed disclosure might be one, Ward still never
+nudges its writer. It reads only English, Roman Urdu, Hinglish and Bangla, and it can be gamed
+the other way too. A message Ward reads as a report reaches moderators without the sender's name
+or words, and nobody it mentions gets a check-in, so a bully who dresses a threat up as a report
+hides who sent it and silences the target's check-in. Moderators must open the link and read the
+message in place, every time. Ward can be wrong both ways, and someone can test messages until
+Ward stops flagging them. See [HARMS.md](HARMS.md#ward-for-discord).
 
 **Before it is offered publicly.** Server mode must not be switched on in any instance that
 others can install, listed or advertised anywhere, or offered to a server beyond the

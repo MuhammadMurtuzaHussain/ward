@@ -4,7 +4,7 @@ import { GatewayIntentBits } from "discord.js";
 import { checkReport } from "@ward/engine";
 import { COMMANDS } from "./commands.ts";
 import { fingerprint, fromEmbed, reportFrom, toEmbed, type Evidence } from "./evidence.ts";
-import { frameOf } from "./frame.ts";
+import { frameOf, maybeFramed } from "./frame.ts";
 import { intentsFor, plan, serverModeOn } from "./server.ts";
 import { CATEGORY, MEMBER_NOTICE, alertEmbed, checkEmbed, serverInfo, steps } from "./text.ts";
 import { read } from "./ward.ts";
@@ -107,11 +107,11 @@ test("someone telling what happened, or standing up for someone, is never treate
     "someone told me to kys",
     "someone told me to kys and I can't stop thinking about it",
     "he keeps telling me to kill myself",
-    "they sent me this: kys",
+    "they keep telling me to kys",
     "he said i should just die",
     "she's threatening to post my pics",
+    "he won't stop telling me to kys",
     "usne mujhe bola mar ja",
-    "mujhe kaha tu mar ja",
     "wo mujhe roz gaali deta hai",
     "আমাকে বলেছে মরে যা",
     "ও আমাকে হুমকি দিয়েছে",
@@ -146,6 +146,34 @@ test("someone telling what happened, or standing up for someone, is never treate
     assert.match(json, /may need support/);
     assert.ok(!json.includes("@sara") && !json.includes('"From"') && !json.includes(text), text);
   }
+  // The same words as a threat or a sextortion ending: "you", "or else" or "don't tell your mum"
+  // mean it is aimed at someone. Moderators get the usual alert (the words and the sender, or for
+  // self-harm the link only), and the person it mentions still gets a check-in.
+  const threats = [
+    "i'll leak the nudes you sent me to everyone",
+    "i'm posting my screenshots of your nudes",
+    "the nudes she sent me go in the gc tonight",
+    "you called me a snitch so kys",
+    "stop telling me what to do, go kys",
+    "everyone told me you should kys @Sara",
+    "kill yourself, my mom said i should tell you",
+    "leave her alone or i'll kill you",
+    "why would you say that lol just kys",
+    "sab ne mujhe kaha tu mar ja",
+    "ammi ko mat bolo warna teri pics leak kar dunga",
+    "mods ko mat bolo warna tujhe maar dunga",
+    "mods ko kuch mat bolo, maar dunga",
+    "বাবাকে বলিস না নইলে মেরে ফেলবো",
+  ];
+  for (const text of threats) {
+    assert.equal(frameOf(text), null, text);
+    const r = await read(text, "bilal_07", new Date());
+    assert.ok(r.dangerous, text);
+    const p = plan(r, text);
+    assert.equal(p.alert, r.categories.includes("selfharm") ? "withheld" : "full", text);
+    assert.ok(p.checkIn && !p.nudge, text);
+  }
+
   // A hurtful report sends nothing at all; the same words aimed at someone still get a nudge.
   const told = "he called me an ugly loser again";
   const tr = { ...(await read(told, "sara", new Date())), severity: 2 as const };
@@ -154,6 +182,12 @@ test("someone telling what happened, or standing up for someone, is never treate
   const sr = { ...(await read(sent, "bilal", new Date())), severity: 2 as const };
   assert.deepEqual(plan(sr, sent), { frame: null, alert: null, nudge: true, checkIn: true });
   assert.ok(!plan(sr, sent, "Alerts. Ward: No-Nudge").nudge);
+  // A report Ward can't be sure of ("tu" may be quoted) is alerted and checked in on as usual,
+  // but its writer never gets a nudge to delete it.
+  const quoted = "usne mujhe kaha tu moti hai";
+  const qr = { ...(await read(quoted, "sara", new Date())), severity: 2 as const };
+  assert.ok(maybeFramed(quoted) && maybeFramed("they sent me this: kys") && !maybeFramed(sent));
+  assert.deepEqual(plan(qr, quoted), { frame: null, alert: null, nudge: false, checkIn: true });
 });
 
 test("/ward server explains server mode and gives moderators a notice for members", () => {
