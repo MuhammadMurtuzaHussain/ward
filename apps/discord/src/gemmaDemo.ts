@@ -27,7 +27,7 @@ function pickModel(key: string): Promise<string> {
       return Number(ver ?? 0) * 1000 + Math.min(Number(size ?? 0), 27);
     };
     const best = gemma.sort((a, b) => rank(b) - rank(a))[0] ?? "gemma-3-27b-it";
-    console.log(new Date().toISOString(), `gemma demo: using ${best} (of ${gemma.length} Gemma models)`);
+    console.log(new Date().toISOString(), `gemma demo: using ${best} (available: ${gemma.join(", ")})`);
     return best;
   })();
   model.catch(() => (model = null));
