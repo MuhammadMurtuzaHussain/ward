@@ -231,6 +231,8 @@ If you work at a child helpline, a school, or with young people in Pakistan, Ind
 Bangladesh, we'd like to hear what's wrong with this before anyone builds more of it. Open an
 issue, or start with [docs/ROADMAP.md](docs/ROADMAP.md).
 
+To contribute: [CONTRIBUTING.md](CONTRIBUTING.md), [LANGUAGES.md](LANGUAGES.md) and Ward Lite's [model card](train/MODEL_CARD.md).
+
 ## Licence
 
 MIT. Helpline numbers were checked on 2026-10-29; please open an issue if one is wrong or
