@@ -42,11 +42,11 @@ installed_path=$(adb shell pm path "$PKG" | tr -d '\r' | sed -n 's/^package://p'
 installed=$(adb shell sha256sum "$installed_path" | awk '{print $1}')
 name=$(field file)
 on_disk=$(adb shell run-as "$PKG" sha256sum "cache/give/$name" | awk '{print $1}')
-# Newer build-tools label it "Signer (minSdkVersion=…)" rather than "Signer #1"; print what we
+# build-tools label it "Signer #1", "V2 Signer:" or "Signer (minSdkVersion=…)"; print what we
 # got so a format change is easy to see.
 apksigner_out=$("$ANDROID_HOME"/build-tools/$(ls "$ANDROID_HOME"/build-tools | sort -V | tail -1)/apksigner verify --print-certs "$APK" 2>/dev/null)
 echo "$apksigner_out" | grep -i "sha-256" || true
-signer=$(echo "$apksigner_out" | sed -n 's/^Signer[^:]* certificate SHA-256 digest: //p' | head -1 | norm)
+signer=$(echo "$apksigner_out" | sed -n 's/^.*[Ss]igner.*certificate SHA-256 digest: //p' | head -1 | norm)
 
 echo "installed  $installed ($installed_path)"
 echo "plugin     $(field apk)"
