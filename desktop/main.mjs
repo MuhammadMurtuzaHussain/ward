@@ -10,9 +10,34 @@ import { createGemma } from "./gemma.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const WEB = app.isPackaged ? path.join(process.resourcesPath, "web") : path.join(here, "..", "apps", "web", "dist");
-// WARD_SMOKE=1 launches, checks a screen comes up, and quits. WARD_SMOKE=llama also requires the
-// bundled llama.cpp to load on this platform.
+// WARD_SMOKE=1 launches, checks a screen comes up and Ward Lite opens, and quits. WARD_SMOKE=llama
+// also requires the bundled llama.cpp to load on this platform.
 const SMOKE = process.env.WARD_SMOKE ?? "";
+// Run in the page by the smoke test: start ort/'s runtime, create a session from the Ward Lite
+// model and count its inputs and outputs. Resolves to "ok ..." or throws.
+const LITE_SMOKE = `(async () => {
+  const base = new URL("./", document.baseURI).href;
+  const { default: factory } = await import(base + "ort/ort-wasm-simd-threaded.asyncify.mjs");
+  const ort = await factory({ numThreads: 1, locateFile: (f) => base + "ort/" + f });
+  if (ort._OrtInit(1, 3) !== 0) throw new Error("the runtime didn't start");
+  ort.asyncInit?.();
+  const res = await fetch(base + "models/ward-lite/onnx/model_quantized.onnx");
+  if (!res.ok) throw new Error("the model isn't in this build");
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  const options = ort._OrtCreateSessionOptions(99, 0, 0, 0, 0, 0, 0, 3, 0, 0);
+  const at = ort._malloc(bytes.length);
+  ort.HEAPU8.set(bytes, at);
+  const session = await ort._OrtCreateSession(at, bytes.length, options);
+  ort._free(at);
+  if (!session) throw new Error("the model didn't open");
+  const counts = ort._malloc(8);
+  ort._OrtGetInputOutputCount(session, counts, counts + 4);
+  const [inputs, outputs] = [ort.getValue(counts, "i32"), ort.getValue(counts + 4, "i32")];
+  ort._free(counts);
+  ort._OrtReleaseSession(session);
+  if (inputs < 2 || outputs !== 1) throw new Error(inputs + " inputs, " + outputs + " outputs");
+  return "ok (" + (bytes.length / 1e6).toFixed(1) + " MB model, " + inputs + " inputs)";
+})()`;
 
 protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } }]);
 
@@ -112,6 +137,15 @@ function createWindow() {
       const rt = await gemma.getRuntime();
       console.log(`smoke: bridge ${bridge}, llama.cpp ${rt.llama ? `ok (${rt.llama.gpu || "cpu"})` : `unavailable: ${rt.error}`}, lab mode ${labOn() ? "on" : "off"}`);
       if (SMOKE === "llama" && !(rt.llama && bridge === "function")) ok = false;
+      // Ward Lite: the ONNX Runtime the build ships in ort/ starts in this sandboxed page and opens
+      // the bundled model, the way lite.ts does. (Its raw API, so a runtime update may need this
+      // changed too; a failure here means Ward Lite can't read on this platform.)
+      const lite = await Promise.race([
+        win.webContents.executeJavaScript(LITE_SMOKE),
+        new Promise((_, no) => setTimeout(() => no(new Error("timed out")), 60_000)),
+      ]).catch((e) => `failed: ${e?.message ?? e}`);
+      console.log(`smoke: Ward Lite ${lite}`);
+      if (!lite.startsWith("ok")) ok = false;
       app.exit(ok ? 0 : 1);
     });
     win.webContents.once("did-fail-load", () => app.exit(1));

@@ -1,4 +1,5 @@
-# Typecheck and test every package, and build the web app, on every push.
+# Typecheck and test every package, and build the web app, on every push. The build fails if
+# Ward Lite (ONNX Runtime's wasm and the model) is missing from its output.
 name: CI
 
 on:
