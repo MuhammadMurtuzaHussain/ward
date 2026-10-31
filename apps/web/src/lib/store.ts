@@ -9,6 +9,7 @@ import type { Analysis, Chat } from "@ward/engine";
 import { withCorrection, type Correction } from "./corrections.ts";
 import { neutral, type CheckSummary } from "./history.ts";
 import { profilePinHash, type Locks } from "./pinGate.ts";
+import { DEFAULT_AUTO_LOCK, type AutoLock } from "./autoLock.ts";
 import { b64 } from "./vaultSeal.ts";
 
 export type LookId = "lantern" | "moonlit" | "firefly" | "ember" | "aurora" | "daylight";
@@ -62,6 +63,8 @@ export interface Profile {
   corrections: Record<string, Correction>;
   /** The helplines the child picked (a country id, or "OTHER"); null means guess from the time zone. */
   region: string | null;
+  /** Lock Ward when it's been out of sight (autoLock.ts). Only does anything once there's a PIN. */
+  autoLock: AutoLock;
 }
 
 /** The single-profile key from before shared-phone mode; migrated into the "default" profile. */
@@ -107,6 +110,7 @@ const DEFAULTS: Profile = {
   readAloud: false,
   corrections: {},
   region: null,
+  autoLock: DEFAULT_AUTO_LOCK,
 };
 
 function read<T>(key: string): T | null {
@@ -335,7 +339,11 @@ export async function openProfile(id: string, pin?: string): Promise<boolean> {
   const entry = state.profiles.list.find((p) => p.id === id);
   if (!entry) return false;
   if (entry.pinHash && (!pin || (await pinHash(pin, entry.pinSalt!)) !== entry.pinHash)) return false;
-  setState((s) => ({ ...leave(s), profiles: { ...s.profiles, active: id }, profile: loadProfile(id), locked: false }));
+  setState((s) => {
+    // A chat shared into Ward while it was auto-locked is waiting for the same person.
+    const kept: Partial<State> = id === s.profiles.active && s.incoming ? { incoming: s.incoming, screen: { name: "check" } } : {};
+    return { ...leave(s), ...kept, profiles: { ...s.profiles, active: id }, profile: loadProfile(id), locked: false };
+  });
   return true;
 }
 
@@ -379,6 +387,14 @@ export function removeActiveProfile() {
 /** Who's using Ward? Also the quick exit's landing place. */
 export function lockProfile() {
   setState((s) => ({ ...leave(s), locked: true }));
+}
+
+/** The profile or its vault has a PIN, so there's something to lock with. */
+export const hasAnyPin = () => Boolean(activeEntry()?.pinHash || state.profile.vaultSalt);
+
+/** Auto-lock (appLife.ts): like the quick exit, but a chat being shared in right now waits. */
+export function autoLockProfile() {
+  setState((s) => ({ ...leave(s), incoming: s.incoming, locked: true }));
 }
 
 export function setHideRecents(on: boolean) {

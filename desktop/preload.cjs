@@ -1,7 +1,7 @@
 // The whole bridge between Ward's page and the desktop app: a handful of calls over IPC, nothing
 // else. The page stays sandboxed (contextIsolation on, no Node): it can ask Gemma to read a prompt
-// and get text back, download or remove the model, and turn lab mode on or off. It never gets a
-// file path, a socket or a port.
+// and get text back, download or remove the model, turn lab mode on or off, and minimise its own
+// window for the quick exit. It never gets a file path, a socket or a port.
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("wardDesktop", {
@@ -20,5 +20,9 @@ contextBridge.exposeInMainWorld("wardDesktop", {
   lab: {
     status: () => ipcRenderer.invoke("lab:status"),
     set: (on) => ipcRenderer.invoke("lab:set", on),
+  },
+  // Quick exit: Ward has already locked itself; this takes the window off the screen.
+  privacy: {
+    leave: () => ipcRenderer.invoke("privacy:leave"),
   },
 });

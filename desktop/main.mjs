@@ -91,6 +91,10 @@ handle("gemma:generate", (o) => {
     maxTokens: clamp(o.maxTokens, 16, 4096, 2048),
   });
 });
+// Quick exit: the page has locked itself; minimise so Ward isn't left open on the screen.
+handle("privacy:leave", () => {
+  for (const w of BrowserWindow.getAllWindows()) w.minimize();
+});
 handle("lab:status", () => ({ on: labOn(), flag: LAB_FLAG }));
 handle("lab:set", (on) => {
   labSetting = on === true;

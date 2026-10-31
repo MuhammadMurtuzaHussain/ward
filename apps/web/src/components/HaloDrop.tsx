@@ -4,6 +4,7 @@
 
 import { useRef, useState, type ReactNode } from "react";
 import { UploadSimple } from "@phosphor-icons/react";
+import { choosingFile } from "../lib/appLife.ts";
 
 export function HaloDrop({ accept, multiple, onFiles, children }: { accept: string; multiple?: boolean; onFiles: (files: File[]) => void; children?: ReactNode }) {
   const input = useRef<HTMLInputElement>(null);
@@ -45,7 +46,14 @@ export function HaloDrop({ accept, multiple, onFiles, children }: { accept: stri
         <div className="absolute -bottom-12 start-1/4 h-28 w-2/3 rounded-full blur-3xl" style={{ background: "var(--glow)", opacity: over ? 0.35 : 0.14, animation: "rim-drift 9s ease-in-out infinite" }} />
       </div>
 
-      <button type="button" onClick={() => input.current?.click()} className="flex w-full flex-col items-center gap-3 px-6 py-10 text-center">
+      <button
+        type="button"
+        onClick={() => {
+          choosingFile();
+          input.current?.click();
+        }}
+        className="flex w-full flex-col items-center gap-3 px-6 py-10 text-center"
+      >
         <span className="grid size-14 place-items-center rounded-full bg-raised text-glow" style={{ animation: "ward-float 3.5s ease-in-out infinite" }}>
           <UploadSimple size={26} weight="bold" />
         </span>

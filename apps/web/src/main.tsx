@@ -6,9 +6,11 @@ import { LabBanner } from "./components/LabMode.tsx";
 import { DemoBanner } from "./demo/DemoBanner.tsx";
 import { listenForShares } from "./lib/shareIn.ts";
 import { listenForQuickExitKey } from "./lib/privacy.ts";
+import { listenForAppLife } from "./lib/appLife.ts";
 
 listenForShares();
 listenForQuickExitKey();
+listenForAppLife();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

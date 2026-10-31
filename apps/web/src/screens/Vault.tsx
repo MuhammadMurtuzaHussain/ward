@@ -9,6 +9,7 @@ import { go, useStore } from "../lib/store.ts";
 import { locale, useT } from "../i18n/index.ts";
 import { hasPin, isUnlocked, list, lock, remove, unlock, type VaultItem } from "../lib/vault.ts";
 import { historyLevel } from "../lib/helpPaths.ts";
+import { useBack } from "../lib/appLife.ts";
 import { Timeline } from "./Result.tsx";
 
 export function VaultScreen() {
@@ -18,6 +19,8 @@ export function VaultScreen() {
   const [viewing, setViewing] = useState<VaultItem | null>(null);
   const [reporting, setReporting] = useState(false);
   const teen = useStore((s) => s.profile.age) === "14";
+  // Android's Back closes the open item before it leaves the vault.
+  useBack(viewing && (() => setViewing(null)));
 
   useEffect(() => {
     if (open) list().then(setItems, () => setOpen(false));

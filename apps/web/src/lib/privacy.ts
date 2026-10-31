@@ -12,11 +12,13 @@ export function applyPrivacy() {
 
 /**
  * Quick exit: forget open chats, lock the vault, go back to "Who's using Ward?" (which asks for
- * a PIN if the profile has one), and on Android drop to the home screen.
+ * a PIN if the profile has one), and on Android drop to the home screen (on desktop, minimise).
  */
 export function quickExit() {
   lockProfile();
   if (android()) void Privacy.leave().catch(() => {});
+  // Desktop: the window minimises too, so Ward isn't left on screen behind the person.
+  else void (window as { wardDesktop?: { privacy?: { leave(): Promise<void> } } }).wardDesktop?.privacy?.leave().catch(() => {});
 }
 
 /**

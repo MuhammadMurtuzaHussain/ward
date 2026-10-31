@@ -8,11 +8,13 @@ import { PinPad } from "../components/PinPad.tsx";
 import { LOOKS } from "../lib/looks.ts";
 import { addProfile, openProfile, useStore, type ProfileEntry } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
+import { useBack } from "../lib/appLife.ts";
 
 export function Who() {
   const list = useStore((s) => s.profiles.list);
   const t = useT();
   const [asking, setAsking] = useState<ProfileEntry | null>(null);
+  useBack(asking && (() => setAsking(null)));
 
   if (asking)
     return (

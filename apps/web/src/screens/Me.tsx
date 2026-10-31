@@ -5,9 +5,10 @@ import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { PinPad } from "../components/PinPad.tsx";
 import { Dialog } from "../components/Dialog.tsx";
 import { needsPin, pinOpens } from "../lib/pinGate.ts";
+import { AUTO_LOCKS } from "../lib/autoLock.ts";
 import { AGES, LOOKS } from "../lib/looks.ts";
 import { modelStatus, type ModelStatus } from "../lib/run.ts";
-import { activeEntry, currentLocks, go, lockProfile, removeActiveProfile, setHideRecents, setProfilePin, updateProfile, useStore, type AgeBand, type Lang } from "../lib/store.ts";
+import { activeEntry, currentLocks, go, hasAnyPin, lockProfile, removeActiveProfile, setHideRecents, setProfilePin, updateProfile, useStore, type AgeBand, type Lang } from "../lib/store.ts";
 import { wipe } from "../lib/vault.ts";
 import { LookTile } from "./Onboarding.tsx";
 import { PhoneGemmaCard } from "../components/PhoneGemmaCard.tsx";
@@ -125,6 +126,20 @@ export function Me() {
             </div>
           )}
           <Toggle on={profiles.hideRecents} onChange={setHideRecents} label={t.profiles.hideRecents} />
+          <p id="auto-lock" className="mt-4 text-sm font-bold text-dim">{t.profiles.autoLock}</p>
+          <div role="group" aria-labelledby="auto-lock" className="mt-1.5 grid grid-cols-3 gap-2">
+            {AUTO_LOCKS.map((a) => (
+              <button
+                key={a}
+                onClick={() => updateProfile({ autoLock: a })}
+                aria-pressed={p.autoLock === a}
+                className={`min-h-12 rounded-btn px-2 text-sm font-bold ${p.autoLock === a ? "bg-glow text-glow-ink" : "bg-raised text-dim hover:text-ink"}`}
+              >
+                {t.profiles.autoLockOptions[a]}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-dim">{hasAnyPin() ? t.profiles.autoLockLine : t.profiles.autoLockNeedsPin}</p>
         </Card>
 
         <Card className="p-5">
