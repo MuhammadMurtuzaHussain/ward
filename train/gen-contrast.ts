@@ -58,7 +58,7 @@ const KITS: Record<Lang | "bn-Latn", Kit> = {
       "kal milte hain", "{t} milte hain", "acha {t} milte hain", "{t} baat karte hain", "{p} pe milna {t}", "{t} {p} pe wait karna, main aa rahi hun",
       "mera wait karna {p} pe", "main {t} tumhare ghar aaunga", "{t} ghar aa jao, ammi ne {f} banaye hain", "{t} apni {x} le aana", "tumhare liye {f} le aaun?",
       "{t} match hai, aa jana", "{t} call karna homework ke liye", "chalo bye, {t} milte hain", "Allah hafiz, {t} milenge", "khuda hafiz {t} school mein milte hain",
-      "seat rakh lena mere liye {t}", "abbu {t} hum dono ko le jayenge", "{n} {t} aa rahe ho na?", "{t} {p} pe milo, {f} khane chalenge", "main tumhe {p} pe dhoond lunga, tumhari {x} mere paas hai",
+      "seat rakh lena mere liye {t}", "abbu {t} hum dono ko le jayenge", "{n} {t} aa rahe ho na?", "main tumhe {p} pe dhoond lunga, tumhari {x} mere paas hai",
       "kisi ko batana mat, {t} {n} ki surprise party hai", "love you yaar, {t} milte hain", "{n} {t} mere ghar aao, minecraft khelenge",
     ],
     harm: [
@@ -105,7 +105,7 @@ const KITS: Record<Lang | "bn-Latn", Kit> = {
     ],
     harm: [
       "তোর দাঁত ভেঙে দেবো", "তোর হাড় ভেঙে দেবো", "এমন মারবো হাসপাতালে যাবি", "আমার ভাইয়েরা তোকে পেটাবে", "তোকে কেউ বাঁচাতে পারবে না", "তোকে মেরে ফেলবো",
-      "মরে যা, কেউ তোকে চায় না", "আত্মহত্যা কর", "তোর ছবি সবাইকে পাঠিয়ে দেবো", "টাকা দে নাহলে তোর চ্যাট ভাইরাল করে দেবো", "তোর ছবি পাঠা নাহলে সবাইকে বলে দেবো",
+      "মরে যা, কেউ তোকে চায় না", "আত্মহত্যা কর", "তোর ছবি সবাইকে পাঠিয়ে দেবো", "টাকা দে নাহলে তোর চ্যাট ভাইরাল করে দেবো", "নিজের ছবি না দিলে সবার কাছে সব ফাঁস করে দেবো",
       "তোর মুখ ভেঙে দেবো", "ছুরি মেরে দেবো", "তোর বাড়ি জ্বালিয়ে দেবো", "এমন পেটাবো আর স্কুলে আসবি না",
     ],
     lead: ["{t}", "{t} দেখা হবে,", "{t} {p} আসিস,", "{n},"],

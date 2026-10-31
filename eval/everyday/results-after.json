@@ -1,0 +1,3352 @@
+{
+ "model": "ward-lite",
+ "danger_threshold": 0.91,
+ "hurtful_thresholds": {
+  "bengali": 0.48,
+  "devanagari": 0.24,
+  "latin": 0.48
+ },
+ "by_lang": {
+  "bn": {
+   "n": 85,
+   "flagged": 2,
+   "urgent": 2,
+   "false_alarm_rate": 0.024,
+   "urgent_rate": 0.024
+  },
+  "en": {
+   "n": 84,
+   "flagged": 5,
+   "urgent": 2,
+   "false_alarm_rate": 0.06,
+   "urgent_rate": 0.024
+  },
+  "hi-Latn": {
+   "n": 80,
+   "flagged": 4,
+   "urgent": 1,
+   "false_alarm_rate": 0.05,
+   "urgent_rate": 0.013
+  },
+  "ur-Latn": {
+   "n": 80,
+   "flagged": 5,
+   "urgent": 2,
+   "false_alarm_rate": 0.062,
+   "urgent_rate": 0.025
+  }
+ },
+ "items": [
+  {
+   "text": "see you tomorrow",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "see you later",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bye see you",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tomorrow",
+   "lang": "en",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.034,
+   "danger": 0.025,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "i'll see you tomorrow at practice",
+   "lang": "en",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "love you bro see you tmrw",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "cya tmrw 👋",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.023,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "see u later alligator 🐊",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.189,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "k bye see u monday",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "night! see u in the morning",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "gn see u at school",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "later!",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.041,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "see u at the bus stop at 7:15, dont be late lol",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "meet at the main gate after school? my dad is picking us up for the movie",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "wait near the canteen pls, i have to return a library book first",
+   "lang": "en",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pls wait 5 min im still in the washroom",
+   "lang": "en",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "can u wait at the park entrance, mum is parking the car",
+   "lang": "en",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.033,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ill get u a juice from the tuck shop, mango or apple?",
+   "lang": "en",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.064,
+   "danger": 0.119,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "i'll get you the notes tmrw, left them at home sorry",
+   "lang": "en",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "we're coming over at 6 for ammi's dawat, tell aunty we're bringing kheer",
+   "lang": "en",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "coming over after lunch to finish the science model ok?",
+   "lang": "en",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "can i come to ur house saturday to play minecraft? my mom said yes",
+   "lang": "en",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ill find u near the stage, its so crowded here",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.029,
+   "danger": 0.086,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "lost u at the mall lol, ill find u at the food court",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.036,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "dont tell anyone about zara's surprise party!! saturday at 5 🎂",
+   "lang": "en",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shhh its a surprise for mrs khan's last day, we're all signing a card",
+   "lang": "en",
+   "topic": "school",
+   "shares": true,
+   "hurtful": 0.034,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ur so dead in fifa tonight 😂 my ultimate team is cracked",
+   "lang": "en",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.537,
+   "danger": 0.959,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "got 9 kills in free fire, new record 🔥",
+   "lang": "en",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.028,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "we destroyed them in the cricket final!!! won with 3 wickets left",
+   "lang": "en",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kill the ender dragon with me later? i have full diamond armour",
+   "lang": "en",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.08,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ur crazy lol thank u for the cake, love u ❤️",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "omg ur crazy for staying up to finish the whole poster, thank u",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.103,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "on my way 🚶",
+   "lang": "en",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "outside ur house, mum is honking 😭 hurry",
+   "lang": "en",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.838,
+   "danger": 0.96,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "see you at 5 at the ground, bring ur bat",
+   "lang": "en",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.029,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "practice tmrw at 4, coach said dont be late",
+   "lang": "en",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bye bye 👋",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.023,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ttyl",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.935,
+   "danger": 0.009,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "see ya",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.02,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "see u in class",
+   "lang": "en",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tmrw then!",
+   "lang": "en",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "waiting at the gate 🙂",
+   "lang": "en",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "reached the cinema, where r u guys",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.026,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ill be there in 10",
+   "lang": "en",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "come early tmrw we have to set up the science fair table",
+   "lang": "en",
+   "topic": "school",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ill come pick u up with my brother at 4, be ready",
+   "lang": "en",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.133,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "results are out tomorrow im so nervous",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ill bring u the charger after tuition",
+   "lang": "en",
+   "topic": "offer",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "did u finish the maths homework",
+   "lang": "en",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "what pages for the english test?",
+   "lang": "en",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.042,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "q5 is so hard 😩",
+   "lang": "en",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.043,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "can u send me the chem notes pdf",
+   "lang": "en",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ammi made biryani 😋",
+   "lang": "en",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.026,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "lol",
+   "lang": "en",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.093,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "😂😂😂",
+   "lang": "en",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.072,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ok",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.089,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "thx bro",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.037,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "happy birthday!! 🎉🎂 have the best day",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "eid mubarak to u and ur family 🌙",
+   "lang": "en",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.098,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "who won the match, i missed the last over",
+   "lang": "en",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "babar's cover drive was so clean today",
+   "lang": "en",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.028,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "messi or ronaldo, final answer",
+   "lang": "en",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.622,
+   "danger": 0.049,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "my cat knocked my phone into the sink 😭",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.11,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "i got an A in bio!!!",
+   "lang": "en",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "what roblox game r we playing",
+   "lang": "en",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.034,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "my minecraft house finally has a roof lol",
+   "lang": "en",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "can we do the group project on volcanoes",
+   "lang": "en",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.202,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "sorry was eating, whats up",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "my little sister drew on my homework 😭",
+   "lang": "en",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "nani is visiting this weekend so ill be busy",
+   "lang": "en",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.015,
+   "danger": 0.019,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pizza or burgers for the class party",
+   "lang": "en",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "that joke in class today 😭 i cant breathe",
+   "lang": "en",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "why did the math book look sad? too many problems 😂",
+   "lang": "en",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.029,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "feeling kinda tired today, gonna sleep early",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.015,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "thanks for helping me with the essay, means a lot",
+   "lang": "en",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "our dog had puppies!! 4 of them 🐶",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.056,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "is the swimming class cancelled bc of rain",
+   "lang": "en",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.138,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "which pen do u use for exams",
+   "lang": "en",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.025,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "good luck on the physics paper u got this 💪",
+   "lang": "en",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "brb",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.776,
+   "danger": 0.003,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "mom says hi",
+   "lang": "en",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "new skin in fortnite looks so good",
+   "lang": "en",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.039,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "nvm found it",
+   "lang": "en",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.327,
+   "danger": 0.029,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ur team won the house cup congrats!!",
+   "lang": "en",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal milenge InshaAllah",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.031,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "acha bye, kal school mein milte",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.034,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Allah hafiz 👋",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.028,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "chal bye, baad mein baat karte",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.029,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "phir milenge yaar",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.06,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.804,
+   "danger": 0.004,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "kal pakka?",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.024,
+   "danger": 0.024,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "parson milte hain academy mein, sir ne extra class rakhi hai",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shaam ko ground pe milo, match hai 5 bje",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "gate pe ruk jana yaar, bhai bike pe lene aa raha hai, tujhe bhi drop kar dega",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.948,
+   "danger": 0.976,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "ruko 2 min, shoes pehen raha hun",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.058,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mera wait karna canteen ke paas, fees jama karwa ke aata hun",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tuition ke baad milte hain, test ka syllabus discuss karna hai",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "isha ke baad hum log aa rahe hain tumhare ghar, khala ne dinner pe bulaya hai",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.026,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "main tumhare ghar aaunga 4 bje, project ka chart le ke",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "aaj raat hum aa rahe hain, nani ki birthday hai 🎂",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tumhare liye bhi pakoray le aun? ammi bana rahi hain",
+   "lang": "ur-Latn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.031,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "main tujhe notes de dunga kal, tension na le",
+   "lang": "ur-Latn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.929,
+   "danger": 0.987,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "dhoond lunga tujhe stadium mein, maine blue shirt pehni hai",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.046,
+   "danger": 0.023,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kisi ko mat batana, Ali ki surprise party hai jummay ko 🎉",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "FIFA mein aaj tu gaya kaam se 😂 meri team full upgraded hai",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "PUBG mein 11 kills kiye aaj, chicken dinner 🐔",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "humne cricket match mein unko destroy kar diya, 8 wickets se jeete",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pagal ho tum, itna pyara gift kyun laye ❤️",
+   "lang": "ur-Latn",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "raaste mein hun, 5 min",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bahar khara hun, abbu gaari mein wait kar rahe hain jaldi aao",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bus stop pe milna subah 7 bje, van nahi aa rahi kal",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal practice pe milte, coach ne jaldi bulaya hai",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ok bye",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal subah",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "baad mein",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.173,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ruk jao main aa rahi hun",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "aa raha hun bas",
+   "lang": "ur-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mosque ke bahar milna jummay ki namaz ke baad, phir saath ghar chalenge",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "eid pe hum tumhare ghar ayenge, chand raat pe mehndi lagwani hai",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.052,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "coaching ke baad wait karna, saath rickshaw lenge",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "nani ke ghar aa jao kal, sab cousins aa rahe hain",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.032,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal 4 bje ground pe, bat le ke aana",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bye yaar, kal class mein dekhte hain",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Minecraft mein creeper ne mera ghar uda diya 😭 kal phir banayenge",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.027,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Sana ke liye cake order kiya hai, usko mat batana abhi 🤫 bday surprise",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mere ghar aa jao Roblox khelte hain, ammi ne permission de di",
+   "lang": "ur-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "sorry late ho gaya, 2 min ruk jao please",
+   "lang": "ur-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tumhe dhoond rahe the stage ke paas, kahan ho?",
+   "lang": "ur-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.029,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "take care, kal baat karte",
+   "lang": "ur-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.024,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "hahaha mar gaya hansi se 😂",
+   "lang": "ur-Latn",
+   "topic": "jokes",
+   "shares": true,
+   "hurtful": 0.03,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal ka test chapter 4 se hai na?",
+   "lang": "ur-Latn",
+   "topic": "homework",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal se exams, dua karna 🤲",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.021,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "homework kar liya?",
+   "lang": "ur-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "maths ka sawal 7 samajh nahi aaya",
+   "lang": "ur-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "urdu ka essay kitne words ka hai",
+   "lang": "ur-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.029,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ammi ne aaj nihari banayi hai 😋",
+   "lang": "ur-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.027,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bhook lagi hai yaar",
+   "lang": "ur-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.62,
+   "danger": 0.002,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "chai peeni hai",
+   "lang": "ur-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.071,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Rizwan ne kya catch pakra aaj 🔥",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Pakistan jeet gaya!!! 🇵🇰",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shaheen ki bowling dekhi?",
+   "lang": "ur-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.107,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Eid Mubarak sab ko 🌙",
+   "lang": "ur-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "abbu ne naya cycle dilaya 🚲",
+   "lang": "ur-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bhai ne meri charger phir se le li 😤",
+   "lang": "ur-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.03,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "result aa gaya, A grade 🥳",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.026,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "exams kab khatam honge yaar 😩",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "sir ne quiz cancel kar diya",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.026,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mood off hai thora, exams ki tension",
+   "lang": "ur-Latn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shukriya yaar, tum best ho",
+   "lang": "ur-Latn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.255,
+   "danger": 0.867,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "billi ke bachay huay hain hamare ghar 🐱",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.101,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "free fire ka naya event dekha?",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ludo khelein?",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.807,
+   "danger": 0.003,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "PUBG ka update download ho raha hai",
+   "lang": "ur-Latn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "jumma mubarak",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.077,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "acha theek hai",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.026,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kya scene hai",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.024,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "han",
+   "lang": "ur-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.421,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "teacher ne bola project group mein karna hai",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "science fair ke liye volcano bana rahe hain",
+   "lang": "ur-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "nimko aur jalebi kha rahe hain 😋",
+   "lang": "ur-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ammi bula rahi hain, brb",
+   "lang": "ur-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.033,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "haha ye sun, teacher ne pucha homework kahan hai, Bilal bola bakri kha gayi 😂",
+   "lang": "ur-Latn",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.071,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "sehri pe aankh hi nahi khuli 😭",
+   "lang": "ur-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.032,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "cousin ki shaadi pe dholki hai saturday ko",
+   "lang": "ur-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.191,
+   "danger": 0.001,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bye bye, kal school me milenge",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.026,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "milte hai fir 👋",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "see you kal bhai",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.02,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal pakka aana birthday pe",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "parso ka plan fix?",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.043,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shaam ko park me milte hai, cycle leke aana",
+   "lang": "hi-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.027,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "coaching ke baad gate pe milna, saath me momos khayenge",
+   "lang": "hi-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ruk na 2 min, bag pack kar rahi hu",
+   "lang": "hi-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.023,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "metro station pe wait karna, auto nahi mil raha",
+   "lang": "hi-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "main tere ghar aa raha hu 5 baje, homework saath me karenge",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "hum log aa rahe hai diwali pe, mummy ne mithai banayi hai",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.074,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tere liye bhi chocolate le aaun?",
+   "lang": "hi-Latn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "main tujhe apni geography ki copy de dunga kal",
+   "lang": "hi-Latn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.06,
+   "danger": 0.038,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "dhoondh lunga tujhe mele me, phone on rakhna",
+   "lang": "hi-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.964,
+   "danger": 0.988,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "kisi ko mat bolna, Riya ka surprise birthday plan hai sunday ko 🎂",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "BGMI me aaj 14 kills 🔥",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Free Fire ke clash squad me tu toh gaya aaj 😂 gg bro",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "humne unko football me 4-0 se destroy kar diya",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pagal hai tu, itni mehnat karke card banaya mere liye 🥹❤️",
+   "lang": "hi-Latn",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.03,
+   "danger": 0.043,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "raste me hu, 10 min",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.034,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bahar khada hu, jaldi aa, mummy car me wait kar rahi hai",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal 7 baje ground pe, nets practice hai",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tata bye 👋",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal subah milte",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "baad me batata hu",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.05,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "aa rahi hu bas 2 min",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.023,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mandir ke bahar milna aarti ke baad, prasad lena hai",
+   "lang": "hi-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.763,
+   "danger": 0.003,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "holi pe hum tere ghar aayenge rang leke 🎨",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tuition ke baad ruk jana, saath me chalenge",
+   "lang": "hi-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "nani ke ghar aa jaa sunday ko, sab cousins hai",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "gn yaar, subah bus me milte",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Minecraft me zombies maarne chal, night ho gayi",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "sorry late ho gayi, wait karo na pls",
+   "lang": "hi-Latn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.021,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tu kahan hai? hum canteen me hai",
+   "lang": "hi-Latn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "take care bhai, sunday ko match pe milte",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.039,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tujhe pick kar lunga 4 baje, bhaiya car la rahe hai",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.028,
+   "danger": 0.023,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Roblox khelne aaja mere ghar, mummy ne haan bol diya",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "hasa hasa ke maar diya tune 😂",
+   "lang": "hi-Latn",
+   "topic": "jokes",
+   "shares": true,
+   "hurtful": 0.026,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal se exam hai, all the best yaar",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "byeee",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.056,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal dekhte hai",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.044,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "chal nikal raha hu, kal milte class me",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.019,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Ludo me tujhe aaj harake rahunga 😂",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.14,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "jaldi aa, movie start hone wali hai",
+   "lang": "hi-Latn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "chalo phir kal, gudnight 😴",
+   "lang": "hi-Latn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tere ghar ke bahar hu, gate khol de, cake leke aaye hai 🎂",
+   "lang": "hi-Latn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal tiffin me tere liye aloo paratha laungi",
+   "lang": "hi-Latn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.031,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "match ke baad milte hai, jeetenge pakka 💪",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.024,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "maths ka homework ho gaya kya",
+   "lang": "hi-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "hindi ki poem yaad hui?",
+   "lang": "hi-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.08,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "physics ke numericals bahut tough hai yaar",
+   "lang": "hi-Latn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.024,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mummy ne aaj rajma chawal banaye 😋",
+   "lang": "hi-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.034,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pani puri khane chalein?",
+   "lang": "hi-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.095,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "maggi bana raha hu",
+   "lang": "hi-Latn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Virat ka century dekha?? 🏏",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.06,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "India jeet gaya!!",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.047,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "IPL me RCB ka kya hoga 😭",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "happy diwali yaar 🪔",
+   "lang": "hi-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "didi ki shaadi ki shopping chal rahi hai",
+   "lang": "hi-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.125,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "papa ne naya phone dilaya",
+   "lang": "hi-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "haha sahi tha",
+   "lang": "hi-Latn",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.023,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ek joke suno: teacher ne pucha sabse purana janwar kaun sa hai, bachha bola zebra kyunki wo black and white hai 😂",
+   "lang": "hi-Latn",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.315,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "result aa gaya, 92% 🥳",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.087,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "exam ki date aa gayi",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "class teacher ne seat change kar di",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "thoda sad feel ho raha hai aaj",
+   "lang": "hi-Latn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "thank you yaar, tu best hai",
+   "lang": "hi-Latn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.025,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mera tommy aaj naha ke bahut cute lag raha hai 🐶",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "valorant ka naya agent kaisa hai",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.665,
+   "danger": 0.002,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "chess khelega online?",
+   "lang": "hi-Latn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.023,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "acha thik hai",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.023,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kya chal raha hai",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.021,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "haan",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.881,
+   "danger": 0.005,
+   "flagged": true,
+   "urgent": false
+  },
+  {
+   "text": "science project ke liye chart paper kaun layega",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ok bhai",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.062,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mummy ne phone le liya tha sorry",
+   "lang": "hi-Latn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.02,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "school trip ka form bhar diya?",
+   "lang": "hi-Latn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.028,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "garmi bahut hai aaj",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.176,
+   "danger": 0.001,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "cricket ka naya bat liya 🏏",
+   "lang": "hi-Latn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ghar pahuch ke msg kar dena",
+   "lang": "hi-Latn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.026,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল দেখা হবে",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "পরে কথা বলি, বাই",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.026,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আচ্ছা বাই, কাল স্কুলে দেখা হবে",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল",
+   "lang": "bn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.035,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বিকালে মাঠে আসিস, ক্রিকেট খেলব",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "স্কুল ছুটির পর গেটে দাঁড়াস, আম্মু আমাদের দুজনকে আইসক্রিম খাওয়াবে",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.019,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "একটু অপেক্ষা কর, জুতা পরছি",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.043,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কোচিং শেষে বাসস্ট্যান্ডে থাকিস, একসাথে রিকশায় যাব",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "তোর জন্য ঝালমুড়ি নিয়ে আসব?",
+   "lang": "bn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল তোকে নোটগুলো দিয়ে দেব",
+   "lang": "bn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.023,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আমরা সন্ধ্যায় তোদের বাসায় আসছি, নানুর জন্মদিন 🎂",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "শনিবার তোর বাসায় আসব, প্রজেক্টটা শেষ করতে হবে",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.041,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "মেলায় তোকে খুঁজে নেব, ফোন চালু রাখিস",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.939,
+   "danger": 0.986,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "কাউকে বলিস না, শুক্রবার রিয়ার সারপ্রাইজ পার্টি 🎉",
+   "lang": "bn",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ফ্রি ফায়ারে আজ ১০টা কিল করলাম 🔥",
+   "lang": "bn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ফুটবলে ওদের ৫-১ গোলে উড়িয়ে দিয়েছি",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "তুই পাগল একটা, এত সুন্দর কার্ড বানিয়েছিস আমার জন্য ❤️",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.022,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "রাস্তায় আছি, ৫ মিনিট",
+   "lang": "bn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বাইরে দাঁড়িয়ে আছি, আব্বু গাড়িতে অপেক্ষা করছে",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল সকালে প্র্যাকটিস, দেরি করিস না",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.018,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বাই 👋",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "পরে দেখা হবে",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আসছি",
+   "lang": "bn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.031,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ঈদে তোদের বাসায় আসব, সেমাই রেখে দিস 😋",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.04,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "নামাজের পর মসজিদের সামনে থাকিস, একসাথে বাসায় যাব",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "টিউশনের পর অপেক্ষা করিস, আজ একসাথে ফুচকা খাব",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল নানুবাড়ি যাচ্ছি, সব কাজিনরা আসবে",
+   "lang": "bn",
+   "topic": "family",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "মাইনক্রাফটে আমার সাথে ড্রাগন মারতে চল",
+   "lang": "bn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.1,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "দেরি হয়ে গেছে, একটু দাঁড়া প্লিজ",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "তুই কোথায়? আমরা ক্যান্টিনে",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.014,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "গুড নাইট, সকালে বাসে দেখা হবে",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.02,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "পরশু খেলা আছে, ব্যাট নিয়ে আসিস",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আমি ৪টায় তোকে নিতে আসব, ভাইয়া সাথে থাকবে",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.024,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "হাসতে হাসতে মরে গেলাম 😂",
+   "lang": "bn",
+   "topic": "jokes",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কাল থেকে পরীক্ষা, শুভকামনা দোস্ত",
+   "lang": "bn",
+   "topic": "school",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "FIFA তে আজ তুই শেষ 😂 আমার টিম ফুল আপগ্রেড",
+   "lang": "bn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "পূজার ছুটিতে তোদের বাসায় আসব, মামা নিয়ে যাবে",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.022,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বিকালে পার্কে দেখা হবে, সাইকেল নিয়ে আসিস",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.015,
+   "danger": 0.02,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "অংকের হোমওয়ার্ক করেছিস?",
+   "lang": "bn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ইংরেজি রচনাটা কত শব্দের?",
+   "lang": "bn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.042,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আম্মু আজ বিরিয়ানি রান্না করেছে 😋",
+   "lang": "bn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "খুব ক্ষুধা লাগছে",
+   "lang": "bn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.329,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বাংলাদেশ জিতেছে!!! 🇧🇩",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "সাকিবের বোলিং দেখেছিস?",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.268,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ঈদ মোবারক সবাইকে 🌙",
+   "lang": "bn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.016,
+   "danger": 0.01,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ছোট বোন আমার খাতায় ছবি এঁকেছে 😭",
+   "lang": "bn",
+   "topic": "family",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "রেজাল্ট দিয়েছে, A+ পেয়েছি 🥳",
+   "lang": "bn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "স্যার আজ কুইজ নেননি",
+   "lang": "bn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.041,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "মন একটু খারাপ আজ",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.031,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ধন্যবাদ দোস্ত, তুই সেরা",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.018,
+   "danger": 0.017,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "আমাদের বিড়ালের বাচ্চা হয়েছে 🐱",
+   "lang": "bn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.18,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "লুডু খেলবি?",
+   "lang": "bn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.025,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ঠিক আছে",
+   "lang": "bn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "হাহাহা",
+   "lang": "bn",
+   "topic": "jokes",
+   "shares": false,
+   "hurtful": 0.278,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "কী করিস?",
+   "lang": "bn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.082,
+   "danger": 0.071,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "সায়েন্স ফেয়ারের জন্য রোবট বানাচ্ছি",
+   "lang": "bn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "বৃষ্টিতে আজ মাঠ ভিজে গেছে, খেলা হবে না",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.019,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "শুভ জন্মদিন 🎂 অনেক অনেক শুভেচ্ছা",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.017,
+   "danger": 0.009,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal dekha hobe 👋",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.023,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "pore kotha boli, bye",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bikale mathe ashish, football khelbo",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ektu wait kor, ashchi",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.015,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "school chutir por gate e thakis, ekshathe library te jabo",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.029,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tor jonno chocolate niye ashbo?",
+   "lang": "bn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.02,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "shondhay tor bashay ashchi, ammu pitha pathiyeche",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.464,
+   "danger": 0.929,
+   "flagged": true,
+   "urgent": true
+  },
+  {
+   "text": "kauke bolis na, Nabil er surprise party shonibar 🎂",
+   "lang": "bn",
+   "topic": "other",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.013,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "PUBG te aaj 8 ta kill 😎",
+   "lang": "bn",
+   "topic": "game",
+   "shares": true,
+   "hurtful": 0.018,
+   "danger": 0.007,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tui pagol 😂 thanks for the gift ❤️",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": true,
+   "hurtful": 0.033,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "raastay achi, 2 min",
+   "lang": "bn",
+   "topic": "plans",
+   "shares": true,
+   "hurtful": 0.019,
+   "danger": 0.012,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "kal shokale coaching e dekha hobe",
+   "lang": "bn",
+   "topic": "meetup",
+   "shares": true,
+   "hurtful": 0.021,
+   "danger": 0.006,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "bye dost",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.043,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "accha pore dekha hobe tahole",
+   "lang": "bn",
+   "topic": "goodbye",
+   "shares": true,
+   "hurtful": 0.035,
+   "danger": 0.011,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tuition er por bus stop e wait korish, ekshathe bari jabo",
+   "lang": "bn",
+   "topic": "waiting",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ami 5 tay tor bashay ashbo, Minecraft khelbo",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.016,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "eid er din bikale tor bashay ashbo, shobai mile salami gunbo 😂",
+   "lang": "bn",
+   "topic": "coming-over",
+   "shares": true,
+   "hurtful": 0.017,
+   "danger": 0.016,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "tor jonno notes photocopy kore anbo kal",
+   "lang": "bn",
+   "topic": "offer",
+   "shares": true,
+   "hurtful": 0.057,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "homework korsish?",
+   "lang": "bn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.031,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "math ta khub kothin",
+   "lang": "bn",
+   "topic": "homework",
+   "shares": false,
+   "hurtful": 0.039,
+   "danger": 0.003,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ammu aaj khichuri ranna koreche 😋",
+   "lang": "bn",
+   "topic": "food",
+   "shares": false,
+   "hurtful": 0.025,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "Bangladesh er match dekhchish?",
+   "lang": "bn",
+   "topic": "sports",
+   "shares": false,
+   "hurtful": 0.037,
+   "danger": 0.004,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "result bhalo hoyeche alhamdulillah",
+   "lang": "bn",
+   "topic": "school",
+   "shares": false,
+   "hurtful": 0.022,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "mon kharap lagche ektu",
+   "lang": "bn",
+   "topic": "feelings",
+   "shares": false,
+   "hurtful": 0.025,
+   "danger": 0.008,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "thik ache",
+   "lang": "bn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.032,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "ludo khelbi raat e?",
+   "lang": "bn",
+   "topic": "game",
+   "shares": false,
+   "hurtful": 0.03,
+   "danger": 0.005,
+   "flagged": false,
+   "urgent": false
+  },
+  {
+   "text": "amar biral ta khub dushtu 🐱",
+   "lang": "bn",
+   "topic": "other",
+   "shares": false,
+   "hurtful": 0.124,
+   "danger": 0.002,
+   "flagged": false,
+   "urgent": false
+  }
+ ],
+ "shares_threat_words": {
+  "n": 199,
+  "flagged": 10,
+  "urgent": 7,
+  "false_alarm_rate": 0.05,
+  "urgent_rate": 0.035
+ },
+ "ordinary": {
+  "n": 130,
+  "flagged": 6,
+  "urgent": 0,
+  "false_alarm_rate": 0.046,
+  "urgent_rate": 0.0
+ },
+ "all": {
+  "n": 329,
+  "flagged": 16,
+  "urgent": 7,
+  "false_alarm_rate": 0.049,
+  "urgent_rate": 0.021
+ }
+}

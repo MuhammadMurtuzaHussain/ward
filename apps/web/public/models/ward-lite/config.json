@@ -27,5 +27,5 @@
   "transformers_version": "5.21.0",
   "type_vocab_size": 2,
   "use_cache": true,
-  "vocab_size": 40359
+  "vocab_size": 40471
 }

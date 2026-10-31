@@ -15,6 +15,8 @@ env.localModelPath = MODELS;
 interface Meta {
   threshold: number;
   thresholds?: Partial<Record<"bengali" | "devanagari" | "latin", number>>;
+  /** The "danger" threshold, calibrated on the dev split (train/calibrate.py); `threshold` if missing. */
+  danger_threshold?: number;
 }
 
 function script(text: string): "bengali" | "devanagari" | "latin" {
@@ -55,7 +57,7 @@ export class WardLiteJudge implements Judge {
         const hurtful = sigmoid(data[k * 2]!);
         const danger = sigmoid(data[k * 2 + 1]!);
         const t = meta.thresholds?.[script(m.text)] ?? meta.threshold;
-        const isDanger = danger >= meta.threshold;
+        const isDanger = danger >= (meta.danger_threshold ?? meta.threshold);
         const hostile = hurtful >= t || isDanger;
         out.set(m.id, {
           hostile,
