@@ -108,8 +108,12 @@ When Ward finds one:
 3. If the danger involves images, Ward adds **Take It Down**, which helps remove nude or sexual
    images of under-18s, including ones the child sent themselves. The coach says in bold: stop
    replying, and never pay.
-4. Dangerous words stay visible even when Gemma reads them as a joke, with "It may be a joke, but
-   these words are serious. How did it feel?" We chose a gentle, visible flag over silence.
+4. When Gemma reads dangerous words as a joke, the message stays visible but is lowered from
+   dangerous to hurtful, with "It may be a joke, but these words are serious. How did it feel?"
+   That message on its own then does not make the result **Get help now** and does not bring up
+   the help block (`packages/engine/src/analyze.ts`). We chose a gentle, visible flag over
+   silence; the safeguarding review should check whether such a message should still show the
+   help block.
 5. A small model such as Ward Lite can raise a warning but can never lower one the word lists
    call dangerous.
 6. For the 14 to 17 band, an urgent result about their own chat points to the safety plan.
@@ -189,8 +193,9 @@ meaning, a severity and a note on why it is there. **Planned:** two-person revie
 word, one of them the language maintainer, and a published list of what each word means.
 
 **Gemma and other models.** Models only read, draft and give feedback. Ward Lite can only raise
-a warning. Gemma can clear a word-list hit it reads as harmless, except a dangerous one, which
-stays visible with "How did it feel?" ([section 4](#4-what-ward-does-when-it-sees-danger)). When
+a warning. Gemma can clear a word-list hit it reads as harmless. A dangerous one it cannot clear,
+but it can lower it to hurtful, and then that message alone no longer brings up "Get help now"
+or the help block ([section 4](#4-what-ward-does-when-it-sees-danger), item 4). When
 Gemma takes a second look at a message only Ward Lite flagged, it can clear a hurtful flag, but a
 dangerous one it can at most mark as unsure, never clear. Models cannot send anything and cannot
 reach the network except the child's own Ollama computer. Prompts sent to a model are in the open
