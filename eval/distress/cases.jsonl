@@ -1,0 +1,48 @@
+{"id":"en-d01","lang":"en","distress":true,"text":"i want to kill myself","note":"plain disclosure"}
+{"id":"en-d02","lang":"en","distress":true,"text":"honestly i just want to die","note":"soft phrase, no laugh"}
+{"id":"en-d03","lang":"en","distress":true,"text":"i've been cutting again and nobody knows","note":"self-harm"}
+{"id":"en-d04","lang":"en","distress":true,"text":"everyone would be better off without me","note":"burden"}
+{"id":"en-d05","lang":"en","distress":true,"text":"i don't want to be alive anymore","note":"passive wish"}
+{"id":"en-d06","lang":"en","distress":true,"text":"nobody would even miss me","note":"burden"}
+{"id":"en-d07","lang":"en","distress":true,"text":"im thinking about ending my life","note":"plan language"}
+{"id":"en-d08","lang":"en","distress":true,"text":"i want to kill myself lol","note":"a strong phrase counts even with a laugh"}
+{"id":"en-d09","lang":"en","distress":true,"text":"i feel so suicidal tonight","note":"suicidal"}
+{"id":"en-d10","lang":"en","distress":true,"text":"i wish i was never born","note":"passive wish"}
+{"id":"en-d11","lang":"en","distress":true,"text":"i'm gonna hurt myself","note":"self-harm intent"}
+{"id":"en-d12","lang":"en","distress":true,"text":"wanna dieeee","note":"stretched letters"}
+{"id":"en-n01","lang":"en","distress":false,"text":"i'm dying of laughter 😂","note":"hyperbole"}
+{"id":"en-n02","lang":"en","distress":false,"text":"i want to die 😂 this teacher is so extra","note":"soft phrase with a laugh"}
+{"id":"en-n03","lang":"en","distress":false,"text":"kms lmao i forgot my homework","note":"soft initialism with a laugh"}
+{"id":"en-n04","lang":"en","distress":false,"text":"he told me to kill myself","note":"a report of abuse, not the child's own wish"}
+{"id":"en-n05","lang":"en","distress":false,"text":"i almost killed myself laughing","note":"hyperbole"}
+{"id":"en-n06","lang":"en","distress":false,"text":"i would never hurt myself","note":"negated"}
+{"id":"en-n07","lang":"en","distress":false,"text":"go kill yourself","note":"second person is abuse, the packs' job"}
+{"id":"en-n08","lang":"en","distress":false,"text":"im dead 💀","note":"hyperbole"}
+{"id":"en-n09","lang":"en","distress":false,"text":"i cut myself on the paper lol","note":"an accident"}
+{"id":"en-n10","lang":"en","distress":false,"text":"she said i should kill myself","note":"a report of abuse"}
+{"id":"ur-d01","lang":"ur-Latn","distress":true,"text":"main marna chahti hoon","note":"I want to die","review":"native-speaker"}
+{"id":"ur-d02","lang":"ur-Latn","distress":true,"text":"mera jeene ka mann nahi karta","note":"I don't feel like living","review":"native-speaker"}
+{"id":"ur-d03","lang":"ur-Latn","distress":true,"text":"khud ko khatam kar dunga","note":"I'll end myself","review":"native-speaker"}
+{"id":"ur-d04","lang":"ur-Latn","distress":true,"text":"koi mujhe miss nahi karega","note":"nobody will miss me","review":"native-speaker"}
+{"id":"ur-d05","lang":"ur-Latn","distress":true,"text":"main mar jaun to acha hai","note":"soft, no laugh","review":"native-speaker"}
+{"id":"ur-n01","lang":"ur-Latn","distress":false,"text":"hans hans ke mar gayi main","note":"dying of laughter","review":"native-speaker"}
+{"id":"ur-n02","lang":"ur-Latn","distress":false,"text":"main mar jaungi hanste hanste 😂","note":"dying of laughter, soft phrase","review":"native-speaker"}
+{"id":"ur-n03","lang":"ur-Latn","distress":false,"text":"tu mar ja","note":"second person is abuse","review":"native-speaker"}
+{"id":"ur-n04","lang":"ur-Latn","distress":false,"text":"ammi mujhe maar dalengi agar fail hua","note":"maar (hit), not mar (die)","review":"native-speaker"}
+{"id":"ur-d06","lang":"ur","distress":true,"text":"میں مرنا چاہتی ہوں","note":"Urdu script, I want to die","review":"native-speaker"}
+{"id":"ur-d07","lang":"ur","distress":true,"text":"میرا جینے کا دل نہیں کرتا","note":"Urdu script, I don't feel like living","review":"native-speaker"}
+{"id":"ur-n05","lang":"ur","distress":false,"text":"تو مر جا","note":"Urdu script, second person","review":"native-speaker"}
+{"id":"hi-d01","lang":"hi-Latn","distress":true,"text":"suicide kar lunga main","note":"Hinglish","review":"native-speaker"}
+{"id":"hi-d02","lang":"hi-Latn","distress":true,"text":"ab jeena nahi chahti","note":"Hinglish, don't want to live","review":"native-speaker"}
+{"id":"hi-d03","lang":"hi-Latn","distress":true,"text":"mere bina sab khush rahenge","note":"Hinglish, burden","review":"native-speaker"}
+{"id":"hi-n01","lang":"hi-Latn","distress":false,"text":"bhai mar gaya hasi se 😂","note":"dying of laughter","review":"native-speaker"}
+{"id":"hi-n02","lang":"hi-Latn","distress":false,"text":"usne mujhe bola suicide kar le","note":"a report of abuse, second person","review":"native-speaker"}
+{"id":"hi-d04","lang":"hi","distress":true,"text":"मैं मरना चाहता हूँ","note":"Devanagari","review":"native-speaker"}
+{"id":"bn-d01","lang":"bn","distress":true,"text":"আমি মরে যেতে চাই","note":"I want to die","review":"native-speaker"}
+{"id":"bn-d02","lang":"bn","distress":true,"text":"আর বাঁচতে ইচ্ছে করে না","note":"I don't feel like living","review":"native-speaker"}
+{"id":"bn-d03","lang":"bn","distress":true,"text":"নিজেকে শেষ করে দেব","note":"I'll end myself","review":"native-speaker"}
+{"id":"bn-d04","lang":"bn","distress":true,"text":"কেউ আমাকে মিস করবে না","note":"nobody will miss me","review":"native-speaker"}
+{"id":"bn-n01","lang":"bn","distress":false,"text":"হাসতে হাসতে মরে যাচ্ছি","note":"dying of laughter","review":"native-speaker"}
+{"id":"bn-n02","lang":"bn","distress":false,"text":"তুই মরে যা","note":"second person is abuse","review":"native-speaker"}
+{"id":"bn-d05","lang":"bn-Latn","distress":true,"text":"ami more jete chai","note":"romanised","review":"native-speaker"}
+{"id":"bn-n03","lang":"bn-Latn","distress":false,"text":"tui more ja","note":"romanised second person","review":"native-speaker"}

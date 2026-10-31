@@ -1,6 +1,8 @@
 // The shapes everything in Ward passes around: a chat the child shared in, what each message
 // was judged to be, and the patterns that only show up across many messages.
 
+import type { DistressHit } from "./distress.ts";
+
 export type Category =
   | "insult" // name-calling, put-downs
   | "appearance" // body, face, skin, clothes
@@ -101,6 +103,8 @@ export interface Finding {
   unsure?: boolean;
   /** A bigger model's second look at a message only the small model flagged, with context. */
   secondLook?: { by: string; hostile: boolean; why?: string };
+  /** The sender sounds like they want to die or to hurt themselves, in their own words (distress.ts). */
+  distress?: DistressHit;
 }
 
 export type PatternKind =
@@ -144,4 +148,10 @@ export interface Analysis {
   senders: { name: string; hostile: number; worst: Severity; total: number }[];
   /** Which layers ran, so the UI can say how sure Ward is. */
   layers: { packs: string[]; models: string[] };
+  /**
+   * The child's own messages that sound like they want to die or to hurt themselves. Never part of
+   * the level, the patterns or a report: it only brings care and the helplines to the result.
+   * Missing on checks saved before Ward read for it.
+   */
+  selfDistress?: number[];
 }

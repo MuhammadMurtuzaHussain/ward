@@ -2,6 +2,7 @@
 // the same person again and again, many people at once, accounts that show up only to attack.
 // This file turns per-message judgements into those patterns and one overall level.
 
+import { selfDistress } from "./distress.ts";
 import { PackMatcher } from "./packs.ts";
 import type { Analysis, Category, Chat, Finding, Level, Message, ModelJudgement, Pattern, Severity } from "./types.ts";
 
@@ -140,7 +141,8 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
     const model = judgements.get(m.id);
     const c = combine(m, matcher, model);
     const atSelf = c.severity > 0 && aimedAtSelf(chat, m, opts.self, model);
-    return { message: m, ...c, model, atSelf };
+    const distress = m.media ? null : selfDistress(m.text);
+    return { message: m, ...c, model, atSelf, ...(distress ? { distress } : {}) };
   });
 
   // Small-model-only flags get a second look with context where a bigger model is available,
@@ -183,6 +185,7 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
     patterns,
     senders: [...bySender.values()].sort((a, b) => b.worst - a.worst || b.hostile - a.hostile),
     layers: { packs: matcher.langs, models },
+    selfDistress: opts.self ? findings.filter((f) => f.distress && f.message.sender === opts.self).map((f) => f.message.id) : [],
   };
 }
 

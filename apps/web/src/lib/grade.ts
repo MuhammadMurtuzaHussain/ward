@@ -1,12 +1,19 @@
 // Feedback on written answers. Gemma gives one warm, specific note; without a model, the child
-// sees an example answer to compare with. Writing is never marked wrong.
+// sees an example answer to compare with. Writing is never marked wrong. An answer that tells of
+// something real is never graded at all (disclosure below).
 
+import { selfDistress } from "@ward/engine";
 import type { Exercise } from "@ward/lessons";
 import { getState } from "./store.ts";
 import { phoneWrite } from "./phoneGemma.ts";
 import { desktopWrite } from "./desktopGemma.ts";
 import { t } from "../i18n/index.ts";
 import { DEMO } from "../demo/demo.ts";
+
+/** The child wrote that they want to die or to hurt themselves: care and help, not a grade. */
+export function disclosure(text: string): boolean {
+  return !!selfDistress(text);
+}
 
 export async function gradeWriting(ex: Extract<Exercise, { kind: "write" }>, text: string, age: string): Promise<string> {
   const fallback = t().lesson.oneWay(ex.example);

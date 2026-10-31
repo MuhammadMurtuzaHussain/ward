@@ -4,16 +4,18 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { CheckCircle, Fire, Lightning, X, XCircle } from "@phosphor-icons/react";
+import { CheckCircle, Fire, HandHeart, Lightning, X, XCircle } from "@phosphor-icons/react";
 import { lessonById, lessonXp, type ChatLine, type Exercise } from "@ward/lessons";
 import { Ghost } from "../components/Ghost.tsx";
+import { HelpNow } from "../components/HelpNow.tsx";
 import { Button } from "../components/ui.tsx";
 import { back, finishLesson, getState, liveStreak, useStore } from "../lib/store.ts";
-import { gradeWriting } from "../lib/grade.ts";
+import { disclosure, gradeWriting } from "../lib/grade.ts";
 import { Speak } from "../components/Speak.tsx";
 import { useT } from "../i18n/index.ts";
 
-type Answer = { right: boolean; why: string; mine?: string };
+/** `care`: the child wrote about something real (grade.ts), so there is no grade, only help. */
+type Answer = { right: boolean; why: string; mine?: string; care?: boolean };
 
 function shuffle<T>(xs: T[], seed: number) {
   const out = [...xs];
@@ -114,6 +116,11 @@ export function LessonPlayer({ id }: { id: string }) {
           {ex && (
             <motion.div key={`${pos}-${exIndex}`} initial={reduce ? false : { opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={reduce ? undefined : { opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
               <ExerciseView ex={ex} seed={exIndex! + pos} locked={!!answer} onAnswer={submit} age={p.age} />
+              {answer?.care && (
+                <div className="mt-6">
+                  <HelpNow />
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -126,15 +133,22 @@ export function LessonPlayer({ id }: { id: string }) {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`fixed inset-x-0 bottom-0 z-30 border-t pb-[env(safe-area-inset-bottom)] ${answer.right ? "border-safe/30 bg-[color-mix(in_srgb,var(--surface),var(--safe)_14%)]" : "border-glow/30 bg-[color-mix(in_srgb,var(--surface),var(--glow)_12%)]"}`}
+            className={`fixed inset-x-0 bottom-0 z-30 border-t pb-[env(safe-area-inset-bottom)] ${answer.care ? "border-line bg-surface" : answer.right ? "border-safe/30 bg-[color-mix(in_srgb,var(--surface),var(--safe)_14%)]" : "border-glow/30 bg-[color-mix(in_srgb,var(--surface),var(--glow)_12%)]"}`}
           >
             <div className="mx-auto flex max-w-2xl flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center">
-              <Ghost mood={answer.right ? "cheer" : "think"} size={64} className="hidden shrink-0 sm:inline-grid" />
+              <Ghost mood={answer.care ? "calm" : answer.right ? "cheer" : "think"} size={64} className="hidden shrink-0 sm:inline-grid" />
               <div className="flex-1">
-                <p className={`flex items-center gap-2 font-display text-xl font-bold ${answer.right ? "text-safe" : "text-glow"}`}>
-                  {answer.right ? <CheckCircle size={24} weight="fill" /> : <XCircle size={24} weight="fill" />}
-                  {answer.right ? t.lesson.right[pos % 3] : t.lesson.notQuite}
-                </p>
+                {answer.care ? (
+                  <p className="flex items-center gap-2 font-display text-xl font-bold text-glow">
+                    <HandHeart size={24} weight="fill" />
+                    {t.lesson.careTitle}
+                  </p>
+                ) : (
+                  <p className={`flex items-center gap-2 font-display text-xl font-bold ${answer.right ? "text-safe" : "text-glow"}`}>
+                    {answer.right ? <CheckCircle size={24} weight="fill" /> : <XCircle size={24} weight="fill" />}
+                    {answer.right ? t.lesson.right[pos % 3] : t.lesson.notQuite}
+                  </p>
+                )}
                 <p className="mt-1 leading-relaxed">{answer.why}</p>
                 <Speak text={answer.why} className="mt-2" />
               </div>
@@ -313,6 +327,9 @@ function ExerciseView({ ex, seed, locked, onAnswer, age }: { ex: Exercise; seed:
             className="mt-6 w-full resize-y rounded-card border-2 border-line bg-surface p-4 text-[1.05rem] leading-relaxed text-ink placeholder:text-dim/70 focus:border-glow focus:outline-none"
           />
           {checkBar(text.trim().length > 8 && !grading, async () => {
+            // Read for a disclosure first: that is answered with care and help, never graded, and
+            // never sent to a model.
+            if (disclosure(text)) return onAnswer({ right: true, why: t.lesson.careWhy, care: true });
             setGrading(true);
             const g = await gradeWriting(ex, text, age);
             setGrading(false);

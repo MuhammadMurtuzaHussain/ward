@@ -106,14 +106,14 @@ export function Result({ id }: { id: string }) {
   const plan = helpPlan(a, { self: s.self, age, refining: s.refining, corrections: childSaid });
   const base = verdict(a.level, age, s.self, t);
   const v =
-    plan.verdict === "unsure"
-      ? { ...base, title: t.result.unsureTitle, line: t.result.unsureLine }
-      : plan.verdict === "hold"
-        ? { mood: "think" as const, title: t.result.holdTitle, line: t.result.holdLine }
-        : base;
+    plan.verdict === "care"
+      ? { mood: "calm" as const, title: t.result.careTitle, line: t.result.careLine }
+      : plan.verdict === "unsure"
+        ? { ...base, title: t.result.unsureTitle, line: t.result.unsureLine }
+        : plan.verdict === "hold"
+          ? { mood: "think" as const, title: t.result.holdTitle, line: t.result.holdLine }
+          : base;
   const hostile = a.findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== s.self);
-  // The child's own messages that could land hard: often anger after being hurt. Named gently.
-  const ownHarsh = s.self ? a.findings.some((f) => f.severity >= 2 && f.message.sender === s.self) : false;
 
   return (
     <Screen wide>
@@ -140,6 +140,16 @@ export function Result({ id }: { id: string }) {
 
           {plan.helpNow && (
             <div className="grid gap-3">
+              {/* Bullying or danger leads, so the child's own distress gets its own card above the help. */}
+              {plan.care && plan.verdict !== "care" && (
+                <section aria-labelledby="care" className="flex gap-4 rounded-card border border-line bg-surface p-5">
+                  <HandHeart size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
+                  <div>
+                    <h2 id="care" className="font-display text-lg font-bold tracking-tight">{t.result.careTitle}</h2>
+                    <p className="mt-1 leading-relaxed">{t.result.careLine}</p>
+                  </div>
+                </section>
+              )}
               {plan.unconfirmed && <p className="text-sm text-dim">{t.result.unsureHelp}</p>}
               <HelpNow images={plan.images} />
             </div>
@@ -205,7 +215,8 @@ export function Result({ id }: { id: string }) {
             </button>
           )}
 
-          {ownHarsh && (
+          {/* The child's own messages that could land hard: often anger after being hurt. Named gently. */}
+          {plan.mean && (
             <button onClick={() => go({ name: "mean" })} className="flex items-start gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
               <ChatCircleText size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
               <span>
@@ -215,7 +226,8 @@ export function Result({ id }: { id: string }) {
             </button>
           )}
 
-          <LessonSuggestions analysis={a} self={s.self} />
+          {/* "Practise for next time" reads wrong beside a child who just said they want to die. */}
+          {!plan.care && <LessonSuggestions analysis={a} self={s.self} />}
 
           <HowWardKnows analysis={a} />
           {!s.refining && <GemmaOffer analysis={a} />}
@@ -381,7 +393,8 @@ export function Timeline({ analysis, self, help = false, fps: given }: { analysi
         out.push({ kind: "day", label: day });
         lastDay = day;
       }
-      const loud = f.severity > 0 && f.message.sender !== self;
+      // The child's own heavy words are never folded away as "ordinary".
+      const loud = (f.severity > 0 && f.message.sender !== self) || (!!f.distress && f.message.sender === self);
       if (loud) {
         flushQuiet();
         out.push({ kind: "msg", f });

@@ -88,3 +88,30 @@ test("history never remembers an unconfirmed danger as \"Looks okay\"", () => {
   assert.equal(historyLevel(chat("watch", [f("Sam", 3, { unsure: true })]), "Me"), "watch");
   assert.equal(historyLevel(chat("urgent", [f("Sam", 3)], ["danger"]), "Me"), "urgent");
 });
+
+test("the child's own distress brings care and the helplines, and never \"Was I mean?\"", () => {
+  // A model flagged the child's "i want to die" as harsh: it must not lead to "Was I mean?".
+  const sad = { ...chat("calm", [f("Sam", 0), f("Me", 3, { categories: ["selfharm"] })]), selfDistress: [1] };
+  for (const refining of [true, false]) {
+    const p = helpPlan(sad, { self: "Me", age: "11", refining });
+    assert.equal(p.verdict, "care", "never \"this looks okay\" or \"reading\" over it");
+    assert.equal(p.care, true);
+    assert.equal(p.helpNow, true);
+    assert.equal(p.mean, false);
+    assert.equal(p.practise, false);
+  }
+  assert.equal(helpPlan(sad, { self: "Me", age: "14", refining: false }).plan, true, "the safety plan is offered to 14 to 17");
+  assert.equal(historyLevel(sad, "Me"), "watch", "never remembered as \"Looks okay\"");
+  // Bullying still leads; the care sits beside it.
+  const both = { ...chat("bullying", [f("Sam", 2), f("Me", 0)], ["campaign"]), selfDistress: [1] };
+  const p = helpPlan(both, { self: "Me", age: "11", refining: false });
+  assert.deepEqual([p.verdict, p.care, p.helpNow, p.coach], ["bullying", true, true, true]);
+  // Checks saved before Ward read for distress have no field at all.
+  assert.equal(helpPlan(chat("calm", [f("Sam", 0)]), { self: "Me", age: "11", refining: false }).care, false);
+});
+
+test("\"Was I mean?\" is still offered for the child's own harsh words when there is no distress", () => {
+  const harsh = chat("watch", [f("Sam", 1), f("Me", 2)]);
+  assert.equal(helpPlan(harsh, { self: "Me", age: "11", refining: false }).mean, true);
+  assert.equal(helpPlan(harsh, { self: null, age: "11", refining: false }).mean, false, "checking for a friend: nothing is the child's own");
+});

@@ -74,6 +74,26 @@ accounts showed up and only attacked"; it never says who it thinks they are.
 - The coach says, in bold: stop replying, never pay. The result links Take It Down
   (takeitdown.ncmec.org), which removes images of under-18s, including ones they sent themselves.
 
+**The child's own distress.** The child writes "i want to die", "main marna chahti hoon" or
+"আমি মরে যেতে চাই" in the chat they check, or in a lesson. Bullied children are at higher risk
+of self-harm, and Ward reading only everyone else's messages would walk past it, or worse, ask
+the child "Was I mean?".
+
+- A separate first-person list (`packages/engine/src/distress.ts`) reads the child's own
+  messages for wanting to die or to hurt themselves. It never changes the level, the patterns or
+  a report, and it never counts anyone as hostile.
+- When it matches, the result opens with care ("Something you wrote sounds really heavy") and
+  the helplines, never "This looks okay", and "Was I mean?" isn't offered. In a lesson, an answer
+  like that isn't graded or sent to a model: Ward thanks the child and shows the helplines.
+- Kids say "i'm dying 😂" all the time. Hyperbole like that is left out, and the softer phrases
+  ("wanna die", "kms") don't count next to a laugh. "He told me to kill myself" is a report of
+  abuse, not distress. The cases, near misses included, are in `eval/distress/cases.jsonl`.
+- The English list follows crisis-line guidance. The Roman Urdu, Hinglish, Urdu, Hindi and Bangla
+  entries are a first draft that **needs review by native speakers** before anyone relies on
+  them; every one of those cases is marked `"review": "native-speaker"`.
+- A list can't catch everything a child might write. Every calm result keeps "It still feels
+  wrong", and the helplines are one tap from Home.
+
 ## Ward's own data
 
 **Someone finds the phone and reads the vault.** The vault is AES-GCM encrypted with a key from
