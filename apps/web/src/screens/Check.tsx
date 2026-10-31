@@ -8,7 +8,9 @@ import sample from "../../../../packages/engine/fixtures/pileon-roman-urdu.txt?r
 import { Ghost } from "../components/Ghost.tsx";
 import { HaloDrop } from "../components/HaloDrop.tsx";
 import { Button, Screen } from "../components/ui.tsx";
-import { parse, readChatFile, readScreenshots, startCheck } from "../lib/run.ts";
+import { modelStatus, parse, readChatFile, readScreenshots, startCheck } from "../lib/run.ts";
+import { liteAvailable } from "../lib/lite.ts";
+import { warmReader } from "../lib/warm.ts";
 import { setState, useStore } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
 import { DEMO } from "../demo/demo.ts";
@@ -36,6 +38,11 @@ export function Check() {
     }
     setStage({ at: "who", chat, title });
   }
+
+  // The deeper read's model starts loading now, while the child chooses a chat (warm.ts).
+  useEffect(() => {
+    void warmReader({ gemma: async () => (await modelStatus()).ok, lite: liteAvailable });
+  }, []);
 
   // A chat shared in from WhatsApp: take it once, then forget it.
   useEffect(() => {
