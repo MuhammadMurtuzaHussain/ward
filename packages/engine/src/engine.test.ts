@@ -11,6 +11,10 @@ test("normalize folds the ways kids dodge filters", () => {
   assert.equal(normalize("s.t.u.p.i.d"), "stupid");
   assert.equal(normalize("b​itch"), "bitch");
   assert.equal(normalize("score 100"), "score 100");
+  assert.equal(normalize("idiot!"), "idiot!");
+  assert.equal(normalize("jaa mar jaa!!"), "jaa mar jaa!!");
+  assert.equal(normalize("b!tch!!"), "bitch!!");
+  assert.equal(normalize("@ss"), "ass");
 });
 
 test("packs match spelling variants, phrases, and other scripts", () => {
@@ -118,7 +122,7 @@ test("GemmaJudge can run through any transport (the phone) and parses wrapped JS
     name: "Gemma 4 E2B (phone)",
     authority: "raise-only",
     transport: async (_system, user) => {
-      assert.match(user, /JUDGE #6/);
+      if (!/JUDGE #6/.test(user)) return '{"messages":[]}';
       return 'Here you go:\n```json\n{"messages":[{"id":6,"hostile":true,"severity":3,"categories":["selfharm"],"target":"Sam","why":"Tells Sam to kill themselves."}]}\n```';
     },
   });
@@ -126,4 +130,23 @@ test("GemmaJudge can run through any transport (the phone) and parses wrapped JS
   assert.equal(got.get(6)?.severity, 3);
   assert.equal(got.get(6)?.authority, "raise-only");
   assert.equal(judge.name, "Gemma 4 E2B (phone)");
+});
+
+test("GemmaJudge asks again for messages the model skipped", async () => {
+  const chat = parseChat(fixture("dm-english.txt"));
+  const { GemmaJudge } = await import("./index.ts");
+  const asked: number[][] = [];
+  const judge = new GemmaJudge({
+    transport: async (_system, user) => {
+      const ids = [...user.matchAll(/JUDGE #(\d+)/g)].map((m) => Number(m[1]));
+      asked.push(ids);
+      // The first, long request skips every other message; the retries answer everything.
+      const answer = asked.length === 1 ? ids.filter((_, k) => k % 2 === 0) : ids;
+      return JSON.stringify({ messages: answer.map((id) => ({ id, hostile: false, severity: 0, categories: [], target: null, why: "" })) });
+    },
+  });
+  const got = await judge.judge(chat, { self: "Sam" });
+  const all = chat.messages.filter((m) => !m.media && m.text.trim()).map((m) => m.id);
+  assert.deepEqual([...got.keys()].sort((a, b) => a - b), all);
+  assert.ok(asked.length > 1 && asked.slice(1).every((ids) => ids.length <= 5));
 });

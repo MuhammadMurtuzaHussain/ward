@@ -110,29 +110,37 @@ export class GemmaJudge implements Judge {
     const text = chat.messages.filter((m) => !m.media && m.text.trim());
     for (let i = 0; i < text.length; i += this.o.batch) {
       const batch = text.slice(i, i + this.o.batch);
-      const ctx = chat.messages.slice(Math.max(0, batch[0]!.id - this.o.context), batch[0]!.id);
-      const prompt = [
-        `Participants: ${chat.participants.join(", ")}.${self ? ` The child using this app is "${self}".` : ""}`,
-        "",
-        ...ctx.map((m) => line(m, false)),
-        ...batch.map((m) => line(m, true)),
-      ].join("\n");
-      const res = await this.chat(prompt);
-      for (const r of res) {
-        if (!batch.some((m) => m.id === r.id)) continue;
-        out.set(r.id, {
-          hostile: Boolean(r.hostile) && clampSeverity(r.severity) > 0,
-          severity: r.hostile ? clampSeverity(r.severity) : 0,
-          categories: (r.categories ?? []).filter((c): c is Category => (CATEGORIES as readonly string[]).includes(c)),
-          target: r.target ?? undefined,
-          why: r.why,
-          model: this.name,
-          authority: this.authority,
-        });
-      }
+      await this.judgeBatch(chat, self, batch, out);
+      // Models sometimes skip entries in a long list. A skipped message isn't "not hurtful", it's
+      // unread: ask once more for just those, in small groups.
+      const missed = batch.filter((m) => !out.has(m.id));
+      for (let k = 0; k < missed.length; k += 5) await this.judgeBatch(chat, self, missed.slice(k, k + 5), out);
       onProgress?.(Math.min(i + this.o.batch, text.length), text.length);
     }
     return out;
+  }
+
+  private async judgeBatch(chat: Chat, self: string | null, batch: Chat["messages"], out: Map<number, ModelJudgement>) {
+    const ctx = chat.messages.slice(Math.max(0, batch[0]!.id - this.o.context), batch[0]!.id);
+    const prompt = [
+      `Participants: ${chat.participants.join(", ")}.${self ? ` The child using this app is "${self}".` : ""}`,
+      "",
+      ...ctx.map((m) => line(m, false)),
+      ...batch.map((m) => line(m, true)),
+    ].join("\n");
+    const res = await this.chat(prompt);
+    for (const r of res) {
+      if (!batch.some((m) => m.id === r.id)) continue;
+      out.set(r.id, {
+        hostile: Boolean(r.hostile) && clampSeverity(r.severity) > 0,
+        severity: r.hostile ? clampSeverity(r.severity) : 0,
+        categories: (r.categories ?? []).filter((c): c is Category => (CATEGORIES as readonly string[]).includes(c)),
+        target: r.target ?? undefined,
+        why: r.why,
+        model: this.name,
+        authority: this.authority,
+      });
+    }
   }
 
   private async chat(prompt: string): Promise<{ id: number; hostile: boolean; severity: number; categories?: string[]; target?: string | null; why?: string }[]> {
