@@ -88,17 +88,23 @@ export async function handleGemma(req: IncomingMessage, res: ServerResponse): Pr
   }
   try {
     const m = await pickModel(key);
-    const r = await fetch(`${API}/models/${m}:generateContent`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { temperature: 0, maxOutputTokens: 2048 } }),
-    });
-    const j = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; error?: { message?: string } };
+    const call = () =>
+      fetch(`${API}/models/${m}:generateContent`, {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { temperature: 0, maxOutputTokens: 4096 } }),
+      });
+    // AI Studio sometimes answers 5xx under load; one retry covers most of it.
+    let r = await call();
+    if (r.status >= 500) r = await call();
+    const j = (await r.json()) as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[]; error?: { message?: string } };
     if (!r.ok) {
       console.log(new Date().toISOString(), `gemma demo: upstream ${r.status}`);
       return void send(res, origin, 502, { error: "Gemma didn't answer" }), true;
     }
-    send(res, origin, 200, { text: j.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "", model: m });
+    // Gemma 4 can return its thinking as separate parts; only the answer goes back.
+    const parts = j.candidates?.[0]?.content?.parts ?? [];
+    send(res, origin, 200, { text: parts.filter((p) => !p.thought).map((p) => p.text ?? "").join(""), model: m });
   } catch {
     send(res, origin, 502, { error: "Gemma didn't answer" });
   }
