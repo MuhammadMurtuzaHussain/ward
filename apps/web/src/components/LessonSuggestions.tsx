@@ -12,12 +12,12 @@ export function LessonSuggestions({ analysis, self }: { analysis: Analysis; self
   const picks = suggestLessons(analysis, self, p.age, p.lang, p.done);
   if (!picks.length) return null;
   return (
-    <section aria-labelledby="practise">
+    <section aria-labelledby="practise" className="min-w-0">
       <h2 id="practise" className="font-display text-lg font-bold tracking-tight">
         {t.suggest.title}
       </h2>
       <p className="mt-1 text-sm text-dim">{t.suggest.line}</p>
-      <ul className="mt-3 grid gap-2">
+      <ul className="mt-3 grid grid-cols-[minmax(0,1fr)] gap-2">
         {picks.map(({ unit, lesson, done }) => (
           <li key={lesson.id}>
             <button

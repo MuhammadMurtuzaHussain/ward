@@ -2,12 +2,14 @@
 // (the part a single-message filter can't see), who is doing it, and the timeline itself with
 // the hurtful messages lit up and the ordinary stretches folded away.
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   ArrowRight,
   CaretDown,
   ChatCircleText,
+  CheckCircle,
+  Flag,
   Lifebuoy,
   ChatsCircle,
   Ghost as GhostIcon,
@@ -19,11 +21,13 @@ import {
   Warning,
   type Icon,
 } from "@phosphor-icons/react";
-import type { Analysis, Finding, Level, PatternKind } from "@ward/engine";
+import { fingerprintMessages, type Analysis, type Category, type Chat, type Finding, type Level, type PatternKind } from "@ward/engine";
 import { Ghost, type Mood } from "../components/Ghost.tsx";
 import { HelpNow } from "../components/HelpNow.tsx";
 import { BackBar, Button, Pill, Screen } from "../components/ui.tsx";
-import { go, useStore, type AgeBand } from "../lib/store.ts";
+import { go, setCorrection, useStore, type AgeBand } from "../lib/store.ts";
+import { correctedView, judgedBy, type Correction, type CorrectionKind, type CorrectedView } from "../lib/corrections.ts";
+import { ShareCorrections } from "../components/ShareCorrections.tsx";
 import { SaveToVault } from "../components/SaveToVault.tsx";
 import { Speak } from "../components/Speak.tsx";
 import { patternText } from "../lib/patternText.ts";
@@ -162,7 +166,7 @@ export function Result({ id }: { id: string }) {
           <HowWardKnows analysis={a} />
         </div>
 
-        <Timeline analysis={a} self={s.self} />
+        <Timeline analysis={a} self={s.self} help={Boolean(danger)} />
       </div>
     </Screen>
   );
@@ -236,9 +240,27 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
 
 type Row = { kind: "msg"; f: Finding } | { kind: "fold"; count: number; from: number } | { kind: "day"; label: string };
 
-export function Timeline({ analysis, self }: { analysis: Analysis; self: string | null }) {
+/** `help`: the crisis block is on this screen, so a corrected dangerous message can point to it. */
+export function Timeline({ analysis, self, help = false }: { analysis: Analysis; self: string | null; help?: boolean }) {
   const t = useT();
   const [unfolded, setUnfolded] = useState<Set<number>>(new Set());
+  const [sharing, setSharing] = useState(false);
+  // Corrections are keyed by each message's fingerprint (the same one the vault takes), so a
+  // correction made here still shows when the chat is checked again or opened from the vault.
+  const [fps, setFps] = useState<Map<number, string>>(new Map());
+  useEffect(() => {
+    let live = true;
+    const messages = analysis.findings.map((f) => f.message);
+    void fingerprintMessages({ messages } as Chat).then((h) => live && setFps(new Map(messages.map((m, i) => [m.id, h[i]!]))));
+    return () => {
+      live = false;
+    };
+  }, [analysis]);
+  const corrections = useStore((s) => s.profile.corrections);
+  const corrected = analysis.findings.flatMap((f) => {
+    const c = f.severity > 0 && f.message.sender !== self ? corrections[fps.get(f.message.id) ?? ""] : undefined;
+    return c ? [{ correction: c, text: f.message.text }] : [];
+  });
   const rows = useMemo(() => {
     const out: Row[] = [];
     let lastDay = "";
@@ -296,20 +318,33 @@ export function Timeline({ analysis, self }: { analysis: Analysis; self: string 
                 </button>
               </li>
             );
-          return <Bubble key={r.f.message.id} f={r.f} mine={r.f.message.sender === self} />;
+          return <Bubble key={r.f.message.id} f={r.f} mine={r.f.message.sender === self} fp={fps.get(r.f.message.id)} help={help} />;
         })}
       </ol>
+      {corrected.length > 0 && (
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-4 text-sm">
+          <p className="text-dim">{t.correct.shareCount(corrected.length)}</p>
+          <button onClick={() => setSharing(true)} className="min-h-11 font-bold text-glow hover:underline">
+            {t.correct.shareOpen}
+          </button>
+        </div>
+      )}
+      {sharing && <ShareCorrections items={corrected} wordLists={analysis.layers.packs} onClose={() => setSharing(false)} />}
     </section>
   );
 }
 
-function Bubble({ f, mine }: { f: Finding; mine: boolean }) {
+function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string; help: boolean }) {
   const t = useT();
   const lang = useStore((s) => s.profile.lang);
+  const correction = useStore((s) => (fp ? s.profile.corrections[fp] : undefined));
   const m = f.message;
   // Word-list notes carry English glosses; in Urdu, show just the words that were caught.
   const why = lang === "ur" && !f.model && f.hits.length ? f.hits.map((h) => `"${h.term}"`).join("، ") : f.why;
-  const loud = f.severity > 0 && !mine;
+  const flagged = f.severity > 0 && !mine;
+  // The child's correction can quiet a message down, but never a dangerous one (corrections.ts).
+  const view = correctedView(f, correction);
+  const loud = flagged && view.keepWarning;
   const late = m.at && (m.at.getHours() >= 23 || m.at.getHours() < 5);
   const edge = f.severity >= 3 ? "border-alarm bg-alarm-soft" : f.severity === 2 ? "border-glow/70 bg-glow-soft" : f.severity === 1 ? "border-line bg-raised" : "border-transparent bg-raised/60";
   return (
@@ -319,7 +354,7 @@ function Bubble({ f, mine }: { f: Finding; mine: boolean }) {
           <span className={`font-bold ${loud ? "text-ink" : "text-dim"}`}>{mine ? t.result.youSender : m.sender}</span>
           {m.at && (
             <span className="text-dim">
-              {m.at.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" })}
+              <bdi>{m.at.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" })}</bdi>
               {late && <MoonStars size={12} weight="fill" className="ms-1 inline text-glow" aria-label={t.result.lateNight} />}
             </span>
           )}
@@ -332,7 +367,70 @@ function Bubble({ f, mine }: { f: Finding; mine: boolean }) {
           {why}
         </p>
       )}
+      {flagged && fp && <Correct f={f} fp={fp} c={correction} view={view} help={help} />}
     </li>
+  );
+}
+
+const KINDS: CorrectionKind[] = ["fine", "worse", "kind"];
+const CATEGORY_ORDER: Category[] = ["insult", "mockery", "appearance", "identity", "exclusion", "threat", "selfharm", "sexual", "exposure"];
+
+/** "This is wrong": a quiet link under a flagged message, opening three plain choices. */
+function Correct({ f, fp, c, view, help }: { f: Finding; fp: string; c?: Correction; view: CorrectedView; help: boolean }) {
+  const t = useT();
+  const [step, setStep] = useState<null | "ask" | "kind">(null);
+  const put = (kind: CorrectionKind, category?: Category) => {
+    setCorrection(fp, { kind, ...(category ? { category } : {}), at: Date.now(), ward: { severity: f.severity, categories: f.categories, by: judgedBy(f) } });
+    setStep(null);
+  };
+
+  if (c)
+    return (
+      <div role="status" className="mt-1 max-w-[88%] px-1 text-sm">
+        <p className={view.gated ? "text-ink" : "text-dim"}>
+          <CheckCircle size={14} weight="fill" className="me-1 inline text-glow" />
+          {c.kind === "fine" ? (view.gated ? t.correct.gated : t.correct.saidFine) : c.kind === "worse" ? t.correct.saidWorse : t.correct.saidKind(t.correct.categories[c.category ?? "insult"]!)}
+        </p>
+        <div className="flex flex-wrap gap-x-4">
+          {view.gated && help && (
+            <button onClick={() => document.getElementById("help-now")?.scrollIntoView({ behavior: "smooth", block: "center" })} className="min-h-10 font-bold text-alarm hover:underline">
+              {t.correct.showHelp}
+            </button>
+          )}
+          <button onClick={() => setCorrection(fp, null)} className="min-h-10 font-bold text-dim hover:text-ink">
+            {t.correct.undo}
+          </button>
+        </div>
+      </div>
+    );
+
+  if (!step)
+    return (
+      <button onClick={() => setStep("ask")} className="-my-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-xs font-bold text-dim hover:text-ink">
+        <Flag size={13} weight="bold" /> {t.correct.open}
+      </button>
+    );
+
+  return (
+    <div className="mt-1.5 w-full max-w-[88%] rounded-[calc(var(--r-card)-6px)] border border-line bg-surface p-3">
+      <p className="text-sm font-bold">{step === "ask" ? t.correct.ask : t.correct.whichKind}</p>
+      <div className={`mt-2 ${step === "ask" ? "grid gap-1.5" : "flex flex-wrap gap-1.5"}`}>
+        {step === "ask"
+          ? KINDS.map((k, i) => (
+              <button key={k} autoFocus={i === 0} onClick={() => (k === "kind" ? setStep("kind") : put(k))} className="min-h-11 rounded-btn bg-raised px-3 text-start text-sm font-semibold hover:bg-[color-mix(in_srgb,var(--raised),var(--ink)_6%)]">
+                {t.correct[k]}
+              </button>
+            ))
+          : CATEGORY_ORDER.filter((x) => !f.categories.includes(x)).map((x, i) => (
+              <button key={x} autoFocus={i === 0} onClick={() => put("kind", x)} className="min-h-10 rounded-full bg-raised px-3 text-sm font-semibold hover:bg-[color-mix(in_srgb,var(--raised),var(--ink)_6%)]">
+                {t.correct.categories[x]}
+              </button>
+            ))}
+      </div>
+      <button onClick={() => setStep(null)} className="mt-1 min-h-10 text-sm font-bold text-dim hover:text-ink">
+        {t.correct.cancel}
+      </button>
+    </div>
   );
 }
 

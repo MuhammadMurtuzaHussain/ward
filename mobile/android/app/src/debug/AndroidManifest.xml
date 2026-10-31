@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: lets CI run the "Give Ward to a friend" copy on the emulator
+     (mobile/ci/give-check.sh). Release builds don't have this receiver. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <receiver android:name=".GiveCheckReceiver" android:exported="true" />
+    </application>
+</manifest>

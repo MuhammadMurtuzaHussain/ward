@@ -20,8 +20,9 @@ export function normalize(text: string): string {
   let s = text.normalize("NFKC").replace(ZERO_WIDTH, "").toLowerCase();
   // Latin diacritics only; Urdu, Hindi and Bangla script pass through untouched.
   s = s.normalize("NFD").replace(/[̀-ͯ]/g, "").normalize("NFC");
-  // Leetspeak inside words ("l00ser", "b!tch"), but leave standalone numbers alone.
-  s = s.replace(/(?<=\p{L})[013457@$!|]+|[013457@$!|]+(?=\p{L})/gu, (m) =>
+  // Leetspeak inside words ("l00ser", "b!tch") or starting one ("@ss"), but not after one:
+  // "idiot!" is an insult with an exclamation mark, not "idioti". Standalone numbers stay.
+  s = s.replace(/[013457@$!|]+(?=\p{L})/gu, (m) =>
     [...m].map((c) => LEET[c] ?? c).join(""),
   );
   // "kuttaaaaa" -> "kuttaa", "stoooopid" -> "stoopid": keeps real doubles.

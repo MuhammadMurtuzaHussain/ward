@@ -30,6 +30,20 @@ test("every age band has a story", () => {
   for (const age of ["8", "11", "14"] as const) assert.ok(storiesFor(age).length >= 1, `no story for ${age}`);
 });
 
+test("every unit has a story in every age band", () => {
+  for (const age of ["8", "11", "14"] as const)
+    for (const u of UNITS) assert.ok(storiesFor(age, "en", u.id).length >= 1, `no ${age} story for unit ${u.id}`);
+});
+
+test("story ids are unique and a scene's choices lead to different scenes", () => {
+  assert.equal(new Set(STORIES.map((s) => s.id)).size, STORIES.length);
+  for (const s of STORIES)
+    for (const [id, scene] of Object.entries(s.scenes)) {
+      const next = scene.choices?.map((c) => c.next) ?? [];
+      assert.equal(new Set(next).size, next.length, `${s.id}/${id}: two choices lead to the same scene`);
+    }
+});
+
 test("the reader is never named or gendered", () => {
   for (const s of STORIES)
     for (const [id, scene] of Object.entries(s.scenes))
