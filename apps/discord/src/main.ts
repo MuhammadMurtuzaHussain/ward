@@ -5,7 +5,8 @@
 //   messages there as they arrive, tells moderators about dangerous ones, quietly checks on the
 //   person they were aimed at, and gives the sender a private chance to edit or delete. It never
 //   deletes, mutes or bans anyone itself.
-// Nothing is stored: no database, no message logs. Evidence lives in the teen's own DMs.
+// Ward keeps nothing itself: no database, no message logs. Evidence lives in the teen's own DMs,
+// and server-mode alerts stay in #ward-alerts like any other Discord message.
 
 import {
   AttachmentBuilder,
@@ -207,8 +208,8 @@ async function onServer(i: ChatInputCommandInteraction) {
       "",
       "**What server mode does**",
       "• Reads new messages as they arrive, with the same open engine as the app. Nothing is stored or logged.",
-      `• Dangerous messages (threats, urging self-harm, sexual pressure, threats to share private images or details) go to #${ALERTS} with a link, so a person decides what to do. Ward never deletes, mutes or bans.`,
-      "• The sender of a hurtful message gets a private nudge to edit or delete it. Add `ward: no-nudge` to the alerts channel's topic to turn this off.",
+      `• Dangerous messages (threats, urging self-harm, sexual pressure, threats to share private images or details) go to #${ALERTS} with a link, so a person decides what to do. Ward never deletes, mutes or bans. Alerts stay in that channel like any message.`,
+      "• The sender of a hurtful (not dangerous) message gets a private nudge to edit or delete it. Add `ward: no-nudge` to the alerts channel's topic to turn this off.",
       "• The person it was aimed at (by mention or reply) gets a private, kind check-in. Add `ward: no-checkin` to the topic to turn this off.",
       serverMode ? "" : "\n_This copy of Ward runs with server mode switched off by whoever hosts it._",
     ].join("\n"),
@@ -281,7 +282,9 @@ async function onMessage(m: Message) {
   }
 
   if (r.unsure) return void log(`server message: severity ${r.severity}, not sure (only Ward Lite, nothing around it): nothing sent`);
-  const nudge = r.severity >= 2 && !topic.includes("ward: no-nudge");
+  // Never nudge on a dangerous message: it would tip off someone making threats, and a child
+  // disclosing harm ("someone told me to kys") must never be told to delete it.
+  const nudge = r.severity >= 2 && !r.dangerous && !topic.includes("ward: no-nudge");
   if (nudge && !due(lastNudge, `${m.guildId}:${m.author.id}`, NUDGE_MS)) did.push("nudge skipped (sent one recently)");
   else if (nudge) {
     did.push("nudged sender");

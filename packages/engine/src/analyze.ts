@@ -53,6 +53,9 @@ const smallModelOnly = (f: Finding) => f.severity > 0 && f.hits.length === 0 && 
  */
 function backedUp(chat: Chat, findings: Finding[], f: Finding, self: string | null): boolean {
   const i = f.message.id;
+  // A dangerous message sent straight to the child, one to one, needs nothing else: a child who
+  // is being threatened or pressured for photos often freezes and doesn't reply.
+  if (self && f.severity >= 3 && chat.participants.filter((p) => p !== self).length === 1) return true;
   const words = (g: Finding) => g.severity > 0 && g.hits.length > 0 && g.message.sender !== self;
   if (findings.some((g) => words(g) && g.message.sender === f.message.sender)) return true;
   if (findings.some((g) => words(g) && Math.abs(g.message.id - i) <= 5)) return true;
@@ -148,11 +151,13 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
       const v = verdicts.get(f.message.id);
       if (!v || (!v.hostile && !opts.secondLook.canClear)) continue;
       f.secondLook = { by: opts.secondLook.name, hostile: v.hostile, why: v.why };
-      if (!v.hostile) Object.assign(f, { severity: 0, categories: [], why: "", atSelf: false });
+      // A second look never clears a dangerous flag; at most it makes Ward unsure of it.
+      if (!v.hostile && f.severity >= 3) f.unsure = true;
+      else if (!v.hostile) Object.assign(f, { severity: 0, categories: [], why: "", atSelf: false });
     }
   }
   if (opts.requireContext !== false)
-    for (const f of flagged) if (f.severity > 0 && !f.secondLook?.hostile && !backedUp(chat, findings, f, opts.self)) f.unsure = true;
+    for (const f of flagged) if (f.severity > 0 && !f.unsure && !f.secondLook?.hostile && !backedUp(chat, findings, f, opts.self)) f.unsure = true;
 
   const hostile = findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== opts.self);
   const toSelf = hostile.filter((f) => f.atSelf || !opts.self);
