@@ -9,11 +9,11 @@ World Solve problem [WS05937](https://www.worldsolve.org/index.php?view=problem&
 
 | WS05937 asks for | Today | The honest gap |
 | --- | --- | --- |
-| Works where resources are scarcest | Offline, free, no account; Roman Urdu, Hinglish and Bangla | Built for a child with their own phone. In Pakistan 50% of people aged 10+ own a phone (69% of men, 31% of women), and many children use a shared family phone. Pairing with a family computer doesn't fit most homes we're aiming at. |
-| Clear, measurable results | A scorecard of how well the *classifier* reads abuse | Nothing yet measures outcomes for *children*: less bullying, more telling, faster help. |
-| Identifies possible harms | [HARMS.md](HARMS.md) | Not reviewed by a child-protection professional. No safeguarding policy yet. |
+| Works where resources are scarcest | Offline, free, no account; Roman Urdu, Hinglish and Bangla; separate profiles on a shared phone | In Pakistan 50% of people aged 10+ own a phone (69% of men, 31% of women), and many children use a shared family phone. Shared-phone profiles exist, but once a profile is open, "Delete everything" asks for no PIN. Pairing with a family computer doesn't fit most homes we're aiming at. No release has been published, so today Ward reaches only people who can build it. |
+| Clear, measurable results | A scorecard and a red-team set of how well the *classifiers* read abuse ([REDTEAM.md](REDTEAM.md)) | Nothing yet measures outcomes for *children*: less bullying, more telling, faster help. Nothing yet measures the verdict a child sees on a whole chat, only single messages. |
+| Identifies possible harms | [HARMS.md](HARMS.md) and a draft [safeguarding policy](SAFEGUARDING.md) | Neither has been reviewed by a child-protection professional. No safeguarding lead and no contact address yet. |
 | Respects local agency | The child owns everything; communities can edit slang packs | No children, parents or teachers have shaped it yet. |
-| Maintainable and expandable by communities | Plain-JSON slang packs and lessons, MIT licence | No process for who adds words, who reviews them, or how a new language gets in. |
+| Maintainable and expandable by communities | Plain-JSON slang packs and lessons, MIT licence, a written process for language maintainers ([GOVERNANCE.md](GOVERNANCE.md#language-maintainers)) | Nobody fills those roles yet, and there is no contributor guide. |
 
 ## What the evidence says
 
@@ -49,21 +49,31 @@ the people and systems that already work, and make each of them work better.
 
 ## What's still missing, in order
 
-1. **Shared phones.** Separate profiles behind separate PINs, no message text in any preview, a
-   quick-exit button. This is the normal case in the communities we're aiming at, not an edge case.
-2. **Real reading on a cheap phone.** Gemma 3 1B failed our test (it cleared real insults as
-   harmless). The plan: use Gemma 4 as a teacher to label a large set of messages, have
-   children and teachers review a sample, and fine-tune a small student model (around 100 MB,
-   runs in the app) with Tinker. Ship it only if it beats the slang packs on the scorecard *and*
-   never lowers a dangerous message.
-3. **Urdu script and read-aloud** for younger children and lower literacy, then Sindhi, Pashto,
-   Punjabi, Hindi. Voice notes later; they're common in Pakistani chats.
-4. **Safeguarding.** A child-protection professional reviews every crisis path; a written
-   safeguarding policy; ethics approval before any pilot; a youth advisory group of 14 to 17
-   year olds who review lessons and wording.
-5. **Community upkeep.** One maintainer per language for slang packs, two-person review on every
+1. **A first release.** Nothing is downloadable yet: there is no tagged release, and the
+   download links and the "Give Ward" QR code wait for one. A release needs the signing key set
+   up and a build checked on a real phone first.
+2. **Shared phones, finished.** Built: separate profiles, an optional PIN for each, a quick-exit
+   button. Still to do: a PIN before "Delete everything", and closing the other ways a sibling
+   could see or wipe a child's checks. This is the normal case in the communities we're aiming
+   at, not an edge case.
+3. **Better reading on a cheap phone.** Gemma 3 1B failed our test (it cleared real insults as
+   harmless), so we distilled Ward Lite (37.7 MB, runs in the app, can only add warnings) from
+   public datasets and Gemma-written chats ([`train/`](../train/)). It is weakest on Bangla script,
+   sarcasm and quoting ([REDTEAM.md](REDTEAM.md)), and it gives no category: when only Ward Lite
+   catches a message, the phone can't tell a threat from sexual pressure. Next: more Bangla and Urdu-script data, a
+   category output, and a danger threshold checked on data the generator didn't write.
+4. **More languages and voice.** The whole app is in Urdu script today, and read-aloud works in
+   English, and in Urdu where the device has an Urdu voice. Next: Sindhi, Pashto, Punjabi,
+   Hindi, recorded Urdu narration, and voice notes, which are common in Pakistani chats.
+5. **A signed report.** The report's digest catches accidental damage and casual edits, not a
+   determined forger ([REPORT.md](REPORT.md#checking-a-report)). A next version could be signed by
+   the device, which would show which install of Ward made it (never what was said).
+6. **Safeguarding.** A child-protection professional reviews every crisis path and the draft
+   [safeguarding policy](SAFEGUARDING.md); a named safeguarding lead; ethics approval before any
+   pilot; a youth advisory group of 14 to 17 year olds who review lessons and wording.
+7. **Community upkeep.** One maintainer per language for slang packs, two-person review on every
    word added, a published list of what each word means and why it's there.
-6. **Growing up with it.** The path from 8 to 17 ends with the child helping others: older teens
+8. **Growing up with it.** The path from 8 to 17 ends with the child helping others: older teens
    become peer mentors and slang-pack reviewers.
 
 ## Measurement plan
@@ -104,7 +114,7 @@ device and is only shared if the child chooses to show it.
 
 | When | What | Done when |
 | --- | --- | --- |
-| Now to 3 months | Shared-phone mode, Urdu script, distilled phone model, safeguarding review, report co-designed with one helpline | A helpline and one school agree to pilot |
+| Now to 3 months | A first signed release, safeguarding review and a named lead, the rest of shared-phone mode, Ward Lite v2, report co-designed with one helpline | A helpline and one school agree to pilot |
 | 3 to 12 months | Stage 1 pilot in one city; publish results, good or bad | Go/no-go on the table above |
 | Year 2 to 3 | Stage 2 trial; second country through a partner (a child helpline or education NGO) | Published trial results |
 | To 2030 | Free public good adopted through school systems and child helplines; languages added by maintainers; Ward report accepted by helplines and platforms as an intake format | Used in schools in 3+ countries, maintained by people who aren't us |
