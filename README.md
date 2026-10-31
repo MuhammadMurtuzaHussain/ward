@@ -15,8 +15,8 @@ Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids 
 
 <!-- Download badges, for when the first release is tagged:
 <p align="center">
-<a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/latest/download/Ward-android.apk"><img src="https://img.shields.io/badge/Android-APK-0f1024?style=for-the-badge&logo=android&logoColor=ffb547" alt="Download for Android" /></a>
-<a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/latest"><img src="https://img.shields.io/badge/Desktop-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-0f1024?style=for-the-badge&logoColor=ffb547" alt="Desktop installers" /></a>
+<a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Android-APK-0f1024?style=for-the-badge&logo=android&logoColor=ffb547" alt="Download for Android" /></a>
+<a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Desktop-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-0f1024?style=for-the-badge&logoColor=ffb547" alt="Desktop installers" /></a>
 </p>
 -->
 <p align="center"><b>No release yet.</b> Until the first version is published, <a href="#run-it">build Ward from source</a>.</p>
