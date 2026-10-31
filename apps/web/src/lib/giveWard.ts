@@ -4,7 +4,9 @@
 
 import { Capacitor, registerPlugin } from "@capacitor/core";
 
-export const RELEASES_URL = "https://github.com/MuhammadMurtuzaHussain/ward/releases/latest";
+// The releases list, not /latest: every release is a prerelease for now, and GitHub never counts
+// a prerelease as "latest".
+export const RELEASES_URL = "https://github.com/MuhammadMurtuzaHussain/ward/releases";
 
 export interface ApkInfo {
   version: string;
