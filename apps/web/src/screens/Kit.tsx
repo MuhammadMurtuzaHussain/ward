@@ -8,11 +8,12 @@ import { unitsFor } from "@ward/lessons";
 import { BackBar, Button, Screen } from "../components/ui.tsx";
 import { UnitIcon } from "../components/UnitIcon.tsx";
 import { AGES } from "../lib/looks.ts";
-import { guessRegion } from "../lib/help.ts";
+import { RegionSelect } from "../components/HelpNow.tsx";
+import { chooseRegion, ELSEWHERE, regionById } from "../lib/help.ts";
 import { KIT, type Kit as KitText } from "../lib/kit.ts";
 import { emptyTally, loadClasses, saveClasses, score, SMALL, totalsCsv, type KitClass, type Tally } from "../lib/kitResults.ts";
 import { printPart } from "../lib/printPart.ts";
-import { uid, useStore, type AgeBand, type Lang } from "../lib/store.ts";
+import { getState, uid, useStore, type AgeBand, type Lang } from "../lib/store.ts";
 import { useT } from "../i18n/index.ts";
 
 type Tab = "term" | "plans" | "letter" | "survey" | "results";
@@ -137,9 +138,20 @@ function LessonPlans({ k }: { k: KitText }) {
   const lang = useStore((s) => s.profile.lang);
   const [age, setAge] = useState<AgeBand>("11");
   const units = unitsFor(age, lang);
-  const region = guessRegion();
+  // The teacher picks whose helplines go on the sheet; the guess only starts the picker.
+  const [regionId, setRegionId] = useState(() => chooseRegion(getState().profile.region));
+  const region = regionById(regionId);
+  const toolbar = (
+    <>
+      <AgePick age={age} setAge={setAge} />
+      <label className="flex flex-wrap items-center gap-2 text-sm font-bold text-dim">
+        {t.help.printFor}
+        <RegionSelect id="kit-region" value={regionId} onChange={setRegionId} />
+      </label>
+    </>
+  );
   return (
-    <Printable title={k.tabs.plans} lang={lang} toolbar={<AgePick age={age} setAge={setAge} />}>
+    <Printable title={k.tabs.plans} lang={lang} toolbar={toolbar}>
       {units.map((u, i) => (
         <article key={u.id} className={i ? "page-break mt-10 border-t border-line pt-10" : ""}>
           <div className="flex items-center gap-3">
@@ -175,7 +187,7 @@ function LessonPlans({ k }: { k: KitText }) {
             <PlanPart title={k.plans.closeTitle}>
               {k.plans.close}{" "}
               <b>
-                {region.lines.map((l) => `${l.name} ${l.number}`).join(" · ")}
+                <span dir="ltr">{region ? region.lines.map((l) => `${l.name} ${l.number}`).join(" · ") : `${ELSEWHERE.name}, ${ELSEWHERE.url.replace("https://", "")}`}</span>
               </b>
             </PlanPart>
             <PlanPart title={k.plans.tellTitle}>

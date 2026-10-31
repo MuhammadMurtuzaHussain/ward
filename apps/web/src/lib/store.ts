@@ -64,6 +64,8 @@ export interface Profile {
   readAloud: boolean;
   /** "This is wrong": the child's corrections, by message fingerprint. */
   corrections: Record<string, Correction>;
+  /** The helplines the child picked (a country id, or "OTHER"); null means guess from the time zone. */
+  region: string | null;
 }
 
 /** The single-profile key from before shared-phone mode; migrated into the "default" profile. */
@@ -108,6 +110,7 @@ const DEFAULTS: Profile = {
   vaultCheck: null,
   readAloud: false,
   corrections: {},
+  region: null,
 };
 
 function read<T>(key: string): T | null {

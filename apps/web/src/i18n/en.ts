@@ -157,9 +157,15 @@ export const en = {
   },
   help: {
     title: "Talk to someone now",
-    line: (emergency: string) => `You don't have to handle this alone. These people help children every day, and calling is free. If you're in danger right now, call ${emergency}.`,
+    line: (emergency: string, free = true) => `You don't have to handle this alone. These people help children every day${free ? ", and calling is free" : ""}. If you're in danger right now, call ${emergency}.`,
+    lineLocal: "You don't have to handle this alone. These people help children every day. If you're in danger right now, call your local emergency number.",
+    lineOther: "You don't have to handle this alone. Find A Helpline shows free helplines for children in your country. If you're in danger right now, call your local emergency number.",
+    find: "Find a helpline near you",
+    findNote: "Free, private helplines in more than 130 countries.",
     where: "Where are you?",
     elsewhere: "Somewhere else",
+    otherCountries: "Helplines in other countries",
+    printFor: "Helplines for",
   },
   coach: {
     title: "What to do",
