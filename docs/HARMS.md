@@ -87,6 +87,50 @@ determined adult with the device; it's a lock against a sibling or a classmate, 
 that's the privacy promise. Every result has "Save as evidence" next to "What do I do?" so saving
 is one tap away. "Forgot my PIN" means deleting the vault: there is no recovery, by design.
 
+## Ward for Discord
+
+Personal mode in Discord works like the app: a teen checks or saves a message and only they see
+the answer. Server mode is different. It is a moderator tool, off by default, and the one place
+Ward alerts adults. Its policy is [SAFEGUARDING.md section 13](SAFEGUARDING.md#13-ward-for-discord).
+
+**Adults get alerts the child never chose.** Everything in the app is built around Ward telling
+nobody. Server mode tells a server's moderators about dangerous messages.
+
+- It runs only when the host sets `WARD_SERVER_MODE=on` and a server creates a private
+  `#ward-alerts` channel. Without the setting, the bot can't read server messages at all.
+- It must not be offered publicly until a safeguarding reviewer has signed it off. The project's
+  own hosting file keeps it off.
+
+**A child telling what happened is treated as the bully.** "someone told me to kys" and "stop
+telling Sara to kys" carry the same words as the abuse, so the word lists flag them.
+
+- Before any nudge or check-in, Ward looks for someone telling what was said to them ("told me",
+  "mujhe kaha", "আমাকে বলেছে") or standing up for someone ("stop telling ..."). Then the writer
+  gets no nudge, nobody they mention gets a check-in (they are often the bully), and moderators
+  only hear that someone may need support, with the link.
+- The check is narrow and misses some. Ward never nudges the sender of a dangerous message at
+  all, so a disclosure Ward misses is still never told to delete itself.
+
+**A disclosure is copied to adults.** A message about self-harm may be a child asking for help.
+Those alerts carry the link, the channel and the kind only, never the words or a name, and so do
+dangerous messages Ward can't name a kind for.
+
+**Alerts outlive the moment.** Ward keeps nothing, but an alert is a Discord message that stays in
+`#ward-alerts` until a moderator deletes it. Moderators are told this in `/ward server`.
+
+**A nudge tips off someone making threats.** Ward nudges only the senders of hurtful messages,
+never dangerous ones, so nobody making a threat is warned to delete the proof.
+
+**A bully games it.** Someone can test messages against a server running Ward until it stops
+flagging them, or dress abuse up as a report to avoid a nudge. Ward ignores a bare "someone said",
+quotation marks, and "told me to tell you", and a dangerous message still reaches moderators
+whichever way it is framed. `/ward server` tells moderators Ward can be gamed and that a person
+decides, every time.
+
+**Members don't know they are being read.** `/ward server` gives moderators a notice to pin for
+members: what Ward reads, what goes to moderators, and that telling what happened won't get
+anyone in trouble.
+
 ## Ward isn't enough
 
 An app can't make bullying stop. Ward's job is to help a child see it clearly, keep proof, take
