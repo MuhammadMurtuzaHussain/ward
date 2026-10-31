@@ -18,7 +18,17 @@
     "productName": "Ward",
     "files": [
       "main.mjs",
-      "package.json"
+      "gemma.mjs",
+      "preload.cjs",
+      "package.json",
+      "!node_modules/node-llama-cpp/llama/gitRelease.bundle",
+      "!node_modules/node-llama-cpp/templates/**/*",
+      "!node_modules/@node-llama-cpp/*-cuda*/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/node-llama-cpp/bins/**/*",
+      "node_modules/node-llama-cpp/llama/localBuilds/**/*",
+      "node_modules/@node-llama-cpp/**/*"
     ],
     "extraResources": [
       {
@@ -58,5 +68,8 @@
   "devDependencies": {
     "electron": "^45.1.0",
     "electron-builder": "^26.18.0"
+  },
+  "dependencies": {
+    "node-llama-cpp": "3.22.2"
   }
 }

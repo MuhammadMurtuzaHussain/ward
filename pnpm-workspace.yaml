@@ -11,3 +11,5 @@ allowBuilds:
   # transformers.js runs in the browser (ONNX Runtime Web); its Node-only native pieces aren't built.
   onnxruntime-node: false
   protobufjs: false
+  # Desktop's bundled Gemma uses node-llama-cpp's prebuilt binaries; never build llama.cpp on install.
+  node-llama-cpp: false

@@ -4,6 +4,7 @@
 import type { Exercise } from "@ward/lessons";
 import { getState } from "./store.ts";
 import { phoneWrite } from "./phoneGemma.ts";
+import { desktopWrite } from "./desktopGemma.ts";
 import { t } from "../i18n/index.ts";
 
 export async function gradeWriting(ex: Extract<Exercise, { kind: "write" }>, text: string, age: string): Promise<string> {
@@ -29,7 +30,7 @@ Give two short sentences of feedback in plain words: first what they did well, t
     });
     if (r.ok) return ((await r.json()) as { message: { content: string } }).message.content.trim() || fallback;
   } catch {
-    // no computer Gemma: try the phone's
+    // no Ollama: try the Gemma built into Ward for desktop, then the phone's
   }
-  return (await phoneWrite(content)) ?? fallback;
+  return (await desktopWrite(content)) ?? (await phoneWrite(content)) ?? fallback;
 }

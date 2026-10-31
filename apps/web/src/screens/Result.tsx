@@ -12,6 +12,7 @@ import {
   Flag,
   Lifebuoy,
   ChatsCircle,
+  Desktop,
   Ghost as GhostIcon,
   HandPalm,
   MoonStars,
@@ -33,6 +34,7 @@ import { Speak } from "../components/Speak.tsx";
 import { patternText } from "../lib/patternText.ts";
 import { LessonSuggestions } from "../components/LessonSuggestions.tsx";
 import { locale, useT, type Dict } from "../i18n/index.ts";
+import { BUILT_IN_GEMMA, desktopStatus } from "../lib/desktopGemma.ts";
 
 const PATTERN_ICON: Record<PatternKind, Icon> = {
   danger: Warning,
@@ -164,6 +166,7 @@ export function Result({ id }: { id: string }) {
           <LessonSuggestions analysis={a} self={s.self} />
 
           <HowWardKnows analysis={a} />
+          {!s.refining && <GemmaOffer analysis={a} />}
         </div>
 
         <Timeline analysis={a} self={s.self} help={Boolean(danger)} />
@@ -225,7 +228,9 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
         <div className="grid gap-2 text-dim">
           <p>
             {t.result.howLists(analysis.layers.packs.length)}
-            {analysis.layers.models.includes("Ward Lite")
+            {analysis.layers.models.includes(BUILT_IN_GEMMA)
+              ? t.result.howBuiltIn
+              : analysis.layers.models.includes("Ward Lite")
               ? t.result.howLite
               : analysis.layers.models.length
                 ? t.result.howModel(analysis.layers.models.join(" + "))
@@ -235,6 +240,30 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * Ward for desktop, first use: no Gemma read this chat, and this computer could run the one built
+ * into Ward. Point to the download (Me), which explains it and shows the size first.
+ */
+function GemmaOffer({ analysis }: { analysis: Analysis }) {
+  const t = useT();
+  const [offer, setOffer] = useState(false);
+  const readByGemma = analysis.layers.models.some((m) => m !== "Ward Lite");
+  useEffect(() => {
+    if (!readByGemma) void desktopStatus().then((st) => setOffer(!!st?.available && st.supported && !st.downloaded));
+  }, [readByGemma]);
+  if (!offer) return null;
+  return (
+    <button onClick={() => go({ name: "me" })} className="flex items-start gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
+      <Desktop size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
+      <span className="min-w-0 flex-1">
+        <span className="block font-display font-bold">{t.desk.offer[0]}</span>
+        <span className="text-sm text-dim">{t.desk.offer[1]}</span>
+      </span>
+      <ArrowRight size={18} weight="bold" className="flip-rtl mt-1 text-glow" />
+    </button>
   );
 }
 

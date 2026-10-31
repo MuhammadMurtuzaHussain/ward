@@ -9,6 +9,8 @@ import { activeEntry, go, lockProfile, removeActiveProfile, setHideRecents, setP
 import { wipe } from "../lib/vault.ts";
 import { LookTile } from "./Onboarding.tsx";
 import { PhoneGemmaCard } from "../components/PhoneGemmaCard.tsx";
+import { DesktopGemmaCard } from "../components/DesktopGemmaCard.tsx";
+import { LabCard } from "../components/LabMode.tsx";
 import { useT } from "../i18n/index.ts";
 
 function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -129,7 +131,7 @@ export function Me() {
           </h2>
           <p className="mt-2 text-sm text-dim">{t.me.aiLine}</p>
           <div className="mt-3">
-            {status === null ? <Pill>{t.me.checking}</Pill> : status.ok ? <Pill tone="safe">{t.me.ready(status.model)}</Pill> : <Pill tone="glow">{t.me.notReady(status.reason)}</Pill>}
+            {status === null ? <Pill>{t.me.checking}</Pill> : status.ok ? <Pill tone="safe">{t.me.ready(status.via === "builtIn" ? t.desk.title : status.model)}</Pill> : <Pill tone="glow">{t.me.notReady(status.reason)}</Pill>}
           </div>
           <label htmlFor="model" className="mt-4 block text-sm font-bold text-dim">
             {t.me.model}
@@ -154,6 +156,8 @@ export function Me() {
           <p className="mt-2 text-xs text-dim">{t.me.addressHint}</p>
         </Card>
         <PhoneGemmaCard />
+        <DesktopGemmaCard ollamaReady={status?.ok === true && status.via === "ollama"} onChange={() => void modelStatus().then(setStatus)} />
+        <LabCard />
       </div>
 
       <section className="mt-10">

@@ -5,6 +5,7 @@
 import type { Analysis } from "@ward/engine";
 import { getState } from "./store.ts";
 import { phoneWrite } from "./phoneGemma.ts";
+import { desktopWrite } from "./desktopGemma.ts";
 import { t } from "../i18n/index.ts";
 
 export function templateDraft(a: Analysis, where: string, adult: string): string {
@@ -38,7 +39,7 @@ export async function gemmaDraft(a: Analysis, where: string, adult: string, age:
     });
     if (r.ok) return clean(((await r.json()) as { message: { content: string } }).message.content);
   } catch {
-    // no computer Gemma: try the phone's
+    // no Ollama: try the Gemma built into Ward for desktop, then the phone's
   }
-  return clean(await phoneWrite(content));
+  return clean((await desktopWrite(content, 0.4)) ?? (await phoneWrite(content)));
 }

@@ -1,6 +1,8 @@
 # Desktop installers for macOS (Apple Silicon and Intel), Windows and Linux. Run by hand from
 # the Actions tab (kept 14 days), or by pushing a v* tag, which publishes them on the Release.
 # Each packaged app is launched once (WARD_SMOKE) before it's kept. Unsigned for now.
+# Gemma's model is never in the installer (Ward downloads it on request); llama.cpp's binaries
+# for the runner's platform are, minus CUDA (Vulkan and CPU cover Windows and Linux).
 name: Desktop installers
 
 on:
@@ -53,6 +55,18 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq xvfb > /dev/null
           WARD_SMOKE=1 xvfb-run -a "${{ matrix.app }}" --no-sandbox
+      # The Gemma built into Ward (node-llama-cpp's prebuilt llama.cpp) must load in the packaged
+      # app, in lab mode. Allowed to fail: without it the feature hides and Ward still works, so
+      # a failure here shows as a warning on the run rather than blocking the installer.
+      - name: Built-in Gemma and lab mode
+        continue-on-error: true
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then
+            WARD_SMOKE=llama xvfb-run -a "${{ matrix.app }}" --no-sandbox --lab
+          else
+            WARD_SMOKE=llama "${{ matrix.app }}" --lab
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: ward-${{ matrix.name }}
