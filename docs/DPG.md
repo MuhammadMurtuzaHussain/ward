@@ -242,12 +242,23 @@ their title, name and contact information. The submission guide asks, if persona
 collected, for a link to the privacy policy or terms, and encourages listing the laws that
 apply.
 
-**Ward.** By design, Ward collects no personal data: no account, no server, no analytics, no
-telemetry. A child's chats are read on the device and forgotten unless saved, and saved
-evidence is encrypted. The one exception is a choice the family makes: a phone can be paired
-with the family's own computer running Ollama, and then the chats it checks are sent to that
-computer, over the home network and unencrypted, to be read there. This is the strongest privacy position available, and it is described in
-[README.md](../README.md), [HARMS.md](HARMS.md) and [SAFEGUARDING.md](SAFEGUARDING.md).
+**Ward.** By design, Ward collects no personal data: no account, no server of ours, no
+analytics, no telemetry. A child's chats are read on the device and forgotten unless saved, and
+saved evidence is encrypted. There are two exceptions, each chosen by whoever sets it up:
+
+- **A paired phone.** A phone can be paired with the family's own computer running Ollama, and
+  then the chats it checks are sent to that computer, over the home network and unencrypted, to
+  be read there.
+- **The optional Discord bot** (`apps/discord`) runs on a computer its operator hosts. In server
+  mode (on unless the operator turns it off) it receives the messages of the servers it is added
+  to, reads them in any server with a `#ward-alerts` channel, and posts dangerous ones, quoted,
+  to that private moderators' channel. If the operator sets `WARD_GEMMA_MODEL`, a message only
+  Ward Lite flagged is also sent to the operator's Ollama for a second look, with the messages
+  just before it.
+
+Nothing goes to the project in either case. Collecting nothing is the strongest privacy position
+available, and it is described in [README.md](../README.md), [HARMS.md](HARMS.md) and
+[SAFEGUARDING.md](SAFEGUARDING.md).
 
 **What is missing.**
 - **No privacy policy or terms of use** document. Even an app that collects nothing should say
@@ -262,8 +273,10 @@ computer, over the home network and unencrypted, to be read there. This is the s
 - **No statement from an authorised person**, which the indicator requires. `[Authorised
   representative: name, title and contact to be supplied.]`
 - Some network calls exist: the optional Ollama computer (which receives the chats it is asked
-  to read, as above), the optional model download and helpline links (which carry no chat). A
-  privacy policy must describe all of them.
+  to read, as above), the optional model download and helpline links (which carry no chat), and
+  the Discord bot, which talks to Discord and, if set up, to its operator's Ollama (as above). A
+  privacy policy must describe all of them, and the bot's operator is responsible for the
+  messages it reads on their server.
 
 **Status: not yet met.** The design supports it; the paperwork does not exist. This indicator
 needs work before submission.
