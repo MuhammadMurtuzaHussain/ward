@@ -11,6 +11,8 @@
     "eval": "node --experimental-strip-types eval/run.ts",
     "redteam": "node --experimental-strip-types eval/redteam/run.ts",
     "redteam:lite": "train/.venv/bin/python eval/redteam/score-lite.py",
+    "eval:chats": "node --experimental-strip-types eval/chats/run.ts",
+    "eval:chats:lite": "train/.venv/bin/python eval/chats/score-lite.py",
     "secondlook": "node --experimental-strip-types eval/secondlook/run.ts gemma4:e2b gemma4:e4b"
   }
 }

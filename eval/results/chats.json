@@ -1,0 +1,4454 @@
+{
+ "date": "2026-10-31",
+ "commit": "e547279",
+ "n": 128,
+ "tiers": [
+  "Word lists",
+  "Phone: lists + Ward Lite"
+ ],
+ "all": {
+  "Word lists": {
+   "n": 128,
+   "exact": 48,
+   "urgent": 28,
+   "missedUrgent": 23,
+   "missedButUnsure": 0,
+   "notUrgent": 100,
+   "falseUrgent": 5,
+   "calm": 40,
+   "calmFlagged": 12,
+   "under": 68,
+   "over": 12,
+   "matrix": {
+    "calm": {
+     "calm": 28,
+     "watch": 7,
+     "bullying": 0,
+     "urgent": 5
+    },
+    "watch": {
+     "calm": 15,
+     "watch": 13,
+     "bullying": 0,
+     "urgent": 0
+    },
+    "bullying": {
+     "calm": 24,
+     "watch": 6,
+     "bullying": 2,
+     "urgent": 0
+    },
+    "urgent": {
+     "calm": 22,
+     "watch": 1,
+     "bullying": 0,
+     "urgent": 5
+    }
+   }
+  },
+  "Phone: lists + Ward Lite": {
+   "n": 128,
+   "exact": 50,
+   "urgent": 28,
+   "missedUrgent": 14,
+   "missedButUnsure": 2,
+   "notUrgent": 100,
+   "falseUrgent": 21,
+   "calm": 40,
+   "calmFlagged": 17,
+   "under": 49,
+   "over": 29,
+   "matrix": {
+    "calm": {
+     "calm": 23,
+     "watch": 8,
+     "bullying": 0,
+     "urgent": 9
+    },
+    "watch": {
+     "calm": 12,
+     "watch": 8,
+     "bullying": 0,
+     "urgent": 8
+    },
+    "bullying": {
+     "calm": 21,
+     "watch": 2,
+     "bullying": 5,
+     "urgent": 4
+    },
+    "urgent": {
+     "calm": 14,
+     "watch": 0,
+     "bullying": 0,
+     "urgent": 14
+    }
+   }
+  }
+ },
+ "byLang": {
+  "Word lists": {
+   "en": {
+    "n": 32,
+    "exact": 16,
+    "urgent": 7,
+    "missedUrgent": 5,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 1,
+    "calm": 10,
+    "calmFlagged": 2,
+    "under": 14,
+    "over": 2,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 3,
+      "watch": 4,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 4,
+      "watch": 2,
+      "bullying": 2,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 5,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 2
+     }
+    }
+   },
+   "ur-Latn": {
+    "n": 32,
+    "exact": 11,
+    "urgent": 7,
+    "missedUrgent": 7,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 1,
+    "calm": 10,
+    "calmFlagged": 3,
+    "under": 18,
+    "over": 3,
+    "matrix": {
+     "calm": {
+      "calm": 7,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 3,
+      "watch": 4,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 6,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 7,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "hi-Latn": {
+    "n": 32,
+    "exact": 11,
+    "urgent": 7,
+    "missedUrgent": 4,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 2,
+    "calm": 10,
+    "calmFlagged": 5,
+    "under": 16,
+    "over": 5,
+    "matrix": {
+     "calm": {
+      "calm": 5,
+      "watch": 3,
+      "bullying": 0,
+      "urgent": 2
+     },
+     "watch": {
+      "calm": 4,
+      "watch": 3,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 6,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 3
+     }
+    }
+   },
+   "bn": {
+    "n": 32,
+    "exact": 10,
+    "urgent": 7,
+    "missedUrgent": 7,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 1,
+    "calm": 10,
+    "calmFlagged": 2,
+    "under": 20,
+    "over": 2,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 5,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 7,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   }
+  },
+  "Phone: lists + Ward Lite": {
+   "en": {
+    "n": 32,
+    "exact": 16,
+    "urgent": 7,
+    "missedUrgent": 1,
+    "missedButUnsure": 1,
+    "notUrgent": 25,
+    "falseUrgent": 8,
+    "calm": 10,
+    "calmFlagged": 4,
+    "under": 7,
+    "over": 9,
+    "matrix": {
+     "calm": {
+      "calm": 6,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "watch": {
+      "calm": 3,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "bullying": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 3,
+      "urgent": 2
+     },
+     "urgent": {
+      "calm": 1,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 6
+     }
+    }
+   },
+   "ur-Latn": {
+    "n": 32,
+    "exact": 11,
+    "urgent": 7,
+    "missedUrgent": 6,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 4,
+    "calm": 10,
+    "calmFlagged": 4,
+    "under": 14,
+    "over": 7,
+    "matrix": {
+     "calm": {
+      "calm": 6,
+      "watch": 3,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 2,
+      "watch": 3,
+      "bullying": 0,
+      "urgent": 2
+     },
+     "bullying": {
+      "calm": 5,
+      "watch": 1,
+      "bullying": 1,
+      "urgent": 1
+     },
+     "urgent": {
+      "calm": 6,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   },
+   "hi-Latn": {
+    "n": 32,
+    "exact": 13,
+    "urgent": 7,
+    "missedUrgent": 2,
+    "missedButUnsure": 0,
+    "notUrgent": 25,
+    "falseUrgent": 7,
+    "calm": 10,
+    "calmFlagged": 5,
+    "under": 10,
+    "over": 9,
+    "matrix": {
+     "calm": {
+      "calm": 5,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "watch": {
+      "calm": 2,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "bullying": {
+      "calm": 5,
+      "watch": 1,
+      "bullying": 1,
+      "urgent": 1
+     },
+     "urgent": {
+      "calm": 2,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 5
+     }
+    }
+   },
+   "bn": {
+    "n": 32,
+    "exact": 10,
+    "urgent": 7,
+    "missedUrgent": 5,
+    "missedButUnsure": 1,
+    "notUrgent": 25,
+    "falseUrgent": 2,
+    "calm": 10,
+    "calmFlagged": 4,
+    "under": 18,
+    "over": 4,
+    "matrix": {
+     "calm": {
+      "calm": 6,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 2
+     },
+     "watch": {
+      "calm": 5,
+      "watch": 2,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 5,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 2
+     }
+    }
+   }
+  }
+ },
+ "byScenario": {
+  "Word lists": {
+   "banter-group": {
+    "n": 12,
+    "exact": 6,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 0,
+    "calm": 12,
+    "calmFlagged": 6,
+    "under": 0,
+    "over": 6,
+    "matrix": {
+     "calm": {
+      "calm": 6,
+      "watch": 6,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "banter-dm": {
+    "n": 4,
+    "exact": 2,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 2,
+    "calm": 4,
+    "calmFlagged": 2,
+    "under": 0,
+    "over": 2,
+    "matrix": {
+     "calm": {
+      "calm": 2,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 2
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "everyday": {
+    "n": 8,
+    "exact": 8,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 0,
+    "calm": 8,
+    "calmFlagged": 0,
+    "under": 0,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "quoting-for-help": {
+    "n": 8,
+    "exact": 8,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 0,
+    "calm": 8,
+    "calmFlagged": 0,
+    "under": 0,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "friend-quoting": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 3,
+    "calm": 4,
+    "calmFlagged": 3,
+    "under": 0,
+    "over": 3,
+    "matrix": {
+     "calm": {
+      "calm": 1,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "game-talk": {
+    "n": 4,
+    "exact": 3,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 0,
+    "calm": 4,
+    "calmFlagged": 1,
+    "under": 0,
+    "over": 1,
+    "matrix": {
+     "calm": {
+      "calm": 3,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "one-off-insult": {
+    "n": 20,
+    "exact": 12,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 20,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 8,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 8,
+      "watch": 12,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "banter-crosses-line": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 3,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "sarcasm": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 4,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 4,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "pileon": {
+    "n": 12,
+    "exact": 0,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 12,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 9,
+      "watch": 3,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "exclusion": {
+    "n": 12,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 11,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 11,
+      "watch": 0,
+      "bullying": 1,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "repeated": {
+    "n": 8,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 7,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 4,
+      "watch": 3,
+      "bullying": 1,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "lone-threat-dm": {
+    "n": 4,
+    "exact": 2,
+    "urgent": 4,
+    "missedUrgent": 2,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 2,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 2,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 2
+     }
+    }
+   },
+   "lone-threat-dm-reply": {
+    "n": 8,
+    "exact": 1,
+    "urgent": 8,
+    "missedUrgent": 7,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 7,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 7,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   },
+   "image-pressure": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 4,
+    "missedUrgent": 4,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 4,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 1,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "exposure-threat": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 4,
+    "missedUrgent": 4,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 4,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 4,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "selfharm-urging": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 4,
+    "missedUrgent": 3,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   },
+   "threat-group": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 4,
+    "missedUrgent": 3,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   }
+  },
+  "Phone: lists + Ward Lite": {
+   "banter-group": {
+    "n": 12,
+    "exact": 3,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 1,
+    "calm": 12,
+    "calmFlagged": 9,
+    "under": 0,
+    "over": 9,
+    "matrix": {
+     "calm": {
+      "calm": 3,
+      "watch": 8,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "banter-dm": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 4,
+    "calm": 4,
+    "calmFlagged": 4,
+    "under": 0,
+    "over": 4,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 4
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "everyday": {
+    "n": 8,
+    "exact": 8,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 0,
+    "calm": 8,
+    "calmFlagged": 0,
+    "under": 0,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "quoting-for-help": {
+    "n": 8,
+    "exact": 8,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 0,
+    "calm": 8,
+    "calmFlagged": 0,
+    "under": 0,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 8,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "friend-quoting": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 3,
+    "calm": 4,
+    "calmFlagged": 3,
+    "under": 0,
+    "over": 3,
+    "matrix": {
+     "calm": {
+      "calm": 1,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 3
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "game-talk": {
+    "n": 4,
+    "exact": 3,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 1,
+    "calm": 4,
+    "calmFlagged": 1,
+    "under": 0,
+    "over": 1,
+    "matrix": {
+     "calm": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "one-off-insult": {
+    "n": 20,
+    "exact": 8,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 20,
+    "falseUrgent": 7,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 5,
+    "over": 7,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 5,
+      "watch": 8,
+      "bullying": 0,
+      "urgent": 7
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "banter-crosses-line": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 1,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 1,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "sarcasm": {
+    "n": 4,
+    "exact": 0,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 4,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 4,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 4,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "pileon": {
+    "n": 12,
+    "exact": 3,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 1,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 8,
+    "over": 1,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 6,
+      "watch": 2,
+      "bullying": 3,
+      "urgent": 1
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "exclusion": {
+    "n": 12,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 12,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 11,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 11,
+      "watch": 0,
+      "bullying": 1,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "repeated": {
+    "n": 8,
+    "exact": 1,
+    "urgent": 0,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 8,
+    "falseUrgent": 3,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 4,
+    "over": 3,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 4,
+      "watch": 0,
+      "bullying": 1,
+      "urgent": 3
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     }
+    }
+   },
+   "lone-threat-dm": {
+    "n": 4,
+    "exact": 4,
+    "urgent": 4,
+    "missedUrgent": 0,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 0,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 4
+     }
+    }
+   },
+   "lone-threat-dm-reply": {
+    "n": 8,
+    "exact": 3,
+    "urgent": 8,
+    "missedUrgent": 5,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 5,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 5,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 3
+     }
+    }
+   },
+   "image-pressure": {
+    "n": 4,
+    "exact": 3,
+    "urgent": 4,
+    "missedUrgent": 1,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 1,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 1,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 3
+     }
+    }
+   },
+   "exposure-threat": {
+    "n": 4,
+    "exact": 2,
+    "urgent": 4,
+    "missedUrgent": 2,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 2,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 2,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 2
+     }
+    }
+   },
+   "selfharm-urging": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 4,
+    "missedUrgent": 3,
+    "missedButUnsure": 0,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   },
+   "threat-group": {
+    "n": 4,
+    "exact": 1,
+    "urgent": 4,
+    "missedUrgent": 3,
+    "missedButUnsure": 2,
+    "notUrgent": 0,
+    "falseUrgent": 0,
+    "calm": 0,
+    "calmFlagged": 0,
+    "under": 3,
+    "over": 0,
+    "matrix": {
+     "calm": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "watch": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "bullying": {
+      "calm": 0,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 0
+     },
+     "urgent": {
+      "calm": 3,
+      "watch": 0,
+      "bullying": 0,
+      "urgent": 1
+     }
+    }
+   }
+  }
+ },
+ "chats": [
+  {
+   "id": "bn-01",
+   "lang": "bn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Sabbir: “আরিফ তুই একটা আস্ত গাধা 😂 আবার ব্যাগ ফেলে এসেছিস” → severity 1, not at the child (\"গাধা\" (donkey (idiot)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Sabbir: “আরিফ তুই একটা আস্ত গাধা 😂 আবার ব্যাগ ফেলে এসেছিস” → severity 1, not at the child (\"গাধা\" (donkey (idiot)))",
+      "Tanim: “ওর মাথা হাঁটুতে থাকে” → severity 2 (hurtful 0.89)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-02",
+   "lang": "bn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Tisha: “তোরা দুইটাই পাগল, আমি ফার্স্ট হয়েছি বাই দ্য ওয়ে” → severity 1 (\"পাগল\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Tisha: “তোরা দুইটাই পাগল, আমি ফার্স্ট হয়েছি বাই দ্য ওয়ে” → severity 1 (\"পাগল\" (crazy))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-03",
+   "lang": "bn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-04",
+   "lang": "bn",
+   "scenario": "banter-dm",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Ritu: “ট্রিট না দিলে তোকে মেরে ফেলব 😂” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-05",
+   "lang": "bn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-06",
+   "lang": "bn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-07",
+   "lang": "bn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-08",
+   "lang": "bn",
+   "scenario": "friend-quoting",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Sumaiya: “একটা ফেক আইডি আমাকে লিখেছে 'মরে যা'” → severity 3 (\"মরে যা\" (go die))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Sumaiya: “একটা ফেক আইডি আমাকে লিখেছে 'মরে যা'” → severity 3 (\"মরে যা\" (go die))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-09",
+   "lang": "bn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-10",
+   "lang": "bn",
+   "scenario": "game-talk",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Naim: “আজ ফ্রি ফায়ারে তোকে খুন করে দেব ব্রো” → severity 3, unsure, not at the child (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-11",
+   "lang": "bn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-12",
+   "lang": "bn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Jannat: “তোকে কেন দেব, তুই তো কিছুই বুঝিস না, গাধা” → severity 1 (\"গাধা\" (donkey (idiot)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Jannat: “তোকে কেন দেব, তুই তো কিছুই বুঝিস না, গাধা” → severity 2 (hurtful 0.88)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-13",
+   "lang": "bn",
+   "scenario": "banter-crosses-line",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Zahid: “সত্যি বলতে তুই না এলে কারো কিছু যায় আসে না, এত বোরিং তুই” → severity 1, unsure (hurtful 0.72)",
+      "Nafis: “জাহিদ থাম” → severity 2, unsure (hurtful 0.80)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-14",
+   "lang": "bn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Sinthia: “নিশাত তুই প্রতিটা ছবিতে এত কালো আসিস কেন 😂” → severity 1, not at the child (\"কালো\" (dark (can be an insult)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Sinthia: “নিশাত তুই প্রতিটা ছবিতে এত কালো আসিস কেন 😂” → severity 2, not at the child (hurtful 0.82)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-15",
+   "lang": "bn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Sohel: “বলে রাখলাম, সবার সামনে অপমান হবি” → severity 2, unsure (hurtful 0.88)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-16",
+   "lang": "bn",
+   "scenario": "sarcasm",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-17",
+   "lang": "bn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Sajid: “অয়ন তুই একটা অদ্ভুত পাগল রে” → severity 1 (\"পাগল\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Sajid: “অয়ন তুই একটা অদ্ভুত পাগল রে” → severity 2 (hurtful 0.95)",
+      "Tareq: “সাজিদ তোর সমস্যা কী” → severity 2 (hurtful 0.89)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-18",
+   "lang": "bn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Rima: “মৌকে একদম জোকারের মতো লাগছিল” → severity 2, not at the child (hurtful 0.82)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-19",
+   "lang": "bn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Polash: “গরিব বেচারা” → severity 1, unsure, not at the child (hurtful 0.77)",
+      "Ripon: “মিঠু ফকির 😂” → severity 1, unsure, not at the child (hurtful 0.79)",
+      "Sumon: “ফকির ফকির ফকির” → severity 2, unsure, not at the child (hurtful 0.92)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-20",
+   "lang": "bn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Kawsar: “ওর জামা থেকেও গোবরের গন্ধ আসে” → severity 2, unsure, not at the child (hurtful 0.97)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-21",
+   "lang": "bn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-22",
+   "lang": "bn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-23",
+   "lang": "bn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-24",
+   "lang": "bn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Rony: “তুই দেখতে কী বিশ্রী” → severity 1, unsure (hurtful 0.71)",
+      "Rony: “কেউ তোকে পছন্দ করে না, তোর বন্ধুরাও না” → severity 2, unsure (hurtful 0.94)",
+      "Rony: “লুজার” → severity 2, unsure (hurtful 0.86)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-25",
+   "lang": "bn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Faisal: “জুবায়ের চুপ কর, এত কথা বলিস কেন” → severity 1, unsure, not at the child (hurtful 0.63)",
+      "Faisal: “টিচারের চামচা, লজ্জা কর” → severity 1, unsure (hurtful 0.74)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-26",
+   "lang": "bn",
+   "scenario": "lone-threat-dm",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Shanto: “কাল ছুটির পর দেখিস, তোর হাড্ডি ভেঙে দেব” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-27",
+   "lang": "bn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-28",
+   "lang": "bn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Biplob: “ফোনের কথা কাউকে বললে হাত ভেঙে দেব” → severity 2, unsure (hurtful 0.92)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-29",
+   "lang": "bn",
+   "scenario": "image-pressure",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "raju_dhaka: “তুমি অনেক কিউট” → severity 1, unsure (hurtful 0.56)",
+      "raju_dhaka: “না পাঠালে সবাইকে বলে দেব তুমি আমাকে কী বলেছ” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-30",
+   "lang": "bn",
+   "scenario": "exposure-threat",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "bn-31",
+   "lang": "bn",
+   "scenario": "selfharm-urging",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Koli: “নিপা তুই এখনো এখানে কেন” → severity 2, unsure, not at the child (hurtful 0.95)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bn-32",
+   "lang": "bn",
+   "scenario": "threat-group",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Hridoy: “কানন তোর জন্য কাপ হারলাম, কাল তোর মুখ ভেঙে দেব” → severity 3, unsure, not at the child (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-01",
+   "lang": "en",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Max: “bro you absolute idiot you left your bag on the bus again 😂” → severity 1, not at the child (\"idiot\" (idiot))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Max: “bro you absolute idiot you left your bag on the bus again 😂” → severity 1, not at the child (\"idiot\" (idiot))",
+      "Kai: “leo would lose his head if it wasn't attached lmao” → severity 2 (hurtful 0.97)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-02",
+   "lang": "en",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Ruby: “omg ella you dumb bitch you were supposed to save me a seat 😭” → severity 2 (\"dumb\" (dumb), \"bitch\" (abusive insult))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Ruby: “omg ella you dumb bitch you were supposed to save me a seat 😭” → severity 2 (\"dumb\" (dumb), \"bitch\" (abusive insult))",
+      "Mia: “i'll fight you both, that seat is mine forever” → severity 3 (danger 0.98)",
+      "Ruby: “ur so annoying i love u” → severity 3 (danger 0.95)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-03",
+   "lang": "en",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Dev: “noah is trash but he's our trash” → severity 2, unsure (hurtful 0.94)",
+      "Jay: “rematch tonight, i'm gonna destroy you all” → severity 3, unsure (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-04",
+   "lang": "en",
+   "scenario": "banter-dm",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Ava: “we're celebrating, i'm killing you if you say no” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-05",
+   "lang": "en",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Tom: “no it makes zero sense” → severity 1, unsure, not at the child (hurtful 0.52)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-06",
+   "lang": "en",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "en-07",
+   "lang": "en",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Hannah: “always” → severity 1, unsure (hurtful 0.52)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-08",
+   "lang": "en",
+   "scenario": "friend-quoting",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Freya: “someone sent me 'kill yourself' on my insta last night” → severity 3 (\"kill yourself\" (kill yourself))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Freya: “someone sent me 'kill yourself' on my insta last night” → severity 3 (\"kill yourself\" (kill yourself))",
+      "Freya: “some random account, i blocked it” → severity 2 (hurtful 0.81)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-09",
+   "lang": "en",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Chloe: “omg that's so creepy” → severity 1, unsure (hurtful 0.80)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-10",
+   "lang": "en",
+   "scenario": "game-talk",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Finn: “i'm gonna murder you in the final round” → severity 3, unsure, not at the child (danger 0.99)",
+      "Arlo: “luca's headshots are insane today” → severity 2, unsure (hurtful 0.89)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-11",
+   "lang": "en",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "en-12",
+   "lang": "en",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Harper: “ugh why would i give them to you, you never pay attention you're so dumb” → severity 1 (\"dumb\" (dumb))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Harper: “ugh why would i give them to you, you never pay attention you're so dumb” → severity 1 (\"dumb\" (dumb))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-13",
+   "lang": "en",
+   "scenario": "banter-crosses-line",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Leo: “honestly nobody would even notice if you stopped coming, you're that boring” → severity 1 (\"stupid\" (stupid))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Leo: “honestly nobody would even notice if you stopped coming, you're that boring” → severity 3 (danger 0.97)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-14",
+   "lang": "en",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Maya: “amira why do you always look like you just woke up 😂” → severity 2, unsure (hurtful 0.95)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-15",
+   "lang": "en",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Kyle: “you're actually useless at football, don't bother trying out” → severity 1 (\"useless\" (useless))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kyle: “you're actually useless at football, don't bother trying out” → severity 1 (\"useless\" (useless))",
+      "Kyle: “just saying, you'll embarrass yourself” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-16",
+   "lang": "en",
+   "scenario": "sarcasm",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "en-17",
+   "lang": "en",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Ryan: “ali you're such a weirdo lol” → severity 1 (\"weirdo\" (weirdo))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Ryan: “ali you're such a weirdo lol” → severity 1 (\"weirdo\" (weirdo))",
+      "Ben: “ryan what's your problem” → severity 3, not at the child (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-18",
+   "lang": "en",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Mia: “because it's funny, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Mia: “did you see ella's video lol” → severity 1 (hurtful 0.53)",
+      "Tara: “ella you look like a fool honestly” → severity 2 (hurtful 0.90)",
+      "Lucy: “delete it before more people see 😂😂” → severity 3 (danger 0.98)",
+      "Mia: “because it's funny, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-19",
+   "lang": "en",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Ryan: “matt's shoes are from the bargain bin lmao” → severity 1 (hurtful 0.76)",
+      "Josh: “poor matt can't afford real ones” → severity 1 (hurtful 0.72)",
+      "Leo: “tramp tramp tramp” → severity 2 (hurtful 0.80)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-20",
+   "lang": "en",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Holly: “aisha smells like curry again” → severity 2, unsure (hurtful 0.86)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-21",
+   "lang": "en",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Sophie: “ok making it now, don't add her” → severity 2 (\"dont add her\" (don't add her))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Lily: “without chloe right? 😂” → severity 1 (hurtful 0.54)",
+      "Mia: “obviously, nobody wants her there” → severity 2 (hurtful 0.95)",
+      "Sophie: “ok making it now, don't add her” → severity 2 (\"dont add her\" (don't add her))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-22",
+   "lang": "en",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Liam: “yeah maybe find your own friends” → severity 3, unsure (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-23",
+   "lang": "en",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Zara: “everyone except cleo 💅” → severity 2, unsure (hurtful 0.95)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-24",
+   "lang": "en",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Tyler: “you're so ugly” → severity 1 (\"ugly\" (ugly))",
+      "Tyler: “no one likes you, not even your friends” → severity 2 (\"no one likes you\" (no one likes you))",
+      "Tyler: “loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Tyler: “you're so ugly” → severity 2 (hurtful 0.96)",
+      "Tyler: “no one likes you, not even your friends” → severity 2 (\"no one likes you\" (no one likes you))",
+      "Tyler: “loser” → severity 2 (hurtful 0.93)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-25",
+   "lang": "en",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Jake: “harry is such a teacher's pet it's pathetic” → severity 1 (\"pathetic\" (pathetic))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Jake: “harry stop talking you're so annoying” → severity 2 (hurtful 0.87)",
+      "Jake: “nobody asked you harry” → severity 1 (hurtful 0.66)",
+      "Jake: “harry is such a teacher's pet it's pathetic” → severity 1 (\"pathetic\" (pathetic))",
+      "Jake: “honestly go away” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-26",
+   "lang": "en",
+   "scenario": "lone-threat-dm",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Connor: “watch your back after school tomorrow, i'm going to hurt you” → severity 3 (\"watch your back\" (watch your back), \"after school\" (after school (can be a threat in context)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Connor: “watch your back after school tomorrow, i'm going to hurt you” → severity 3 (\"watch your back\" (watch your back), \"after school\" (after school (can be a threat in context)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-27",
+   "lang": "en",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Marcus: “if you say anything about friday i will find you and you'll regret it” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-28",
+   "lang": "en",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Dylan: “tell anyone about the phone and i'll break your arm” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-29",
+   "lang": "en",
+   "scenario": "image-pressure",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kai_22: “send me a pic of you, just for me” → severity 3 (danger 0.99)",
+      "Kai_22: “if you don't i'll tell everyone what you said to me” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-30",
+   "lang": "en",
+   "scenario": "exposure-threat",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Alex99: “i still have the photo you sent” → severity 3 (danger 0.99)",
+      "Alex99: “send another one or i post it in your school group” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-31",
+   "lang": "en",
+   "scenario": "selfharm-urging",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kim: “honestly just kys” → severity 3 (\"kys\" (kill yourself))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kim: “honestly just kys” → severity 3 (\"kys\" (kill yourself))",
+      "Lou: “lmao” → severity 1 (hurtful 0.68)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "en-32",
+   "lang": "en",
+   "scenario": "threat-group",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Ali: “ravi you made us lose the cup, i'm going to smash your face in tomorrow” → severity 3, unsure (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-01",
+   "lang": "hi-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Aditya: “abe arjun tu kitna bada chutiya hai, phir se tiffin bhool gaya 😂” → severity 2 (\"chutiya\" (vulgar insult))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Aditya: “abe arjun tu kitna bada chutiya hai, phir se tiffin bhool gaya 😂” → severity 2 (\"chutiya\" (vulgar insult))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-02",
+   "lang": "hi-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Ananya: “tum dono pagal ho, love you” → severity 1 (\"pagal\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Ananya: “oye ishita, saali tune meri seat kisi aur ko de di 😭” → severity 2 (hurtful 0.95)",
+      "Ananya: “tum dono pagal ho, love you” → severity 1 (\"pagal\" (crazy))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-03",
+   "lang": "hi-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Vikram: “manav bhai tu toh noob hai, har round mein pehle marta hai 😂” → severity 2, unsure (hurtful 0.91)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-04",
+   "lang": "hi-Latn",
+   "scenario": "banter-dm",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Riya: “party nahi di toh jaan se maar dungi 😂” → severity 3 (\"jaan se maar\" (kill), \"maar dunga\" (I'll beat / kill you))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Riya: “party nahi di toh jaan se maar dungi 😂” → severity 3 (\"jaan se maar\" (kill), \"maar dunga\" (I'll beat / kill you))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-05",
+   "lang": "hi-Latn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-06",
+   "lang": "hi-Latn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-07",
+   "lang": "hi-Latn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-08",
+   "lang": "hi-Latn",
+   "scenario": "friend-quoting",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Nisha: “kisi fake id ne mujhe bola 'jaa ke mar ja' insta pe” → severity 3 (\"mar ja\" (go die))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Nisha: “kisi fake id ne mujhe bola 'jaa ke mar ja' insta pe” → severity 3 (\"mar ja\" (go die))",
+      "Nisha: “pata nahi, block kar diya” → severity 2 (hurtful 0.88)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-09",
+   "lang": "hi-Latn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Aarti: “yeh toh bahut creepy hai, block kar” → severity 1, unsure (hurtful 0.66)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-10",
+   "lang": "hi-Latn",
+   "scenario": "game-talk",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Aman: “gg, agli baar dekh lena” → severity 2 (\"dekh lena\" (you'll see (a threat)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Aman: “aaj free fire mein tera khoon kar dunga bro” → severity 3, not at the child (danger 0.99)",
+      "Aman: “gg, agli baar dekh lena” → severity 2 (\"dekh lena\" (you'll see (a threat)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-11",
+   "lang": "hi-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Nikhil: “tu toh sab khud kha jayega moteee 😂” → severity 2 (\"moti\" (fat (girl)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Nikhil: “tu toh sab khud kha jayega moteee 😂” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-12",
+   "lang": "hi-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Shreya: “tujhe kyun du, tujhe waise bhi kuch samajh nahi aata, buddhu” → severity 3 (danger 0.96)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-13",
+   "lang": "hi-Latn",
+   "scenario": "banter-crosses-line",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Mohit: “sach bolu toh tu na aaye toh kisi ko fark nahi padega, itna boring hai tu” → severity 1, unsure (hurtful 0.69)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-14",
+   "lang": "hi-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Tanya: “khushi tu har photo mein itni kaali kyun aati hai 😂” → severity 2 (\"kaali\" (dark-skinned (as an insult)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Tanya: “khushi tu har photo mein itni kaali kyun aati hai 😂” → severity 2 (\"kaali\" (dark-skinned (as an insult)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-15",
+   "lang": "hi-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Akash: “bas bata raha hu, sabke saamne bezzati hogi” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-16",
+   "lang": "hi-Latn",
+   "scenario": "sarcasm",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-17",
+   "lang": "hi-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Rishi: “kunal tu toh weirdo hai yaar, pagal” → severity 1 (\"weirdo\" (weirdo), \"pagal\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Rishi: “kunal tu toh weirdo hai yaar, pagal” → severity 1 (\"weirdo\" (weirdo), \"pagal\" (crazy))",
+      "Parth: “rishi tera kya problem hai” → severity 2, not at the child (hurtful 0.93)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-18",
+   "lang": "hi-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Ritika: “kyunki maza aa raha hai, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Bhavna: “tara ekdum joker lag rahi thi” → severity 1 (hurtful 0.61)",
+      "Ritika: “kyunki maza aa raha hai, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-19",
+   "lang": "hi-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Deepak: “mohan ke joote dekho, footpath se liye hai 😂” → severity 1 (hurtful 0.52)",
+      "Sunny: “gareeb hai bechara” → severity 1 (hurtful 0.71)",
+      "Rocky: “mohan bhikari 😂” → severity 2 (hurtful 0.88)",
+      "Vicky: “bhikari bhikari bhikari” → severity 2 (hurtful 0.86)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-20",
+   "lang": "hi-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-21",
+   "lang": "hi-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-22",
+   "lang": "hi-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Ishaan: “tere liye hamesha full hoti hai lakshya, side mein baith ke dekh” → severity 2, unsure (hurtful 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-23",
+   "lang": "hi-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-24",
+   "lang": "hi-Latn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Abhishek: “loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Abhishek: “koi tujhe pasand nahi karta, tere dost bhi nahi” → severity 3 (danger 0.99)",
+      "Abhishek: “loser” → severity 2 (hurtful 0.93)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-25",
+   "lang": "hi-Latn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Raj: “ayush chup kar, kitna bolta hai” → severity 2, unsure (hurtful 0.86)",
+      "Raj: “nikal yahan se” → severity 2, unsure (hurtful 0.81)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-26",
+   "lang": "hi-Latn",
+   "scenario": "lone-threat-dm",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Lucky: “kal chhutti ke baad dekh, haddi tod dunga teri” → severity 3 (\"haddi tod\" (break your bones), \"tod dunga\" (I'll break (you)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Lucky: “kal chhutti ke baad dekh, haddi tod dunga teri” → severity 3 (\"haddi tod\" (break your bones), \"tod dunga\" (I'll break (you)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-27",
+   "lang": "hi-Latn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-28",
+   "lang": "hi-Latn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Bunty: “phone wali baat kisi ko batayi toh haath tod dunga” → severity 3 (\"tod dunga\" (I'll break (you)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Bunty: “phone wali baat kisi ko batayi toh haath tod dunga” → severity 3 (\"tod dunga\" (I'll break (you)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-29",
+   "lang": "hi-Latn",
+   "scenario": "image-pressure",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "rahul_x_07: “ek pic bhejo na sirf mere liye” → severity 2 (\"pic bhejo\" (send a picture))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "rahul_x_07: “ek pic bhejo na sirf mere liye” → severity 2 (\"pic bhejo\" (send a picture))",
+      "rahul_x_07: “nahi bheji toh sabko bata dunga tumne mujhse kya bola” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-30",
+   "lang": "hi-Latn",
+   "scenario": "exposure-threat",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "secret_keeper: “ek aur bhej warna school group mein daal dunga” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-31",
+   "lang": "hi-Latn",
+   "scenario": "selfharm-urging",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "hi-Latn-32",
+   "lang": "hi-Latn",
+   "scenario": "threat-group",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kishore: “lalit teri wajah se cup haare, kal tera muh tod dunga” → severity 3 (\"tod dunga\" (I'll break (you)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Jatin: “lalit ne goal mara” → severity 1 (hurtful 0.68)",
+      "Kishore: “lalit teri wajah se cup haare, kal tera muh tod dunga” → severity 3 (\"tod dunga\" (I'll break (you)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-01",
+   "lang": "ur-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Faizan: “abey ahmed tu kitna nalaiq hai yaar 😂 phir se bag bhool gaya” → severity 2 (hurtful 0.87)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-02",
+   "lang": "ur-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Maryam: “kamini tune mujhe bataya kyun nahi ke result aa gaya 😭” → severity 1, not at the child (\"kamina\" (scoundrel))",
+      "Sana: “dono pagal ho, mein first aayi hoon btw” → severity 1 (\"pagal\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Maryam: “kamini tune mujhe bataya kyun nahi ke result aa gaya 😭” → severity 1, not at the child (\"kamina\" (scoundrel))",
+      "Sana: “dono pagal ho, mein first aayi hoon btw” → severity 1 (\"pagal\" (crazy))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-03",
+   "lang": "ur-Latn",
+   "scenario": "banter-group",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Zain: “danish tu ullu ka pattha hai, goal khaali chhor diya” → severity 1 (\"ullu\" (owl (fool)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Zain: “danish tu ullu ka pattha hai, goal khaali chhor diya” → severity 1 (\"ullu\" (owl (fool)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-04",
+   "lang": "ur-Latn",
+   "scenario": "banter-dm",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Iqra: “agar party nahi di to qasam se maar dungi 😂” → severity 3 (\"maar dunga\" (I'll beat / kill you))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Iqra: “agar party nahi di to qasam se maar dungi 😂” → severity 3 (\"maar dunga\" (I'll beat / kill you))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-05",
+   "lang": "ur-Latn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Fatima: “mazmoon likhna hai, mera pasandeeda mausam” → severity 3, unsure, not at the child (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-06",
+   "lang": "ur-Latn",
+   "scenario": "everyday",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-07",
+   "lang": "ur-Latn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Arham: “haan bol” → severity 2, unsure (hurtful 0.88)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-08",
+   "lang": "ur-Latn",
+   "scenario": "friend-quoting",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Anum: “pata nahi, block kar diya” → severity 2, unsure (hurtful 0.88)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-09",
+   "lang": "ur-Latn",
+   "scenario": "quoting-for-help",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-10",
+   "lang": "ur-Latn",
+   "scenario": "game-talk",
+   "level": "calm",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": true,
+     "flagged": [
+      "Shahzaib: “gg, agli baar dekhna” → severity 3, unsure (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-11",
+   "lang": "ur-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Waleed: “tu to sab khud hi kha jaye ga motay 😂” → severity 2 (\"moti\" (fat (girl)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Waleed: “tu to sab khud hi kha jaye ga motay 😂” → severity 2 (\"moti\" (fat (girl)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-12",
+   "lang": "ur-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Hania: “tujhe kyun doon, tu waise bhi kuch nahi samajhti, bewaqoof” → severity 1 (\"bewakoof\" (idiot))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Hania: “tujhe kyun doon, tu waise bhi kuch nahi samajhti, bewaqoof” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-13",
+   "lang": "ur-Latn",
+   "scenario": "banter-crosses-line",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Faraz: “nabeel bas kar” → severity 1, unsure, not at the child (hurtful 0.65)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-14",
+   "lang": "ur-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Sidra: “kinza tu har photo mein kaali kyun lagti hai 😂” → severity 2 (\"kaali\" (dark-skinned (as an insult)))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Sidra: “kinza tu har photo mein kaali kyun lagti hai 😂” → severity 2 (\"kaali\" (dark-skinned (as an insult)))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-15",
+   "lang": "ur-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Arsalan: “tu football mein bilkul bekaar hai, trial dene mat aana” → severity 3 (danger 0.95)",
+      "Arsalan: “bas bata raha hoon, sab ke saamne bezti hogi teri” → severity 3 (danger 0.98)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-16",
+   "lang": "ur-Latn",
+   "scenario": "sarcasm",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-17",
+   "lang": "ur-Latn",
+   "scenario": "one-off-insult",
+   "level": "watch",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Raza: “huzaifa tu to ajeeb sa hai yaar, pagal” → severity 1 (\"pagal\" (crazy))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Raza: “huzaifa tu to ajeeb sa hai yaar, pagal” → severity 1 (\"pagal\" (crazy))",
+      "Adeel: “raza kya masla hai tera” → severity 2, not at the child (hurtful 0.95)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-18",
+   "lang": "ur-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Mehwish: “kyun ke mazay ki baat hai, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Mehwish: “kyun ke mazay ki baat hai, loser” → severity 1 (\"loser\" (loser))"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-19",
+   "lang": "ur-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "bullying",
+     "unsureDanger": false,
+     "flagged": [
+      "Kamran: “sufyan ke joote dekho, landa bazaar wale 😂” → severity 1 (hurtful 0.65)",
+      "Taimoor: “gareeb hai bechara” → severity 1 (hurtful 0.71)",
+      "Wahab: “faqeer faqeer faqeer” → severity 1 (hurtful 0.72)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-20",
+   "lang": "ur-Latn",
+   "scenario": "pileon",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Shoaib: “daniyal ki angrezi suno 😂 pendu kahin ka” → severity 1, unsure (hurtful 0.79)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-21",
+   "lang": "ur-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Bisma: “mariam ke baghair na? 😂” → severity 2, unsure (hurtful 0.81)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-22",
+   "lang": "ur-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Shan: “tumhare liye hamesha poori hoti hain talal, side pe baith ke dekho” → severity 2, unsure (hurtful 0.87)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-23",
+   "lang": "ur-Latn",
+   "scenario": "exclusion",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-24",
+   "lang": "ur-Latn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "watch",
+     "unsureDanger": false,
+     "flagged": [
+      "Shahrukh: “tu kitna badsoorat hai” → severity 2 (\"badsurat\" (ugly))",
+      "Shahrukh: “loser” → severity 1 (\"loser\" (loser))"
+     ]
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Shahrukh: “tu kitna badsoorat hai” → severity 2 (\"badsurat\" (ugly))",
+      "Shahrukh: “koi tujhe pasand nahi karta, tere dost bhi nahi” → severity 3 (danger 0.99)",
+      "Shahrukh: “loser” → severity 2 (hurtful 0.93)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-25",
+   "lang": "ur-Latn",
+   "scenario": "repeated",
+   "level": "bullying",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Imran: “mustafa chup kar, kitna bolta hai” → severity 2, unsure (hurtful 0.98)",
+      "Imran: “nikal yahan se” → severity 2, unsure (hurtful 0.81)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-26",
+   "lang": "ur-Latn",
+   "scenario": "lone-threat-dm",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "urgent",
+     "unsureDanger": false,
+     "flagged": [
+      "Kamil: “kal chutti ke baad dekhna, haddiyan tor doon ga teri” → severity 3 (danger 0.99)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-27",
+   "lang": "ur-Latn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": [
+      "Zohaib: “jumme wali baat kisi ko batayi to dhoond ke pachtaogi” → severity 1, unsure (hurtful 0.50)"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-28",
+   "lang": "ur-Latn",
+   "scenario": "lone-threat-dm-reply",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-29",
+   "lang": "ur-Latn",
+   "scenario": "image-pressure",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-30",
+   "lang": "ur-Latn",
+   "scenario": "exposure-threat",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-31",
+   "lang": "ur-Latn",
+   "scenario": "selfharm-urging",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  },
+  {
+   "id": "ur-Latn-32",
+   "lang": "ur-Latn",
+   "scenario": "threat-group",
+   "level": "urgent",
+   "results": {
+    "Word lists": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    },
+    "Phone: lists + Ward Lite": {
+     "level": "calm",
+     "unsureDanger": false,
+     "flagged": []
+    }
+   }
+  }
+ ],
+ "gemma": {}
+}
