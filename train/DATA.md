@@ -17,6 +17,43 @@ The scorecard's own splits (Roman Urdu validation, Bangla blindspot test, CB1 te
 
 The red-team set (`eval/redteam/`, see [docs/REDTEAM.md](../docs/REDTEAM.md)) is a test set too. **Nothing in `train/` may read `eval/redteam/`**, and no red-team message may be copied or paraphrased into training data or the synthetic-data prompts. `eval/redteam/leak.test.ts`, part of `pnpm test`, fails if any red-team text turns up in `train/data` or the training scripts, or if code here opens that folder.
 
+## Licences
+
+Checked on 2026-10-31 against each dataset's Hugging Face page. **Not legal advice**: a lawyer
+should confirm this before Ward Lite is distributed more widely or the project applies to the
+Digital Public Goods registry ([docs/DPG.md](../docs/DPG.md#2-use-of-approved-open-licences)).
+
+| Source | Used for | Licence declared | What it means for Ward |
+| --- | --- | --- | --- |
+| [roman_urdu_hate_speech](https://huggingface.co/datasets/community-datasets/roman_urdu_hate_speech) | Training (train split); scorecard (validation split) | MIT | Allowed, with attribution. |
+| [Cyberbullying-Detection-CB1](https://huggingface.co/datasets/surrey-nlp/Cyberbullying-Detection-CB1) | Training (train split); scorecard (test split) | Unknown (the page says "unknown") | No licence means no stated permission. We can't say training on it and sharing the model is allowed until the authors say so. |
+| [prism-hinglish-hate-speech](https://huggingface.co/datasets/pankajbiswas6/prism-hinglish-hate-speech) | Training | MIT | Allowed, with attribution. The page says the data was combined from a Kaggle dataset whose own licence we haven't checked. |
+| [mteb/bengali_hate_speech](https://huggingface.co/datasets/mteb/bengali_hate_speech) | Training (abusive Bangla) | None declared | Same as CB1: no stated permission. The original source behind this copy hasn't been traced. |
+| [SentNoB](https://huggingface.co/datasets/khondoker/SentNoB) | Training (non-abusive Bangla) | CC BY-ND 4.0 | "No derivatives": you may share it unchanged, with credit, but not share adapted versions. Whether trained weights count as an adapted version is unsettled. The cautious reading is that Ward Lite, as trained today, may not be shareable under an open licence. |
+| [bangla-cyberbullying-blindspot](https://huggingface.co/datasets/yamin401533/bangla-cyberbullying-blindspot) | Scorecard only (never trained on) | None declared | Only read for testing, never redistributed by Ward. |
+| Synthetic chats and hard negatives | Training | Written by Gemma 4 (Apache 2.0) on the author's machine | Gemma 4's licence doesn't restrict its output. Who owns the text is for the project's owner to state. |
+| Contrast templates (`gen-contrast.ts`), everyday set, red-team set | Training (templates); testing (the two sets) | Written for this project; in the MIT repository | Allowed. |
+
+**What this means.** Ward Lite's weights are committed to this repository and bundled in the
+apps, but no licence has been decided for them, because three of the sources that trained them
+(SentNoB, CB1, mteb) don't clearly allow it. The model card says the same
+([MODEL_CARD.md](MODEL_CARD.md#licence)). Nothing in `train/data` is committed, so the datasets
+themselves are not redistributed by the repository.
+
+**Replacing SentNoB.** SentNoB is the only source of real, non-abusive Bangla. Dropping it would
+take:
+
+1. a replacement: non-abusive Bangla social-media text under a licence that allows derivatives
+   (for example CC BY, CC BY-SA, MIT or Apache 2.0), or non-abusive Bangla written for the
+   project by Bangla speakers (better still if it is chat-like, which also fixes the source
+   confound under Known weaknesses);
+2. swapping it in `fetch.py` and `build-data.ts`, rebuilding the data and retraining
+   ([README.md](README.md)), then recalibrating;
+3. rerunning the scorecard, the everyday check and the red-team set, and publishing the before
+   and after numbers. Bangla is already the weakest language, so a drop there must be visible.
+
+CB1 and mteb need a different fix: ask the authors for a licence, or replace them the same way.
+
 ## Labels
 
 - **hurtful**: the dataset's own abusive/bullying label, or the kind the synthetic message was written as.
