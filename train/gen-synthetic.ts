@@ -27,9 +27,18 @@ const KINDS: [string, 0 | 1, 0 | 1, string][] = [
   ["selfharm", 1, 1, "messages telling one classmate to kill themselves, die, or that the world is better without them"],
   ["sexual", 1, 1, "messages pressuring a classmate to send photos or video call, or sexual comments about them"],
   ["exposure", 1, 1, "threats to share a classmate's private photos, chats or address with everyone, or make them go viral, or blackmail"],
+  // Hard negatives and intent-only threats (added after Ward Lite learned that "see you tomorrow"
+  // is a threat: the threat batches above are full of "later", "tomorrow", "after school", "meet
+  // me", and almost nothing friendly used those words). See DATA.md.
+  ["plans", 0, 0, "friendly everyday plans and goodbyes between friends or family that use the same words threats use, but clearly kind: see you tomorrow, see you later, see you after school, meet at the gate, wait for me at the bus stop, I'll come over later, bring my notebook tomorrow, practice after school, tuition at 5, good night see you in the morning. Include many very short ones (1 to 5 words) like a real goodbye"],
+  ["caring", 0, 0, "kids being warm and helpful to a friend or sibling with words that could look scary out of context but are clearly kind: I'll get you a snack, I'm coming to your house, wait there I'm coming, I'll find you at break, don't tell anyone about the surprise party, I'll save you a seat, we're coming for you at 6 to go to the match"],
+  ["gaming", 0, 0, "friendly trash talk about a video game or sport that clearly names the game (Free Fire, PUBG, FIFA, Minecraft, Roblox, cricket, ludo), both kids laughing, about the game only, nobody's real body or life threatened"],
+  ["threat-intent", 1, 1, "real threats of violence to one classmate that say what will be done to them, WITHOUT any time or meeting words (no tomorrow, later, after school, tonight, meet me, see you, wait): I'll break your teeth, you're going to get hurt, my brother will beat you, nobody will save you, I'll make you bleed"],
+  ["coercion", 1, 1, "real threats or pressure WITHOUT any time or meeting words (no tomorrow, later, after school, tonight, meet me, see you): threatening to post a classmate's private photos or chats, blackmail for money, pressuring them to send photos of themselves, telling them to kill themselves"],
 ];
 const PER_CALL = 25;
 const CALLS = 3;
+const CALLS_FOR: Record<string, number> = { plans: 5, caring: 4, gaming: 2, "threat-intent": 4, coercion: 3 };
 
 const done = new Set<string>();
 if (existsSync(OUT)) for (const l of readFileSync(OUT, "utf8").split("\n").filter(Boolean)) done.add(JSON.parse(l).batch);
@@ -39,7 +48,7 @@ const schema = { type: "object", properties: { messages: { type: "array", items:
 for (const [lang, langDesc] of Object.entries(LANGS)) {
   for (const [kind, hurtful, danger, desc] of KINDS) {
     // Extra Bangla negatives, for the reason above.
-    const calls = lang === "bn" && !hurtful ? CALLS + 3 : CALLS;
+    const calls = CALLS_FOR[kind] ?? (lang === "bn" && !hurtful ? CALLS + 3 : CALLS);
     for (let c = 0; c < calls; c++) {
       const batch = `${lang}/${kind}/${c}`;
       if (done.has(batch)) continue;

@@ -103,19 +103,68 @@ sources["Bangla non-abusive (SentNoB, neutral and positive comments)"] = shuffle
   .slice(0, 2500)
   .map((r) => ({ text: String(r.Data), hurtful: 0, danger: danger(String(r.Data)), lang: "bn", source: "sentnob" }));
 
-// Synthetic kid-style chats from gen-synthetic.ts.
+// Synthetic kid-style chats from gen-synthetic.ts. The hard-negative kinds (friendly plans,
+// caring, game talk) and the intent-only threats are counted as their own source in the card.
+const HARD_KINDS = new Set(["plans", "caring", "gaming", "threat-intent", "coercion"]);
+// The intent-only threat kinds were asked for no time or meeting words; drop any that used them
+// anyway, so "danger" has to come from what the message threatens.
+const TIMED = /\b(tomorrow|tmrw|tmr|later|tonight|after school|meet|see (you|u)|wait|kal|parso|parson|baad|chutti|shaam|raat|subah|milte|milna|milenge|pore|bikale|dekha hobe)\b|কাল|পরে|ছুটির|বিকাল|সন্ধ্যা|রাতে|সকালে|দেখা/i;
 const synth = new URL("./data/synthetic.jsonl", import.meta.url);
+let timedDropped = 0;
 if (existsSync(synth)) {
-  sources["Synthetic chats (Gemma 4 on this machine)"] = readFileSync(synth, "utf8")
+  const all = readFileSync(synth, "utf8")
     .split("\n")
     .filter(Boolean)
     .map((l) => JSON.parse(l))
+    .filter((r) => {
+      const drop = (r.kind === "threat-intent" || r.kind === "coercion") && TIMED.test(r.text);
+      if (drop) timedDropped++;
+      return !drop;
+    })
     .map((r) => ({ text: r.text, hurtful: r.hurtful, danger: r.danger, lang: r.lang, source: `synthetic:${r.kind}` }));
+  sources["Synthetic chats (Gemma 4 on this machine)"] = all.filter((r) => !HARD_KINDS.has(r.source.slice(10)));
+  sources["Synthetic hard negatives and intent-only threats (Gemma 4 on this machine)"] = all.filter((r) => HARD_KINDS.has(r.source.slice(10)));
+}
+
+// Hand-written contrast templates from gen-contrast.ts: the same time and meeting words in
+// friendly plans and in real threats.
+const contrast = new URL("./data/contrast.jsonl", import.meta.url);
+if (existsSync(contrast)) {
+  sources["Contrast templates (gen-contrast.ts, hand-written)"] = readFileSync(contrast, "utf8")
+    .split("\n")
+    .filter(Boolean)
+    .map((l) => JSON.parse(l))
+    .map((r) => ({ text: r.text, hurtful: r.hurtful, danger: r.danger, lang: r.lang, source: r.kind }));
+}
+
+// The everyday false-alarm set (eval/everyday) is held out too, more strictly than the
+// scorecard: a training message is dropped if it matches an everyday message, shares most of its
+// words (Jaccard >= 0.6), or contains a whole everyday message of three or more words.
+const everydayFile = new URL("../eval/everyday/everyday.jsonl", import.meta.url);
+if (!existsSync(everydayFile)) throw new Error("eval/everyday/everyday.jsonl is missing: the leak check needs it.");
+const everyday = readFileSync(everydayFile, "utf8")
+  .split("\n")
+  .filter(Boolean)
+  .map((l) => key(JSON.parse(l).text));
+const everydayKeys = new Set(everyday);
+const everydayWords = everyday.map((k) => new Set(k.split(" ")));
+const everydayLong = everyday.filter((k) => k.split(" ").length >= 3).map((k) => ` ${k} `);
+function nearEveryday(k: string): boolean {
+  if (everydayKeys.has(k)) return true;
+  const w = new Set(k.split(" "));
+  for (const e of everydayWords) {
+    let inter = 0;
+    for (const x of w) if (e.has(x)) inter++;
+    if (inter / (w.size + e.size - inter) >= 0.6) return true;
+  }
+  const padded = ` ${k} `;
+  return everydayLong.some((e) => padded.includes(e));
 }
 
 // Dedupe, drop anything the scorecard could test on, drop empties.
 const seen = new Set<string>();
 let leaks = 0;
+let everydayLeaks = 0;
 const all: Row[] = [];
 for (const rs of Object.values(sources)) {
   for (const r of rs) {
@@ -123,6 +172,10 @@ for (const rs of Object.values(sources)) {
     if (k.length < 3 || seen.has(k)) continue;
     if (evalTexts.has(k)) {
       leaks++;
+      continue;
+    }
+    if (nearEveryday(k)) {
+      everydayLeaks++;
       continue;
     }
     seen.add(k);
@@ -143,11 +196,20 @@ const table = Object.entries(by(all, (r) => r.lang))
     return `| ${lang} | ${rs.length} | ${rs.filter((r) => r.hurtful).length} | ${rs.filter((r) => r.danger).length} |`;
   })
   .join("\n");
+// The hard negatives and intent-only threats, as kept after dedupe and the leak checks.
+const isHard = (r: Row) => r.source.startsWith("contrast") || HARD_KINDS.has(r.source.replace("synthetic:", ""));
+const hardTable = Object.keys(by(all, (r) => r.lang))
+  .map((lang) => {
+    const rs = all.filter((r) => r.lang === lang && isHard(r));
+    const n = (f: (r: Row) => boolean) => rs.filter(f).length;
+    return `| ${lang} | ${n((r) => !r.danger && !r.source.startsWith("contrast"))} | ${n((r) => !r.danger && r.source.startsWith("contrast"))} | ${n((r) => !!r.danger && !r.source.startsWith("contrast"))} | ${n((r) => !!r.danger && r.source.startsWith("contrast"))} |`;
+  })
+  .join("\n");
 writeFileSync(
   new URL("./DATA.md", import.meta.url),
   `# Ward Lite training data
 
-Built by \`build-data.ts\`. ${all.length} messages after removing duplicates and **${leaks} that also appear in the scorecard's eval sets** (dropped so the scorecard stays honest). 90% train, 10% dev (for choosing the checkpoint; the scorecard is separate).
+Built by \`build-data.ts\`. ${all.length} messages after removing duplicates, **${leaks} that also appear in the scorecard's eval sets** and **${everydayLeaks} that match or nearly match the everyday false-alarm set** (both dropped so those tests stay honest). 90% train, 10% dev (for choosing the checkpoint; the scorecard is separate).
 
 ## Sources
 
@@ -166,6 +228,36 @@ The scorecard's own splits (Roman Urdu validation, Bangla blindspot test, CB1 te
 | --- | --- | --- | --- |
 ${table}
 
+## Hard negatives and intent-only threats (added 2026-10-31)
+
+The first Ward Lite scored "see you tomorrow" as 0.99 dangerous. The synthetic threat batches were
+full of "later", "tomorrow", "after school" and "meet me", and almost nothing friendly used those
+words, so the model learned the words instead of the intent. Two kinds of data fix that:
+
+- **Friendly messages that share threat words** (hurtful 0, danger 0): goodbyes and plans ("see
+  you after tuition", "kal milte hain", "কাল দেখা হবে"), caring offers ("I'll get you a samosa",
+  "wait there I'm coming"), and game trash talk that names the game. Gemma 4 kinds \`plans\`,
+  \`caring\`, \`gaming\`, plus hand-written templates in \`gen-contrast.ts\`.
+- **Threats that rely on intent** (hurtful 1, danger 1): violence, self-harm urging, blackmail and
+  sexual pressure. Gemma 4 kinds \`threat-intent\` and \`coercion\` were asked for no time or
+  meeting words, and ${timedDropped} that used them anyway were dropped. The templates write most
+  threats with no time words and about a third starting with the same time and meeting phrases as
+  the friendly templates ("see you tomorrow, I'm going to break your teeth"), so those phrases
+  appear on both sides and only the intent decides.
+
+Templates use the same names, punctuation, casing and emoji on both sides, so none of those can
+become the next shortcut.
+
+| Language | Friendly (Gemma) | Friendly (templates) | Threats (Gemma) | Threats (templates) |
+| --- | --- | --- | --- | --- |
+${hardTable}
+
+**Held out:** the everyday false-alarm set (\`eval/everyday/everyday.jsonl\`, ${everyday.length} friendly
+messages written separately, never shown to the generators) is checked against every training
+row, not only the new ones: exact match, word overlap (Jaccard >= 0.6), or containing a whole
+everyday message of three or more words drops the training row. \`score-everyday.py\` reports how
+often the exported model flags that set.
+
 ## Known weaknesses
 
 - Public data is tweets and comments, not children's chats; synthetic chats fill that gap but were written by a model.
@@ -173,4 +265,4 @@ ${table}
 - The danger label on public data is weak (slang-pack hits only).
 `,
 );
-console.log({ total: all.length, train: train.length, dev: dev.length, leaks, byLang: by(all, (r) => r.lang) });
+console.log({ total: all.length, train: train.length, dev: dev.length, leaks, everydayLeaks, timedDropped, byLang: by(all, (r) => r.lang) });

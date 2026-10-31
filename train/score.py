@@ -42,7 +42,7 @@ for name, items in sets.items():
         logits = sess.run(["logits"], {"input_ids": enc["input_ids"].astype(np.int64), "attention_mask": enc["attention_mask"].astype(np.int64)})[0]
         p = 1 / (1 + np.exp(-logits))
         for t, row in zip(texts[i : i + 16], p):
-            preds[name][t] = bool(row[0] >= hurt_threshold(t) or row[1] >= meta["threshold"])
+            preds[name][t] = bool(row[0] >= hurt_threshold(t) or row[1] >= meta.get("danger_threshold", meta["threshold"]))
         n += len(texts[i : i + 16])
 ms = (time.time() - t0) * 1000 / n
 (EVAL / "ward-lite.preds.json").write_text(json.dumps(preds, ensure_ascii=False))
