@@ -4,7 +4,7 @@ When a child makes a report in Ward, they get two files:
 
 - **A page** (`Ward report - <chat>.html`) for a person to read or print.
 - **`ward-report.json`**, the same report as data, so a helpline or school system can import it
-  and check it wasn't changed.
+  and check it against its own digest and fingerprints.
 
 Both are made on the child's device. Ward never sends them; the child chooses who gets them.
 
@@ -31,7 +31,7 @@ complete saves that time on every case.
 | `safety.level` | Ward's overall reading: `calm`, `watch`, `bullying`, `urgent`. |
 | `safety.dangerous` | Any of `threat`, `selfharm`, `sexual`, `exposure` present in the messages. |
 | `wants` | What the child wants to happen, e.g. `{ "id": "remove", "label": "Get something taken down" }`. |
-| `conversation` | Title, platform, `source` (`whatsapp` export or `paste`), message and participant counts, first and last hurtful message, number of days. |
+| `conversation` | Title, platform, `source` (`whatsapp` export, `paste`, or `discord` for messages saved with Ward's Discord bot), message and participant counts, first and last hurtful message, number of days. |
 | `accounts` | Each account that sent hurtful messages, as named in the chat: count, worst severity, whether it was added to the group during the chat, whether it only ever attacked. |
 | `patterns` | Ward's pattern findings (`campaign`, `pileon`, `ghosts`, `exclusion`, `danger`, `nightwatch`, `escalating`) with one neutral, third-person sentence each (`fact`). |
 | `incidents` | Every hurtful message: time, sender, exact text, severity (1 unkind, 2 bullying, 3 dangerous), categories, Ward's short note, and its SHA-256 fingerprint. |
@@ -54,18 +54,26 @@ By hand: recompute the digest and compare. In JavaScript, with the same function
 ```js
 const { createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents } = r;
 const text = JSON.stringify({ createdAt, recipient, tool, reporter, safety, wants, conversation, accounts, patterns, incidents, savedAt: r.integrity.savedAt });
-sha256(text) === r.integrity.digest; // false if anything a reader relies on was edited
+sha256(text) === r.integrity.digest; // false if the file was damaged or edited without recomputing it
 ```
 
 The fields go in that fixed order, so it doesn't matter how a system re-orders the top level of
 the file. Inside each field, keep the order and values exactly as received (parse, don't rebuild).
 The digest covers the child's own answers (`safety.inDangerNow`, `wants`, `recipient`,
-`reporter`) as well as the messages, so nobody can quietly change "in danger now" from yes to no.
+`reporter`) as well as the messages, so changing "in danger now" from yes to no, and nothing else,
+makes the check fail.
 
 Each message fingerprint is `sha256(sender + "|" + ISO time + "|" + text)` at the moment it was
-saved. What the fingerprints prove: the messages weren't changed after the child saved them.
-What they don't prove: that the chat export itself was genuine. For that, a caseworker can ask
-the child to show the conversation in WhatsApp.
+saved, so a mismatch points at the message that changed.
+
+**What the checks prove, and what they don't.** The digest and the fingerprints are plain SHA-256
+with no secret key, and the recipe is on this page. A match means the file agrees with its own
+checksums: it catches accidental damage (a bad copy, a truncated download) and casual edits by
+someone who doesn't recompute them. It is not proof against a determined forger, who can edit the
+file and recompute every hash. Nor does it prove the chat export itself was genuine. For proof,
+ask the child to show you the original conversation in the app it came from. A signed report
+format, which would at least show which install of Ward made a file, is planned (see
+[ROADMAP.md](ROADMAP.md)).
 
 ## Versions
 

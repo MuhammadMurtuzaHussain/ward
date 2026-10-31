@@ -8,8 +8,8 @@
 <meta name="referrer" content="no-referrer">
 <title>Ward case viewer</title>
 <!--
-  Ward case viewer. Opens a ward-report.json (format: docs/REPORT.md), checks it wasn't edited
-  after the child saved the evidence, and lays the case out for intake. One file, no
+  Ward case viewer. Opens a ward-report.json (format: docs/REPORT.md), checks it against its own
+  digest and message fingerprints, and lays the case out for intake. One file, no
   dependencies, no network: save it, double-click it, use it offline. Read it before you trust
   it; it's short. Part of Ward, MIT licence: https://github.com/MuhammadMurtuzaHussain/ward
 -->
@@ -110,7 +110,7 @@
 
   <div id="empty" class="drop" tabindex="-1">
     <p class="big">Drop a ward-report.json here</p>
-    <p class="dim" style="max-width:56ch">A child makes this file in Ward and chooses to give it to you. This page checks that the messages weren't edited after they were saved, then lays out the case.</p>
+    <p class="dim" style="max-width:56ch">A child makes this file in Ward and chooses to give it to you. This page checks the file against its own fingerprints, then lays out the case.</p>
     <button id="sampleBtn" type="button">Try a sample report</button>
   </div>
 
@@ -120,9 +120,9 @@
   <details class="noprint">
     <summary>What the checks prove, and what they don't</summary>
     <div class="dim" style="display:grid;gap:8px;margin-top:8px;max-width:72ch">
-      <p><b>The digest</b> is SHA-256 over the whole report: every message, the conversation facts, the accounts and patterns, and the child's own answers (whether they're in danger now, what they want, who it's for, the details they shared). If anything in this file was changed after Ward made it, the digest won't match. Reports from before October 2026 (<code>ward.report/v1</code>) cover only the messages and conversation facts; the viewer says so when it opens one.</p>
-      <p><b>Each message's fingerprint</b> is SHA-256 of sender, time and text, taken when the child saved the chat in Ward's locked vault. A match means that message is exactly as saved.</p>
-      <p><b>What neither proves:</b> that the chat export itself was genuine. If it matters, ask the child to show you the conversation in the app. Times come from the child's chat export and are shown in this computer's time zone.</p>
+      <p><b>The digest</b> is SHA-256 over the whole report: every message, the conversation facts, the accounts and patterns, and the child's own answers (whether they're in danger now, what they want, who it's for, the details they shared). If part of the file is changed by accident or by a casual edit, the digest won't match. Reports from before October 2026 (<code>ward.report/v1</code>) cover only the messages and conversation facts; the viewer says so when it opens one.</p>
+      <p><b>Each message's fingerprint</b> is SHA-256 of sender, time and text, taken when the child saved the chat in Ward's locked vault. A mismatch pins a change to the message it touched.</p>
+      <p><b>What neither proves:</b> the recipe for both is public and uses no secret key, so anyone who edits the file on purpose can recompute them and they will match again. They catch accidental damage and casual edits, not a determined forger. Nor do they prove the chat export itself was genuine. If it matters, ask the child to show you the original conversation in the app. Times come from the child's chat export and are shown in this computer's time zone.</p>
       <p>Only hurtful messages from others are in a report. The rest of the chat, the child's own messages, and anyone who stood up for them stay on the child's phone.</p>
     </div>
   </details>
@@ -222,7 +222,7 @@ function render(r, check) {
   const allOk = check.digestOk && okMsgs === n;
 
   const banner = allOk
-    ? h("div", { class: "banner ok", role: "status" }, h("div", null, h("strong", null, "Unchanged since it was saved"), h("p", null, `The digest matches, and all ${n} messages match the fingerprints taken when the child saved them on ${when(r.integrity.savedAt)}.`)))
+    ? h("div", { class: "banner ok", role: "status" }, h("div", null, h("strong", null, "Matches its own checks"), h("p", null, `The digest matches, and all ${n} messages match the fingerprints taken when the child saved them on ${when(r.integrity.savedAt)}. This catches accidental damage and casual edits, not a determined forger. For proof, ask to see the original chat.`)))
     : h("div", { class: "banner bad", role: "alert" }, h("div", null, h("strong", null, "This report was changed after Ward made it"),
         h("p", null, `${check.digestOk ? "The digest matches, but " : `The digest doesn't match${okMsgs < n ? ", and " : ". "}`}${okMsgs < n ? `${n - okMsgs} of ${n} message${n - okMsgs === 1 ? " doesn't" : "s don't"} match the fingerprints taken when it was saved. ` : ""}Treat the content below with care, and ask the child for the original file or to show you the chat.`)));
   const legacy = r.schema === "ward.report/v1"
@@ -299,7 +299,7 @@ function summary({ r, check }) {
   const n = r.incidents.length, ok = check.digestOk && check.perMessage.every(Boolean);
   return [
     `Ward report: ${c.title} (${c.platform})`,
-    `Integrity: ${ok ? "unchanged since saved (digest and all message fingerprints match)" : "CHANGED after it was made, do not rely on it without the original"}${r.schema === "ward.report/v1" ? " [older v1 report: the child's answers aren't covered by the check]" : ""}`,
+    `Integrity: ${ok ? "matches its own checks (digest and all message fingerprints; catches accidental damage and casual edits, not deliberate forgery)" :"CHANGED after it was made, do not rely on it without the original"}${r.schema === "ward.report/v1" ? " [older v1 report: the child's answers aren't covered by the check]" : ""}`,
     `In danger now (child's answer): ${s.inDangerNow === true ? "YES" : s.inDangerNow === false ? "no" : "not answered"}`,
     `Ward's reading: ${LEVEL[s.level] || s.level}${s.dangerous?.length ? `; ${s.dangerous.map((d) => CATEGORY[d] || d).join(", ")}` : ""}`,
     `Child: ${[rep.firstName, rep.ageBand ? `age ${AGE[rep.ageBand] || rep.ageBand}` : "", rep.city, rep.country].filter(Boolean).join(", ") || "not shared"}`,
