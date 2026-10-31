@@ -39,34 +39,34 @@ Hurtful + harmless messages per trick:
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| English | 7/36 (19%) | 21/36 (58%) | 21/36 (58%) | 27/36 (75%) |
-| Roman Urdu | 8/34 (24%) | 14/34 (41%) | 19/34 (56%) | 26/34 (76%) |
-| Hinglish | 6/32 (19%) | 15/32 (47%) | 19/32 (59%) | 27/32 (84%) |
-| Bangla (Bangla script) | 3/21 (14%) | 4/21 (19%) | 6/21 (29%) | 15/21 (71%) |
-| Bangla (romanised) | 4/19 (21%) | 11/19 (58%) | 12/19 (63%) | 11/19 (58%) |
-| **All** | **28/142 (20%)** | **65/142 (46%)** | **77/142 (54%)** | **106/142 (75%)** |
+| English | 8/36 (22%) | 21/36 (58%) | 25/36 (69%) | 27/36 (75%) |
+| Roman Urdu | 8/34 (24%) | 11/34 (32%) | 16/34 (47%) | 26/34 (76%) |
+| Hinglish | 6/32 (19%) | 11/32 (34%) | 16/32 (50%) | 27/32 (84%) |
+| Bangla (Bangla script) | 3/21 (14%) | 5/21 (24%) | 7/21 (33%) | 15/21 (71%) |
+| Bangla (romanised) | 4/19 (21%) | 9/19 (47%) | 11/19 (58%) | 11/19 (58%) |
+| **All** | **29/142 (20%)** | **57/142 (40%)** | **75/142 (53%)** | **106/142 (75%)** |
 
 ### Harmless look-alikes flagged (false alarms)
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| English | 10/35 (29%) | 12/35 (34%) | 18/35 (51%) | 9/35 (26%) |
-| Roman Urdu | 8/33 (24%) | 10/33 (30%) | 13/33 (39%) | 8/33 (24%) |
-| Hinglish | 6/31 (19%) | 10/31 (32%) | 13/31 (42%) | 7/31 (23%) |
-| Bangla (Bangla script) | 3/20 (15%) | 1/20 (5%) | 4/20 (20%) | 2/20 (10%) |
-| Bangla (romanised) | 2/14 (14%) | 0/14 (0%) | 2/14 (14%) | 3/14 (21%) |
-| **All** | **29/133 (22%)** | **33/133 (25%)** | **50/133 (38%)** | **29/133 (22%)** |
+| English | 10/35 (29%) | 6/35 (17%) | 13/35 (37%) | 9/35 (26%) |
+| Roman Urdu | 8/33 (24%) | 1/33 (3%) | 8/33 (24%) | 8/33 (24%) |
+| Hinglish | 6/31 (19%) | 5/31 (16%) | 9/31 (29%) | 7/31 (23%) |
+| Bangla (Bangla script) | 3/20 (15%) | 2/20 (10%) | 4/20 (20%) | 2/20 (10%) |
+| Bangla (romanised) | 2/14 (14%) | 1/14 (7%) | 3/14 (21%) | 3/14 (21%) |
+| **All** | **29/133 (22%)** | **15/133 (11%)** | **37/133 (28%)** | **29/133 (22%)** |
 
 ### Dangerous messages (severity 3) marked dangerous
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| English | 2/11 (18%) | 5/11 (45%) | 5/11 (45%) | 6/11 (55%) |
-| Roman Urdu | 0/8 (0%) | 2/8 (25%) | 2/8 (25%) | 4/8 (50%) |
+| English | 2/11 (18%) | 6/11 (55%) | 8/11 (73%) | 6/11 (55%) |
+| Roman Urdu | 0/8 (0%) | 3/8 (38%) | 3/8 (38%) | 4/8 (50%) |
 | Hinglish | 0/8 (0%) | 3/8 (38%) | 3/8 (38%) | 2/8 (25%) |
 | Bangla (Bangla script) | 1/6 (17%) | 1/6 (17%) | 2/6 (33%) | 2/6 (33%) |
-| Bangla (romanised) | 0/5 (0%) | 1/5 (20%) | 1/5 (20%) | 2/5 (40%) |
-| **All** | **3/38 (8%)** | **12/38 (32%)** | **13/38 (34%)** | **16/38 (42%)** |
+| Bangla (romanised) | 0/5 (0%) | 2/5 (40%) | 2/5 (40%) | 2/5 (40%) |
+| **All** | **3/38 (8%)** | **15/38 (39%)** | **18/38 (47%)** | **16/38 (42%)** |
 
 ### Harmless messages marked dangerous
 
@@ -74,12 +74,12 @@ In the app, one message from someone else marked dangerous makes the whole chat 
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| English | 3/35 (9%) | 8/35 (23%) | 10/35 (29%) | 1/35 (3%) |
-| Roman Urdu | 1/33 (3%) | 6/33 (18%) | 6/33 (18%) | 1/33 (3%) |
-| Hinglish | 1/31 (3%) | 6/31 (19%) | 6/31 (19%) | 1/31 (3%) |
+| English | 3/35 (9%) | 2/35 (6%) | 4/35 (11%) | 1/35 (3%) |
+| Roman Urdu | 1/33 (3%) | 1/33 (3%) | 1/33 (3%) | 1/33 (3%) |
+| Hinglish | 1/31 (3%) | 2/31 (6%) | 2/31 (6%) | 1/31 (3%) |
 | Bangla (Bangla script) | 1/20 (5%) | 0/20 (0%) | 1/20 (5%) | 0/20 (0%) |
 | Bangla (romanised) | 0/14 (0%) | 0/14 (0%) | 0/14 (0%) | 0/14 (0%) |
-| **All** | **6/133 (5%)** | **20/133 (15%)** | **23/133 (17%)** | **3/133 (2%)** |
+| **All** | **6/133 (5%)** | **5/133 (4%)** | **8/133 (6%)** | **3/133 (2%)** |
 
 ## Results by trick (all languages)
 
@@ -87,34 +87,34 @@ In the app, one message from someone else marked dangerous makes the whole chat 
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| Spelling disguises (leetspeak, spacing, stretched letters, emoji, mixed scripts) | 17/41 (41%) | 20/41 (49%) | 27/41 (66%) | 35/41 (85%) |
-| Coded and new slang, initialisms | 4/26 (15%) | 12/26 (46%) | 15/26 (58%) | 19/26 (73%) |
-| Sarcasm and backhanded compliments | 0/21 (0%) | 4/21 (19%) | 4/21 (19%) | 9/21 (43%) |
-| Exclusion said politely | 0/23 (0%) | 11/23 (48%) | 11/23 (48%) | 16/23 (70%) |
-| Indirect threats, exposure, self-harm urging, image pressure | 7/31 (23%) | 18/31 (58%) | 20/31 (65%) | 27/31 (87%) |
+| Spelling disguises (leetspeak, spacing, stretched letters, emoji, mixed scripts) | 18/41 (44%) | 17/41 (41%) | 28/41 (68%) | 35/41 (85%) |
+| Coded and new slang, initialisms | 4/26 (15%) | 12/26 (46%) | 16/26 (62%) | 19/26 (73%) |
+| Sarcasm and backhanded compliments | 0/21 (0%) | 3/21 (14%) | 3/21 (14%) | 9/21 (43%) |
+| Exclusion said politely | 0/23 (0%) | 10/23 (43%) | 10/23 (43%) | 16/23 (70%) |
+| Indirect threats, exposure, self-harm urging, image pressure | 7/31 (23%) | 15/31 (48%) | 18/31 (58%) | 27/31 (87%) |
 
 ### Harmless look-alikes flagged
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| Spelling disguises (leetspeak, spacing, stretched letters, emoji, mixed scripts) | 0/21 (0%) | 1/21 (5%) | 1/21 (5%) | 0/21 (0%) |
-| Coded and new slang, initialisms | 0/16 (0%) | 2/16 (13%) | 2/16 (13%) | 0/16 (0%) |
-| Sarcasm and backhanded compliments | 0/13 (0%) | 2/13 (15%) | 2/13 (15%) | 1/13 (8%) |
-| Exclusion said politely | 0/13 (0%) | 4/13 (31%) | 4/13 (31%) | 5/13 (38%) |
+| Spelling disguises (leetspeak, spacing, stretched letters, emoji, mixed scripts) | 0/21 (0%) | 0/21 (0%) | 0/21 (0%) | 0/21 (0%) |
+| Coded and new slang, initialisms | 0/16 (0%) | 1/16 (6%) | 1/16 (6%) | 0/16 (0%) |
+| Sarcasm and backhanded compliments | 0/13 (0%) | 0/13 (0%) | 0/13 (0%) | 1/13 (8%) |
+| Exclusion said politely | 0/13 (0%) | 0/13 (0%) | 0/13 (0%) | 5/13 (38%) |
 | Indirect threats, exposure, self-harm urging, image pressure | 1/17 (6%) | 4/17 (24%) | 4/17 (24%) | 1/17 (6%) |
-| Hard negatives: banter, reclaimed words, quoting to ask for help, game talk | 28/53 (53%) | 20/53 (38%) | 37/53 (70%) | 22/53 (42%) |
+| Hard negatives: banter, reclaimed words, quoting to ask for help, game talk | 28/53 (53%) | 10/53 (19%) | 32/53 (60%) | 22/53 (42%) |
 
 ### By the engine's category (hurtful messages caught)
 
 |  | Slang packs | Ward Lite | Phone: packs + Ward Lite | Gemma 4 E4B |
 | --- | --- | --- | --- | --- |
-| appearance | 6/28 (21%) | 11/28 (39%) | 13/28 (46%) | 17/28 (61%) |
-| insult | 11/25 (44%) | 14/25 (56%) | 19/25 (76%) | 23/25 (92%) |
-| selfharm | 2/16 (13%) | 6/16 (38%) | 7/16 (44%) | 15/16 (94%) |
-| mockery | 0/23 (0%) | 8/23 (35%) | 8/23 (35%) | 12/23 (52%) |
+| appearance | 6/28 (21%) | 7/28 (25%) | 12/28 (43%) | 17/28 (61%) |
+| insult | 12/25 (48%) | 13/25 (52%) | 19/25 (76%) | 23/25 (92%) |
+| selfharm | 2/16 (13%) | 6/16 (38%) | 8/16 (50%) | 15/16 (94%) |
+| mockery | 0/23 (0%) | 9/23 (39%) | 9/23 (39%) | 12/23 (52%) |
 | identity | 2/4 (50%) | 2/4 (50%) | 4/4 (100%) | 4/4 (100%) |
-| exclusion | 0/24 (0%) | 11/24 (46%) | 11/24 (46%) | 17/24 (71%) |
-| threat | 3/12 (25%) | 4/12 (33%) | 6/12 (50%) | 8/12 (67%) |
+| exclusion | 0/24 (0%) | 10/24 (42%) | 10/24 (42%) | 17/24 (71%) |
+| threat | 3/12 (25%) | 1/12 (8%) | 4/12 (33%) | 8/12 (67%) |
 | exposure | 2/5 (40%) | 4/5 (80%) | 4/5 (80%) | 5/5 (100%) |
 | sexual | 2/5 (40%) | 5/5 (100%) | 5/5 (100%) | 5/5 (100%) |
 
@@ -124,12 +124,12 @@ Each cell: hurtful caught, then harmless flagged.
 
 |  | English | Roman Urdu | Hinglish | Bangla (Bangla script) | Bangla (romanised) |
 | --- | --- | --- | --- | --- | --- |
-| disguise | 8/11 · 1/5 | 7/10 · 0/5 | 6/9 · 0/5 | 2/6 · 0/4 | 4/5 · 0/2 |
-| coded | 4/6 · 0/4 | 4/6 · 1/4 | 3/6 · 1/4 | 2/4 · 0/2 | 2/4 · 0/2 |
-| sarcasm | 1/6 · 1/3 | 2/5 · 1/3 | 1/5 · 0/3 | 0/3 · 0/2 | 0/2 · 0/2 |
-| exclusion | 4/6 · 2/3 | 2/6 · 0/3 | 3/5 · 2/3 | 0/3 · 0/2 | 2/3 · 0/2 |
-| indirect | 4/7 · 1/4 | 4/7 · 1/4 | 6/7 · 1/4 | 2/5 · 1/3 | 4/5 · 0/2 |
-| hard-negative | – · 13/16 | – · 10/14 | – · 9/12 | – · 3/7 | – · 2/4 |
+| disguise | 9/11 · 0/5 | 6/10 · 0/5 | 6/9 · 0/5 | 3/6 · 0/4 | 4/5 · 0/2 |
+| coded | 5/6 · 0/4 | 4/6 · 0/4 | 3/6 · 1/4 | 2/4 · 0/2 | 2/4 · 0/2 |
+| sarcasm | 1/6 · 0/3 | 1/5 · 0/3 | 0/5 · 0/3 | 0/3 · 0/2 | 1/2 · 0/2 |
+| exclusion | 4/6 · 0/3 | 2/6 · 0/3 | 2/5 · 0/3 | 1/3 · 0/2 | 1/3 · 0/2 |
+| indirect | 6/7 · 1/4 | 3/7 · 0/4 | 5/7 · 1/4 | 1/5 · 1/3 | 3/5 · 1/2 |
+| hard-negative | – · 12/16 | – · 8/14 | – · 7/12 | – · 3/7 | – · 2/4 |
 
 ## What fails, and why
 
@@ -160,89 +160,90 @@ Up to six misses and four false alarms per language, spread across tricks. *Test
 
 ### English
 
-Missed (6 of 15):
+Missed (6 of 11):
 
-- `en-004` disguise/spacing, severity 3 selfharm: “k y s”. *Tests:* spaced self-harm initialism. *Why:* no word-list hit; Ward Lite: hurtful 0.11 (flags at 0.58), danger 0.00 (at 0.5).
-- `en-018` coded/algospeak, severity 3 selfharm: “do everyone a favour and unalive yourself”. *Tests:* 'unalive', the filter-dodging word for kill. *Why:* no word-list hit; Ward Lite: hurtful 0.41 (flags at 0.58), danger 0.35 (at 0.5).
-- `en-028` sarcasm/sarcasm, severity 2 mockery: “omg congrats on finally getting a friend, so proud of you 🥹”. *Tests:* fake congratulations. *Why:* no word-list hit; Ward Lite: hurtful 0.05 (flags at 0.58), danger 0.05 (at 0.5).
-- `en-037` exclusion/polite, severity 1 exclusion: “sorry, the sleepover is kind of a close-friends-only thing 🙂”. *Tests:* polite exclusion with a smile. *Why:* no word-list hit; Ward Lite: hurtful 0.06 (flags at 0.58), danger 0.11 (at 0.5).
-- `en-046` indirect/exposure, severity 3 exposure: “it'd be a shame if those screenshots ended up in the class group”. *Tests:* threat to expose, phrased as regret. *Why:* no word-list hit; Ward Lite: hurtful 0.18 (flags at 0.58), danger 0.04 (at 0.5).
-- `en-005` disguise/leetspeak, severity 3 selfharm: “go k!ll urs3lf”. *Tests:* leetspeak self-harm urging, 'urself' spelling. *Why:* no word-list hit; Ward Lite: hurtful 0.05 (flags at 0.58), danger 0.01 (at 0.5).
+- `en-004` disguise/spacing, severity 3 selfharm: “k y s”. *Tests:* spaced self-harm initialism. *Why:* no word-list hit; Ward Lite: hurtful 0.16 (flags at 0.48), danger 0.00 (at 0.91).
+- `en-019` coded/slang, severity 1 mockery: “ratio + L + nobody asked”. *Tests:* pile-on slang, no insult word. *Why:* no word-list hit; Ward Lite: hurtful 0.45 (flags at 0.48), danger 0.00 (at 0.91).
+- `en-028` sarcasm/sarcasm, severity 2 mockery: “omg congrats on finally getting a friend, so proud of you 🥹”. *Tests:* fake congratulations. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `en-037` exclusion/polite, severity 1 exclusion: “sorry, the sleepover is kind of a close-friends-only thing 🙂”. *Tests:* polite exclusion with a smile. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.02 (at 0.91).
+- `en-047` indirect/threat, severity 3 threat: “we know which bus you take 🙂”. *Tests:* implied stalking threat. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `en-005` disguise/leetspeak, severity 3 selfharm: “go k!ll urs3lf”. *Tests:* leetspeak self-harm urging, 'urself' spelling. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
 
-False alarms (4 of 18):
+False alarms (4 of 13):
 
-- `en-016` disguise/leetspeak: “ur s0 c00l fr”. *Tests:* harmless: leetspeak compliment. *Why:* Ward Lite: hurtful 0.85 (flags at 0.58), danger 0.55 (at 0.5).
-- `en-035` sarcasm/genuine: “thanks for saving me a seat, you're the best”. *Tests:* harmless: plain thanks. *Why:* Ward Lite: hurtful 0.28 (flags at 0.58), danger 0.79 (at 0.5).
-- `en-043` exclusion/lookalike: “can't come today sorry, family dinner 😩”. *Tests:* harmless: declining an invite. *Why:* Ward Lite: hurtful 0.75 (flags at 0.58), danger 0.99 (at 0.5).
-- `en-054` indirect/lookalike: “watch your back in the game, there's a sniper on the roof”. *Tests:* harmless: the same 'watch your back' in a game. *Why:* word list: "watch your back" (threat, 3); Ward Lite: hurtful 0.95 (flags at 0.58), danger 0.99 (at 0.5).
+- `en-054` indirect/lookalike: “watch your back in the game, there's a sniper on the roof”. *Tests:* harmless: the same 'watch your back' in a game. *Why:* word list: "watch your back" (threat, 3); Ward Lite: hurtful 0.89 (flags at 0.48), danger 0.97 (at 0.91).
+- `en-056` hard-negative/banter: “you absolute idiot you left your bag on the bus again 😂 love you”. *Tests:* insult word with affection. *Why:* word list: "idiot" (insult, 1).
+- `en-057` hard-negative/banter: “shut up loser, see you at practice”. *Tests:* teasing between teammates (contestable without context). *Why:* word list: "loser" (insult, 1).
+- `en-058` hard-negative/banter: “you're so dumb lmaooo that was hilarious”. *Tests:* laughing with, not at. *Why:* word list: "dumb" (insult, 1).
 
 ### Roman Urdu
 
-Missed (6 of 15):
+Missed (6 of 18):
 
-- `ur-005` disguise/emoji, severity 2 appearance: “isko dekho 🐘 chal rahi hai”. *Tests:* elephant emoji for a fat-shaming jibe. *Why:* no word-list hit; Ward Lite: hurtful 0.29 (flags at 0.58), danger 0.00 (at 0.5).
-- `ur-016` coded/slang, severity 1 mockery: “burger bacha, mummy se pooch ke aaya hai 😂”. *Tests:* 'burger' as slang for a posh, soft kid. *Why:* no word-list hit; Ward Lite: hurtful 0.12 (flags at 0.58), danger 0.00 (at 0.5).
-- `ur-026` sarcasm/backhanded, severity 2 appearance: “waah, aaj to tum insaan lag rahi ho 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.58), danger 0.01 (at 0.5).
-- `ur-035` exclusion/polite, severity 2 exclusion: “usay mat batana ke hum kahan ja rahe hain”. *Tests:* 'don't tell her where we're going'. *Why:* no word-list hit; Ward Lite: hurtful 0.35 (flags at 0.58), danger 0.00 (at 0.5).
-- `ur-044` indirect/threat, severity 3 threat: “tumhara ghar pata hai humein 🙂”. *Tests:* 'we know where you live'. *Why:* no word-list hit; Ward Lite: hurtful 0.06 (flags at 0.58), danger 0.00 (at 0.5).
-- `ur-007` disguise/spacing, severity 2 appearance: “k.a.l.i kalooti”. *Tests:* dotted 'kali' (dark-skinned) plus a variant. *Why:* no word-list hit; Ward Lite: hurtful 0.42 (flags at 0.58), danger 0.00 (at 0.5).
+- `ur-005` disguise/emoji, severity 2 appearance: “isko dekho 🐘 chal rahi hai”. *Tests:* elephant emoji for a fat-shaming jibe. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
+- `ur-016` coded/slang, severity 1 mockery: “burger bacha, mummy se pooch ke aaya hai 😂”. *Tests:* 'burger' as slang for a posh, soft kid. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `ur-026` sarcasm/backhanded, severity 2 appearance: “waah, aaj to tum insaan lag rahi ho 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `ur-035` exclusion/polite, severity 2 exclusion: “usay mat batana ke hum kahan ja rahe hain”. *Tests:* 'don't tell her where we're going'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
+- `ur-043` indirect/threat, severity 3 threat: “chutti ke baad gate pe milna, phir batate hain”. *Tests:* 'meet at the gate after school, then we'll show you'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
+- `ur-006` disguise/emoji, severity 2 appearance: “shakal dekhi hai apni? 🐒”. *Tests:* monkey emoji aimed at someone's face (colourist). *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
 
-False alarms (4 of 13):
+False alarms (4 of 8):
 
-- `ur-022` coded/initialism: “acha bhai, brb, ammi bula rahi hain”. *Tests:* harmless: initialism. *Why:* Ward Lite: hurtful 0.95 (flags at 0.58), danger 0.99 (at 0.5).
-- `ur-032` sarcasm/genuine: “zabardast, kal phir test hai 🙄”. *Tests:* harmless: sarcasm about a test. *Why:* Ward Lite: hurtful 0.74 (flags at 0.58), danger 0.00 (at 0.5).
-- `ur-052` indirect/lookalike: “gate pe milo 4 bajay, samosay khane chalte hain”. *Tests:* harmless: the same 'meet at the gate' for snacks. *Why:* Ward Lite: hurtful 0.91 (flags at 0.58), danger 0.91 (at 0.5).
-- `ur-054` hard-negative/banter: “abay gadhay, phir apna bag bhool gaya 😂 chal koi baat nahi”. *Tests:* 'donkey' with affection. *Why:* word list: "gadha" (insult, 1); Ward Lite: hurtful 0.89 (flags at 0.58), danger 0.01 (at 0.5).
+- `ur-054` hard-negative/banter: “abay gadhay, phir apna bag bhool gaya 😂 chal koi baat nahi”. *Tests:* 'donkey' with affection. *Why:* word list: "gadha" (insult, 1).
+- `ur-055` hard-negative/banter: “pagal hai tu bilkul 😂😂 love you yaar”. *Tests:* 'crazy' with love. *Why:* word list: "pagal" (insult, 1).
+- `ur-056` hard-negative/banter: “chup kar kameenay, kal match pe milte hain”. *Tests:* rude word between friends (contestable without context). *Why:* word list: "kameena" (insult, 1).
+- `ur-057` hard-negative/banter: “ullu ke pathay, mera charger wapis kar 😂”. *Tests:* 'son of an owl' (fool) as teasing. *Why:* word list: "ullu" (insult, 1).
 
 ### Hinglish
 
-Missed (6 of 13):
+Missed (6 of 16):
 
-- `hi-004` disguise/leetspeak, severity 1 insult: “tu toh full n@ll@ hai, kisi kaam ka nahi”. *Tests:* leetspeak 'nalla' (useless). *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.58), danger 0.01 (at 0.5).
-- `hi-015` coded/slang, severity 2 mockery: “chapri lag raha hai pura, uske baal dekho 😂”. *Tests:* classist slang 'chapri'. *Why:* no word-list hit; Ward Lite: hurtful 0.55 (flags at 0.58), danger 0.00 (at 0.5).
-- `hi-026` sarcasm/sarcasm, severity 1 mockery: “itna bada genius, phir bhi fail 👏”. *Tests:* sarcastic applause. *Why:* no word-list hit; Ward Lite: hurtful 0.13 (flags at 0.58), danger 0.01 (at 0.5).
-- `hi-034` exclusion/polite, severity 2 exclusion: “usko movie ka plan mat batana”. *Tests:* keeping a plan secret from one child. *Why:* no word-list hit; Ward Lite: hurtful 0.56 (flags at 0.58), danger 0.00 (at 0.5).
-- `hi-044` indirect/selfharm, severity 3 selfharm: “tu na rahe toh sabka bhala hoga”. *Tests:* 'everyone is better off without you'. *Why:* no word-list hit; Ward Lite: hurtful 0.15 (flags at 0.58), danger 0.00 (at 0.5).
-- `hi-005` disguise/emoji, severity 2 appearance: “dekho 🐄 aa rahi hai”. *Tests:* cow emoji as a fat-shaming jibe. *Why:* no word-list hit; Ward Lite: hurtful 0.39 (flags at 0.58), danger 0.00 (at 0.5).
+- `hi-004` disguise/leetspeak, severity 1 insult: “tu toh full n@ll@ hai, kisi kaam ka nahi”. *Tests:* leetspeak 'nalla' (useless). *Why:* no word-list hit; Ward Lite: hurtful 0.07 (flags at 0.48), danger 0.02 (at 0.91).
+- `hi-017` coded/initialism, severity 1 insult: “BKL chal hat”. *Tests:* swear-word initialism. *Why:* no word-list hit; Ward Lite: hurtful 0.08 (flags at 0.48), danger 0.00 (at 0.91).
+- `hi-025` sarcasm/backhanded, severity 2 appearance: “wah, tujhe dekh ke toh mirror bhi resign kar de”. *Tests:* joke-shaped insult about a face. *Why:* no word-list hit; Ward Lite: hurtful 0.29 (flags at 0.48), danger 0.04 (at 0.91).
+- `hi-034` exclusion/polite, severity 2 exclusion: “usko movie ka plan mat batana”. *Tests:* keeping a plan secret from one child. *Why:* no word-list hit; Ward Lite: hurtful 0.05 (flags at 0.48), danger 0.00 (at 0.91).
+- `hi-041` indirect/threat, severity 3 threat: “chhutti ke baad bahar mil, phir batata hu”. *Tests:* 'meet me outside after school, then I'll show you'. *Why:* no word-list hit; Ward Lite: hurtful 0.08 (flags at 0.48), danger 0.03 (at 0.91).
+- `hi-005` disguise/emoji, severity 2 appearance: “dekho 🐄 aa rahi hai”. *Tests:* cow emoji as a fat-shaming jibe. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
 
-False alarms (4 of 13):
+False alarms (4 of 9):
 
-- `hi-021` coded/initialism: “brb, mummy bula rahi hai”. *Tests:* harmless: initialism. *Why:* Ward Lite: hurtful 0.95 (flags at 0.58), danger 0.72 (at 0.5).
-- `hi-039` exclusion/lookalike: “aaj nahi aa paunga, cousin ki shaadi hai 😩”. *Tests:* harmless: declining. *Why:* Ward Lite: hurtful 0.87 (flags at 0.58), danger 0.01 (at 0.5).
-- `hi-050` indirect/lookalike: “gate pe mil 4 baje, golgappe khane chalte hai”. *Tests:* harmless: the same 'meet me' for snacks. *Why:* Ward Lite: hurtful 0.83 (flags at 0.58), danger 0.65 (at 0.5).
-- `hi-052` hard-negative/banter: “abe gadhe phir se bag bhool gaya 😂 chal koi na”. *Tests:* 'donkey' with affection. *Why:* word list: "gadha" (insult, 1); Ward Lite: hurtful 0.93 (flags at 0.58), danger 0.01 (at 0.5).
+- `hi-023` coded/initialism: “ngl teri drawing next level hai”. *Tests:* harmless: initialism in a compliment. *Why:* Ward Lite: hurtful 0.57 (flags at 0.48), danger 0.00 (at 0.91).
+- `hi-048` indirect/lookalike: “kal exam mein phod dunga 💪”. *Tests:* harmless: 'I'll smash it' about an exam. *Why:* Ward Lite: hurtful 0.70 (flags at 0.48), danger 0.98 (at 0.91).
+- `hi-052` hard-negative/banter: “abe gadhe phir se bag bhool gaya 😂 chal koi na”. *Tests:* 'donkey' with affection. *Why:* word list: "gadha" (insult, 1).
+- `hi-053` hard-negative/banter: “pagal hai kya tu 😂😂 love you bro”. *Tests:* 'crazy' with love. *Why:* word list: "pagal" (insult, 1).
 
 ### Bangla (Bangla script)
 
-Missed (6 of 15):
+Missed (6 of 14):
 
-- `bn-001` disguise/spacing, severity 2 appearance: “মো টি এসেছে ক্লাসে 😂”. *Tests:* a space inside 'মোটি' (fat, to a girl). *Why:* no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.72), danger 0.01 (at 0.5).
-- `bn-011` coded/slang, severity 2 mockery: “খ্যাত একটা, দেখ কী পরে এসেছে 😂”. *Tests:* slang 'খ্যাত' (uncool, rustic) mocking clothes. *Why:* no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.72), danger 0.01 (at 0.5).
-- `bn-017` sarcasm/backhanded, severity 2 appearance: “বাহ, আজকে তো তোকে মানুষের মতো লাগছে 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.72), danger 0.01 (at 0.5).
-- `bn-022` exclusion/polite, severity 2 exclusion: “নতুন গ্রুপ খুলি, রিয়াকে ছাড়া, শান্তিতে থাকা যাবে”. *Tests:* new group without one girl, 'for some peace'. *Why:* no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.72), danger 0.02 (at 0.5).
-- `bn-027` indirect/threat, severity 3 threat: “ছুটির পর গেটে দেখা করিস, তারপর দেখাচ্ছি”. *Tests:* 'meet at the gate after school, then I'll show you'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.72), danger 0.04 (at 0.5).
-- `bn-002` disguise/repeat, severity 2 appearance: “কালোওওও ভূত একটা”. *Tests:* stretched 'কালো' (dark-skinned) plus 'ghost'. *Why:* no word-list hit; Ward Lite: hurtful 0.56 (flags at 0.72), danger 0.00 (at 0.5).
+- `bn-001` disguise/spacing, severity 2 appearance: “মো টি এসেছে ক্লাসে 😂”. *Tests:* a space inside 'মোটি' (fat, to a girl). *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `bn-011` coded/slang, severity 2 mockery: “খ্যাত একটা, দেখ কী পরে এসেছে 😂”. *Tests:* slang 'খ্যাত' (uncool, rustic) mocking clothes. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `bn-017` sarcasm/backhanded, severity 2 appearance: “বাহ, আজকে তো তোকে মানুষের মতো লাগছে 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `bn-022` exclusion/polite, severity 2 exclusion: “নতুন গ্রুপ খুলি, রিয়াকে ছাড়া, শান্তিতে থাকা যাবে”. *Tests:* new group without one girl, 'for some peace'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.02 (at 0.91).
+- `bn-027` indirect/threat, severity 3 threat: “ছুটির পর গেটে দেখা করিস, তারপর দেখাচ্ছি”. *Tests:* 'meet at the gate after school, then I'll show you'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.03 (at 0.91).
+- `bn-002` disguise/repeat, severity 2 appearance: “কালোওওও ভূত একটা”. *Tests:* stretched 'কালো' (dark-skinned) plus 'ghost'. *Why:* no word-list hit; Ward Lite: hurtful 0.46 (flags at 0.48), danger 0.00 (at 0.91).
 
 False alarms (4 of 4):
 
-- `bn-033` indirect/lookalike: “দেরি হলে আম্মু মেরেই ফেলবে”. *Tests:* harmless: hyperbole about a parent. *Why:* Ward Lite: hurtful 0.76 (flags at 0.72), danger 0.01 (at 0.5).
-- `bn-035` hard-negative/banter: “দোস্ত তুই আসলেই একটা গাধা 😂 ভালোবাসি”. *Tests:* 'donkey' with love. *Why:* word list: "গাধা" (insult, 1).
+- `bn-033` indirect/lookalike: “দেরি হলে আম্মু মেরেই ফেলবে”. *Tests:* harmless: hyperbole about a parent. *Why:* Ward Lite: hurtful 0.61 (flags at 0.48), danger 0.00 (at 0.91).
+- `bn-035` hard-negative/banter: “দোস্ত তুই আসলেই একটা গাধা 😂 ভালোবাসি”. *Tests:* 'donkey' with love. *Why:* word list: "গাধা" (insult, 1); Ward Lite: hurtful 0.50 (flags at 0.48), danger 0.00 (at 0.91).
 - `bn-036` hard-negative/banter: “পাগল নাকি? 😂 চল খেলতে যাই”. *Tests:* 'crazy?' as teasing. *Why:* word list: "পাগল" (insult, 1).
 - `bn-039` hard-negative/quoting: “কেউ আমাকে বলেছে মরে যা, আমার ভয় লাগছে”. *Tests:* quoting self-harm urging; the sender needs support. *Why:* word list: "মরে যা" (selfharm, 3).
 
 ### Bangla (romanised)
 
-Missed (6 of 7):
+Missed (6 of 8):
 
-- `bnl-004` disguise/emoji, severity 2 appearance: “dekh dekh 🐒 ta hashche”. *Tests:* monkey emoji standing for a person (colourist). *Why:* no word-list hit; Ward Lite: hurtful 0.15 (flags at 0.58), danger 0.00 (at 0.5).
-- `bnl-009` coded/slang, severity 2 appearance: “fokinnir moto jama pore ashe”. *Tests:* classist 'like a beggar' about clothes. *Why:* no word-list hit; Ward Lite: hurtful 0.42 (flags at 0.58), danger 0.00 (at 0.5).
-- `bnl-014` sarcasm/backhanded, severity 2 appearance: “wow, aaj to tore manusher moto lagtese 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.58), danger 0.01 (at 0.5).
-- `bnl-019` exclusion/polite, severity 2 exclusion: “o message dile shobai seen kore rakhbi”. *Tests:* organising leaving someone on 'seen'. *Why:* no word-list hit; Ward Lite: hurtful 0.19 (flags at 0.58), danger 0.00 (at 0.5).
-- `bnl-024` indirect/threat, severity 3 threat: “tor basha kothay amra jani 🙂”. *Tests:* 'we know where you live'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.58), danger 0.01 (at 0.5).
-- `bnl-011` coded/slang, severity 1 mockery: “ratio + L, keu jiggesh kore nai”. *Tests:* pile-on slang, 'nobody asked'. *Why:* no word-list hit; Ward Lite: hurtful 0.13 (flags at 0.58), danger 0.00 (at 0.5).
+- `bnl-004` disguise/emoji, severity 2 appearance: “dekh dekh 🐒 ta hashche”. *Tests:* monkey emoji standing for a person (colourist). *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91).
+- `bnl-008` coded/slang, severity 2 mockery: “khaet ekta, ki pore ashche dekh 😂”. *Tests:* slang 'khaet' (uncool, rustic) mocking clothes. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.01 (at 0.91).
+- `bnl-014` sarcasm/backhanded, severity 2 appearance: “wow, aaj to tore manusher moto lagtese 🙂”. *Tests:* 'today you look human'. *Why:* no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91).
+- `bnl-019` exclusion/polite, severity 2 exclusion: “o message dile shobai seen kore rakhbi”. *Tests:* organising leaving someone on 'seen'. *Why:* no word-list hit; Ward Lite: hurtful 0.12 (flags at 0.48), danger 0.00 (at 0.91).
+- `bnl-024` indirect/threat, severity 3 threat: “tor basha kothay amra jani 🙂”. *Tests:* 'we know where you live'. *Why:* no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.48), danger 0.09 (at 0.91).
+- `bnl-011` coded/slang, severity 1 mockery: “ratio + L, keu jiggesh kore nai”. *Tests:* pile-on slang, 'nobody asked'. *Why:* no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.01 (at 0.91).
 
-False alarms (2 of 2):
+False alarms (3 of 3):
 
+- `bnl-029` indirect/lookalike: “deri hole ammu mere felbe”. *Tests:* harmless: hyperbole about a parent. *Why:* Ward Lite: hurtful 0.96 (flags at 0.48), danger 0.79 (at 0.91).
 - `bnl-030` hard-negative/banter: “dost tui ashlei ekta gadha 😂 love you”. *Tests:* 'donkey' with love. *Why:* word list: "gadha" (insult, 1), "gadhi" (insult, 1).
 - `bnl-031` hard-negative/reclaimed: “ami moti, tao ei dress e amake darun lagche”. *Tests:* body word about oneself, positively. *Why:* word list: "moti" (appearance, 2), "mota" (appearance, 1).
 

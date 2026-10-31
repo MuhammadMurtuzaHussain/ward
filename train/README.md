@@ -16,9 +16,13 @@ uv venv --python 3.12 .venv && uv pip install --python .venv -r pyproject.toml p
 .venv/bin/python fetch.py                          # public train splits, as parquet
 ollama pull gemma4:e4b
 node --experimental-strip-types gen-synthetic.ts   # kid-style chats written by Gemma 4 (resumable)
-node --experimental-strip-types build-data.ts      # dedupe + leak check against the scorecard
+node --experimental-strip-types gen-contrast.ts    # hand-written contrast pairs: friendly plans vs threats
+ollama stop gemma4:e4b                             # free the memory before training
+node --experimental-strip-types build-data.ts      # dedupe + leak checks (scorecard, everyday set)
 .venv/bin/python train.py                          # fine-tune, trim, export to apps/web/public/models
+.venv/bin/python calibrate.py                      # per-script hurtful thresholds + danger threshold, on dev
 .venv/bin/python score.py                          # run the exported model on the scorecard sample
+.venv/bin/python score-everyday.py                 # false alarms on everyday friendly chat (held out)
 cd .. && pnpm eval -- --only="Ward Lite,Phone: packs + Ward Lite"
 ```
 

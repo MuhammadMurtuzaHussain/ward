@@ -1,7 +1,7 @@
 # Ward scorecard
 
 200 messages per language, half abusive and half not by each dataset's own labels, same sample for every system (seed 26).
-Run on 2026-10-29, Apple M-series laptop, Ollama, nothing sent off the machine.
+Run on 2026-10-31, Apple M-series laptop, Ollama, nothing sent off the machine.
 
 Recall is the share of abusive messages caught. Precision is the share of flags that were right.
 
@@ -13,8 +13,8 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | ShieldGemma 2B | 14% | 70% | 0.23 | 54% |
 | Gemma 4 E4B | 86% | 86% | 0.86 | 86% |
 | Gemma 4 E2B | 33% | 75% | 0.46 | 61% |
-| Ward Lite | 83% | 86% | 0.84 | 85% |
-| Phone: packs + Ward Lite | 85% | 83% | 0.84 | 84% |
+| Ward Lite | 79% | 90% | 0.84 | 85% |
+| Phone: packs + Ward Lite | 83% | 86% | 0.85 | 85% |
 
 ## Bangla
 
@@ -24,8 +24,8 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | ShieldGemma 2B | 14% | 93% | 0.24 | 56% |
 | Gemma 4 E4B | 65% | 78% | 0.71 | 74% |
 | Gemma 4 E2B | 34% | 71% | 0.46 | 60% |
-| Ward Lite | 32% | 71% | 0.44 | 60% |
-| Phone: packs + Ward Lite | 39% | 74% | 0.51 | 63% |
+| Ward Lite | 40% | 78% | 0.53 | 65% |
+| Phone: packs + Ward Lite | 46% | 79% | 0.58 | 67% |
 
 ## English
 
@@ -35,8 +35,8 @@ Recall is the share of abusive messages caught. Precision is the share of flags 
 | ShieldGemma 2B | 19% | 73% | 0.30 | 56% |
 | Gemma 4 E4B | 36% | 72% | 0.48 | 61% |
 | Gemma 4 E2B | 33% | 69% | 0.45 | 59% |
-| Ward Lite | 82% | 64% | 0.72 | 68% |
-| Phone: packs + Ward Lite | 83% | 64% | 0.72 | 68% |
+| Ward Lite | 84% | 67% | 0.74 | 71% |
+| Phone: packs + Ward Lite | 85% | 67% | 0.75 | 72% |
 
 ## Systems
 

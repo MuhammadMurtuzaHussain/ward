@@ -56,6 +56,7 @@ function packPreds(): Pred[] {
 interface LiteMeta {
   threshold: number;
   thresholds?: Partial<Record<"bengali" | "devanagari" | "latin", number>>;
+  danger_threshold?: number;
 }
 function script(text: string): "bengali" | "devanagari" | "latin" {
   if (/[ঀ-৿]/.test(text)) return "bengali";
@@ -76,8 +77,9 @@ function litePreds(): Pred[] {
     if (!p) throw new Error(`Ward Lite's scores are from an older red-team set (no score for ${it.id}): ${again}.`);
     const [hurt, danger] = p;
     const t = meta.thresholds?.[script(it.text)] ?? meta.threshold;
-    const isDanger = danger >= meta.threshold;
-    return { flag: hurt >= t || isDanger, danger: isDanger, why: `Ward Lite: hurtful ${hurt.toFixed(2)} (flags at ${t}), danger ${danger.toFixed(2)} (at ${meta.threshold})` };
+    const dt = meta.danger_threshold ?? meta.threshold;
+    const isDanger = danger >= dt;
+    return { flag: hurt >= t || isDanger, danger: isDanger, why: `Ward Lite: hurtful ${hurt.toFixed(2)} (flags at ${t}), danger ${danger.toFixed(2)} (at ${dt})` };
   });
   return liteCache;
 }
