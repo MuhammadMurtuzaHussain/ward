@@ -190,6 +190,16 @@ export function Result({ id }: { id: string }) {
             </section>
           ) : null}
 
+          {plan.support && (
+            <section aria-labelledby="support" className="flex gap-4 rounded-card border border-line bg-surface p-5">
+              <HandHeart size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
+              <div>
+                <h2 id="support" className="font-display text-lg font-bold tracking-tight">{t.result.supportTitle}</h2>
+                <p className="mt-1 leading-relaxed">{t.result.supportLine(supportNames(a))}</p>
+              </div>
+            </section>
+          )}
+
           {hostile.length > 0 && <Who analysis={a} self={s.self} />}
 
           <div className="sticky bottom-20 z-10 grid gap-2 rounded-card bg-[color-mix(in_srgb,var(--bg),transparent_10%)] py-2 backdrop-blur-md sm:grid-cols-2 lg:static lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
@@ -237,6 +247,12 @@ export function Result({ id }: { id: string }) {
       </div>
     </Screen>
   );
+}
+
+/** Who told what was done to them and asked for help, by name. */
+function supportNames(a: Analysis): string {
+  const ids = new Set(a.support ?? []);
+  return [...new Set(a.findings.filter((f) => ids.has(f.message.id)).map((f) => f.message.sender))].join(", ");
 }
 
 /** While the deeper read runs: how far it has got, in place of a verdict that isn't final yet. */
@@ -393,8 +409,8 @@ export function Timeline({ analysis, self, help = false, fps: given }: { analysi
         out.push({ kind: "day", label: day });
         lastDay = day;
       }
-      // The child's own heavy words are never folded away as "ordinary".
-      const loud = (f.severity > 0 && f.message.sender !== self) || (!!f.distress && f.message.sender === self);
+      // The child's own heavy words, and someone asking for help, are never folded away as "ordinary".
+      const loud = (f.severity > 0 && f.message.sender !== self) || (!!f.distress && f.message.sender === self) || (!!f.support && f.message.sender !== self);
       if (loud) {
         flushQuiet();
         out.push({ kind: "msg", f });
@@ -484,6 +500,12 @@ function Bubble({ f, mine, fp, help, helpHere }: { f: Finding; mine: boolean; fp
         </p>
       )}
       {unsure && <p className="mt-1 max-w-[88%] px-1 text-sm text-dim">{t.result.unsure}</p>}
+      {f.support && !mine && (
+        <p className="mt-1 max-w-[88%] px-1 text-sm text-dim">
+          <HandHeart size={14} weight="fill" className="me-1 inline text-glow" />
+          {t.result.supportNote}
+        </p>
+      )}
       {flagged && fp && <Correct f={f} fp={fp} c={correction} view={view} help={help} helpHere={helpHere} />}
     </li>
   );

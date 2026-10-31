@@ -72,7 +72,7 @@ You will see a stretch of a chat. Judge ONLY the messages marked JUDGE; the othe
 Messages may be in English, Roman Urdu, Hinglish, Bangla, or a mix. Read them as a native speaker would.
 
 For each JUDGE message decide:
-- hostile: is it meant to hurt, mock, shame, threaten, exclude, pressure, or expose someone? Friends teasing each other in a friendly way is NOT hostile. Standing up for someone is NOT hostile. Talking about a bully is NOT hostile.
+- hostile: is it meant to hurt, mock, shame, threaten, exclude, pressure, or expose someone? Friends teasing each other in a friendly way is NOT hostile. Standing up for someone is NOT hostile. Talking about a bully is NOT hostile. Someone telling what was said or done to them, quoting the hurtful words to ask for help ("he told me to kill myself, what do I do?", "usne mujhe kaha mar ja"), is NOT hostile. But a hurtful message aimed at someone here stays hostile even when it starts with "someone said" or sits in quotation marks.
 - severity: 0 not hostile; 1 rude or unkind; 2 bullying (degrading, insulting appearance or identity, excluding, humiliating, repeated); 3 dangerous (threats of violence, telling someone to hurt or kill themselves, sexual messages or pressure for photos, threats to share photos or private information, blackmail).
 - categories: any of ${CATEGORIES.join(", ")}.
 - target: the name of the person it is aimed at, exactly as they appear in the chat, or null.

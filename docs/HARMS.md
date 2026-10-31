@@ -33,7 +33,15 @@ bullying. This mostly costs trust in the app.
 **It blames the wrong person.** In a group chat, Ward might count someone as a bully who was
 quoting a bully or standing up for the victim.
 
-- Gemma is told that standing up for someone and talking about a bully are not hostile.
+- Gemma is told that standing up for someone, talking about a bully, and quoting what was said
+  to you to ask for help are not hostile.
+- A child quoting abuse to ask for help ("he told me to kys, what do i do", "usne mujhe kaha mar
+  ja, kya karun", "আমাকে বলেছে মরে যা, কী করব") isn't counted as hostile, whatever the words,
+  and the result says "Someone may need support" (`packages/engine/src/frame.ts`, shared with the
+  Discord bot). It takes both a first-person recipient ("told me", "mujhe kaha", "আমাকে বলেছে")
+  and help-seeking or distress in the same message. A bare "someone said", quotation marks, or a
+  message that also talks to "you" or says "or else" never count, so a bully can't wrap abuse in
+  them. The Roman Urdu and Bangla phrasing needs native-speaker review.
 - People with no hostile messages are listed as "Not part of it", so an upstander isn't lumped in.
 - Ward never names anyone outside the app, never sends anything, and never guesses who is behind
   an anonymous account (see below).

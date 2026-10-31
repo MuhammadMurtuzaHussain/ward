@@ -10,7 +10,7 @@ const f = (sender: string, severity: Severity, opts: { unsure?: boolean; categor
   categories: opts.categories ?? [],
   ...(opts.unsure ? { unsure: true } : {}),
 });
-const chat = (level: Level, findings: ReturnType<typeof f>[], patterns: PatternKind[] = []): AnalysisLike => ({ level, findings, patterns: patterns.map((kind) => ({ kind })) });
+const chat = (level: Level, findings: AnalysisLike["findings"], patterns: PatternKind[] = []): AnalysisLike => ({ level, findings, patterns: patterns.map((kind) => ({ kind })) });
 const said = (kind: Correction["kind"], category?: Category): Correction => ({ kind, ...(category ? { category } : {}), at: 1, ward: { severity: 2, categories: ["insult"], by: "Ward Lite" } });
 
 // A lone threat only Ward Lite caught: no categories, unsure, level stays calm.
@@ -114,4 +114,15 @@ test("\"Was I mean?\" is still offered for the child's own harsh words when ther
   const harsh = chat("watch", [f("Sam", 1), f("Me", 2)]);
   assert.equal(helpPlan(harsh, { self: "Me", age: "11", refining: false }).mean, true);
   assert.equal(helpPlan(harsh, { self: null, age: "11", refining: false }).mean, false, "checking for a friend: nothing is the child's own");
+});
+
+test("someone quoting abuse to ask for help is named as needing support; the helplines come if they sound in danger", () => {
+  const asking = { ...chat("calm", [{ ...f("Sara", 0), support: true }, f("Me", 0)]), support: [0] };
+  const p = helpPlan(asking, { self: "Me", age: "11", refining: false });
+  assert.deepEqual([p.verdict, p.support, p.helpNow, p.mean], ["calm", true, false, false]);
+  const crisis = { ...chat("calm", [{ ...f("Sara", 0), support: true, distress: { term: "i want to die", lang: "en" as const } }]), support: [0] };
+  assert.equal(helpPlan(crisis, { self: "Me", age: "11", refining: false }).helpNow, true);
+  // The child's own quote of a bully's words, flagged by a model, never becomes "Was I mean?".
+  const own = chat("calm", [{ ...f("Me", 3, { categories: ["selfharm"] }), support: true }]);
+  assert.equal(helpPlan(own, { self: "Me", age: "11", refining: false }).mean, false);
 });

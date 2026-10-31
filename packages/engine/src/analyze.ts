@@ -3,6 +3,7 @@
 // This file turns per-message judgements into those patterns and one overall level.
 
 import { selfDistress } from "./distress.ts";
+import { needsSupport } from "./frame.ts";
 import { PackMatcher } from "./packs.ts";
 import type { Analysis, Category, Chat, Finding, Level, Message, ModelJudgement, Pattern, Severity } from "./types.ts";
 
@@ -162,6 +163,14 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
   if (opts.requireContext !== false)
     for (const f of flagged) if (f.severity > 0 && !f.unsure && !f.secondLook?.hostile && !backedUp(chat, findings, f, opts.self)) f.unsure = true;
 
+  // Someone telling what was done to them and asking for help ("he told me to kys, what do i do")
+  // quotes the abuse, so the words get flagged; they may need support, and they aren't the bully.
+  for (const f of findings) {
+    if (f.severity === 0 || !needsSupport(f.message.text)) continue;
+    Object.assign(f, { severity: 0, categories: [], why: "", atSelf: false, support: true });
+    delete f.unsure;
+  }
+
   const hostile = findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== opts.self);
   const toSelf = hostile.filter((f) => f.atSelf || !opts.self);
   const patterns = findPatterns(chat, hostile, toSelf, opts.self);
@@ -185,6 +194,7 @@ export async function analyze(chat: Chat, opts: AnalyzeOptions): Promise<Analysi
     patterns,
     senders: [...bySender.values()].sort((a, b) => b.worst - a.worst || b.hostile - a.hostile),
     layers: { packs: matcher.langs, models },
+    support: findings.filter((f) => f.support && f.message.sender !== opts.self).map((f) => f.message.id),
     selfDistress: opts.self ? findings.filter((f) => f.distress && f.message.sender === opts.self).map((f) => f.message.id) : [],
   };
 }

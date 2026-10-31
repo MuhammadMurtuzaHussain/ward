@@ -105,6 +105,11 @@ export interface Finding {
   secondLook?: { by: string; hostile: boolean; why?: string };
   /** The sender sounds like they want to die or to hurt themselves, in their own words (distress.ts). */
   distress?: DistressHit;
+  /**
+   * The sender is telling what was done to them and asking for help (frame.ts): they may need
+   * support, and whatever words they quote, they aren't counted as hostile.
+   */
+  support?: boolean;
 }
 
 export type PatternKind =
@@ -154,4 +159,6 @@ export interface Analysis {
    * Missing on checks saved before Ward read for it.
    */
   selfDistress?: number[];
+  /** Other people's messages that tell what was done to them and ask for help: they may need support. */
+  support?: number[];
 }

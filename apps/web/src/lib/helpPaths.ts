@@ -3,14 +3,15 @@
 // sounding message it isn't sure about gets the same help, labelled as unconfirmed; and every
 // calm or "keep an eye" result keeps a quiet "It still feels wrong" door to the Coach, because
 // Ward misses things. When the child's own words sound like they want to die or to hurt
-// themselves, care and the helplines come first, and "Was I mean?" is never asked.
+// themselves, care and the helplines come first, and "Was I mean?" is never asked. Someone telling
+// what was done to them and asking for help is named as someone who may need support.
 
 import type { Analysis, Finding, Level } from "@ward/engine";
 import { raisesHelp, type Correction } from "./corrections.ts";
 import type { AgeBand } from "./store.ts";
 
-type FindingLike = Pick<Finding, "severity" | "categories" | "unsure"> & { message: Pick<Finding["message"], "sender"> };
-export type AnalysisLike = Pick<Analysis, "level" | "selfDistress"> & { findings: FindingLike[]; patterns: Pick<Analysis["patterns"][number], "kind">[] };
+type FindingLike = Pick<Finding, "severity" | "categories" | "unsure" | "support" | "distress"> & { message: Pick<Finding["message"], "sender"> };
+export type AnalysisLike = Pick<Analysis, "level" | "selfDistress" | "support"> & { findings: FindingLike[]; patterns: Pick<Analysis["patterns"][number], "kind">[] };
 
 /**
  * "hold": the deeper read is still running, so a calm or watch verdict isn't final yet.
@@ -38,6 +39,8 @@ export interface HelpPlan {
   care: boolean;
   /** "Was I mean?", for the child's own harsh messages. Never asked of a child in distress. */
   mean: boolean;
+  /** "Someone may need support": others telling what was done to them and asking for help. */
+  support: boolean;
 }
 
 const fromOthers = (f: FindingLike, self: string | null) => f.message.sender !== self;
@@ -63,7 +66,9 @@ export function helpPlan(a: AnalysisLike, opts: { self: string | null; age: AgeB
   const verdict: Verdict = mild && care ? "care" : mild && unsure ? "unsure" : mild && opts.refining ? "hold" : a.level;
   const confirmedImages = a.findings.some((f) => f.severity >= 3 && !f.unsure && isImages(f.categories));
   // Ward Lite's flags carry no categories, so an unconfirmed danger could be about images.
-  const helpNow = danger || unsure || care;
+  // Someone asking for help who also sounds like they want to die: the helplines, for the child to share.
+  const supportCrisis = a.findings.some((f) => f.support && f.distress && fromOthers(f, opts.self));
+  const helpNow = danger || unsure || care || supportCrisis;
   const correctedImages = (opts.corrections ?? []).some((c) => c.kind === "kind" && isImages([c.category ?? ""]));
   return {
     verdict,
@@ -76,7 +81,9 @@ export function helpPlan(a: AnalysisLike, opts: { self: string | null; age: AgeB
     stillWrong: mild,
     care,
     // The child's own messages that could land hard: often anger after being hurt.
-    mean: !care && opts.self !== null && a.findings.some((f) => f.severity >= 2 && f.message.sender === opts.self),
+    // Not when quoting abuse to ask for help: the words are the bully's.
+    mean: !care && opts.self !== null && a.findings.some((f) => f.severity >= 2 && !f.support && f.message.sender === opts.self),
+    support: (a.support?.length ?? 0) > 0,
   };
 }
 
