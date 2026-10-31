@@ -4,13 +4,15 @@
 //
 //   pnpm redteam:lite        Ward Lite's scores (train/.venv; rerun when the model or the set changes)
 //   pnpm redteam             word lists, Ward Lite, and the phone's combination
-//   pnpm redteam -- --gemma  also Gemma 4 E4B through Ollama (kept for later runs while the set is unchanged)
+//   pnpm redteam -- --gemma  also Gemma 4 E4B and E2B through Ollama (kept for later runs while the set is unchanged)
 //   pnpm redteam -- --packs-only   skip Ward Lite (no Python environment)
 
+import { execSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { GemmaJudge, PackMatcher, type Chat } from "../../packages/engine/src/index.ts";
 import { CLASSES, CLASS_NAMES, LANGS, loadRedteam, type Lang, type RedClass, type RedItem } from "./set.ts";
+import { wilson } from "../stats.ts";
 
 const GEMMA = process.argv.includes("--gemma");
 const PACKS_ONLY = process.argv.includes("--packs-only");
@@ -38,6 +40,8 @@ interface System {
   name: string;
   about: string;
   run: () => Promise<Pred[]>;
+  /** When these predictions were made (kept Gemma rows keep their own date). */
+  ran?: string;
 }
 
 // ---- Word lists: exactly what eval/run.ts counts (any hit of severity 1 or more).
@@ -84,17 +88,17 @@ function litePreds(): Pred[] {
   return liteCache;
 }
 
-// ---- Gemma 4 E4B, the computer tier: the same call as eval/run.ts (no chat context).
-async function gemmaPreds(): Promise<Pred[]> {
+// ---- Gemma 4 E4B (the computer tier) and E2B: the same calls as eval/run.ts (no chat context).
+async function gemmaPreds(model: string, batch: number): Promise<Pred[]> {
   const chat: Chat = {
     source: "paste",
     events: [],
     participants: items.map((_, i) => `user${i}`),
     messages: items.map((it, i) => ({ id: i, at: null, sender: `user${i}`, text: it.text, media: false })),
   };
-  const got = await new GemmaJudge({ model: "gemma4:e4b", batch: 20, context: 0 }).judge(chat, {
+  const got = await new GemmaJudge({ model, batch, context: 0 }).judge(chat, {
     self: null,
-    onProgress: (d, t) => process.stderr.write(`\r  gemma4:e4b ${d}/${t}   `),
+    onProgress: (d, t) => process.stderr.write(`\r  ${model} ${d}/${t}   `),
   });
   process.stderr.write("\n");
   return items.map((_, i) => {
@@ -104,10 +108,15 @@ async function gemmaPreds(): Promise<Pred[]> {
   });
 }
 
-const GEMMA_NAME = "Gemma 4 E4B";
-const prev = existsSync(OUT_JSON) ? (JSON.parse(readFileSync(OUT_JSON, "utf8")) as { items?: { text: string; preds: Record<string, Pred> }[] }) : null;
-function cachedGemma(): Pred[] | null {
-  const byText = new Map((prev?.items ?? []).map((i) => [i.text, i.preds[GEMMA_NAME]]));
+const GEMMAS = [
+  { name: "Gemma 4 E4B", model: "gemma4:e4b", batch: 20, about: "Ward's judge prompt on a computer, through Ollama, 20 unrelated messages per request with no chat context; skipped ones asked again in groups of 5" },
+  { name: "Gemma 4 E2B", model: "gemma4:e2b", batch: 5, about: "The same prompt on the phone-sized Gemma 4, through Ollama, 5 messages per request, skipped ones asked again (on phones Ward uses it to write, not to judge). Ollama gives it no structured output here, so it answers in plain JSON, and one malformed entry loses its whole request" },
+];
+const prev = existsSync(OUT_JSON)
+  ? (JSON.parse(readFileSync(OUT_JSON, "utf8")) as { date?: string; systems?: { name: string; ran?: string }[]; items?: { text: string; preds: Record<string, Pred> }[] })
+  : null;
+function cachedGemma(name: string): Pred[] | null {
+  const byText = new Map((prev?.items ?? []).map((i) => [i.text, i.preds[name]]));
   const out = items.map((it) => byText.get(it.text));
   return out.every((p) => p) ? (out as Pred[]) : null;
 }
@@ -133,12 +142,21 @@ if (!PACKS_ONLY) {
     },
   );
 }
-const cached = GEMMA ? null : cachedGemma();
-if (GEMMA || cached) {
+const date = new Date().toISOString().slice(0, 10);
+/** The last commit that changed the engine (word lists, Gemma's prompt), which is what this run measures. */
+let commit = "unknown";
+try {
+  const dirty = execSync("git status --porcelain -- packages/engine", { encoding: "utf8" }).trim() !== "";
+  commit = execSync("git log -1 --format=%h -- packages/engine", { encoding: "utf8" }).trim() + (dirty ? "+changes" : "");
+} catch {}
+for (const g of GEMMAS) {
+  const cached = GEMMA ? null : cachedGemma(g.name);
+  if (!GEMMA && !cached) continue;
   systems.push({
-    name: GEMMA_NAME,
-    about: `Ward's judge prompt on a computer, through Ollama, no chat context${GEMMA ? "" : " (kept from an earlier run with --gemma on this same set)"}`,
-    run: async () => cached ?? gemmaPreds(),
+    name: g.name,
+    about: `${g.about}${GEMMA ? "" : " (kept from an earlier run with --gemma on this same set)"}`,
+    run: async () => cached ?? gemmaPreds(g.model, g.batch),
+    ran: GEMMA ? `${date}, engine \`${commit}\`` : (prev?.systems?.find((s) => s.name === g.name)?.ran ?? prev?.date),
   });
 }
 
@@ -192,16 +210,20 @@ const byLangClass = Object.fromEntries(langs.map((l) => [l, Object.fromEntries(C
 // ---- Writing
 const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)}%` : "–");
 const frac = (a: number, b: number) => (b ? `${a}/${b} (${pct(a, b)})` : "–");
+/** With the 95% Wilson interval: used where a reader compares systems. */
+const fracCI = (a: number, b: number) => {
+  if (!b) return "–";
+  const [lo, hi] = wilson(a, b);
+  return `${a}/${b} (${pct(a, b)}, ${Math.round(lo * 100)}–${Math.round(hi * 100)})`;
+};
 const row = (cells: string[]) => `| ${cells.join(" | ")} |`;
 const head = (cells: string[]) => [row(cells), row(cells.map(() => "---"))];
-const date = new Date().toISOString().slice(0, 10);
-
 function table(rows: [string, (s: string) => string][]): string[] {
   return [...head(["", ...names]), ...rows.map(([label, cell]) => row([label, ...names.map(cell)]))];
 }
-const langRows = (f: (t: Tally) => string): [string, (s: string) => string][] => [
-  ...langs.map((l): [string, (s: string) => string] => [LANGS[l], (s) => f(byLang[s]![l]!)]),
-  ["**All**", (s) => `**${f(byLang[s]!.all!)}**`],
+const langRowsCI = (f: (t: Tally) => [number, number]): [string, (s: string) => string][] => [
+  ...langs.map((l): [string, (s: string) => string] => [LANGS[l], (s) => frac(...f(byLang[s]![l]!))]),
+  ["**All**", (s) => `**${fracCI(...f(byLang[s]!.all!))}**`],
 ];
 const classRows = (f: (t: Tally) => string, only = CLASSES as readonly RedClass[]): [string, (s: string) => string][] =>
   only.map((c) => [CLASS_NAMES[c], (s) => f(byClass[s]![c]!)]);
@@ -246,11 +268,11 @@ const systemList = systems.map((s) => {
   const note = skipped.length
     ? ` **It returned no verdict for ${skipped.length} of ${items.length} messages** (${skipped.filter(({ it }) => it.severity > 0).length} of them hurtful), even though the prompt asks for every one; like the app and the scorecard, a missing verdict counts as not flagged.`
     : "";
-  return `- **${s.name}**: ${s.about}.${note}`;
+  return `- **${s.name}**: ${s.about}. Run ${s.ran ?? `${date}, engine \`${commit}\``}.${note}`;
 });
 const notRun = [
   ...(PACKS_ONLY ? ["Ward Lite (run without --packs-only after `pnpm redteam:lite`)"] : []),
-  ...(names.includes(GEMMA_NAME) ? [] : ["Gemma 4 E4B (pass --gemma with Ollama running)"]),
+  ...GEMMAS.filter((g) => !names.includes(g.name)).map((g) => `${g.name} (pass --gemma with Ollama running)`),
 ];
 
 const doc = [
@@ -266,7 +288,7 @@ const doc = [
   `- **Never trained on.** \`eval/redteam/leak.test.ts\` (part of \`pnpm test\`) fails if any red-team text is in Ward Lite's training data (\`train/data\`, when present) or its scripts, and if any code in \`train/\` opens this folder. See [train/DATA.md](../train/DATA.md).`,
   `- **Not tuned against.** Word lists and Ward Lite were not changed to pass this set. A fix should come from new, different examples or pack entries justified on their own, and the set should gain new items after each fix, or these numbers stop meaning anything.`,
   `- **Scoring, as in the scorecard.** A message counts as flagged when the system calls it hurtful at all: any word-list hit of severity 1 or more, Ward Lite over its threshold. *Caught* is the share of hurtful messages flagged; *false alarms* is the share of harmless look-alikes flagged; *dangerous* is the share of severity-3 messages marked dangerous (a severity-3 word-list hit, or Ward Lite's danger output). Each message is read alone, without the chat around it, which is harder than what Ward sees in a real chat.`,
-  `- **Small numbers.** A language has 14 to 36 messages on each side and a language-and-trick cell as few as 2: read them as where to look, not as rates.`,
+  `- **Small numbers.** A language has 14 to 36 messages on each side and a language-and-trick cell as few as 2: read them as where to look, not as rates. The **All** rows give the 95% Wilson interval after the rate.`,
   `- **Each system alone.** As in the scorecard, the Gemma row is Gemma by itself. In the app, the computer tier also keeps a severity-3 word-list hit visible (at severity 2) when Gemma reads it as a joke.`,
   ``,
   `Systems:`,
@@ -284,21 +306,21 @@ const doc = [
   ``,
   `### Hurtful messages caught`,
   ``,
-  ...table(langRows((t) => frac(t.caught, t.hurtful))),
+  ...table(langRowsCI((t) => [t.caught, t.hurtful])),
   ``,
   `### Harmless look-alikes flagged (false alarms)`,
   ``,
-  ...table(langRows((t) => frac(t.falseAlarms, t.harmless))),
+  ...table(langRowsCI((t) => [t.falseAlarms, t.harmless])),
   ``,
   `### Dangerous messages (severity 3) marked dangerous`,
   ``,
-  ...table(langRows((t) => frac(t.dangerCaught, t.dangerous))),
+  ...table(langRowsCI((t) => [t.dangerCaught, t.dangerous])),
   ``,
   `### Harmless messages marked dangerous`,
   ``,
   `In the app, one message from someone else marked dangerous makes the whole chat "urgent".`,
   ``,
-  ...table(langRows((t) => frac(t.falseDanger, t.harmless))),
+  ...table(langRowsCI((t) => [t.falseDanger, t.harmless])),
   ``,
   `## Results by trick (all languages)`,
   ``,
@@ -371,7 +393,7 @@ writeFileSync(
     {
       date,
       n: items.length,
-      systems: systems.map((s) => ({ name: s.name, about: s.about })),
+      systems: systems.map((s) => ({ name: s.name, about: s.about, ran: s.ran ?? `${date}, engine \`${commit}\`` })),
       byLang,
       byClass,
       byCategory,

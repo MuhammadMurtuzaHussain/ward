@@ -4,19 +4,28 @@
  "systems": [
   {
    "name": "Slang packs",
-   "about": "Ward's word lists alone: no model, works on any phone"
+   "about": "Ward's word lists alone: no model, works on any phone",
+   "ran": "2026-10-31, engine `e547279`"
   },
   {
    "name": "Ward Lite",
-   "about": "The small classifier (train/), int8 ONNX, flagged when hurtful or dangerous passes its threshold, as in the app"
+   "about": "The small classifier (train/), int8 ONNX, flagged when hurtful or dangerous passes its threshold, as in the app",
+   "ran": "2026-10-31, engine `e547279`"
   },
   {
    "name": "Phone: packs + Ward Lite",
-   "about": "What a phone without a big model does: flagged if the word lists or Ward Lite flag it (Ward Lite can only add)"
+   "about": "What a phone without a big model does: flagged if the word lists or Ward Lite flag it (Ward Lite can only add)",
+   "ran": "2026-10-31, engine `e547279`"
   },
   {
    "name": "Gemma 4 E4B",
-   "about": "Ward's judge prompt on a computer, through Ollama, no chat context (kept from an earlier run with --gemma on this same set)"
+   "about": "Ward's judge prompt on a computer, through Ollama, 20 unrelated messages per request with no chat context; skipped ones asked again in groups of 5 (kept from an earlier run with --gemma on this same set)",
+   "ran": "2026-10-31, engine `e547279`"
+  },
+  {
+   "name": "Gemma 4 E2B",
+   "about": "The same prompt on the phone-sized Gemma 4, through Ollama, 5 messages per request, skipped ones asked again (on phones Ward uses it to write, not to judge). Ollama gives it no structured output here, so it answers in plain JSON, and one malformed entry loses its whole request (kept from an earlier run with --gemma on this same set)",
+   "ran": "2026-10-31, engine `e547279`"
   }
  ],
  "byLang": {
@@ -191,7 +200,7 @@
   "Gemma 4 E4B": {
    "en": {
     "hurtful": 36,
-    "caught": 27,
+    "caught": 30,
     "harmless": 35,
     "falseAlarms": 9,
     "dangerous": 11,
@@ -202,32 +211,32 @@
     "hurtful": 34,
     "caught": 26,
     "harmless": 33,
-    "falseAlarms": 8,
+    "falseAlarms": 7,
     "dangerous": 8,
-    "dangerCaught": 4,
+    "dangerCaught": 3,
     "falseDanger": 1
    },
    "hi-Latn": {
     "hurtful": 32,
-    "caught": 27,
+    "caught": 29,
     "harmless": 31,
     "falseAlarms": 7,
     "dangerous": 8,
-    "dangerCaught": 2,
+    "dangerCaught": 4,
     "falseDanger": 1
    },
    "bn": {
     "hurtful": 21,
-    "caught": 15,
+    "caught": 17,
     "harmless": 20,
-    "falseAlarms": 2,
+    "falseAlarms": 3,
     "dangerous": 6,
     "dangerCaught": 2,
-    "falseDanger": 0
+    "falseDanger": 2
    },
    "bn-Latn": {
     "hurtful": 19,
-    "caught": 11,
+    "caught": 12,
     "harmless": 14,
     "falseAlarms": 3,
     "dangerous": 5,
@@ -236,12 +245,68 @@
    },
    "all": {
     "hurtful": 142,
-    "caught": 106,
+    "caught": 114,
     "harmless": 133,
     "falseAlarms": 29,
     "dangerous": 38,
-    "dangerCaught": 16,
-    "falseDanger": 3
+    "dangerCaught": 17,
+    "falseDanger": 5
+   }
+  },
+  "Gemma 4 E2B": {
+   "en": {
+    "hurtful": 36,
+    "caught": 20,
+    "harmless": 35,
+    "falseAlarms": 4,
+    "dangerous": 11,
+    "dangerCaught": 7,
+    "falseDanger": 0
+   },
+   "ur-Latn": {
+    "hurtful": 34,
+    "caught": 8,
+    "harmless": 33,
+    "falseAlarms": 4,
+    "dangerous": 8,
+    "dangerCaught": 1,
+    "falseDanger": 1
+   },
+   "hi-Latn": {
+    "hurtful": 32,
+    "caught": 13,
+    "harmless": 31,
+    "falseAlarms": 0,
+    "dangerous": 8,
+    "dangerCaught": 1,
+    "falseDanger": 0
+   },
+   "bn": {
+    "hurtful": 21,
+    "caught": 0,
+    "harmless": 20,
+    "falseAlarms": 0,
+    "dangerous": 6,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "bn-Latn": {
+    "hurtful": 19,
+    "caught": 0,
+    "harmless": 14,
+    "falseAlarms": 0,
+    "dangerous": 5,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "all": {
+    "hurtful": 142,
+    "caught": 41,
+    "harmless": 133,
+    "falseAlarms": 8,
+    "dangerous": 38,
+    "dangerCaught": 9,
+    "falseDanger": 1
    }
   }
  },
@@ -417,16 +482,16 @@
   "Gemma 4 E4B": {
    "disguise": {
     "hurtful": 41,
-    "caught": 35,
+    "caught": 37,
     "harmless": 21,
-    "falseAlarms": 0,
+    "falseAlarms": 1,
     "dangerous": 5,
-    "dangerCaught": 2,
+    "dangerCaught": 4,
     "falseDanger": 0
    },
    "coded": {
     "hurtful": 26,
-    "caught": 19,
+    "caught": 23,
     "harmless": 16,
     "falseAlarms": 0,
     "dangerous": 2,
@@ -435,7 +500,7 @@
    },
    "sarcasm": {
     "hurtful": 21,
-    "caught": 9,
+    "caught": 10,
     "harmless": 13,
     "falseAlarms": 1,
     "dangerous": 0,
@@ -446,18 +511,18 @@
     "hurtful": 23,
     "caught": 16,
     "harmless": 13,
-    "falseAlarms": 5,
+    "falseAlarms": 4,
     "dangerous": 0,
     "dangerCaught": 0,
     "falseDanger": 0
    },
    "indirect": {
     "hurtful": 31,
-    "caught": 27,
+    "caught": 28,
     "harmless": 17,
     "falseAlarms": 1,
     "dangerous": 31,
-    "dangerCaught": 12,
+    "dangerCaught": 11,
     "falseDanger": 0
    },
    "hard-negative": {
@@ -467,7 +532,63 @@
     "falseAlarms": 22,
     "dangerous": 0,
     "dangerCaught": 0,
-    "falseDanger": 3
+    "falseDanger": 5
+   }
+  },
+  "Gemma 4 E2B": {
+   "disguise": {
+    "hurtful": 41,
+    "caught": 26,
+    "harmless": 21,
+    "falseAlarms": 0,
+    "dangerous": 5,
+    "dangerCaught": 3,
+    "falseDanger": 0
+   },
+   "coded": {
+    "hurtful": 26,
+    "caught": 9,
+    "harmless": 16,
+    "falseAlarms": 0,
+    "dangerous": 2,
+    "dangerCaught": 2,
+    "falseDanger": 0
+   },
+   "sarcasm": {
+    "hurtful": 21,
+    "caught": 1,
+    "harmless": 13,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "exclusion": {
+    "hurtful": 23,
+    "caught": 0,
+    "harmless": 13,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "indirect": {
+    "hurtful": 31,
+    "caught": 5,
+    "harmless": 17,
+    "falseAlarms": 1,
+    "dangerous": 31,
+    "dangerCaught": 4,
+    "falseDanger": 1
+   },
+   "hard-negative": {
+    "hurtful": 0,
+    "caught": 0,
+    "harmless": 53,
+    "falseAlarms": 7,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
    }
   }
  },
@@ -724,7 +845,7 @@
   "Gemma 4 E4B": {
    "appearance": {
     "hurtful": 28,
-    "caught": 17,
+    "caught": 20,
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 0,
@@ -733,7 +854,7 @@
    },
    "insult": {
     "hurtful": 25,
-    "caught": 23,
+    "caught": 24,
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 0,
@@ -746,12 +867,12 @@
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 16,
-    "dangerCaught": 5,
+    "dangerCaught": 8,
     "falseDanger": 0
    },
    "mockery": {
     "hurtful": 23,
-    "caught": 12,
+    "caught": 15,
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 0,
@@ -778,11 +899,11 @@
    },
    "threat": {
     "hurtful": 12,
-    "caught": 8,
+    "caught": 9,
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 12,
-    "dangerCaught": 1,
+    "dangerCaught": 0,
     "falseDanger": 0
    },
    "exposure": {
@@ -791,7 +912,7 @@
     "harmless": 0,
     "falseAlarms": 0,
     "dangerous": 5,
-    "dangerCaught": 5,
+    "dangerCaught": 4,
     "falseDanger": 0
    },
    "sexual": {
@@ -801,6 +922,89 @@
     "falseAlarms": 0,
     "dangerous": 5,
     "dangerCaught": 5,
+    "falseDanger": 0
+   }
+  },
+  "Gemma 4 E2B": {
+   "appearance": {
+    "hurtful": 28,
+    "caught": 12,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "insult": {
+    "hurtful": 25,
+    "caught": 13,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "selfharm": {
+    "hurtful": 16,
+    "caught": 8,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 16,
+    "dangerCaught": 8,
+    "falseDanger": 0
+   },
+   "mockery": {
+    "hurtful": 23,
+    "caught": 5,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "identity": {
+    "hurtful": 4,
+    "caught": 1,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "exclusion": {
+    "hurtful": 24,
+    "caught": 0,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 0,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "threat": {
+    "hurtful": 12,
+    "caught": 1,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 12,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "exposure": {
+    "hurtful": 5,
+    "caught": 0,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 5,
+    "dangerCaught": 0,
+    "falseDanger": 0
+   },
+   "sexual": {
+    "hurtful": 5,
+    "caught": 1,
+    "harmless": 0,
+    "falseAlarms": 0,
+    "dangerous": 5,
+    "dangerCaught": 1,
     "falseDanger": 0
    }
   }
@@ -831,6 +1035,11 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
+     "why": "Gemma: This is a lighthearted comment about something arriving in class."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
     }
@@ -859,6 +1068,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.46 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calls user0 a ghost, which is a mean insult."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -889,6 +1103,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Makes fun of how user0 walks using an elephant emoji."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -922,6 +1141,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls user3 an 'abal' and says they can't do anything."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -950,7 +1175,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user4 a 'gadha' which means foolish."
+     "why": "Gemma: Calls user4 a 'gadha', which means donkey."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -978,8 +1209,13 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
+     "danger": true,
+     "why": "Gemma: Tells user0 to die, which is a serious threat."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
      "danger": false,
-     "why": "Gemma: Tells user5 to die, which is a mean insult."
+     "why": "Gemma: Message is a friendly exclamation."
     }
    }
   },
@@ -1008,8 +1244,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a positive and excited reaction to something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Message is a positive comment."
     }
    }
   },
@@ -1038,8 +1278,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a birthday wish for someone."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Message is a friendly comment."
     }
    }
   },
@@ -1068,8 +1312,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a compliment about a sticker."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Message is a complimenting request."
     }
    }
   },
@@ -1098,8 +1346,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a nice compliment to user9."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Message is a complimenting statement."
     }
    }
   },
@@ -1128,7 +1380,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user10 'khat' and mocks how they dressed."
+     "why": "Gemma: Calls user0 a 'khat' and mocks their appearance."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1157,7 +1415,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Insults user11's clothes by calling them 'fokinnir moto'."
+     "why": "Gemma: Insults user0's clothes by calling them 'fokinnir moto'."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1186,7 +1450,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Questions user12's identity and mocks how they walk."
+     "why": "Gemma: Questions user0's identity and mocks their walk."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1215,7 +1485,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user13 an 'NPC' and says they have no brain."
+     "why": "Gemma: Calls user0 an 'NPC' and says they have no brain."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1242,6 +1518,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -1276,6 +1558,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking about a plan or a match."
     }
    }
   },
@@ -1304,8 +1591,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a compliment about how user14 looks today."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Complimenting user0's appearance."
     }
    }
   },
@@ -1334,7 +1625,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Mocks user17 by saying someone finally invited them."
+     "why": "Gemma: Mocks user0 for finally being invited somewhere."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Congratulating user0 for winning."
     }
    }
   },
@@ -1363,7 +1659,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Mocks user18's failure by calling them a scientist who failed."
+     "why": "Gemma: Mocks user0 for failing, even though they are a scientist."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Teasing user0 about failing."
     }
    }
   },
@@ -1394,6 +1695,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Praising a good goal."
     }
    }
   },
@@ -1422,8 +1728,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is just a comment about an upcoming test."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is making a comment about an exam."
     }
    }
   },
@@ -1453,6 +1763,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are making a group without Riya, which excludes her."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is announcing a change in group membership."
     }
    }
   },
@@ -1483,6 +1798,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is asking for clarification about the group's destination."
     }
    }
   },
@@ -1509,9 +1829,15 @@
      "why": "Ward Lite: hurtful 0.75 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: They are telling someone to ignore messages, which excludes them."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is stating that others will see the message."
     }
    }
   },
@@ -1538,9 +1864,15 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: They are making a group only for a few people, leaving others out."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is announcing a new project group with specific members."
     }
    }
   },
@@ -1571,6 +1903,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1597,6 +1935,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.03 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Tells user26 to meet at the gate after the holiday."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -1629,7 +1972,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying they know where the person lives."
+     "why": "Gemma: Asks for user27's home address, which is private."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1657,8 +2006,14 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
-     "danger": true,
-     "why": "Gemma: They threaten to share a screenshot of the person in the group."
+     "danger": false,
+     "why": "Gemma: They threaten to share screenshots if someone talks too much."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1687,7 +2042,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying everyone would be happier without that person."
+     "why": "Gemma: Says everyone would be happier if user29 wasn't there."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1716,7 +2077,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They threaten to tell everyone if the person doesn't send a picture."
+     "why": "Gemma: Threatens to tell everyone if user30 doesn't send a picture."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1743,6 +2110,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.05 (flags at 0.48), danger 0.18 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This message is just saying they will do well in the test."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -1773,6 +2145,11 @@
      "why": "Ward Lite: hurtful 0.61 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This is a joke about being scolded by mom."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -1807,6 +2184,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -1833,6 +2216,12 @@
      "why": "word list: \"গাধা\" (insult, 1); Ward Lite: hurtful 0.50 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -1867,6 +2256,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is joking about playing a game."
     }
    }
   },
@@ -1897,6 +2291,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is making a friendly statement about being a hero."
     }
    }
   },
@@ -1923,10 +2322,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.48), danger 0.05 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Someone calls user37 'moti' in the group every day."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: User is asking for help about being called a nickname."
     }
    }
   },
@@ -1953,10 +2356,14 @@
      "why": "word list: \"মরে যা\" (selfharm, 3)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Someone told user38 to die, which is very scary."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: User expresses fear after someone said something scary."
     }
    }
   },
@@ -1987,6 +2394,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is bragging about winning in a game."
     }
    }
   },
@@ -2014,8 +2426,14 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
-     "danger": false,
+     "danger": true,
      "why": "Gemma: Tells someone to hit the boss and then steal things."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2045,6 +2463,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls user41 a fool who can't do anything."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2074,6 +2498,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls user42 a rude person."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2102,7 +2532,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message seems to be laughing at something."
+     "why": "Gemma: This is just a laughing emoji and text."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2131,7 +2567,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is laughing at something."
+     "why": "Gemma: This is just a comment about watching something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2160,7 +2602,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Uses a word that is a mild insult."
+     "why": "Gemma: Calls user45 a weak person."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Seems like a game or friendly banter."
     }
    }
   },
@@ -2189,7 +2636,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message seems to be excited about something."
+     "why": "Gemma: This is just an excited comment."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Seems like friendly teasing."
     }
    }
   },
@@ -2218,7 +2670,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is complimenting a game."
+     "why": "Gemma: This is a positive comment about a game."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Seems like friendly teasing."
     }
    }
   },
@@ -2247,7 +2704,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is teasing about what is coming next."
+     "why": "Gemma: This is a comment about watching something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Seems like friendly teasing."
     }
    }
   },
@@ -2276,7 +2738,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Insults someone's clothes by calling them a 'fokinnir'."
+     "why": "Gemma: Insults user49's clothes by calling them something rude."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Seems like friendly teasing."
     }
    }
   },
@@ -2305,7 +2772,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Insults someone's identity by asking if they are a hijra."
+     "why": "Gemma: Insults user50's identity by using a derogatory term."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Comment about someone's appearance in a teasing way."
     }
    }
   },
@@ -2334,7 +2806,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is talking about a game score."
+     "why": "Gemma: This is a comment about a game's score."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Comment about someone's appearance in a teasing way."
     }
    }
   },
@@ -2363,7 +2840,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is asking about homework."
+     "why": "Gemma: This is a question about homework."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking about homework, not bullying."
     }
    }
   },
@@ -2392,7 +2874,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is asking about plans for the day."
+     "why": "Gemma: This is asking about plans for the day."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking about plans, not bullying."
     }
    }
   },
@@ -2421,7 +2908,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is giving a compliment to someone."
+     "why": "Gemma: This is a compliment to user54."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Teasing about someone's appearance."
     }
    }
   },
@@ -2450,7 +2942,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is congratulating someone."
+     "why": "Gemma: This is a congratulatory message to user55."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly encouragement about a call."
     }
    }
   },
@@ -2479,7 +2976,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is praising a goal scored."
+     "why": "Gemma: This is a compliment about a goal scored."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Praising a goal or achievement."
     }
    }
   },
@@ -2508,7 +3010,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is talking about an upcoming exam."
+     "why": "Gemma: This is a comment about an upcoming exam."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a casual comment about an exam."
     }
    }
   },
@@ -2535,9 +3042,14 @@
      "why": "Ward Lite: hurtful 0.93 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Excludes Riya from a new group chat."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is announcing a new group chat."
+     "why": "Gemma: Mentioning a new group and excluding Riya."
     }
    }
   },
@@ -2566,7 +3078,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is telling people to ignore a message."
+     "why": "Gemma: This is a warning about seeing messages."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Stating an intention to keep a message private."
     }
    }
   },
@@ -2596,6 +3113,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are saying the picnic is only for close friends."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is politely declining an invitation."
     }
    }
   },
@@ -2624,7 +3146,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying the new group is only for a few people."
+     "why": "Gemma: They are making a new group just for a few people."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is stating a fact about a new group."
     }
    }
   },
@@ -2653,7 +3180,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is just an excuse for not coming."
+     "why": "Gemma: This message is just saying they cannot come to an event."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is stating they cannot come due to a cousin's wedding."
     }
    }
   },
@@ -2682,7 +3214,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making fun of someone's appearance after a bath."
+     "why": "Gemma: They are making fun of someone's appearance after a shower."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is telling someone to wait to see them."
     }
    }
   },
@@ -2712,6 +3249,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are teasing someone about where they live."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is asking where someone lives."
     }
    }
   },
@@ -2741,6 +3283,12 @@
      "flag": true,
      "danger": true,
      "why": "Gemma: They are threatening to share someone's private chats if they don't comply."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2769,7 +3317,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying everyone would be happier if someone wasn't there."
+     "why": "Gemma: They are saying everyone would be happier if this person wasn't there."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2798,7 +3352,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They are threatening to tell everyone if someone doesn't send a picture."
+     "why": "Gemma: They are threatening to tell everyone if the person doesn't send a picture."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2828,6 +3388,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are bragging about beating someone in an exam."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2857,6 +3423,12 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is a joke about a parent getting angry."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2886,6 +3458,12 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is a friendly joke between friends."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2914,7 +3492,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is someone talking about how they feel in a dress."
+     "why": "Gemma: This is the person talking about their own appearance."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2943,7 +3527,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying people call someone names, which is unkind."
+     "why": "Gemma: They are saying others call them names, which is hurtful."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -2972,7 +3562,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is someone bragging about a game they played."
+     "why": "Gemma: This is just bragging about a game they played."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -3002,6 +3598,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are calling someone a loser in a mean way."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -3030,7 +3632,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are using a mean word to call someone a bad person."
+     "why": "Gemma: They are using a strong swear word to insult someone."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Insulting user0's appearance with a rude word."
     }
    }
   },
@@ -3060,6 +3667,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are telling someone they are ugly and nobody likes them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calling user0 ugly to hurt their feelings."
     }
    }
   },
@@ -3089,6 +3701,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is just an abbreviation or a short message."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Just a casual response."
     }
    }
   },
@@ -3118,6 +3735,11 @@
      "flag": true,
      "danger": true,
      "why": "Gemma: They are telling someone to hurt or kill themselves."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Directly telling user0 to kill themselves."
     }
    }
   },
@@ -3147,6 +3769,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are making fun of someone while they are dancing."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Mocking user0 for trying to dance."
     }
    }
   },
@@ -3176,6 +3803,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls user80 a clown every day to make fun of them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calls someone a clown every day."
     }
    }
   },
@@ -3204,7 +3836,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user81 an idiot, which is unkind."
+     "why": "Gemma: Calls user81 an idiot to insult them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Directly insults someone."
     }
    }
   },
@@ -3233,7 +3870,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user82 stupid, which is unkind."
+     "why": "Gemma: Calls user82 stupid to insult them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Uses a rude word."
     }
    }
   },
@@ -3262,7 +3904,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calls user83 ugly, which is unkind."
+     "why": "Gemma: Calls user83 ugly to insult their looks."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Comments negatively on someone's appearance."
     }
    }
   },
@@ -3292,6 +3939,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Says user84 is worthless and a freak to hurt them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Says someone is worthless."
     }
    }
   },
@@ -3318,10 +3970,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.04 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Uses emojis to mock someone's reaction."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: Positive comment about a game."
     }
    }
   },
@@ -3352,6 +4008,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly greeting."
     }
    }
   },
@@ -3382,6 +4043,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Wishing a happy birthday."
     }
    }
   },
@@ -3412,6 +4078,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Offering a gift."
     }
    }
   },
@@ -3442,6 +4113,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Giving a compliment."
     }
    }
   },
@@ -3471,6 +4147,11 @@
      "flag": true,
      "danger": true,
      "why": "Gemma: Tells user90 to kill themselves, which is very dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User tells someone to commit suicide."
     }
    }
   },
@@ -3500,6 +4181,11 @@
      "flag": true,
      "danger": true,
      "why": "Gemma: Tells user91 to end their life, which is very dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User tells someone to commit suicide."
     }
    }
   },
@@ -3526,10 +4212,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.45 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": false,
+     "flag": true,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This message is teasing and making fun of something."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User mocks someone for not asking a question."
     }
    }
   },
@@ -3556,10 +4246,14 @@
      "why": "Ward Lite: hurtful 0.72 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": false,
+     "flag": true,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: Calls user93 an NPC, which is a mean way to say they are boring."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User insults someone's intelligence and looks."
     }
    }
   },
@@ -3586,10 +4280,14 @@
      "why": "Ward Lite: hurtful 0.89 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": false,
+     "flag": true,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: Makes fun of user94's behavior by comparing it to something gross."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User makes a negative comment about someone's eating habits."
     }
    }
   },
@@ -3616,10 +4314,14 @@
      "why": "Ward Lite: hurtful 0.74 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calls user95's actions 'pick-me behaviour' and says it is embarrassing."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: User is joking about pick-me behavior being embarrassing."
     }
    }
   },
@@ -3648,8 +4350,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This message just says they are tired and is not mean."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is stating they are just tired."
     }
    }
   },
@@ -3678,8 +4384,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This message is a compliment about someone's outfit."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is giving a positive comment about someone's appearance."
     }
    }
   },
@@ -3710,6 +4420,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is saying they like the group and it's the best."
     }
    }
   },
@@ -3740,6 +4455,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is expressing disappointment about a test result."
     }
    }
   },
@@ -3769,6 +4489,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is a compliment about their looks."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Comments on someone's appearance are unkind."
     }
    }
   },
@@ -3798,6 +4523,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is a nice message congratulating someone."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Positive comment about a friend."
     }
    }
   },
@@ -3824,9 +4554,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: This makes fun of their singing ability."
+     "why": "Gemma: This is a lighthearted comment about singing."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Positive comment about how someone thinks."
     }
    }
   },
@@ -3855,7 +4590,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a supportive comment about their bravery."
+     "why": "Gemma: This is a supportive comment about wearing something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Positive comment about wearing something."
     }
    }
   },
@@ -3884,7 +4624,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This mocks their ideas by saying they are always bad."
+     "why": "Gemma: This mocks their ideas by saying they are not good."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Positive comment about an idea."
     }
    }
   },
@@ -3913,7 +4658,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a lighthearted comment about a baby."
+     "why": "Gemma: This is a playful comment about a baby."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Comment about a baby getting upset."
     }
    }
   },
@@ -3942,7 +4692,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a compliment about their drawing skill."
+     "why": "Gemma: This is a compliment about their drawing talent."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Complimenting someone's drawing talent."
     }
    }
   },
@@ -3972,6 +4727,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: This is a teasing comment about a math test."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Mentioning a maths test."
     }
    }
   },
@@ -4000,7 +4760,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a thank you message."
+     "why": "Gemma: This is a thank you message for being kind."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Thanking someone for saving a seat."
     }
    }
   },
@@ -4030,6 +4795,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are trying to leave Ayesha out of a group."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting removing someone from a group."
     }
    }
   },
@@ -4058,7 +4828,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying someone is not invited to the sleepover."
+     "why": "Gemma: They are saying someone is not invited to a sleepover."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4087,7 +4863,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This message suggests someone is not welcome at the table."
+     "why": "Gemma: They are telling someone they cannot join because the table is full."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4117,6 +4899,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are telling someone they are not wanted in the group."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4145,7 +4933,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are telling someone to ignore messages to be excluded."
+     "why": "Gemma: They are telling someone to ignore a message to avoid trouble."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4175,6 +4969,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are telling someone to sit somewhere else from now on."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4203,7 +5003,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making a new group that leaves someone out."
+     "why": "Gemma: They are making a group for a project that leaves someone out."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a new group for a project is not bullying."
     }
    }
   },
@@ -4233,6 +5038,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is just an excuse for not being able to come."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Saying you can't come is not bullying."
     }
    }
   },
@@ -4261,7 +5071,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a friendly message saying they will save a spot."
+     "why": "Gemma: This is a kind message saying they will save a spot."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Offering a spot for tomorrow is kind."
     }
    }
   },
@@ -4291,6 +5106,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: This is a warning that someone should be careful on Monday."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: A warning about watching someone's back is not bullying."
     }
    }
   },
@@ -4319,7 +5139,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They are threatening to share private pictures in a group."
+     "why": "Gemma: They are threatening to share private screenshots in a group."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Mentioning screenshots in a class group is not bullying."
     }
    }
   },
@@ -4348,7 +5173,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: It sounds like they are watching what you do and making fun of it."
+     "why": "Gemma: It makes fun of user120 by knowing their bus route."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Threatens user120 with knowledge of their bus route."
     }
    }
   },
@@ -4377,7 +5207,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying everyone would be happier if you were gone."
+     "why": "Gemma: It tells someone they are better off if they leave."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Suggests disappearance, which is a threat."
     }
    }
   },
@@ -4406,7 +5241,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying nobody would even miss you if you left."
+     "why": "Gemma: It says no one would miss the person if they were gone."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Threatens user122 by implying they are unimportant."
     }
    }
   },
@@ -4435,7 +5275,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They are threatening to tell people secrets if you don't send pictures."
+     "why": "Gemma: It threatens to share private things if someone doesn't send pictures."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Threatens to expose private information."
     }
    }
   },
@@ -4464,7 +5309,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They are telling you to not wake up, which is very scary."
+     "why": "Gemma: It tells someone to not wake up, which is very dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Threatens someone not to wake up."
     }
    }
   },
@@ -4493,7 +5343,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is about an exam and doesn't seem mean."
+     "why": "Gemma: This is just talking about an exam."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4522,7 +5378,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This message is about being late for something."
+     "why": "Gemma: This is just talking about being late for something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4551,7 +5413,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This sounds like a warning in a game, not bullying."
+     "why": "Gemma: This is talking about a game situation."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4580,7 +5448,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just someone talking about pizza."
+     "why": "Gemma: This is just talking about liking pizza."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4609,7 +5483,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They call someone an idiot but then say they love them."
+     "why": "Gemma: It calls someone an idiot but says it with a laugh."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -4638,7 +5518,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They call someone a loser in a mean way."
+     "why": "Gemma: It calls someone a loser in a mean way."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Called user1 a loser and told them to leave."
     }
    }
   },
@@ -4667,7 +5552,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are calling someone dumb, even if they say it's funny."
+     "why": "Gemma: It says something was funny in a mean way."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Called user1 dumb and said something was hilarious."
     }
    }
   },
@@ -4696,7 +5586,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just a reaction to a video."
+     "why": "Gemma: This is just reacting to a video."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Called someone ugly for crying."
     }
    }
   },
@@ -4725,7 +5620,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a positive message about a club."
+     "why": "Gemma: This is just talking about a club."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friends sticking together for a club."
     }
    }
   },
@@ -4754,7 +5654,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a fun, silly message between friends."
+     "why": "Gemma: This is just a fun group message."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Called someone a weirdo and asked them to assemble."
     }
    }
   },
@@ -4783,7 +5688,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is someone talking about their own clothes."
+     "why": "Gemma: This is user135 talking about their own outfit."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Expressing love for an outfit is not bullying."
     }
    }
   },
@@ -4812,7 +5722,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are being called mean names about their body by others."
+     "why": "Gemma: Someone is calling user136 names about their weight."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking for advice about hurtful comments is not bullying."
     }
    }
   },
@@ -4841,7 +5756,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: Someone told them to die, which is very dangerous."
+     "why": "Gemma: Someone told them to kill themselves, which is very serious."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking for help about harmful statements is not bullying."
     }
    }
   },
@@ -4868,9 +5788,14 @@
      "why": "word list: \"nobody likes you\" (exclusion, 2)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: Their friend is getting mean messages, and they are asking for help."
+     "why": "Gemma: This is asking for advice about a friend."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking for help for a friend who is being bullied is not bullying."
     }
    }
   },
@@ -4899,7 +5824,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are asking if saying 'go die' as a joke is still bullying."
+     "why": "Gemma: Asking if saying 'go die' as a joke is bullying."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking if 'go die' is bullying is not bullying."
     }
    }
   },
@@ -4928,8 +5858,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is friendly trash talk after a game."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly challenge for a rematch."
     }
    }
   },
@@ -4960,6 +5894,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly competitive statement about a game."
     }
    }
   },
@@ -4990,6 +5929,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Comment about a game result."
     }
    }
   },
@@ -5020,6 +5964,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting a game strategy."
     }
    }
   },
@@ -5050,6 +5999,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Complaining about poor lobby performance."
     }
    }
   },
@@ -5079,6 +6033,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: User145 calls user140 a bad word to insult them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Used a very rude and insulting word."
     }
    }
   },
@@ -5108,6 +6067,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: User146 uses a strong insult against user140."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Used a very rude and insulting phrase."
     }
    }
   },
@@ -5136,7 +6100,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: User147 makes fun of user140 in a teasing way."
+     "why": "Gemma: User147 makes fun of user140 with a silly comment."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Made a mocking comment about something."
     }
    }
   },
@@ -5166,6 +6135,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: User148 calls user140 useless and worthless."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Insulted someone by calling them worthless."
     }
    }
   },
@@ -5194,7 +6168,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: User149 makes fun of user140 with a cow emoji."
+     "why": "Gemma: User149 mocks user140 by saying a cow is coming."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Made a mocking comment about an animal."
     }
    }
   },
@@ -5224,6 +6203,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: User150 calls user140 crazy and says their mind is bad."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User150 insulted another user's mind."
     }
    }
   },
@@ -5252,7 +6236,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: User151 tells user140 to eat less, which is rude."
+     "why": "Gemma: User151 tells user140 to eat less, which is unkind."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User151 insulted another user's food."
     }
    }
   },
@@ -5280,8 +6269,13 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
-     "danger": false,
-     "why": "Gemma: User152 tells user140 to go and die."
+     "danger": true,
+     "why": "Gemma: User152 tells user140 to go and die, which is dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User152 threatened someone to die."
     }
    }
   },
@@ -5310,7 +6304,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: User153 insults user140 by calling them a bad person."
+     "why": "Gemma: User153 insults user140 by saying no one will look at them."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: User153 insulted someone based on their appearance."
     }
    }
   },
@@ -5339,8 +6338,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This message is just saying something was fun."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User154 made a friendly comment about a scene."
     }
    }
   },
@@ -5367,6 +6370,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -5401,6 +6410,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -5427,6 +6442,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.03 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -5461,6 +6482,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -5490,6 +6517,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: User159 says user140 looks uncool and makes fun of their hair."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -5519,6 +6552,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are mocking user160 by saying they act like a girl."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Insulting user160 by comparing them to girls."
     }
    }
   },
@@ -5548,6 +6586,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are telling user161 to go away using a rude word."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Using rude slang to insult user161."
     }
    }
   },
@@ -5576,7 +6619,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are calling user162 an NPC and telling them to use their brain."
+     "why": "Gemma: Calls someone an NPC and tells them to use their brain."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calling user162 an NPC and criticizing their thinking."
     }
    }
   },
@@ -5605,7 +6653,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making fun of user163's voice and calling them delusional."
+     "why": "Gemma: Says someone sounds cringe and is delusional."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Calling someone's voice cringe and delusional."
     }
    }
   },
@@ -5634,7 +6687,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making fun of user164 by suggesting a silly gift."
+     "why": "Gemma: Suggests giving a silly gift to someone."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting a lighthearted gift for a birthday."
     }
    }
   },
@@ -5661,6 +6719,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.06 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -5695,6 +6759,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -5721,6 +6791,12 @@
      "why": "Ward Lite: hurtful 0.57 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -5755,6 +6831,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -5781,6 +6863,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.29 (flags at 0.48), danger 0.04 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Tells someone they are so good they make a mirror quit."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -5813,7 +6900,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are mocking user170 by calling them a genius who failed."
+     "why": "Gemma: Calls someone a genius but then says they failed."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly teasing about failing."
     }
    }
   },
@@ -5840,10 +6932,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Makes fun of someone for being invited to a birthday."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: Congratulating someone for being invited to a party."
     }
    }
   },
@@ -5872,7 +6968,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making fun of user172 for the clothes they wear to school."
+     "why": "Gemma: They are making fun of user172's clothes."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Commenting on someone's clothing."
     }
    }
   },
@@ -5901,7 +7002,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making fun of someone for not coming to the party."
+     "why": "Gemma: They are making fun of user173 for not coming to a party."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a comment about not attending a party."
     }
    }
   },
@@ -5930,8 +7036,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a compliment about a goal scored."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Praising someone's achievement."
     }
    }
   },
@@ -5960,8 +7070,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a comment about a future test."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a comment about a test."
     }
    }
   },
@@ -5990,8 +7104,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a thank you message."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Giving a compliment."
     }
    }
   },
@@ -6018,9 +7136,14 @@
      "why": "Ward Lite: hurtful 0.98 (flags at 0.48), danger 0.54 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: They are excluding Rohan from a new group chat."
+     "why": "Gemma: They are just suggesting a new group without adding Rohan."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Telling someone not to add a person."
     }
    }
   },
@@ -6049,8 +7172,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: They are just saying not to tell Rohan about the movie plan."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Giving a warning about a movie plan."
     }
    }
   },
@@ -6077,10 +7204,14 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.04 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: They are saying the trip is only for close friends, leaving others out."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: Apologizing about a trip rule."
     }
    }
   },
@@ -6109,7 +7240,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Telling someone to ignore messages is unkind and excludes them."
+     "why": "Gemma: Tells someone to ignore messages, which is excluding them."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6138,7 +7275,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Telling someone to leave permanently is very mean and excludes them."
+     "why": "Gemma: Tells someone to leave the group permanently, which is excluding them."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6167,7 +7310,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Excluding someone from a new group is unkind and makes them feel left out."
+     "why": "Gemma: Excludes someone by making a new group with only a few people."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6197,6 +7346,12 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is just an excuse for not being able to come."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6226,6 +7381,12 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is a friendly promise to include someone later."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6254,7 +7415,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just making plans for later."
+     "why": "Gemma: This is a casual plan to meet up later."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6283,7 +7450,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Asking for someone's home address can feel like a threat."
+     "why": "Gemma: This is a threatening message about knowing someone's address."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6312,7 +7485,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: Threatening to share chats is a serious threat to privacy."
+     "why": "Gemma: Threatens to share private chats if the person talks too much."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6341,7 +7520,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Saying someone is better off gone is a mean insult."
+     "why": "Gemma: Says the person is a burden to everyone, which is mean."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6369,8 +7554,14 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
+     "danger": true,
+     "why": "Gemma: Tells someone to leave life forever, which is very dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
      "danger": false,
-     "why": "Gemma: Calling someone a burden and telling them to leave is very mean."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6399,7 +7590,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: Threatening to share private pictures is a serious threat."
+     "why": "Gemma: Threatens to tell everyone if the person doesn't send pictures."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Sharing pictures is not bullying."
     }
    }
   },
@@ -6428,7 +7624,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This sounds like a threat about something bad happening."
+     "why": "Gemma: This is a threat that something bad will happen to the person."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about what happens tomorrow is not bullying."
     }
    }
   },
@@ -6457,7 +7658,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just showing excitement about an exam."
+     "why": "Gemma: This is just showing excitement for an exam."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about exams is not bullying."
     }
    }
   },
@@ -6487,6 +7693,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is just talking about a parent's reaction."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about parents is not bullying."
     }
    }
   },
@@ -6515,7 +7726,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just making plans to meet up for food."
+     "why": "Gemma: This is a friendly plan to meet for snacks."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about meeting friends is not bullying."
     }
    }
   },
@@ -6544,7 +7760,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just showing excitement about food."
+     "why": "Gemma: This is just showing excitement about pizza."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6573,7 +7795,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calling someone a fool for forgetting something is teasing."
+     "why": "Gemma: Calls someone a fool for forgetting their bag."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6602,7 +7830,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is friendly teasing and saying they care."
+     "why": "Gemma: This is friendly teasing between friends."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6631,7 +7865,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Calling someone a jerk is a bit rude, but not serious bullying."
+     "why": "Gemma: Tells someone to be quiet and calls them a bad person."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6661,6 +7901,12 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is just talking about studying hard."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6689,7 +7935,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a personal statement, not directed at anyone else."
+     "why": "Gemma: This is a personal statement about appearance and liking a dress."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is happy with their dress."
     }
    }
   },
@@ -6718,7 +7969,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Someone is calling the user names in the group chat."
+     "why": "Gemma: Someone is being called 'kaali' (black) in the group."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is worried about being called black in a group."
     }
    }
   },
@@ -6747,7 +8003,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: Someone told the user to die, which is very scary."
+     "why": "Gemma: Someone was told to 'go die', which is a serious threat."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is scared because someone told them to 'go die'."
     }
    }
   },
@@ -6777,6 +8038,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: A friend received mean messages saying they are useless."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User needs help with hurtful messages from a friend."
     }
    }
   },
@@ -6805,7 +8071,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just talking about a game they played."
+     "why": "Gemma: This is just talking about a video game match."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is bragging about winning in a game."
     }
    }
   },
@@ -6834,7 +8105,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just talking about the game lobby."
+     "why": "Gemma: This is a comment about the skill level in a game."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6863,7 +8140,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is giving advice about playing a game."
+     "why": "Gemma: This is advice about playing a game."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6892,7 +8175,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This message is teasing someone about their game skills."
+     "why": "Gemma: This is a mean comment about someone's game performance."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6921,7 +8210,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This calls someone crazy and says they are bad at things."
+     "why": "Gemma: This calls someone crazy and says they are bad at something."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6950,7 +8245,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is making fun of someone's appearance in class."
+     "why": "Gemma: This mocks someone by calling them 'moti' (fat) in class."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -6979,7 +8280,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This uses a very mean and insulting word."
+     "why": "Gemma: This uses a very rude and insulting word."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Used a rude insult to question someone's presence."
     }
    }
   },
@@ -7008,7 +8314,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This calls someone stupid and says they are not thinking."
+     "why": "Gemma: This calls someone foolish and says they are not thinking."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Insulted user210 by questioning their intelligence."
     }
    }
   },
@@ -7037,7 +8348,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is mocking someone by showing a picture of an elephant."
+     "why": "Gemma: This is mocking someone by showing an elephant picture."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Mocked someone by saying they are struggling."
     }
    }
   },
@@ -7066,7 +8382,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is insulting someone by comparing them to a monkey."
+     "why": "Gemma: This is insulting someone's face by comparing it to a monkey."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Asked someone to look at their face in a mocking way."
     }
    }
   },
@@ -7095,7 +8416,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is calling someone dirty or bad looking."
+     "why": "Gemma: This is a harsh insult about someone's skin color."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Used a very rude and insulting phrase."
     }
    }
   },
@@ -7124,7 +8450,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This says the person looks very dirty."
+     "why": "Gemma: This tells someone they look very dirty."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User insulted another user with a harsh comment."
     }
    }
   },
@@ -7153,7 +8484,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is calling someone immoral or shameless."
+     "why": "Gemma: This is a very strong insult about someone's character."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User insulted another user with a harsh word."
     }
    }
   },
@@ -7182,7 +8518,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: This is a direct wish for someone to die."
+     "why": "Gemma: This is a direct threat telling someone to die."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: User told another user to kill themselves."
     }
    }
   },
@@ -7211,7 +8552,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is just expressing excitement about something."
+     "why": "Gemma: This is just expressing excitement about something that happened."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User expressed enjoyment in a result, not bullying."
     }
    }
   },
@@ -7241,6 +8587,11 @@
      "flag": false,
      "danger": false,
      "why": "Gemma: This is congratulating someone on a good result."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User congratulated someone on a result."
     }
    }
   },
@@ -7267,6 +8618,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This is a happy birthday wish."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7301,6 +8657,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7327,6 +8689,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.16 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7361,6 +8729,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7390,6 +8764,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls paindu a derogatory name to make fun of them."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7419,6 +8799,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Uses a strong swear word to tell someone to leave."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is asking to leave the chat."
     }
    }
   },
@@ -7448,6 +8833,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Tells someone to use Fair and Lovely cream to change their look."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is making a lighthearted comment."
     }
    }
   },
@@ -7476,7 +8866,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Challenges someone in a mocking way to prove something."
+     "why": "Gemma: Challenges someone to prove something, which is mocking."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is teasing someone about their action."
     }
    }
   },
@@ -7506,6 +8901,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Calls someone a simp and tells them to be ashamed."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is mocking someone for being shy."
     }
    }
   },
@@ -7536,6 +8936,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is leaving because their mother called."
     }
    }
   },
@@ -7562,6 +8967,12 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.00 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7596,6 +9007,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7626,6 +9043,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7652,6 +9075,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This is a nice compliment to user233."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7686,6 +9114,12 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7715,6 +9149,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Makes fun of someone for being added to the group."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7741,6 +9181,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This is a compliment about their singing voice."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7774,6 +9219,12 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: Insults someone's intelligence by saying their mind is new."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -7800,6 +9251,11 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: This is a compliment about their skill."
+    },
+    "Gemma 4 E2B": {
      "flag": false,
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
@@ -7832,6 +9288,11 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
+     "why": "Gemma: This is encouragement for their upcoming test."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
     }
@@ -7862,8 +9323,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a nice compliment to someone."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Complimenting user240 for being smart."
     }
    }
   },
@@ -7892,7 +9357,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They want to make a new group without Hira, leaving Hira out."
+     "why": "Gemma: They want to make a new group without Hira, leaving them out."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting to exclude Hira from a new group."
     }
    }
   },
@@ -7923,6 +9393,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Telling someone not to tell others where they are going."
     }
    }
   },
@@ -7951,7 +9426,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying the picnic is only for certain people, excluding others."
+     "why": "Gemma: They are saying the picnic is only for their friends."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Apologizing that the picnic is only for their group."
     }
    }
   },
@@ -7982,6 +9462,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Instructing everyone to be quiet when someone arrives."
     }
    }
   },
@@ -8010,7 +9495,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are telling someone to sit at another table because there is no space."
+     "why": "Gemma: They are telling someone to sit somewhere else because there is no room."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggests someone should sit somewhere else."
     }
    }
   },
@@ -8039,7 +9529,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They want to remove someone from the group, saying no one will care."
+     "why": "Gemma: They want to remove someone from the group chat."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Tells someone to remove themselves from a group."
     }
    }
   },
@@ -8068,7 +9563,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are making a new group with only four people listed."
+     "why": "Gemma: They are making a new group with only a few specific people."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Explains making a new group for the project."
     }
    }
   },
@@ -8099,6 +9599,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Says they cannot come today because they are going to their grandmother's house."
     }
    }
   },
@@ -8129,6 +9634,11 @@
      "danger": false,
      "why": "Gemma skipped this message (no verdict)",
      "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Promises to reserve a seat for someone for tomorrow."
     }
    }
   },
@@ -8157,8 +9667,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is just making plans to meet after a break."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting a meeting after vacation is friendly."
     }
    }
   },
@@ -8186,8 +9700,13 @@
     },
     "Gemma 4 E4B": {
      "flag": true,
-     "danger": true,
-     "why": "Gemma: They know someone's home address, which is a scary thing to say."
+     "danger": false,
+     "why": "Gemma: They are saying they know the person's home address."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a statement about knowing someone's address is not mean."
     }
    }
   },
@@ -8216,7 +9735,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They threaten to share screenshots if someone talks too much."
+     "why": "Gemma: They will share screenshots if the person talks too much."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Threatening to put someone in a group for talking is not bullying."
     }
    }
   },
@@ -8245,7 +9769,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: They are saying that everyone would be happier if a certain person wasn't there."
+     "why": "Gemma: They are saying everyone would be happier if the person wasn't there."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making a statement about happiness is not hurtful."
     }
    }
   },
@@ -8275,6 +9804,11 @@
      "flag": true,
      "danger": false,
      "why": "Gemma: They are telling someone to just leave quietly because no one cares."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Suggesting someone leave quietly is not bullying."
     }
    }
   },
@@ -8303,7 +9837,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: They threaten to tell everyone if someone doesn't send a picture."
+     "why": "Gemma: They are threatening to tell everyone if you don't send a picture."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking for a picture, not bullying."
     }
    }
   },
@@ -8332,8 +9871,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is just telling someone to show up at school tomorrow."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Asking to show something, not bullying."
     }
    }
   },
@@ -8362,8 +9905,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is just saying they are ready for the test."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about exams, not bullying."
     }
    }
   },
@@ -8392,8 +9939,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is just saying their mom wants them to be on time."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Talking about getting scolded, not bullying."
     }
    }
   },
@@ -8422,8 +9973,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma skipped this message (no verdict)",
-     "noAnswer": true
+     "why": "Gemma: This is a friendly invitation to meet and eat samosas."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Making plans to meet, not bullying."
     }
    }
   },
@@ -8452,7 +10007,13 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a playful, exaggerated statement about food."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": true,
+     "why": "Gemma: Threatening to give life to someone."
     }
    }
   },
@@ -8481,7 +10042,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is friendly teasing about forgetting a bag."
+     "why": "Gemma: This is friendly teasing between friends."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Using a rude insult."
     }
    }
   },
@@ -8510,7 +10076,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is friendly teasing and affection between friends."
+     "why": "Gemma: This is a friendly and loving message."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: Friendly teasing and expressing love."
     }
    }
   },
@@ -8539,7 +10110,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is a harsh command telling someone to be quiet."
+     "why": "Gemma: Calling someone a 'kameena' is unkind teasing."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Using a rude command to be quiet."
     }
    }
   },
@@ -8568,7 +10144,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: This is a rude insult about someone being silly."
+     "why": "Gemma: Calling someone an 'ullu' is a mean tease."
+    },
+    "Gemma 4 E2B": {
+     "flag": true,
+     "danger": false,
+     "why": "Gemma: Using a rude insult."
     }
    }
   },
@@ -8597,7 +10178,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a statement about self-perception, not directed at anyone."
+     "why": "Gemma: This is a statement about themselves."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is praising others as heroes."
     }
    }
   },
@@ -8626,7 +10212,12 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a positive statement about how they feel in their clothes."
+     "why": "Gemma: This is a positive statement about their body."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is happy with their appearance."
     }
    }
   },
@@ -8655,7 +10246,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Someone is repeatedly calling them a bad name in the group."
+     "why": "Gemma: Being called 'kaali' repeatedly is hurtful teasing."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is asking for advice about being called names."
     }
    }
   },
@@ -8684,7 +10280,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": true,
-     "why": "Gemma: Someone told them to die, which is very scary."
+     "why": "Gemma: Someone told them to die, which is very dangerous."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is expressing fear from a threat."
     }
    }
   },
@@ -8713,7 +10314,12 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: A friend is being told they are useless many times."
+     "why": "Gemma: Repeatedly calling a friend 'useless' is bullying."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma: User is asking for help with hurtful messages."
     }
    }
   },
@@ -8742,7 +10348,13 @@
     "Gemma 4 E4B": {
      "flag": true,
      "danger": false,
-     "why": "Gemma: Asking if calling someone a dog in a joke is bullying."
+     "why": "Gemma: Calling someone a dog, even as a joke, can be mean."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -8771,7 +10383,14 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is bragging about winning a game."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -8800,7 +10419,14 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is a comment about losing a game."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -8829,7 +10455,14 @@
     "Gemma 4 E4B": {
      "flag": false,
      "danger": false,
-     "why": "Gemma: This is giving advice on how to play a game."
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   },
@@ -8856,9 +10489,15 @@
      "why": "no word-list hit; Ward Lite: hurtful 0.02 (flags at 0.48), danger 0.01 (at 0.91)"
     },
     "Gemma 4 E4B": {
-     "flag": true,
+     "flag": false,
      "danger": false,
-     "why": "Gemma: This is a playful threat to beat someone in a game."
+     "why": "Gemma: This is a playful threat about a game, not serious harm."
+    },
+    "Gemma 4 E2B": {
+     "flag": false,
+     "danger": false,
+     "why": "Gemma skipped this message (no verdict)",
+     "noAnswer": true
     }
    }
   }

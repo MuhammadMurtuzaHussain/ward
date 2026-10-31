@@ -9,9 +9,11 @@
 // Ward Lite's predictions come from train/score.py (it runs the exported ONNX model), written to
 // results/ward-lite.preds.json; run that first.
 
+import { execSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { GemmaJudge, PackMatcher, ShieldGemmaJudge, type Chat } from "../packages/engine/src/index.ts";
 import { loadSets, type Item } from "./data.ts";
+import { bootstrap, wilson } from "./stats.ts";
 
 const N = Number(process.argv.find((a) => /^\d+$/.test(a)) ?? 200);
 // --only=a,b: rerun just these systems and keep the others' results from the last run.
@@ -23,6 +25,9 @@ const packs = new PackMatcher();
 const shield = new ShieldGemmaJudge();
 
 type System = { name: string; about: string; run: (items: Item[]) => Promise<boolean[]> };
+
+/** Messages a model returned no verdict for, even after being asked again: counted as not flagged. */
+const skipped: Record<string, number> = {};
 
 function asChat(items: Item[]): Chat {
   return {
@@ -40,6 +45,7 @@ async function gemma(model: string, items: Item[], batch = 20) {
     onProgress: (d, t) => process.stderr.write(`\r  ${model} ${d}/${t}   `),
   });
   process.stderr.write("\n");
+  skipped[model] = (skipped[model] ?? 0) + items.filter((_, i) => !got.has(i)).length;
   return items.map((_, i) => got.get(i)?.hostile ?? false);
 }
 
@@ -58,11 +64,11 @@ const systems: System[] = [
       return out;
     },
   },
-  { name: "Gemma 4 E4B", about: "Ward's judge prompt, one message at a time, no chat context (the computer tier)", run: (items) => gemma("gemma4:e4b", items) },
-  { name: "Gemma 4 E2B", about: "The same prompt on the phone-sized Gemma 4, 5 messages per request (it loses track of longer lists); scored through Ollama, on a phone it runs through LiteRT-LM", run: (items) => gemma("gemma4:e2b", items, 5) },
+  { name: "Gemma 4 E4B", about: "Ward's judge prompt (the computer tier's model), 20 unrelated messages per request with no chat context around them; any it skips are asked again in groups of 5", run: (items) => gemma("gemma4:e4b", items) },
+  { name: "Gemma 4 E2B", about: "The same prompt on the phone-sized Gemma 4, 5 messages per request (it loses track of longer lists), skipped ones asked again; scored through Ollama, on a phone it runs through LiteRT-LM. Ollama gives it no structured output here, so it answers in plain JSON, and one malformed entry loses its whole request", run: (items) => gemma("gemma4:e2b", items, 5) },
   {
     name: "Ward Lite",
-    about: "The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5",
+    about: "The small classifier distilled for any phone (train/), int8 ONNX, flagged when hurtful or dangerous >= 0.5. Trained on the train splits of the Roman Urdu and English datasets below (never their test messages), so those two rows are in distribution; its Bangla came from other datasets",
     run: async (items) => litePreds(items),
   },
   {
@@ -100,9 +106,37 @@ function score(pred: boolean[], items: Item[]) {
   return { tp, fp, fn, tn, precision, recall, f1, accuracy: (tp + tn) / items.length };
 }
 
-const results: Record<string, Record<string, ReturnType<typeof score> & { seconds: number }>> = {};
+/** 95% intervals: Wilson for recall and precision, a bootstrap over the messages for F1. */
+function intervals(pred: boolean[], items: Item[]) {
+  const s = score(pred, items);
+  const pairs = pred.map((p, i) => [p, items[i]!.bad] as const);
+  const f1 = bootstrap(pairs, (xs) => {
+    let tp = 0, fp = 0, fn = 0;
+    for (const [p, b] of xs) if (p && b) tp++; else if (p) fp++; else if (b) fn++;
+    return (2 * tp) / Math.max(1, 2 * tp + fp + fn);
+  });
+  return { recallCI: wilson(s.tp, s.tp + s.fn), precisionCI: wilson(s.tp, s.tp + s.fp), f1CI: f1 };
+}
+
+type Row = ReturnType<typeof score> & ReturnType<typeof intervals> & { seconds: number; ran: string; commit?: string; skipped?: number };
+
+/** The last commit that changed the engine (word lists, Gemma's prompt), which is what a row measures. */
+function engineCommit(): string | undefined {
+  try {
+    const dirty = execSync("git status --porcelain -- packages/engine", { encoding: "utf8" }).trim() !== "";
+    return execSync("git log -1 --format=%h -- packages/engine", { encoding: "utf8" }).trim() + (dirty ? "+changes" : "");
+  } catch {
+    return undefined;
+  }
+}
+const commit = engineCommit();
+
+const today = new Date().toISOString().slice(0, 10);
+const results: Record<string, Record<string, Row>> = {};
 const raw: Record<string, Record<string, boolean[]>> = {};
 const prev = ONLY ? JSON.parse(readFileSync(new URL("./results/scorecard.raw.json", import.meta.url), "utf8")) : null;
+// Kept rows keep their own run date, time and skip count from the last scorecard.
+const prevRows = ONLY ? (JSON.parse(readFileSync(new URL("./results/scorecard.json", import.meta.url), "utf8")).results as Record<string, Record<string, Partial<Row>>>) : {};
 for (const [set, items] of Object.entries(sets)) {
   results[set] = {};
   raw[set] = {};
@@ -111,37 +145,57 @@ for (const [set, items] of Object.entries(sets)) {
       const pred = prev.raw[set]?.[sys.name] as boolean[] | undefined;
       if (!pred) continue;
       raw[set]![sys.name] = pred;
-      results[set]![sys.name] = { ...score(pred, items), seconds: 0 };
+      const old = prevRows[set]?.[sys.name] ?? {};
+      results[set]![sys.name] = { ...score(pred, items), ...intervals(pred, items), seconds: old.seconds ?? 0, ran: old.ran ?? "unknown", ...(old.commit ? { commit: old.commit } : {}), ...(old.skipped !== undefined ? { skipped: old.skipped } : {}) };
       continue;
     }
     console.error(`${set} / ${sys.name}`);
     const t = Date.now();
+    const before = { ...skipped };
     const pred = await sys.run(items);
     raw[set]![sys.name] = pred;
-    results[set]![sys.name] = { ...score(pred, items), seconds: (Date.now() - t) / 1000 };
+    const model = sys.name.startsWith("Gemma 4 ") ? `gemma4:${sys.name.slice(8).toLowerCase()}` : null;
+    results[set]![sys.name] = {
+      ...score(pred, items),
+      ...intervals(pred, items),
+      seconds: (Date.now() - t) / 1000,
+      ran: today,
+      ...(commit ? { commit } : {}),
+      ...(model ? { skipped: (skipped[model] ?? 0) - (before[model] ?? 0) } : {}),
+    };
   }
 }
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
+const ci = (x: number, [lo, hi]: [number, number]) => `${pct(x)} (${Math.round(lo * 100)}–${Math.round(hi * 100)})`;
+const f1ci = (x: number, [lo, hi]: [number, number]) => `${x.toFixed(2)} (${lo.toFixed(2)}–${hi.toFixed(2)})`;
+const IN_DIST = new Set(["Roman Urdu/Ward Lite", "Roman Urdu/Phone: packs + Ward Lite", "English/Ward Lite", "English/Phone: packs + Ward Lite"]);
 const md = [
   `# Ward scorecard`,
   ``,
   `${N} messages per language, half abusive and half not by each dataset's own labels, same sample for every system (seed 26).`,
-  `Run on ${new Date().toISOString().slice(0, 10)}, Apple M-series laptop, Ollama, nothing sent off the machine.`,
+  `Apple M-series laptop, Ollama, nothing sent off the machine. Each row says when it was run, and on which engine commit (the word lists and Gemma's prompt): \`pnpm eval -- --only=...\` reruns some systems and keeps the others.`,
   ``,
-  `Recall is the share of abusive messages caught. Precision is the share of flags that were right.`,
+  `Recall is the share of abusive messages caught. Precision is the share of flags that were right. In brackets: the 95% interval (Wilson for recall and precision, 2,000 bootstrap resamples of the messages for F1). With 100 messages on each side, two systems whose intervals overlap may not really differ.`,
+  ``,
+  `† In distribution: Ward Lite was trained on the train split of the same dataset (never these test messages). The other systems never saw it. Bangla is the out-of-distribution check for Ward Lite.`,
   ``,
   ...Object.entries(results).flatMap(([set, r]) => [
     `## ${set}`,
     ``,
-    `| System | Caught (recall) | Right when it flags (precision) | F1 | Accuracy |`,
-    `| --- | --- | --- | --- | --- |`,
-    ...Object.entries(r).map(([s, v]) => `| ${s} | ${pct(v.recall)} | ${pct(v.precision)} | ${v.f1.toFixed(2)} | ${pct(v.accuracy)} |`),
+    `| System | Caught (recall) | Right when it flags (precision) | F1 | Accuracy | Run |`,
+    `| --- | --- | --- | --- | --- | --- |`,
+    ...Object.entries(r).map(
+      ([s, v]) =>
+        `| ${s}${IN_DIST.has(`${set}/${s}`) ? " †" : ""} | ${ci(v.recall, v.recallCI)} | ${ci(v.precision, v.precisionCI)} | ${f1ci(v.f1, v.f1CI)} | ${pct(v.accuracy)} | ${v.ran}${v.commit ? ` \`${v.commit}\`` : ""}${v.skipped ? `, ${v.skipped} unanswered` : ""} |`,
+    ),
     ``,
   ]),
   `## Systems`,
   ``,
   ...systems.map((s) => `- **${s.name}**: ${s.about}`),
+  ``,
+  `"Unanswered" counts messages a Gemma model returned no verdict for even after being asked again; they count as not flagged, as in the app.`,
   ``,
   `## Datasets`,
   ``,
