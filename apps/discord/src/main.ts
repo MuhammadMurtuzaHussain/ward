@@ -299,5 +299,13 @@ client.on(Events.ShardResume, (id) => log(`reconnected (shard ${id})`));
 client.rest.on("rateLimited", (r) => log(`rate limited on ${r.route} for ${r.timeToReset} ms`));
 process.on("unhandledRejection", (e) => log("unhandled:", (e as Error)?.message ?? e));
 
+// On a host that expects a web service (Render), answer health checks on $PORT. Nothing else is served.
+if (process.env.PORT) {
+  const { createServer } = await import("node:http");
+  createServer((_req, res) => {
+    res.writeHead(client.isReady() ? 200 : 503, { "content-type": "text/plain" }).end(client.isReady() ? "ok" : "starting");
+  }).listen(Number(process.env.PORT), "0.0.0.0");
+}
+
 process.on("SIGTERM", () => void client.destroy().then(() => process.exit(0)));
 await client.login(token);
