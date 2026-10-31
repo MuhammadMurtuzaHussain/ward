@@ -64,6 +64,7 @@ export const en = {
     recent: "Recent checks",
     recentEmpty: "Nothing yet. When you check a chat, a short note appears here: what I found, never the messages themselves.",
     savedInVault: "Saved in vault",
+    helpCard: ["Need someone to talk to?", "Helplines for children, any time. You don't need a reason."] as [string, string],
   },
   check: {
     title: "Check a chat",
@@ -133,6 +134,9 @@ export const en = {
     unsureHelp: "If it was meant seriously, it is serious. These people can help, any time.",
     unsureTitle: "I'm not sure about one message.",
     unsureLine: "Most of this looks fine. One message could be serious if it was meant that way. Read it below, and trust how it felt.",
+    holdTitle: "I'm reading this closely.",
+    holdLine: "My quick look is done. Now I'm reading every message properly. If something already feels wrong, you don't have to wait for me.",
+    stillWrong: ["It still feels wrong", "I can miss things. How it feels to you counts."] as [string, string],
   },
   patterns: {
     danger: (kinds: string[]) => `This chat has ${kinds.length ? list(kinds) : "messages that could put you in danger"}. That is never okay, and it's not your fault.`,
@@ -160,6 +164,7 @@ export const en = {
   coach: {
     title: "What to do",
     intro: "One step at a time. You don't have to do all of this today.",
+    feltIntro: "You said it still feels wrong. I can miss things, and how it feels to you counts. Here's who can help, and what you can do.",
     dontReply: "Don't reply to them",
     dontReplyLine: "Replying angry is what they're hoping for, and it can make it look like you started it. You don't owe them an answer.",
     neverPay: "If someone is asking for photos or money, stop replying and never pay. It won't stop if you do.",
@@ -596,12 +601,12 @@ export const en = {
     shareCount: (n: number) => `You've corrected me ${n === 1 ? "once" : `${n} times`} in this chat. That stays on this device.`,
     shareOpen: "Help make Ward better",
     shareTitle: "Help make Ward better",
-    shareLine: "If you want, you can send your corrections to the people who make Ward, so I get better at this. It's completely up to you. Ward never sends anything itself: this makes a file, and you decide what happens to it.",
+    shareLine: "If you want, you can keep your corrections in a file. It says what I said and what you said, never the messages, names or times. Ward never sends anything itself.",
     includeText: "Include the words of the messages",
     includeTextHint: "Without this, the file only says what I said and what you said, not what the message was. Names and times are never included.",
     preview: "This is everything in the file",
     save: "Save the file",
-    where: "To send it, attach it to a new issue at github.com/MuhammadMurtuzaHussain/ward, or ask an adult you trust to do it for you.",
+    where: "Keep this file. If your school joins a Ward pilot, you can give it to your teacher.",
   },
   give: {
     title: "Give Ward to a friend",

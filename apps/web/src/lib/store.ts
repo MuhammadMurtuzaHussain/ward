@@ -16,7 +16,7 @@ export type Screen =
   | { name: "home" }
   | { name: "check" }
   | { name: "result"; id: string }
-  | { name: "coach"; id: string }
+  | { name: "coach"; id: string; felt?: boolean } // felt: from "It still feels wrong", so help comes first
   | { name: "path" }
   | { name: "lesson"; id: string }
   | { name: "vault" }

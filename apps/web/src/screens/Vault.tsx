@@ -8,6 +8,7 @@ import { ReportDialog } from "../components/ReportDialog.tsx";
 import { go, useStore } from "../lib/store.ts";
 import { locale, useT } from "../i18n/index.ts";
 import { hasPin, isUnlocked, list, lock, remove, unlock, type VaultItem } from "../lib/vault.ts";
+import { historyLevel } from "../lib/helpPaths.ts";
 import { Timeline } from "./Result.tsx";
 
 export function VaultScreen() {
@@ -127,7 +128,7 @@ export function VaultScreen() {
                     {t.vault.summary(it.analysis.findings.filter((f) => f.severity > 0 && !f.unsure).length, it.chat.messages.length, new Date(it.savedAt).toLocaleDateString(locale()))}
                   </span>
                 </span>
-                <LevelPill level={it.analysis.level} />
+                <LevelPill level={historyLevel(it.analysis, it.self)} />
               </button>
             </li>
           ))}

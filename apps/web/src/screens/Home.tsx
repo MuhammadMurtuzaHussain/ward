@@ -1,6 +1,8 @@
-import { ArrowRight, ChatCircleText, Fire, Lifebuoy, Lightning, LockKey, MagnifyingGlass, type Icon } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, CaretDown, ChatCircleText, Fire, Lifebuoy, Lightning, LockKey, MagnifyingGlass, Phone, type Icon } from "@phosphor-icons/react";
 import { nextLesson } from "@ward/lessons";
 import { Ghost, type Mood } from "../components/Ghost.tsx";
+import { HelpNow } from "../components/HelpNow.tsx";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { LevelPill } from "../components/LevelPill.tsx";
 import { go, liveStreak, tab, useStore } from "../lib/store.ts";
@@ -11,6 +13,11 @@ import { locale, useT } from "../i18n/index.ts";
 export function Home() {
   const p = useStore((s) => s.profile);
   const t = useT();
+  const [help, setHelp] = useState(false);
+  const helpRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (help) helpRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [help]);
   const streak = liveStreak(p);
   const up = nextLesson(p.age, p.done, p.lang);
   const late = new Date().getHours() >= 23 || new Date().getHours() < 5;
@@ -88,10 +95,17 @@ export function Home() {
         )}
       </div>
 
-      <div className={`mt-5 grid gap-3 ${p.age === "14" ? "sm:grid-cols-2" : ""}`}>
+      <div className={`mt-5 grid gap-3 sm:grid-cols-2 ${p.age === "14" ? "lg:grid-cols-3" : ""}`}>
+        {/* Someone to talk to, for every age: Ward can miss things, and nobody needs a check to ask. */}
+        <SideDoor icon={Phone} text={t.home.helpCard} onClick={() => setHelp((h) => !h)} expanded={help} controls="home-help" />
         <SideDoor icon={ChatCircleText} text={t.mean.homeCard} onClick={() => go({ name: "mean" })} />
         {p.age === "14" && <SideDoor icon={Lifebuoy} text={t.plan.card} onClick={() => go({ name: "plan" })} />}
       </div>
+      {help && (
+        <div id="home-help" ref={helpRef} className="mt-3">
+          <HelpNow />
+        </div>
+      )}
 
       <section className="mt-10">
         <div className="flex items-end justify-between">
@@ -121,16 +135,20 @@ export function Home() {
   );
 }
 
-/** A quiet card for the less common doors: "Was I mean?" and the safety plan. */
-function SideDoor({ icon: I, text: [title, line], onClick }: { icon: Icon; text: [string, string]; onClick: () => void }) {
+/** A quiet card for the less common doors: someone to talk to, "Was I mean?" and the safety plan. */
+function SideDoor({ icon: I, text: [title, line], onClick, expanded, controls }: { icon: Icon; text: [string, string]; onClick: () => void; expanded?: boolean; controls?: string }) {
   return (
-    <button onClick={onClick} className="group flex items-center gap-4 rounded-card border border-line bg-surface px-5 py-4 text-start hover:border-dim/40">
+    <button onClick={onClick} aria-expanded={expanded} aria-controls={expanded ? controls : undefined} className="group flex items-center gap-4 rounded-card border border-line bg-surface px-5 py-4 text-start hover:border-dim/40">
       <I size={24} weight="bold" className="shrink-0 text-glow" />
       <span className="min-w-0 flex-1">
         <span className="block font-display font-semibold">{title}</span>
         <span className="text-sm text-dim">{line}</span>
       </span>
-      <ArrowRight size={18} weight="bold" className="flip-rtl shrink-0 text-glow transition-transform group-hover:translate-x-0.5" />
+      {expanded === undefined ? (
+        <ArrowRight size={18} weight="bold" className="flip-rtl shrink-0 text-glow transition-transform group-hover:translate-x-0.5" />
+      ) : (
+        <CaretDown size={18} weight="bold" className={`shrink-0 text-glow transition-transform ${expanded ? "rotate-180" : ""}`} />
+      )}
     </button>
   );
 }

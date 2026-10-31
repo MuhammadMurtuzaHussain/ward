@@ -10,6 +10,7 @@ import {
   ChatCircleText,
   CheckCircle,
   Flag,
+  HandHeart,
   Lifebuoy,
   ChatsCircle,
   Desktop,
@@ -28,6 +29,7 @@ import { HelpNow } from "../components/HelpNow.tsx";
 import { BackBar, Button, Pill, Screen } from "../components/ui.tsx";
 import { go, setCorrection, useStore, type AgeBand } from "../lib/store.ts";
 import { correctedView, judgedBy, type Correction, type CorrectionKind, type CorrectedView } from "../lib/corrections.ts";
+import { correctionHelp, helpPlan } from "../lib/helpPaths.ts";
 import { ShareCorrections } from "../components/ShareCorrections.tsx";
 import { SaveToVault } from "../components/SaveToVault.tsx";
 import { Speak } from "../components/Speak.tsx";
@@ -58,11 +60,28 @@ function verdict(level: Level, age: AgeBand, self: string | null, t: Dict): { mo
   };
 }
 
+/** Each message's fingerprint (the same one the vault takes), so a correction follows its message. */
+function useFingerprints(analysis: Analysis | null): Map<number, string> {
+  const [fps, setFps] = useState<Map<number, string>>(new Map());
+  useEffect(() => {
+    if (!analysis) return;
+    let live = true;
+    const messages = analysis.findings.map((f) => f.message);
+    void fingerprintMessages({ messages } as Chat).then((h) => live && setFps(new Map(messages.map((m, i) => [m.id, h[i]!]))));
+    return () => {
+      live = false;
+    };
+  }, [analysis]);
+  return fps;
+}
+
 export function Result({ id }: { id: string }) {
   const s = useStore((st) => st.sessions[id]);
   const age = useStore((st) => st.profile.age);
+  const corrections = useStore((st) => st.profile.corrections);
   const t = useT();
   const reduce = useReducedMotion();
+  const fps = useFingerprints(s?.analysis ?? null);
 
   if (!s) {
     return (
@@ -77,13 +96,21 @@ export function Result({ id }: { id: string }) {
   }
 
   const a = s.analysis;
-  const danger = a.patterns.find((p) => p.kind === "danger");
-  // A dangerous-sounding message Ward isn't sure about doesn't raise the alarm, but it doesn't
-  // get "this looks okay" either: Ward says it isn't sure, and the help stays close.
-  const unsureDanger = !danger && a.findings.some((f) => f.unsure && f.severity >= 3 && f.message.sender !== s.self);
+  const childSaid = a.findings.flatMap((f) => {
+    const c = f.severity > 0 && f.message.sender !== s.self ? corrections[fps.get(f.message.id) ?? ""] : undefined;
+    return c ? [c] : [];
+  });
+  // Which help this result shows (helpPaths.ts). A dangerous-sounding message Ward isn't sure
+  // about gets the full help under a softer "I'm not sure" heading, never "this looks okay"; and a
+  // calm or watch verdict waits, as "reading closely", until the deeper read has finished.
+  const plan = helpPlan(a, { self: s.self, age, refining: s.refining, corrections: childSaid });
   const base = verdict(a.level, age, s.self, t);
-  const v = unsureDanger && (a.level === "calm" || a.level === "watch") ? { ...base, title: t.result.unsureTitle, line: t.result.unsureLine } : base;
-  const imageRisk = a.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const v =
+    plan.verdict === "unsure"
+      ? { ...base, title: t.result.unsureTitle, line: t.result.unsureLine }
+      : plan.verdict === "hold"
+        ? { mood: "think" as const, title: t.result.holdTitle, line: t.result.holdLine }
+        : base;
   const hostile = a.findings.filter((f) => f.severity > 0 && !f.unsure && f.message.sender !== s.self);
   // The child's own messages that could land hard: often anger after being hurt. Named gently.
   const ownHarsh = s.self ? a.findings.some((f) => f.severity >= 2 && f.message.sender === s.self) : false;
@@ -100,21 +127,24 @@ export function Result({ id }: { id: string }) {
             className="flex gap-5 rounded-card border border-line bg-surface p-6"
           >
             <Ghost mood={v.mood} size={age === "14" ? 72 : 88} className="shrink-0" />
-            <div>
-              <h1 className={`font-display text-2xl font-bold leading-tight tracking-tight sm:text-3xl ${a.level === "urgent" ? "text-alarm" : ""}`}>{v.title}</h1>
-              <p className="mt-2 leading-relaxed">{v.line}</p>
+            <div className="min-w-0 flex-1">
+              {/* The verdict can change when the deeper read lands: screen readers hear it, politely. */}
+              <div role="status" aria-live="polite" aria-atomic="true">
+                <h1 className={`font-display text-2xl font-bold leading-tight tracking-tight sm:text-3xl ${a.level === "urgent" ? "text-alarm" : ""}`}>{v.title}</h1>
+                <p className="mt-2 leading-relaxed">{v.line}</p>
+              </div>
+              {plan.verdict === "hold" && <Reading progress={s.progress} />}
               <Speak text={[v.title, v.line, ...a.patterns.map((p) => patternText(p, t))]} className="mt-3" />
             </div>
           </motion.section>
 
-          {danger && <HelpNow images={imageRisk} />}
-          {unsureDanger && (
+          {plan.helpNow && (
             <div className="grid gap-3">
-              <p className="text-sm text-dim">{t.result.unsureHelp}</p>
-              <HelpNow images={false} />
+              {plan.unconfirmed && <p className="text-sm text-dim">{t.result.unsureHelp}</p>}
+              <HelpNow images={plan.images} />
             </div>
           )}
-          {danger && age === "14" && s.self && (
+          {plan.plan && (
             <Button tone="quiet" onClick={() => go({ name: "plan" })}>
               <Lifebuoy size={20} weight="bold" /> {t.plan.open}
             </Button>
@@ -153,15 +183,27 @@ export function Result({ id }: { id: string }) {
           {hostile.length > 0 && <Who analysis={a} self={s.self} />}
 
           <div className="sticky bottom-20 z-10 grid gap-2 rounded-card bg-[color-mix(in_srgb,var(--bg),transparent_10%)] py-2 backdrop-blur-md sm:grid-cols-2 lg:static lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
-            {a.level !== "calm" ? (
+            {plan.coach ? (
               <Button onClick={() => go({ name: "coach", id })}>
                 {t.result.whatToDo} <ArrowRight size={18} weight="bold" className="flip-rtl" />
               </Button>
-            ) : (
+            ) : plan.practise ? (
               <Button onClick={() => go({ name: "path" })}>{t.result.practise}</Button>
-            )}
+            ) : null}
             <SaveToVault id={id} />
           </div>
+
+          {/* Ward misses things: a quiet door to the Coach, with help first, on every calm or watch result. */}
+          {plan.stillWrong && (
+            <button onClick={() => go({ name: "coach", id, felt: true })} className="flex items-start gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
+              <HandHeart size={24} weight="bold" className="mt-0.5 shrink-0 text-glow" />
+              <span className="min-w-0 flex-1">
+                <span className="block font-display font-bold">{t.result.stillWrong[0]}</span>
+                <span className="text-sm text-dim">{t.result.stillWrong[1]}</span>
+              </span>
+              <ArrowRight size={18} weight="bold" className="flip-rtl mt-1 shrink-0 text-glow" />
+            </button>
+          )}
 
           {ownHarsh && (
             <button onClick={() => go({ name: "mean" })} className="flex items-start gap-4 rounded-card border border-line bg-surface p-4 text-start hover:border-dim/40">
@@ -179,9 +221,27 @@ export function Result({ id }: { id: string }) {
           {!s.refining && <GemmaOffer analysis={a} />}
         </div>
 
-        <Timeline analysis={a} self={s.self} help={Boolean(danger)} />
+        <Timeline analysis={a} self={s.self} help={plan.helpNow} fps={fps} />
       </div>
     </Screen>
+  );
+}
+
+/** While the deeper read runs: how far it has got, in place of a verdict that isn't final yet. */
+function Reading({ progress }: { progress?: [number, number] }) {
+  const t = useT();
+  const pct = progress && progress[1] ? Math.round((progress[0] / progress[1]) * 100) : null;
+  return (
+    <div
+      role="progressbar"
+      aria-label={t.result.readingClosely}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={pct ?? undefined}
+      className="mt-4 h-1.5 w-full max-w-64 overflow-hidden rounded-full bg-raised"
+    >
+      <div className={`h-full rounded-full bg-glow transition-[width] duration-300 ${pct === null ? "w-1/4 animate-pulse" : ""}`} style={pct === null ? undefined : { width: `${Math.max(4, pct)}%` }} />
+    </div>
   );
 }
 
@@ -279,27 +339,26 @@ function GemmaOffer({ analysis }: { analysis: Analysis }) {
 
 type Row = { kind: "msg"; f: Finding } | { kind: "fold"; count: number; from: number } | { kind: "day"; label: string };
 
-/** `help`: the crisis block is on this screen, so a corrected dangerous message can point to it. */
-export function Timeline({ analysis, self, help = false }: { analysis: Analysis; self: string | null; help?: boolean }) {
+/**
+ * `help`: the crisis block is on this screen, so a corrected dangerous message can point to it.
+ * Without it, the first message the child says was worse (or dangerous) gets HelpNow under it.
+ */
+export function Timeline({ analysis, self, help = false, fps: given }: { analysis: Analysis; self: string | null; help?: boolean; fps?: Map<number, string> }) {
   const t = useT();
+  const age = useStore((s) => s.profile.age);
   const [unfolded, setUnfolded] = useState<Set<number>>(new Set());
   const [sharing, setSharing] = useState(false);
   // Corrections are keyed by each message's fingerprint (the same one the vault takes), so a
   // correction made here still shows when the chat is checked again or opened from the vault.
-  const [fps, setFps] = useState<Map<number, string>>(new Map());
-  useEffect(() => {
-    let live = true;
-    const messages = analysis.findings.map((f) => f.message);
-    void fingerprintMessages({ messages } as Chat).then((h) => live && setFps(new Map(messages.map((m, i) => [m.id, h[i]!]))));
-    return () => {
-      live = false;
-    };
-  }, [analysis]);
+  const own = useFingerprints(given ? null : analysis);
+  const fps = given ?? own;
   const corrections = useStore((s) => s.profile.corrections);
   const corrected = analysis.findings.flatMap((f) => {
     const c = f.severity > 0 && f.message.sender !== self ? corrections[fps.get(f.message.id) ?? ""] : undefined;
-    return c ? [{ correction: c, text: f.message.text }] : [];
+    return c ? [{ correction: c, text: f.message.text, f }] : [];
   });
+  // One HelpNow per screen: under the first corrected message that asks for help, the rest point to it.
+  const helpUnder = help ? undefined : corrected.find(({ correction, f }) => correctionHelp(correction, correctedView(f, correction).gated).help)?.f.message.id;
   const rows = useMemo(() => {
     const out: Row[] = [];
     let lastDay = "";
@@ -357,23 +416,26 @@ export function Timeline({ analysis, self, help = false }: { analysis: Analysis;
                 </button>
               </li>
             );
-          return <Bubble key={r.f.message.id} f={r.f} mine={r.f.message.sender === self} fp={fps.get(r.f.message.id)} help={help} />;
+          return <Bubble key={r.f.message.id} f={r.f} mine={r.f.message.sender === self} fp={fps.get(r.f.message.id)} help={help || helpUnder !== undefined} helpHere={helpUnder === r.f.message.id} />;
         })}
       </ol>
       {corrected.length > 0 && (
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-4 text-sm">
           <p className="text-dim">{t.correct.shareCount(corrected.length)}</p>
-          <button onClick={() => setSharing(true)} className="min-h-11 font-bold text-glow hover:underline">
-            {t.correct.shareOpen}
-          </button>
+          {/* The file stays with the child; 8 to 10 aren't offered it at all. */}
+          {age !== "8" && (
+            <button onClick={() => setSharing(true)} className="min-h-11 font-bold text-glow hover:underline">
+              {t.correct.shareOpen}
+            </button>
+          )}
         </div>
       )}
-      {sharing && <ShareCorrections items={corrected} wordLists={analysis.layers.packs} onClose={() => setSharing(false)} />}
+      {sharing && age !== "8" && <ShareCorrections items={corrected} wordLists={analysis.layers.packs} onClose={() => setSharing(false)} />}
     </section>
   );
 }
 
-function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string; help: boolean }) {
+function Bubble({ f, mine, fp, help, helpHere }: { f: Finding; mine: boolean; fp?: string; help: boolean; helpHere: boolean }) {
   const t = useT();
   const lang = useStore((s) => s.profile.lang);
   const correction = useStore((s) => (fp ? s.profile.corrections[fp] : undefined));
@@ -409,7 +471,7 @@ function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string;
         </p>
       )}
       {unsure && <p className="mt-1 max-w-[88%] px-1 text-sm text-dim">{t.result.unsure}</p>}
-      {flagged && fp && <Correct f={f} fp={fp} c={correction} view={view} help={help} />}
+      {flagged && fp && <Correct f={f} fp={fp} c={correction} view={view} help={help} helpHere={helpHere} />}
     </li>
   );
 }
@@ -417,8 +479,11 @@ function Bubble({ f, mine, fp, help }: { f: Finding; mine: boolean; fp?: string;
 const KINDS: CorrectionKind[] = ["fine", "worse", "kind"];
 const CATEGORY_ORDER: Category[] = ["insult", "mockery", "appearance", "identity", "exclusion", "threat", "selfharm", "sexual", "exposure"];
 
-/** "This is wrong": a quiet link under a flagged message, opening three plain choices. */
-function Correct({ f, fp, c, view, help }: { f: Finding; fp: string; c?: Correction; view: CorrectedView; help: boolean }) {
+/**
+ * "This is wrong": a quiet link under a flagged message, opening three plain choices. "Worse", or a
+ * dangerous kind, only adds help (HelpNow here, or a link to it); the verdict stays as it was.
+ */
+function Correct({ f, fp, c, view, help, helpHere }: { f: Finding; fp: string; c?: Correction; view: CorrectedView; help: boolean; helpHere: boolean }) {
   const t = useT();
   const [step, setStep] = useState<null | "ask" | "kind">(null);
   const put = (kind: CorrectionKind, category?: Category) => {
@@ -426,24 +491,32 @@ function Correct({ f, fp, c, view, help }: { f: Finding; fp: string; c?: Correct
     setStep(null);
   };
 
+  const needs = correctionHelp(c, view.gated);
   if (c)
     return (
-      <div role="status" className="mt-1 max-w-[88%] px-1 text-sm">
-        <p className={view.gated ? "text-ink" : "text-dim"}>
-          <CheckCircle size={14} weight="fill" className="me-1 inline text-glow" />
-          {c.kind === "fine" ? (view.gated ? t.correct.gated : t.correct.saidFine) : c.kind === "worse" ? t.correct.saidWorse : t.correct.saidKind(t.correct.categories[c.category ?? "insult"]!)}
-        </p>
-        <div className="flex flex-wrap gap-x-4">
-          {view.gated && help && (
-            <button onClick={() => document.getElementById("help-now")?.scrollIntoView({ behavior: "smooth", block: "center" })} className="min-h-10 font-bold text-alarm hover:underline">
-              {t.correct.showHelp}
+      <>
+        <div role="status" className="mt-1 max-w-[88%] px-1 text-sm">
+          <p className={view.gated ? "text-ink" : "text-dim"}>
+            <CheckCircle size={14} weight="fill" className="me-1 inline text-glow" />
+            {c.kind === "fine" ? (view.gated ? t.correct.gated : t.correct.saidFine) : c.kind === "worse" ? t.correct.saidWorse : t.correct.saidKind(t.correct.categories[c.category ?? "insult"]!)}
+          </p>
+          <div className="flex flex-wrap gap-x-4">
+            {needs.help && help && !helpHere && (
+              <button onClick={() => document.getElementById("help-now")?.scrollIntoView({ behavior: "smooth", block: "center" })} className="min-h-10 font-bold text-alarm hover:underline">
+                {t.correct.showHelp}
+              </button>
+            )}
+            <button onClick={() => setCorrection(fp, null)} className="min-h-10 font-bold text-dim hover:text-ink">
+              {t.correct.undo}
             </button>
-          )}
-          <button onClick={() => setCorrection(fp, null)} className="min-h-10 font-bold text-dim hover:text-ink">
-            {t.correct.undo}
-          </button>
+          </div>
         </div>
-      </div>
+        {needs.help && helpHere && (
+          <div className="mt-2 w-full max-w-[88%]">
+            <HelpNow images={needs.images} />
+          </div>
+        )}
+      </>
     );
 
   if (!step)

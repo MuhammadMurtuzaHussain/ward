@@ -5,6 +5,8 @@
 //
 // The safety gate: a dangerous message (severity 3, or a threat, self-harm urging, sexual
 // pressure or exposure) is never softened. The child is thanked, the help stays where it was.
+// The other way round only adds help: "it was worse", or a dangerous kind, brings HelpNow to
+// that message, while the verdict and the report stay as they were.
 
 import type { Category, Finding, Severity } from "@ward/engine";
 
@@ -22,6 +24,9 @@ export interface Correction {
 export const DANGER_CATEGORIES: readonly Category[] = ["threat", "selfharm", "sexual", "exposure"];
 
 export const isDangerous = (f: Pick<Finding, "severity" | "categories">) => f.severity >= 3 || f.categories.some((c) => DANGER_CATEGORIES.includes(c));
+
+/** The child says it was worse, or a threat, self-harm urging, sexual or exposure: show help. */
+export const raisesHelp = (c: Pick<Correction, "kind" | "category">) => c.kind === "worse" || (c.kind === "kind" && !!c.category && DANGER_CATEGORIES.includes(c.category));
 
 /** Who made the judgement: a model by name, or the word lists. */
 export const judgedBy = (f: Pick<Finding, "model">) => f.model?.model ?? "word lists";
@@ -64,7 +69,7 @@ export interface SharedCorrection {
   childSaid: CorrectionKind;
   category?: Category;
   ward: { severity: Severity; categories: Category[]; by: string };
-  /** Only when the child ticks "include the words". Never the sender's name or the time. */
+  /** Only when "include the words" is ticked, which only a future counsellor flow offers. Never the sender's name or the time. */
   text?: string;
 }
 
@@ -76,8 +81,8 @@ export interface CorrectionsFile {
 }
 
 /**
- * The file a child can choose to send the project: what Ward said and what the child said,
- * nothing else. No fingerprints (a short message's fingerprint can be guessed), no names, no
+ * The file a child can choose to keep (and, if their school joins a Ward pilot, give to their
+ * teacher): what Ward said and what the child said, nothing else. No fingerprints (a short message's fingerprint can be guessed), no names, no
  * times, no dates. The words of the message only if the child asked for them.
  */
 export function correctionsFile(

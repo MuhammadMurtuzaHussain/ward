@@ -8,6 +8,7 @@ import { getState, go, patchSession, putSession, uid, updateProfile } from "./st
 import { liteAvailable, WardLiteJudge } from "./lite.ts";
 import { phoneSecondLook } from "./phoneGemma.ts";
 import { BUILT_IN_GEMMA, desktopReady, desktopTransport } from "./desktopGemma.ts";
+import { historyLevel } from "./helpPaths.ts";
 import type { Judge, SecondLook } from "@ward/engine";
 import { t } from "../i18n/index.ts";
 
@@ -43,9 +44,10 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
   const id = uid();
   const quick = await analyze(chat, { self });
   putSession(id, { chat, analysis: quick, title, self, refining: true });
+  // The history line never says "Looks okay" over a dangerous message Ward isn't sure about.
   updateProfile((p) => ({
     checks: [
-      { id, at: Date.now(), title, level: quick.level, hostile: quick.findings.filter((f) => f.severity > 0 && !f.unsure).length, saved: false },
+      { id, at: Date.now(), title, level: historyLevel(quick, self), hostile: quick.findings.filter((f) => f.severity > 0 && !f.unsure).length, saved: false },
       ...p.checks,
     ].slice(0, 50),
   }));
@@ -81,7 +83,7 @@ export async function startCheck(chat: Chat, self: string | null, title: string)
     });
     patchSession(id, { analysis: full, refining: false, progress: undefined });
     updateProfile((p) => ({
-      checks: p.checks.map((c) => (c.id === id ? { ...c, level: full.level, hostile: full.findings.filter((f) => f.severity > 0 && !f.unsure).length } : c)),
+      checks: p.checks.map((c) => (c.id === id ? { ...c, level: historyLevel(full, self), hostile: full.findings.filter((f) => f.severity > 0 && !f.unsure).length } : c)),
     }));
   } catch (e) {
     patchSession(id, { refining: false, modelError: e instanceof Error ? e.message : String(e) });

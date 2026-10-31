@@ -1,5 +1,6 @@
 // What to do now, in order: don't feed it, save it, shut the door, tell someone. Ward drafts the
-// message to a trusted adult; the child copies or shares it themselves.
+// message to a trusted adult; the child copies or shares it themselves. HelpNow comes first for a
+// danger (sure or not) and when the child said it still feels wrong; otherwise it closes the page.
 
 import { useEffect, useState, type ReactNode } from "react";
 import { ChatCircleDots, ChatsCircle, Copy, Flag, HandHeart, HandPalm, MoonStars, PaperPlaneTilt, ShieldCheck, Sparkle, UsersThree } from "@phosphor-icons/react";
@@ -9,6 +10,7 @@ import { HelpNow } from "../components/HelpNow.tsx";
 import { SaveToVault } from "../components/SaveToVault.tsx";
 import { BackBar, Button, Screen } from "../components/ui.tsx";
 import { gemmaDraft, templateDraft } from "../lib/draft.ts";
+import { helpPlan, type HelpPlan } from "../lib/helpPaths.ts";
 import { go, updateProfile, useStore } from "../lib/store.ts";
 import { Speak } from "../components/Speak.tsx";
 import { useT } from "../i18n/index.ts";
@@ -16,7 +18,19 @@ import type { Session } from "../lib/store.ts";
 
 const APP_NAMES = ["WhatsApp", "Instagram", "TikTok", "Snapchat", "Discord"] as const;
 
-export function Coach({ id }: { id: string }) {
+/** HelpNow at the top: a danger (labelled when Ward isn't sure of it), or "it still feels wrong". */
+function TopHelp({ plan, felt }: { plan: HelpPlan; felt: boolean }) {
+  const t = useT();
+  if (!plan.helpNow && !felt) return null;
+  return (
+    <div className="mt-6 grid gap-3">
+      {plan.unconfirmed && <p className="text-sm text-dim">{t.result.unsureHelp}</p>}
+      <HelpNow images={plan.images} />
+    </div>
+  );
+}
+
+export function Coach({ id, felt = false }: { id: string; felt?: boolean }) {
   const s = useStore((st) => st.sessions[id]);
   const p = useStore((st) => st.profile);
   const t = useT();
@@ -32,23 +46,20 @@ export function Coach({ id }: { id: string }) {
   }, [id]);
 
   if (!s) return <Screen><BackBar /></Screen>;
-  if (!s.self) return <FriendCoach id={id} s={s} />;
-  const danger = s.analysis.level === "urgent";
-  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const plan = helpPlan(s.analysis, { self: s.self, age: p.age, refining: s.refining });
+  if (!s.self) return <FriendCoach id={id} s={s} plan={plan} felt={felt} />;
+  const top = plan.helpNow || felt;
+  const imageRisk = plan.images;
 
   return (
     <Screen>
       <BackBar title={t.coach.title} />
       <div className="flex items-center gap-4">
-        <Ghost mood="calm" size={72} />
-        <p className="text-lg leading-relaxed">{t.coach.intro}</p>
+        <Ghost mood="calm" size={72} className="shrink-0" />
+        <p className="text-lg leading-relaxed">{felt ? t.coach.feltIntro : t.coach.intro}</p>
       </div>
 
-      {danger && (
-        <div className="mt-6">
-          <HelpNow images={imageRisk} />
-        </div>
-      )}
+      <TopHelp plan={plan} felt={felt} />
 
       <ol className="mt-8 grid gap-8">
         <Step n={1} icon={HandPalm} title={t.coach.dontReply}>
@@ -141,7 +152,7 @@ export function Coach({ id }: { id: string }) {
         <LessonSuggestions analysis={s.analysis} self={s.self} />
       </div>
 
-      {!danger && (
+      {!top && (
         <div className="mt-12">
           <HelpNow />
         </div>
@@ -200,26 +211,23 @@ function CopyLine({ text }: { text: string }) {
 }
 
 /** "Checking for a friend": the upstander version of the coach. */
-function FriendCoach({ id, s }: { id: string; s: Session }) {
+function FriendCoach({ id, s, plan, felt }: { id: string; s: Session; plan: HelpPlan; felt: boolean }) {
   const t = useT();
   const [app, setApp] = useState<AppName>("WhatsApp");
-  const danger = s.analysis.level === "urgent";
-  const imageRisk = s.analysis.findings.some((f) => f.severity >= 3 && !f.unsure && (f.categories.includes("sexual") || f.categories.includes("exposure")));
+  const danger = plan.helpNow;
+  const top = plan.helpNow || felt;
+  const imageRisk = plan.images;
   const pileon = s.analysis.patterns.some((p) => p.kind === "pileon");
 
   return (
     <Screen>
       <BackBar title={t.friend.title} />
       <div className="flex items-center gap-4">
-        <Ghost mood="calm" size={72} />
-        <p className="text-lg leading-relaxed">{t.friend.intro}</p>
+        <Ghost mood="calm" size={72} className="shrink-0" />
+        <p className="text-lg leading-relaxed">{felt ? t.coach.feltIntro : t.friend.intro}</p>
       </div>
 
-      {danger && (
-        <div className="mt-6">
-          <HelpNow images={imageRisk} />
-        </div>
-      )}
+      <TopHelp plan={plan} felt={felt} />
 
       <ol className="mt-8 grid gap-8">
         <Step n={1} icon={HandHeart} title={t.friend.reach}>
@@ -267,7 +275,7 @@ function FriendCoach({ id, s }: { id: string; s: Session }) {
         <LessonSuggestions analysis={s.analysis} self={null} />
       </div>
 
-      {!danger && (
+      {!top && (
         <div className="mt-12">
           <HelpNow />
         </div>

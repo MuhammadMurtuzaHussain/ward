@@ -116,7 +116,7 @@ export function App() {
         {screen.name === "home" && <Home />}
         {screen.name === "check" && <Check />}
         {screen.name === "result" && <Result id={screen.id} />}
-        {screen.name === "coach" && <Coach id={screen.id} />}
+        {screen.name === "coach" && <Coach id={screen.id} felt={screen.felt} />}
         {screen.name === "path" && <PathScreen />}
         {screen.name === "vault" && <VaultScreen />}
         {screen.name === "me" && <Me />}
