@@ -3,9 +3,11 @@ import { ArrowRight, Briefcase, ChalkboardTeacher, Cpu, Gift, HandHeart, LockKey
 import { STARTER_PACKS } from "@ward/engine";
 import { Button, Card, Pill, Screen } from "../components/ui.tsx";
 import { PinPad } from "../components/PinPad.tsx";
+import { Dialog } from "../components/Dialog.tsx";
+import { needsPin, pinOpens } from "../lib/pinGate.ts";
 import { AGES, LOOKS } from "../lib/looks.ts";
 import { modelStatus, type ModelStatus } from "../lib/run.ts";
-import { activeEntry, go, lockProfile, removeActiveProfile, setHideRecents, setProfilePin, updateProfile, useStore, type AgeBand, type Lang } from "../lib/store.ts";
+import { activeEntry, currentLocks, go, lockProfile, removeActiveProfile, setHideRecents, setProfilePin, updateProfile, useStore, type AgeBand, type Lang } from "../lib/store.ts";
 import { wipe } from "../lib/vault.ts";
 import { LookTile } from "./Onboarding.tsx";
 import { PhoneGemmaCard } from "../components/PhoneGemmaCard.tsx";
@@ -230,18 +232,71 @@ export function Me() {
       <section className="mt-12 border-t border-line pt-8">
         <h2 className="font-display text-xl font-bold tracking-tight">{t.me.startOver}</h2>
         <p className="mt-2 max-w-[56ch] text-dim">{t.me.startOverLine}</p>
-        <Button
-          tone="quiet"
-          className="mt-4 text-alarm"
-          onClick={async () => {
-            if (!confirm(t.me.deleteConfirm)) return;
-            await wipe();
-            removeActiveProfile();
-          }}
-        >
-          <Trash size={20} weight="bold" /> {t.me.deleteAll}
-        </Button>
+        <DeleteEverything />
       </section>
     </Screen>
+  );
+}
+
+/**
+ * "Delete everything" asks for the child's PIN (the profile's or the vault's) when there is one,
+ * so someone else who picks up a shared phone can't wipe the evidence. With no PIN anywhere there
+ * is nothing locked to protect, and a plain "are you sure" is enough.
+ */
+function DeleteEverything() {
+  const t = useT();
+  const [asking, setAsking] = useState(false);
+  const [forgot, setForgot] = useState(false);
+  const locks = currentLocks();
+
+  async function erase() {
+    await wipe();
+    removeActiveProfile();
+  }
+
+  function close() {
+    setAsking(false);
+    setForgot(false);
+  }
+
+  return (
+    <>
+      <Button tone="quiet" className="mt-4 text-alarm" onClick={() => setAsking(true)}>
+        <Trash size={20} weight="bold" /> {t.me.deleteAll}
+      </Button>
+      <Dialog open={asking} onClose={close} labelledBy={needsPin(locks) ? undefined : "delete-title"} label={t.me.deleteAll}>
+        {needsPin(locks) ? (
+          forgot ? (
+            <div className="text-center">
+              <h2 dir="auto" className="font-display text-2xl font-bold tracking-tight">{t.me.forgotPin[0]}</h2>
+              <p dir="auto" className="mt-3 text-dim">{t.me.forgotPin[1]}</p>
+              <Button tone="quiet" className="mt-6 w-full" data-autofocus onClick={() => setForgot(false)}>
+                {t.common.back}
+              </Button>
+            </div>
+          ) : (
+            <>
+              <PinPad title={t.me.deletePin} hint={t.me.deleteConfirm} onDone={async (pin) => (await pinOpens(pin, locks)) && (await erase(), true)} />
+              <button onClick={() => setForgot(true)} className="mx-auto mt-5 block min-h-11 text-sm font-bold text-dim hover:text-ink">
+                {t.me.forgotPin[0]}
+              </button>
+            </>
+          )
+        ) : (
+          <div className="text-center">
+            <h2 id="delete-title" dir="auto" className="font-display text-2xl font-bold tracking-tight">{t.me.deleteAll}</h2>
+            <p dir="auto" className="mt-3 text-dim">{t.me.deleteConfirm}</p>
+            <div className="mt-6 grid gap-3">
+              <Button tone="quiet" data-autofocus onClick={close}>
+                {t.me.keepAll}
+              </Button>
+              <Button tone="alarm" onClick={() => void erase()}>
+                <Trash size={20} weight="bold" /> {t.me.deleteAll}
+              </Button>
+            </div>
+          </div>
+        )}
+      </Dialog>
+    </>
   );
 }

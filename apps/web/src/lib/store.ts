@@ -8,6 +8,8 @@ import { useSyncExternalStore } from "react";
 import type { Analysis, Chat } from "@ward/engine";
 import { withCorrection, type Correction } from "./corrections.ts";
 import { neutral, type CheckSummary } from "./history.ts";
+import { profilePinHash, type Locks } from "./pinGate.ts";
+import { b64 } from "./vaultSeal.ts";
 
 export type LookId = "lantern" | "moonlit" | "firefly" | "ember" | "aurora" | "daylight";
 export type AgeBand = "8" | "11" | "14";
@@ -301,14 +303,7 @@ export const uid = () => Math.random().toString(36).slice(2, 10);
 
 // ---- Shared phones -------------------------------------------------------------------------
 
-const enc = new TextEncoder();
-const b64 = (b: ArrayBuffer | Uint8Array) => btoa(String.fromCharCode(...new Uint8Array(b instanceof Uint8Array ? b : new Uint8Array(b))));
-
-async function pinHash(pin: string, salt: string) {
-  const base = await crypto.subtle.importKey("raw", enc.encode(pin), "PBKDF2", false, ["deriveBits"]);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: Uint8Array.from(atob(salt), (c) => c.charCodeAt(0)), iterations: 310_000, hash: "SHA-256" }, base, 256);
-  return b64(bits);
-}
+const pinHash = profilePinHash;
 
 /** Things to forget whenever the person using Ward changes: open chats, an unlocked vault. */
 const onLeave = new Set<() => void>();
@@ -323,6 +318,16 @@ function leave(s: State): State {
 
 export function activeEntry(): ProfileEntry | undefined {
   return state.profiles.list.find((p) => p.id === state.profiles.active);
+}
+
+/** This profile's PINs, for asking before something that can't be undone (pinGate.ts). */
+export function currentLocks(): Locks {
+  const e = activeEntry();
+  const { vaultSalt, vaultCheck } = state.profile;
+  return {
+    profile: e?.pinHash && e.pinSalt ? { salt: e.pinSalt, hash: e.pinHash } : undefined,
+    vault: vaultSalt && vaultCheck ? { salt: vaultSalt, check: vaultCheck } : undefined,
+  };
 }
 
 /** Open a profile. Returns false if it has a PIN and the PIN is wrong. */
