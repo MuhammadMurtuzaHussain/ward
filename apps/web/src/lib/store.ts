@@ -1,10 +1,12 @@
 // App state. Each person on the device has a profile (name, look, streak, XP) in localStorage,
 // so siblings on a shared phone each get their own Ward; a profile can be locked with a PIN.
 // Chats are never stored here: an analysis stays in memory until the child chooses to save it,
-// and then it goes into that profile's encrypted vault (vault.ts).
+// and then it goes into that profile's encrypted vault (vault.ts). The child's "this is wrong"
+// corrections are kept here by message fingerprint only, never the words (corrections.ts).
 
 import { useSyncExternalStore } from "react";
 import type { Analysis, Chat, Level } from "@ward/engine";
+import { withCorrection, type Correction } from "./corrections.ts";
 
 export type LookId = "lantern" | "moonlit" | "firefly" | "ember" | "aurora" | "daylight";
 export type AgeBand = "8" | "11" | "14";
@@ -59,6 +61,8 @@ export interface Profile {
   vaultCheck: string | null;
   /** Show "Listen" buttons. Defaults on for the youngest band, set in onboarding's age step. */
   readAloud: boolean;
+  /** "This is wrong": the child's corrections, by message fingerprint. */
+  corrections: Record<string, Correction>;
 }
 
 /** The single-profile key from before shared-phone mode; migrated into the "default" profile. */
@@ -102,6 +106,7 @@ const DEFAULTS: Profile = {
   vaultSalt: null,
   vaultCheck: null,
   readAloud: false,
+  corrections: {},
 };
 
 function read<T>(key: string): T | null {
@@ -274,6 +279,11 @@ export function finishStory(storyId: string, endId: string, xp = 10) {
 export function liveStreak(p: Profile) {
   const y = today(new Date(Date.now() - 86_400_000));
   return p.lastLessonDay === today() || p.lastLessonDay === y ? p.streak : 0;
+}
+
+/** Remember (or, with null, forget) the child's correction to one message. */
+export function setCorrection(fp: string, c: Correction | null) {
+  updateProfile((p) => ({ corrections: withCorrection(p.corrections, fp, c) }));
 }
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
