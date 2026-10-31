@@ -1,6 +1,7 @@
 # Desktop installers for macOS (Apple Silicon and Intel), Windows and Linux. Run by hand from
 # the Actions tab (kept 14 days), or by pushing a v* tag, which publishes them on the Release.
-# Each packaged app is launched once (WARD_SMOKE) before it's kept. Unsigned for now.
+# Each packaged app is launched once (WARD_SMOKE, which also opens Ward Lite) before it's kept.
+# Unsigned for now.
 # Gemma's model is never in the installer (Ward downloads it on request); llama.cpp's binaries
 # for the runner's platform are, minus CUDA (Vulkan and CPU cover Windows and Linux).
 name: Desktop installers
@@ -20,18 +21,22 @@ jobs:
             name: mac-arm64
             target: --mac dmg --arm64
             app: release/mac-arm64/Ward.app/Contents/MacOS/Ward
+            resources: release/mac-arm64/Ward.app/Contents/Resources
           - os: macos-15-intel
             name: mac-x64
             target: --mac dmg --x64
             app: release/mac/Ward.app/Contents/MacOS/Ward
+            resources: release/mac/Ward.app/Contents/Resources
           - os: windows-latest
             name: windows-x64
             target: --win nsis --x64
             app: release/win-unpacked/Ward.exe
+            resources: release/win-unpacked/resources
           - os: ubuntu-latest
             name: linux-x64
             target: --linux AppImage --x64
             app: release/linux-unpacked/ward
+            resources: release/linux-unpacked/resources
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +51,15 @@ jobs:
         working-directory: desktop
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      # Ward Lite reads in the app only if ONNX Runtime's wasm and the model were packaged; the
+      # launch test below then opens the model with that runtime inside the app's own page.
+      - name: Ward Lite is in the app
+        shell: bash
+        run: |
+          for f in ort/ort-wasm-simd-threaded.asyncify.wasm ort/ort-wasm-simd-threaded.asyncify.mjs models/ward-lite/ward-lite.json models/ward-lite/config.json models/ward-lite/tokenizer.json models/ward-lite/tokenizer_config.json models/ward-lite/onnx/model_quantized.onnx; do
+            [ -s "${{ matrix.resources }}/web/$f" ] || { echo "::error::$f is missing from the packaged app"; exit 1; }
+          done
+          echo "Ward Lite: runtime and model are in the app"
       - name: Launch test
         if: runner.os != 'Linux'
         shell: bash
