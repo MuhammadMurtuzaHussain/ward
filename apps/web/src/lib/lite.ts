@@ -9,6 +9,11 @@ import { t as words } from "../i18n/index.ts";
 const BASE = new URL("./models/", document.baseURI).href;
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
+// The model ships inside the app, so there's nothing to gain from caching it, and the cache is
+// keyed by URL: after an update with a retrained model, a cached copy would keep the old one.
+env.useBrowserCache = false;
+// Free the stale copy earlier versions cached (about 38 MB).
+void globalThis.caches?.delete("transformers-cache").catch(() => {});
 // Relative on purpose: transformers.js skips its local-file check for http(s) URLs.
 env.localModelPath = "./models/";
 if (env.backends.onnx.wasm) {
