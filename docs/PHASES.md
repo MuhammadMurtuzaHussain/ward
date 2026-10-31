@@ -79,7 +79,14 @@ lessons' cast; endings are kind, mixed or hard, never a telling-off, each saying
 did and what else could work. Stories sit on the Path after their unit, are never locked, count
 endings found ("2 of 5"), and the first ending earns XP like a lesson. Tests walk every path (no
 dead links, no loops, a kind ending in each), keep the reader ungendered, and hold the Urdu to
-the same structure. Still to do: the rest of the "one per unit per age band" set (18 more).
+the same structure.
+
+**All 21 stories (2026-10-31).** Every unit now has a story in every age band, in English and
+Urdu: 18 more, from a sports-day nickname that won't stop (8 to 10) to a threat to share a
+private photo unless the reader pays (14 to 17; non-explicit, every ending says it's not the
+reader's fault and points to a trusted adult, the police and Take It Down). Nothing touches
+self-harm. Tests now also check every unit has a story in every band. Still to do: a native
+Urdu speaker's review of the flagged lines.
 
 ## Phase 4: the circle and the community
 
@@ -120,6 +127,28 @@ PIN. The desktop app now refuses every permission except the camera, and Android
 camera only when scanning. Tests decode every rendered QR frame with the same decoder the
 scanner uses.
 
+**Phase 4 complete (2026-10-31).**
+- **One-click desktop:** "Gemma inside Ward" (Me) downloads Gemma 4 E4B once, with consent (4.6
+  GB GGUF from Hugging Face, pinned and SHA-256 checked, resumable), and runs it through
+  llama.cpp (node-llama-cpp) in the app, over a preload IPC bridge rather than a local port.
+  Readers in order: Ollama, then the built-in Gemma, then Ward Lite, then the word lists, and
+  "How I worked this out" names which one read. A 16-message chat takes about 50 s on an Apple
+  M-series laptop. **Lab mode** (Me, or `--lab`) wipes everything when Ward opens and closes, for
+  shared school computers. CI loads llama.cpp in the packaged app on all four platforms (Metal on
+  Apple Silicon, CPU elsewhere), with lab mode on and off.
+- **Give Ward to a friend** (Me): on Android, Ward copies its own APK and opens the share sheet
+  (Bluetooth, Quick Share, any app), with the signing certificate's fingerprint for the friend to
+  compare with GitHub releases; on web and desktop, a QR code to the releases page. CI copies the
+  APK on an emulator, checks it byte for byte against the installed app and the fingerprint
+  against apksigner's, then installs the copy on a wiped emulator. A real two-phone transfer
+  isn't tested yet, and the Play Store and F-Droid listings aren't done.
+- **Ward for Discord** (`apps/discord`, beyond the original plan): a right-click check and "Save
+  as evidence" for teens, installed to their own account so it works in any server or DM;
+  evidence lives in the teen's own DMs with Ward (no database) and `/ward report` turns it into a
+  `ward.report/v2`; an opt-in server mode through a private `#ward-alerts` channel that tells
+  moderators about dangerous messages, nudges the sender privately and checks in on the target,
+  and never acts on its own. Same engine and Ward Lite, in Node.
+
 ## Phase 5: proof and staying alive
 
 | Piece | What | Done when |
@@ -128,6 +157,27 @@ scanner uses.
 | **Red-team set** | Disguised insults, coded bullying and tricky banter, rerun on every release with the scorecard | Published per language, including failures |
 | **"This is wrong"** | A correction button on every judgement; corrections stay on the device unless the child shares them | Shown on every flagged message |
 | **Governance** | Safeguarding policy, language maintainers, youth advisory group, Digital Public Goods application | Policy published; application submitted |
+
+**Phase 5 progress (2026-10-31).**
+- **Red-team set:** 275 hand-written synthetic messages in English, Roman Urdu, Hinglish and
+  Bangla (142 hurtful, 133 harmless look-alikes), with a leak test that keeps it out of training.
+  Results, failures included, are in [REDTEAM.md](REDTEAM.md). It found two engine bugs, both
+  fixed: insults ending in "!" were read as leetspeak and missed, and Gemma's skipped verdicts
+  counted as "not hurtful" (now asked again). Open: a child quoting abuse to ask for help still
+  reads as hurtful, sarcasm and polite exclusion are weak, and the labels need native speakers.
+- **Ward Lite retrained:** building the Discord bot showed the shipped model scoring "see you
+  tomorrow" as dangerous (0.99): its synthetic threats leaned on "later", "tomorrow" and "after
+  school". New friendly hard negatives, threats without those words, a held-out "everyday" set
+  and its own danger threshold took everyday false alarms from 25% to 5% (urgent 16% to 2%) and
+  the red-team's harmless-marked-dangerous on a phone from 23 to 8. Scorecard: Bangla and English
+  up; Roman Urdu recall down 2 points on a phone.
+- **"This is wrong"** on every flagged message: the child's correction changes what they see, is
+  kept on the device by fingerprint only (no words), and can never hide the help for a dangerous
+  message. Sharing corrections is opt-in, shows the file first, and has no words unless ticked.
+- **Governance drafts:** [SAFEGUARDING.md](SAFEGUARDING.md), [GOVERNANCE.md](GOVERNANCE.md),
+  [DPG.md](DPG.md) (the Digital Public Goods Standard, indicator by indicator),
+  `CODE_OF_CONDUCT.md` and `SECURITY.md`. All drafts until a safeguarding professional reviews
+  them; a safeguarding lead, contact addresses and a content licence still need deciding.
 
 ## Phase 6: prevention at the keyboard
 
