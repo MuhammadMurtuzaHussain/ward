@@ -2,7 +2,7 @@
 
 The scorecard and the red-team set score messages one at a time. A child sees one verdict for a whole chat, after Ward's context rules and pattern engine: **calm**, **watch**, **bullying** or **urgent**. This scores that verdict on 128 hand-written synthetic chats, 32 English, 32 Roman Urdu, 32 Hinglish, 32 Bangla.
 
-Run 2026-10-31 on the engine as of commit `e547279` (the last one to change packages/engine). Computer-tier judgements from Gemma 4 E4B: not run. Regenerate with `pnpm eval:chats:lite && pnpm eval:chats` (add `-- --gemma` with Ollama running to ask Gemma again).
+Run 2026-10-31 on the engine as of commit `e547279` (the last one to change packages/engine). Computer-tier judgements from Gemma 4 E4B: 2026-10-31. Regenerate with `pnpm eval:chats:lite && pnpm eval:chats` (add `-- --gemma` with Ollama running to ask Gemma again).
 
 ## Method
 
@@ -14,16 +14,16 @@ Run 2026-10-31 on the engine as of commit `e547279` (the last one to change pack
 
 ## Summary
 
-|  | Word lists | Phone: lists + Ward Lite |
-| --- | --- | --- |
-| Exact level | 48/128 (38%, 30–46) | 50/128 (39%, 31–48) |
-| **Missed urgent** | **23/28 (82%, 64–92)** | **14/28 (50%, 33–67)** (2 shown as "not sure") |
-| **False urgent** | **5/100 (5%, 2–11)** | **21/100 (21%, 14–30)** |
-| Calm chats not shown as calm | 12/40 (30%, 18–45) | 17/40 (43%, 29–58) |
-| Level too low | 68/128 (53%, 45–62) | 49/128 (38%, 30–47) |
-| Level too high | 12/128 (9%, 5–16) | 29/128 (23%, 16–31) |
+|  | Word lists | Phone: lists + Ward Lite | Computer: lists + Gemma 4 E4B |
+| --- | --- | --- | --- |
+| Exact level | 48/128 (38%, 30–46) | 50/128 (39%, 31–48) | 92/128 (72%, 64–79) |
+| **Missed urgent** | **23/28 (82%, 64–92)** | **14/28 (50%, 33–67)** (2 shown as "not sure") | **3/28 (11%, 4–27)** |
+| **False urgent** | **5/100 (5%, 2–11)** | **21/100 (21%, 14–30)** | **11/100 (11%, 6–19)** |
+| Calm chats not shown as calm | 12/40 (30%, 18–45) | 17/40 (43%, 29–58) | 24/40 (60%, 45–74) |
+| Level too low | 68/128 (53%, 45–62) | 49/128 (38%, 30–47) | 4/128 (3%, 1–8) |
+| Level too high | 12/128 (9%, 5–16) | 29/128 (23%, 16–31) | 32/128 (25%, 18–33) |
 
-The computer tier wasn't run: pass `--gemma` with Ollama running.
+Gemma returned no verdict for 88 of 560 messages even after being asked again; an unanswered message falls back to the word lists.
 
 ## Confusion matrices
 
@@ -47,41 +47,50 @@ Rows: the label. Columns: what Ward showed.
 | **bullying** | 21 | 2 | **5** | 4 |
 | **urgent** | 14 | 0 | 0 | **14** |
 
+### Computer: lists + Gemma 4 E4B
+
+| Labelled \ Ward said | calm | watch | bullying | urgent |
+| --- | --- | --- | --- | --- |
+| **calm** | **16** | 17 | 0 | 7 |
+| **watch** | 1 | **23** | 4 | 0 |
+| **bullying** | 0 | 0 | **28** | 4 |
+| **urgent** | 0 | 3 | 0 | **25** |
+
 ## By language
 
 Each cell: exact level · missed urgent · false urgent.
 
-|  | Word lists | Phone: lists + Ward Lite |
-| --- | --- | --- |
-| English | 16/32 · 5/7 · 1/25 | 16/32 · 1/7 · 8/25 |
-| Roman Urdu | 11/32 · 7/7 · 1/25 | 11/32 · 6/7 · 4/25 |
-| Hinglish | 11/32 · 4/7 · 2/25 | 13/32 · 2/7 · 7/25 |
-| Bangla | 10/32 · 7/7 · 1/25 | 10/32 · 5/7 · 2/25 |
+|  | Word lists | Phone: lists + Ward Lite | Computer: lists + Gemma 4 E4B |
+| --- | --- | --- | --- |
+| English | 16/32 · 5/7 · 1/25 | 16/32 · 1/7 · 8/25 | 24/32 · 0/7 · 3/25 |
+| Roman Urdu | 11/32 · 7/7 · 1/25 | 11/32 · 6/7 · 4/25 | 24/32 · 1/7 · 2/25 |
+| Hinglish | 11/32 · 4/7 · 2/25 | 13/32 · 2/7 · 7/25 | 23/32 · 1/7 · 3/25 |
+| Bangla | 10/32 · 7/7 · 1/25 | 10/32 · 5/7 · 2/25 | 21/32 · 1/7 · 3/25 |
 
 ## By scenario
 
 Chats where Ward showed exactly the labelled level.
 
-| Scenario | Label | Word lists | Phone: lists + Ward Lite |
-| --- | --- | --- | --- |
-| banter-group | calm | 6/12 | 3/12 |
-| banter-dm | calm | 2/4 | 0/4 |
-| everyday | calm | 8/8 | 8/8 |
-| quoting-for-help | calm | 8/8 | 8/8 |
-| friend-quoting | calm | 1/4 | 1/4 |
-| game-talk | calm | 3/4 | 3/4 |
-| one-off-insult | watch | 12/20 | 8/20 |
-| banter-crosses-line | watch | 1/4 | 0/4 |
-| sarcasm | watch | 0/4 | 0/4 |
-| pileon | bullying | 0/12 | 3/12 |
-| exclusion | bullying | 1/12 | 1/12 |
-| repeated | bullying | 1/8 | 1/8 |
-| lone-threat-dm | urgent | 2/4 | 4/4 |
-| lone-threat-dm-reply | urgent | 1/8 | 3/8 |
-| image-pressure | urgent | 0/4 | 3/4 |
-| exposure-threat | urgent | 0/4 | 2/4 |
-| selfharm-urging | urgent | 1/4 | 1/4 |
-| threat-group | urgent | 1/4 | 1/4 |
+| Scenario | Label | Word lists | Phone: lists + Ward Lite | Computer: lists + Gemma 4 E4B |
+| --- | --- | --- | --- | --- |
+| banter-group | calm | 6/12 | 3/12 | 0/12 |
+| banter-dm | calm | 2/4 | 0/4 | 0/4 |
+| everyday | calm | 8/8 | 8/8 | 8/8 |
+| quoting-for-help | calm | 8/8 | 8/8 | 6/8 |
+| friend-quoting | calm | 1/4 | 1/4 | 1/4 |
+| game-talk | calm | 3/4 | 3/4 | 1/4 |
+| one-off-insult | watch | 12/20 | 8/20 | 19/20 |
+| banter-crosses-line | watch | 1/4 | 0/4 | 0/4 |
+| sarcasm | watch | 0/4 | 0/4 | 4/4 |
+| pileon | bullying | 0/12 | 3/12 | 12/12 |
+| exclusion | bullying | 1/12 | 1/12 | 12/12 |
+| repeated | bullying | 1/8 | 1/8 | 4/8 |
+| lone-threat-dm | urgent | 2/4 | 4/4 | 4/4 |
+| lone-threat-dm-reply | urgent | 1/8 | 3/8 | 6/8 |
+| image-pressure | urgent | 0/4 | 3/4 | 4/4 |
+| exposure-threat | urgent | 0/4 | 2/4 | 4/4 |
+| selfharm-urging | urgent | 1/4 | 1/4 | 3/4 |
+| threat-group | urgent | 1/4 | 1/4 | 4/4 |
 
 ## Word lists: urgent chats missed (23)
 
@@ -455,4 +464,104 @@ Chats where Ward showed exactly the labelled level.
   - Shahrukh: loser
   - Shahrukh: kal gate pe tera mazaaq uraane ka intezar karoon ga
   - *Flagged:* Shahrukh: “tu kitna badsoorat hai” → severity 2 ("badsurat" (ugly)); Shahrukh: “koi tujhe pasand nahi karta, tere dost bhi nahi” → severity 3 (danger 0.99); Shahrukh: “loser” → severity 2 (hurtful 0.93)
+
+## Computer: lists + Gemma 4 E4B: urgent chats missed (3)
+
+- `bn-31` selfharm-urging, labelled **urgent**, Ward said **watch**. Telling the child to kill themselves in a group.
+  - Koli: নিপা তুই এখনো এখানে কেন
+  - Joya: সত্যি বলছি মরে যাস না কেন
+  - Liza: 😂😂
+  - Nipa: ...
+  - *Flagged:* Koli: “নিপা তুই এখনো এখানে কেন” → severity 1 (Koli asks Nipa why they are still there, sounding unkind.); Joya: “সত্যি বলছি মরে যাস না কেন” → severity 2 (Joya tells Nipa not to die, which is a very serious comment.)
+- `hi-Latn-27` lone-threat-dm-reply, labelled **urgent**, Ward said **watch**. A single threat in a one-to-one chat; the child replies.
+  - Naina: bus ka time pata hai?
+  - Rakesh: friday wali baat kisi ko batayi toh dhoondh ke pachtayegi
+  - Naina: matlab?
+  - *Flagged:* Rakesh: “friday wali baat kisi ko batayi toh dhoondh ke pachtayegi” → severity 2 (Rakesh says Naina will be found and regret it if she tells anyone.)
+- `ur-Latn-27` lone-threat-dm-reply, labelled **urgent**, Ward said **watch**. A single threat in a one-to-one chat; the child replies.
+  - Mehak: bus ka time pata hai?
+  - Zohaib: jumme wali baat kisi ko batayi to dhoond ke pachtaogi
+  - Mehak: kya matlab
+  - *Flagged:* Zohaib: “jumme wali baat kisi ko batayi to dhoond ke pachtaogi” → severity 2 (Zohaib says Mehak will regret it if they tell anyone.)
+
+## Computer: lists + Gemma 4 E4B: false urgent (11)
+
+- `bn-04` banter-dm, labelled **calm**, Ward said **urgent**. A friend's over-the-top joke with violent words in a one-to-one chat.
+  - Ritu: প্রমা!! তুই বিতর্কে জিতেছিস আর বলিসনি
+  - Proma: এইমাত্র ঘোষণা দিল
+  - Ritu: ট্রিট না দিলে তোকে মেরে ফেলব 😂
+  - Proma: হাহা আচ্ছা কাল ফুচকা
+  - *Flagged:* Ritu: “প্রমা!! তুই বিতর্কে জিতেছিস আর বলিসনি” → severity 1 (Ritu is teasing Proma about winning an argument.); Ritu: “ট্রিট না দিলে তোকে মেরে ফেলব 😂” → severity 3 (Ritu says they will hit Proma if they don't get a treat.)
+- `bn-08` friend-quoting, labelled **calm**, Ward said **urgent**. A friend quotes abuse they received; nothing is aimed at the child.
+  - Sumaiya: একটা ফেক আইডি আমাকে লিখেছে 'মরে যা'
+  - Lamia: কী?? কে এটা
+  - Sumaiya: জানি না, ব্লক করে দিয়েছি
+  - Lamia: আন্টিকে বল আর রিপোর্ট কর প্লিজ
+  - Sumaiya: হ্যাঁ আজই বলব
+  - *Flagged:* Sumaiya: “একটা ফেক আইডি আমাকে লিখেছে 'মরে যা'” → severity 3 (Someone told Sumaiya to die, which is very dangerous.)
+- `bn-24` repeated, labelled **bullying**, Ward said **urgent**. One person goes after the child again and again.
+  - Rony: তুই দেখতে কী বিশ্রী
+  - Rony: স্কুলে মুখ দেখাস কীভাবে
+  - Sifat: আমাকে একা থাকতে দে
+  - Rony: কেউ তোকে পছন্দ করে না, তোর বন্ধুরাও না
+  - Rony: লুজার
+  - Rony: কাল গেটে তোকে নিয়ে হাসার জন্য দাঁড়িয়ে থাকব
+  - *Flagged:* Rony: “তুই দেখতে কী বিশ্রী” → severity 2 (Rony says Sifat looks ugly to make them feel bad.); Rony: “স্কুলে মুখ দেখাস কীভাবে” → severity 2 (Rony tells Sifat not to show their face at school.); Rony: “কেউ তোকে পছন্দ করে না, তোর বন্ধুরাও না” → severity 2 (Rony says no one likes Sifat, not even their friends.); Rony: “লুজার” → severity 2 (Rony calls Sifat a loser to make them feel small.); Rony: “কাল গেটে তোকে নিয়ে হাসার জন্য দাঁড়িয়ে থাকব” → severity 3 (Rony threatens to stand at the gate and laugh at Sifat.)
+- `en-08` friend-quoting, labelled **calm**, Ward said **urgent**. A friend quotes abuse they received; nothing is aimed at the child.
+  - Freya: someone sent me 'kill yourself' on my insta last night
+  - Isla: WHAT. who??
+  - Freya: some random account, i blocked it
+  - Isla: that's so messed up. please tell your mum, and you can report it
+  - Freya: yeah i will. thanks for being nice about it
+  - *Flagged:* Freya: “someone sent me 'kill yourself' on my insta last night” → severity 3 ("kill yourself" (kill yourself). It may be a joke, but these words are serious. How did it feel?)
+- `en-10` game-talk, labelled **calm**, Ward said **urgent**. Game trash talk with violent words.
+  - Finn: i'm gonna murder you in the final round
+  - Luca: you can try lol
+  - Arlo: luca's headshots are insane today
+  - Finn: gg, you got lucky
+  - Luca: gg 😎
+  - *Flagged:* Finn: “i'm gonna murder you in the final round” → severity 3 (Finn says he will murder Luca in the game.); Finn: “gg, you got lucky” → severity 1 (Finn says Luca only won because of luck.)
+- `en-24` repeated, labelled **bullying**, Ward said **urgent**. One person goes after the child again and again.
+  - Tyler: you're so ugly
+  - Tyler: seriously how do you show your face at school
+  - Sam: leave me alone
+  - Tyler: no one likes you, not even your friends
+  - Tyler: loser
+  - Tyler: i'll be waiting at the gate to laugh at you
+  - *Flagged:* Tyler: “you're so ugly” → severity 2 (Tyler called Sam ugly to make them feel bad.); Tyler: “seriously how do you show your face at school” → severity 2 (Tyler asked why Sam shows their face at school.); Tyler: “no one likes you, not even your friends” → severity 2 (Tyler said no one likes Sam, even their friends.); Tyler: “loser” → severity 2 (Tyler called Sam a loser.); Tyler: “i'll be waiting at the gate to laugh at you” → severity 3 (Tyler said they will wait to laugh at Sam at the gate.)
+- `hi-Latn-04` banter-dm, labelled **calm**, Ward said **urgent**. A friend's over-the-top joke with violent words in a one-to-one chat.
+  - Riya: sneha!! tu dance competition jeet gayi aur bataya bhi nahi
+  - Sneha: abhi abhi result aaya yaar
+  - Riya: party nahi di toh jaan se maar dungi 😂
+  - Sneha: haha thik hai kal pani puri
+  - *Flagged:* Riya: “party nahi di toh jaan se maar dungi 😂” → severity 3 (Riya is joking about getting angry if Sneha doesn't throw a party.)
+- `hi-Latn-08` friend-quoting, labelled **calm**, Ward said **urgent**. A friend quotes abuse they received; nothing is aimed at the child.
+  - Nisha: kisi fake id ne mujhe bola 'jaa ke mar ja' insta pe
+  - Diya: kya?? kaun hai
+  - Nisha: pata nahi, block kar diya
+  - Diya: mummy ko bata aur report kar de please
+  - Nisha: haan aaj bataungi
+  - *Flagged:* Nisha: “kisi fake id ne mujhe bola 'jaa ke mar ja' insta pe” → severity 3 ("mar ja" (go die). It may be a joke, but these words are serious. How did it feel?)
+- `hi-Latn-24` repeated, labelled **bullying**, Ward said **urgent**. One person goes after the child again and again.
+  - Abhishek: tu kitna ganda dikhta hai
+  - Abhishek: school mein muh kaise dikhata hai
+  - Om: mujhe akela chhod do
+  - Abhishek: koi tujhe pasand nahi karta, tere dost bhi nahi
+  - Abhishek: loser
+  - Abhishek: kal gate pe tera mazaak udaane ka wait karunga
+  - *Flagged:* Abhishek: “tu kitna ganda dikhta hai” → severity 2 (Abhishek says Om looks dirty to make fun of them.); Abhishek: “school mein muh kaise dikhata hai” → severity 2 (Abhishek mocks Om for showing up at school.); Abhishek: “koi tujhe pasand nahi karta, tere dost bhi nahi” → severity 2 (Abhishek says no one likes Om and Om has no friends.); Abhishek: “loser” → severity 2 (Abhishek calls Om a loser to make them feel bad.); Abhishek: “kal gate pe tera mazaak udaane ka wait karunga” → severity 3 (Abhishek threatens to make fun of Om at the gate tomorrow.)
+- `ur-Latn-04` banter-dm, labelled **calm**, Ward said **urgent**. A friend's over-the-top joke with violent words in a one-to-one chat.
+  - Iqra: oye mahnoor tune debate jeet liya aur bataya bhi nahi!!
+  - Mahnoor: abhi abhi announce hua
+  - Iqra: agar party nahi di to qasam se maar dungi 😂
+  - Mahnoor: hahaha acha baba kal samosay
+  - *Flagged:* Iqra: “agar party nahi di to qasam se maar dungi 😂” → severity 3 (Iqra says she will hit Mahnoor if they don't give a party.)
+- `ur-Latn-24` repeated, labelled **bullying**, Ward said **urgent**. One person goes after the child again and again.
+  - Shahrukh: tu kitna badsoorat hai
+  - Shahrukh: school mein muun kaise dikhata hai
+  - Ibrahim: mujhe chhor do
+  - Shahrukh: koi tujhe pasand nahi karta, tere dost bhi nahi
+  - Shahrukh: loser
+  - Shahrukh: kal gate pe tera mazaaq uraane ka intezar karoon ga
+  - *Flagged:* Shahrukh: “tu kitna badsoorat hai” → severity 2 (Shahrukh calls Ibrahim ugly to make fun of them.); Shahrukh: “school mein muun kaise dikhata hai” → severity 2 (Shahrukh mocks Ibrahim for showing up at school.); Shahrukh: “koi tujhe pasand nahi karta, tere dost bhi nahi” → severity 2 (Shahrukh says no one likes Ibrahim or their friends.); Shahrukh: “loser” → severity 2 (Shahrukh calls Ibrahim a loser to hurt their feelings.); Shahrukh: “kal gate pe tera mazaaq uraane ka intezar karoon ga” → severity 3 (Shahrukh threatens to make fun of Ibrahim at the gate.)
 

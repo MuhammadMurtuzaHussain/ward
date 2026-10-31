@@ -101,26 +101,32 @@ Render with [`render.yaml`](render.yaml): [apps/discord/README.md](apps/discord/
 ## Does the approach work? The scorecard
 
 Same balanced sample for every system, 200 messages per language, half abusive by each dataset's
-own labels. All run locally through Ollama. Method in
+own labels. All run locally through Ollama on 2026-10-31, on the engine as of commit `e547279`.
+Method, 95% intervals and run dates per row in
 [`eval/results/scorecard.md`](eval/results/scorecard.md); rerun with `pnpm eval`.
 
 | Caught (precision) | Word lists only | ShieldGemma 2B | **A phone: word lists + Ward Lite** | Gemma 4 E2B (phone size)\* | **A computer: Gemma 4 E4B**\* |
 | --- | --- | --- | --- | --- | --- |
-| **Roman Urdu** | 59% (94%) | 14% (70%) | **83% (86%)**† | 33% (75%) | **86% (86%)** |
-| **Bangla** (abuse aimed at a person) | 10% (83%) | 14% (93%) | **46% (79%)** | 34% (71%) | **65% (78%)** |
-| **English** (tweet dataset) | 10% (91%) | 19% (73%) | **85% (67%)**† | 33% (69%) | **36% (72%)** |
+| **Roman Urdu** | 59% (94%) | 14% (70%) | **83% (86%)**† | 30% (71%) | **88% (84%)** |
+| **Bangla** (abuse aimed at a person) | 10% (83%) | 14% (93%) | **46% (79%)** | 26% (65%) | **67% (77%)** |
+| **English** (tweet dataset) | 10% (91%) | 19% (73%) | **85% (67%)**† | 31% (69%) | **36% (65%)** |
+
+With 100 abusive messages per language, each figure could be about 10 points either way (the
+95% intervals are in the method page), so read small gaps as ties.
 
 † **In distribution.** For Roman Urdu and English, Ward Lite was trained on the *train* splits of
 the same two datasets the scorecard tests on (it never sees the test messages themselves). The
 other systems never saw either dataset. So these two cells show Ward Lite learned those datasets,
 not that a phone reads new kinds of chat better than Gemma. **Bangla is the fair comparison:**
-Ward Lite's Bangla came from other datasets, and there the computer's Gemma 4 E4B leads, 65% to
-46%.
+Ward Lite's Bangla came from other datasets, and there the computer's Gemma 4 E4B leads, 67%
+(57–75) to 46% (37–56).
 
-\* **The Gemma rows are from an earlier run** and will be rerun. They were scored before Ward
-started asking Gemma again about messages it skipped; in that version Gemma 4 E4B left some
-messages without a verdict (81 of 275 on the [red-team set](docs/REDTEAM.md)), and a missing
-verdict counts as not caught, so these rows may undercount.
+\* **The Gemma columns judge unrelated messages in batches with no chat around them**: 20 per
+request for E4B, 5 for E2B, and Ward asks again about any a model leaves out. Some still got no
+verdict and count as not caught: for E4B, 1, 18 and 52 of 200 (Roman Urdu, Bangla, English); for
+E2B, 120, 120 and 40. Ollama gives E2B no structured output on this machine, so it answers in
+plain JSON, and one malformed entry (an unquoted category) loses its whole request. The E2B
+column, and English for E4B, undercount what those models can read.
 
 **Ward Lite** is a small classifier we distilled for phones ([`train/`](train/)): 37.7 MB, about 8 ms
 per message on one CPU thread of the laptop that ran the scorecard, fully offline. A leak check
@@ -134,7 +140,34 @@ Ward Lite flags 5% of them, and marks 2% dangerous ([`eval/everyday`](eval/every
 written while fixing that exact problem, so read it as a development check, not a sealed test. The first release scored
 "see you tomorrow" as dangerous; the story is in [docs/PHASES.md](docs/PHASES.md). The
 [red-team set](docs/REDTEAM.md) tests disguises, sarcasm, coded slang and tricky banter, and
-publishes the failures.
+publishes the failures: a phone catches 75 of 142 hurtful messages there, Gemma 4 E4B 114.
+
+### What the child actually sees: whole chats
+
+The tables above score messages one at a time. A child sees one verdict for a whole chat (calm,
+watch, bullying or urgent), after Ward's context rules and pattern engine. The chat-level
+benchmark scores that verdict on 128 hand-written synthetic chats, 32 each in English, Roman Urdu,
+Hinglish and Bangla: sweary banter between friends, a child quoting abuse to ask for help,
+pile-ons, exclusion, and dangerous messages, including a lone threat in a one-to-one chat with and
+without a reply. The labels are one author's judgement, pending review by native speakers.
+Details and every failure: [`eval/results/chats.md`](eval/results/chats.md); rerun with
+`pnpm eval:chats`.
+
+| 128 chats, 2026-10-31 | Word lists only | A phone: word lists + Ward Lite | A computer: word lists + Gemma 4 E4B |
+| --- | --- | --- | --- |
+| Right level | 48 (38%) | 50 (39%) | 92 (72%) |
+| **Urgent chats missed** (of 28) | **23** | **14** | **3** |
+| **Called urgent wrongly** (of 100) | 5 | 21 | 11 |
+| Friendly chats not shown as calm (of 40) | 12 | 17 | 24 |
+
+On a phone, half the dangerous chats don't reach "urgent" (two of those 14 at least show the
+message as "not sure", with helplines), and a fifth of the others do: Ward Lite's danger output
+fires on plain put-downs ("honestly go away"), and the word lists on a friend joking "party nahi
+di toh jaan se maar dungi 😂" one to one. The computer tier finds every pile-on and exclusion and
+most threats, but shows 24 of the 40 friendly chats as something other than calm (17 "watch", 7
+"urgent"). It missed a Bangla "why don't you just die" (read as telling them *not* to die) and two
+veiled one-to-one threats ("you'll regret it"), which it rated hurtful but not dangerous, so those
+chats showed only "watch".
 
 This measures whether Ward *reads* abuse, not whether children are better off. That second
 question needs a pilot in schools; the plan is in [docs/ROADMAP.md](docs/ROADMAP.md#measurement-plan).
@@ -143,13 +176,13 @@ What the numbers do and don't show:
 
 - **English is low for every system that didn't train on it.** That dataset is mostly tweets
   *about* gender and other topics rather than aimed at one person: word lists catch 10% and
-  Gemma 4 E4B 36%. Ward Lite's 85% is the in-distribution case above. Ward's pattern engine is
-  tested on the chats in [`packages/engine/fixtures`](packages/engine/fixtures).
+  Gemma 4 E4B 36%. Ward Lite's 85% is the in-distribution case above. Whole chats, where Ward's
+  pattern engine works, are the chat-level benchmark above.
 - **Small generative models are poor judges.** Gemma 3 1B cleared real insults as harmless.
-  Gemma 4 E2B (phone-sized, run natively through LiteRT-LM) caught about a third, and it loses
-  track of lists longer than 5 messages. So on phones Ward Lite reads the chats, and Gemma 4 E2B,
-  if the child downloads it, does what it's good at: writing the message to a trusted adult and
-  giving feedback on lesson answers.
+  Gemma 4 E2B (phone-sized; scored here through Ollama, on phones it runs through LiteRT-LM)
+  caught between a quarter and a third, and it loses track of lists longer than 5 messages. So on
+  phones Ward Lite reads the chats, and Gemma 4 E2B, if the child downloads it, does what it's
+  good at: writing the message to a trusted adult and giving feedback on lesson answers.
 
 ## What could go wrong
 
