@@ -6,7 +6,7 @@
 
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-const ORIGINS = (process.env.GEMMA_DEMO_ORIGINS ?? "https://ward-w8cd.onrender.com").split(",").map((s) => s.trim());
+const ORIGINS = (process.env.GEMMA_DEMO_ORIGINS ?? "https://try-ward.onrender.com,https://ward-w8cd.onrender.com").split(",").map((s) => s.trim());
 const API = "https://generativelanguage.googleapis.com/v1beta";
 const MAX_BODY = 24_000;
 const WINDOW_MS = 10 * 60_000;

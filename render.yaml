@@ -21,10 +21,11 @@ services:
       - key: WARD_SERVER_MODE
         value: "off"
 
-  # The web demo (https://ward-w8cd.onrender.com). Everything runs in the visitor's browser; the
-  # only network calls are the optional Gemma demo relay and a local Ollama on the visitor's own
-  # machine. The case viewer carries its own stricter meta CSP and needs inline script and style,
-  # so it gets its own header instead of the site one.
+  # The web demo (https://try-ward.onrender.com; https://ward-w8cd.onrender.com is a second static
+  # site built the same way, kept so older links still work, with the same headers). Everything runs
+  # in the visitor's browser; the only network calls are the optional Gemma demo relay and a local
+  # Ollama on the visitor's own machine. The case viewer carries its own stricter meta CSP and needs
+  # inline script and style, so it gets its own header instead of the site one.
   - type: web
     runtime: static
     name: ward

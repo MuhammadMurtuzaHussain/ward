@@ -9,7 +9,7 @@ Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids 
 </p>
 
 <p align="center">
-<a href="https://ward-w8cd.onrender.com"><img src="https://img.shields.io/badge/Try_it-in_your_browser-0f1024?style=for-the-badge&logoColor=ffb547" alt="Try Ward in your browser" /></a>
+<a href="https://try-ward.onrender.com"><img src="https://img.shields.io/badge/Try_it-in_your_browser-0f1024?style=for-the-badge&logoColor=ffb547" alt="Try Ward in your browser" /></a>
 </p>
 <p align="center"><sub>The demo runs entirely in your browser: Ward Lite and the word lists load from the page, and the chat you paste is never sent anywhere.</sub></p>
 
@@ -26,7 +26,7 @@ Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids 
 &nbsp;
 <img src="docs/media/story.gif" width="260" alt="A branching story: a group chat about Saturday bowling where one classmate is left out" />
 </p>
-<p align="center"><sub>Check a chat · Pick your night light · Live a story. Recorded from the <a href="https://ward-w8cd.onrender.com">browser demo</a>.</sub></p>
+<p align="center"><sub>Check a chat · Pick your night light · Live a story. Recorded from the <a href="https://try-ward.onrender.com">browser demo</a>.</sub></p>
 
 The bully is the ghost haunting the chat. Ward is the ghost on your side.
 
