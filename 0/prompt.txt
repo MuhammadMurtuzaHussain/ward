@@ -1,0 +1,1 @@
+<bash-input>/opt/homebrew/opt/openjdk@21/bin/keytool -list -v -keystore ward-release.p12 -alias ward | grep SHA256</bash-input><bash-stdout>[No output was captured. The command ran in the terminal pane (tab 2); if it should have printed something, use read_terminal with tab_id "2" to check.]</bash-stdout><bash-stderr></bash-stderr>
