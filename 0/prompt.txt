@@ -1,0 +1,2 @@
+<bash-input>cd "/Users/haider/Desktop/Hacktoberfest 26/ward" && entire import claude-code --path /private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/scratchpad/entire</bash-input><bash-stdout>✓ Importing Claude Code sessions... (session 1/1 · turn 12/12)
+Imported 12 turn(s) from 1 session(s) (0 already imported).</bash-stdout><bash-stderr></bash-stderr>
