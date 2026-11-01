@@ -211,12 +211,12 @@ export const en = {
       ],
       Instagram: [
         "Press and hold a mean message or comment, then tap Report.",
-        "On their profile, tap the three dots at the top right, then Block. Restrict is a quieter option: they won't know, and you won't see their comments.",
+        "On their profile, tap … at the top right, then Block. In a chat, tap their name at the top, then Block. Restrict is a quieter option: they won't know, and you won't see their comments.",
         "Reports are anonymous.",
       ],
-      TikTok: ["Press and hold a mean comment, then tap Report.", "On their profile, tap the share arrow at the top right, then Report or Block.", "In Settings, Privacy, you can limit who comments on your videos."],
-      Snapchat: ["Press and hold their name in your chats.", "Tap Manage Friendship, then Report or Block.", "Snaps can be screenshotted. Save evidence with screenshots of your own before you block."],
-      Discord: ["Press and hold (or right-click) a message, then Report Message.", "Tap their name, then the three dots, then Block.", "Tell a server moderator too: they can remove people from the server."],
+      TikTok: ["Press and hold a mean comment, then tap Report.", "On their profile, tap the Share button at the top, then Report or Block.", "In Settings, Privacy, you can limit who comments on your videos."],
+      Snapchat: ["Press and hold their name in your chats.", "Tap Manage Friendship, then Block.", "To report, press and hold their profile or the Snap, then tap Report.", "Snaps can be screenshotted. Save evidence with screenshots of your own before you block."],
+      Discord: ["Press and hold (or right-click) a message, then Report Message.", "Open their profile, tap …, then Block.", "Tell a server moderator too: they can remove people from the server."],
     } as Record<string, string[]>,
   },
   draft: {
