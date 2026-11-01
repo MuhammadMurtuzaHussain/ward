@@ -13,13 +13,20 @@ Hinglish and Bangla, keeps the evidence, coaches the next step, and trains kids 
 </p>
 <p align="center"><sub>The demo runs entirely in your browser: Ward Lite and the word lists load from the page, and the chat you paste is never sent anywhere.</sub></p>
 
-<!-- Download badges, for when the first release is tagged:
 <p align="center">
 <a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Android-APK-0f1024?style=for-the-badge&logo=android&logoColor=ffb547" alt="Download for Android" /></a>
 <a href="https://github.com/MuhammadMurtuzaHussain/ward/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Desktop-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-0f1024?style=for-the-badge&logoColor=ffb547" alt="Desktop installers" /></a>
 </p>
--->
-<p align="center"><b>No release yet.</b> Until the first version is published, <a href="#run-it">build Ward from source</a>.</p>
+<p align="center"><sub>v0.1.0 is a preview. Read the safeguarding policy below before giving it to a child.</sub></p>
+
+<p align="center">
+<img src="docs/media/check.gif" width="260" alt="Checking an example group chat: pick who you are, and Ward says this is serious, then lists what it noticed" />
+&nbsp;
+<img src="docs/media/looks.gif" width="260" alt="Picking a night light: Lantern, Moonlit, Firefly, Ember, Aurora" />
+&nbsp;
+<img src="docs/media/story.gif" width="260" alt="A branching story: a group chat about Saturday bowling where one classmate is left out" />
+</p>
+<p align="center"><sub>Check a chat · Pick your night light · Live a story. Recorded from the <a href="https://ward-w8cd.onrender.com">browser demo</a>.</sub></p>
 
 The bully is the ghost haunting the chat. Ward is the ghost on your side.
 
@@ -48,6 +55,14 @@ The evidence is clear that apps alone don't fix bullying. School-wide programs t
 peers and teachers do best, and even they cut cyberbullying modestly (g = -0.13 to -0.18 across
 50 studies). So Ward is built as the child's front door into the people who can help: the adult
 they tell, their class, and helplines.
+
+## A look around
+
+| Home | Who are you? | The verdict | What do I do? |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/media/home.png" width="190" alt="Home at night: Ward says late messages feel worse, with today's lesson and helplines" /> | <img src="docs/media/who.png" width="190" alt="Choosing which person in the chat is you, or checking for a friend" /> | <img src="docs/media/verdict.png" width="190" alt="This is serious, with Talk to someone now first" /> | <img src="docs/media/coach.png" width="190" alt="The Coach: steps to save, block and report, and tell an adult" /> |
+| **Resilience Path** | **اردو** | | |
+| <img src="docs/media/path.png" width="190" alt="The Resilience Path with lessons and stories per unit" /> | <img src="docs/media/urdu.png" width="190" alt="Home in Urdu, right to left in Nastaliq" /> | | |
 
 ## Three rings
 
@@ -264,6 +279,54 @@ at the app and fix `en.ts` and `ur.ts` together. It isn't proof the step is wron
 public help pages: no chat ever goes out.
 
 ## How it's built
+
+```mermaid
+flowchart LR
+  subgraph In["Where chats come from"]
+    WA["WhatsApp export<br/>(Share to Ward)"]
+    PASTE["Paste or screenshots"]
+    DC["Discord message<br/>(right-click → Apps)"]
+  end
+  subgraph Engine["packages/engine (same code everywhere)"]
+    P["Parser"] --> WL["Word lists<br/>slang packs, 4 languages"]
+    P --> LITE["Ward Lite<br/>38 MB ONNX, on device"]
+    P --> G["Gemma 4<br/>E4B on computers · E2B on phones"]
+    WL & LITE & G --> C["combine()<br/>can raise, never lower"]
+    C --> PAT["Pattern engine<br/>repeat attacker · pile-on · ghost accounts · late night"]
+  end
+  subgraph Out["What the child gets"]
+    V["Verdict + help first"]
+    CO["Coach"]
+    VA["Encrypted vault<br/>AES-GCM, PIN"]
+    R["ward.report/v2"]
+  end
+  WA & PASTE & DC --> P
+  PAT --> V --> CO
+  V --> VA --> R
+  R --> VIEW["Offline case viewer<br/>counsellor mode"]
+  R -. child chooses .-> ADULT["Trusted adult · helpline"]
+```
+
+Everything inside the engine box runs on the child's device. The only network calls are optional
+and named: Ollama on the family computer, the Discord bot, and the browser demo's Gemma relay.
+
+| Where Ward runs | How it's built | Who reads the chat |
+| --- | --- | --- |
+| Android phone | Capacitor (`mobile/`), lite APK for any phone, Gemma APK for arm64 | Word lists + Ward Lite; Gemma 4 E2B helps write on 6 GB+ phones |
+| Computer | Electron (`desktop/`), macOS, Windows, Linux | Gemma 4 E4B through Ollama or built in |
+| Browser | `apps/web` on Render and GitHub Pages | Word lists + Ward Lite in the page; hosted Gemma (Google AI Studio, through the relay) only if you press the demo button |
+| Discord | `apps/discord` on Render | The same engine and Ward Lite in Node; no database |
+
+| Open model or tool | What it does in Ward |
+| --- | --- |
+| **Gemma 4 E4B / E2B** | Reads chats with context; wrote the synthetic training data Ward Lite learned from |
+| **Ward Lite** (e5-small, fine-tuned) | The on-device reader that runs everywhere, offline |
+| **ShieldGemma 2B** | The baseline on the scorecard |
+| **Ollama / LiteRT-LM** | Run Gemma locally on computers and phones |
+| **Render** | Hosts the browser demo, the Discord bot and the demo's Gemma relay |
+| **Tiger Data** | Keeps every eval run; CI fails a push that makes a score worse ([eval/history](eval/history/README.md)) |
+| **Browserbase + SerpApi** | `pnpm helpcheck` checks the Coach's block and report steps against each app's help pages |
+| **ElevenLabs** | 107 English narration clips bundled for read-aloud, offline |
 
 ```
 packages/engine    parser, slang packs, pattern engine, Gemma and ShieldGemma judges,
