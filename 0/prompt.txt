@@ -1,0 +1,9 @@
+<task-notification>
+<task-id>bok4aqvwp</task-id>
+<tool-use-id>toolu_01VmMoptpQWyBWJar5Li6i3v</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/666a7bb9-40f1-49b0-9e29-7f8170fbcabf/tasks/bok4aqvwp.output</output-file>
+<status>completed</status>
+<summary>Monitor "Android debug build for @capacitor/app wiring" stream ended</summary>
+<event>android run: completed success</event>
+If this event is something the user would act on now, send a PushNotification. Routine or benign output doesn't need one.
+</task-notification>
