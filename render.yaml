@@ -33,6 +33,8 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "24"
+      - key: VITE_WARD_DEMO
+        value: "1"
       - key: VITE_GEMMA_DEMO_URL
         value: https://ward-discord.onrender.com/gemma
     routes:
