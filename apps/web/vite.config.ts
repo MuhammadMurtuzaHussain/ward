@@ -103,13 +103,15 @@ const caseworkerViewer: Plugin = {
 // The hosted demo (VITE_WARD_DEMO=1, .github/workflows/pages.yml) gets a strict CSP: everything
 // from its own origin, nothing third-party, and WebAssembly allowed for Ward Lite. The app and the
 // desktop build are untouched. (frame-ancestors can't be set from a meta tag, so it isn't here.)
+// A build with the Gemma demo relay (VITE_GEMMA_DEMO_URL, the Render demo) may also reach that one origin.
+const relay = process.env.VITE_GEMMA_DEMO_URL ? new URL(process.env.VITE_GEMMA_DEMO_URL).origin : "";
 const DEMO_CSP = [
   "default-src 'self'",
   "script-src 'self' 'wasm-unsafe-eval'",
   "style-src 'self'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self'${relay ? ` ${relay}` : ""}`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
   "object-src 'none'",
