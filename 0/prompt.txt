@@ -1,0 +1,16 @@
+Background (from the session that started this one):
+Ward (github.com/MuhammadMurtuzaHussain/ward, public MIT, local checkout at `/Users/haider/Desktop/Hacktoberfest 26/ward`) is a child-owned cyberbullying guardian for the DEV Hacktoberfest Week 4 challenge (deadline 31 Oct 11:59 PM PDT, about 06:59 GMT 1 Nov). Judges currently have nothing to open: no release and no hosted demo. The web app is `apps/web` (Vite + React; Ward Lite is a ~38 MB ONNX model plus ONNX Runtime wasm copied by `apps/web/scripts/copy-ort.mjs`; Gemma needs Ollama, so a hosted page gets word lists + Ward Lite only). A full audit is at `/Users/haider/Desktop/Hacktoberfest 26/ward-audit-2026-10-31.md`. Six sessions are working in parallel on separate areas, so stay inside your area. Project rules: commit and push each verified change straight to main (no PRs), with the attribution line `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; never commit secrets. Docs must never claim more than the code does.
+
+Task:
+Your area: a hosted web demo judges can open tonight (audit appendix: "Hosted web demo").
+
+Setup: other sessions share this checkout, so work in your own worktree: `git -C ward fetch && git -C ward worktree add "../ward-wt-web-demo" -b web-demo origin/main`, `pnpm install`, `node apps/web/scripts/copy-ort.mjs`, and work only there.
+
+1. A demo build of `apps/web` for GitHub Pages under `/ward/` (base path), produced by a GitHub Actions workflow that builds on push to main and deploys with `actions/deploy-pages`. Ward Lite and ONNX Runtime must be included (the build fails without them) and loaded lazily. Add a WASM-safe strict CSP (meta tag) with no third-party origins.
+2. Frame it honestly in-app: a small "Demo: word lists and Ward Lite, in your browser. Nothing you paste leaves this page." banner, sample chats a judge can load in one tap (synthetic, from the existing fixtures/stories, mildest wording), and iPhone/desktop copy that doesn't promise the Android share sheet. Strings go in en.ts and ur.ts.
+3. Verify locally with the preview tools: load a sample chat, see a verdict, check the console for CSP errors, and check phone width.
+4. **Before turning on Pages or the deploy (it publishes publicly), ask the owner in your session and wait for a yes.** After deploying, set the repo homepage to the demo URL only with that same yes.
+
+Keep your `apps/web/src` changes to the demo banner/samples and build config. Other sessions are editing Result, Me and engine code, so rebase carefully. Push each verified piece to main (fetch, rebase onto origin/main, `pnpm test`, push; retry on rejection). Finish with the live URL (or what blocks it), commits, and a screenshot.
+
+Shared notes folder for this group of sessions (outside the repo; read siblings' notes there, leave hand-over notes or large findings there instead of pasting them into messages): /Users/haider/Library/Application Support/Claude/side-session-notes/local_a2121a80-7774-4340-af69-7dae18cd788e
