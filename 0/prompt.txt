@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bcvmlldwi</task-id>
+<tool-use-id>toolu_01Qgpd8RHz3DydEnAM919HGF</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/666a7bb9-40f1-49b0-9e29-7f8170fbcabf/tasks/bcvmlldwi.output</output-file>
+<status>completed</status>
+<summary>Background command "Watch Android CI run until done" completed (exit code 0)</summary>
+</task-notification>
