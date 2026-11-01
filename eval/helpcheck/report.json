@@ -1,0 +1,268 @@
+{
+  "date": "2026-11-01",
+  "rows": [
+    {
+      "app": "WhatsApp",
+      "action": "report",
+      "url": "https://faq.whatsapp.com/414631957536067/",
+      "wardSteps": [
+        "Scroll down and tap Report. WhatsApp gets the last few messages so they can see what happened. They aren't told it was you.",
+        "Tap Block. For a group: tap the group name, then Exit group, or Report group."
+      ],
+      "pageSteps": [],
+      "found": [
+        "report",
+        "block",
+        "exit"
+      ],
+      "missing": [],
+      "status": "ok",
+      "title": "About reporting and blocking on WhatsApp"
+    },
+    {
+      "app": "WhatsApp",
+      "action": "block",
+      "url": "https://faq.whatsapp.com/1142481766359885",
+      "wardSteps": [
+        "Tap Block. For a group: tap the group name, then Exit group, or Report group."
+      ],
+      "pageSteps": [
+        "click  on the chat with the sender you’d like to block. you can also click  at the top right of the chat window.",
+        "click block > block. check the box next to report to whatsapp if you also want to report the sender.",
+        "go to the chats tab and click the third-party chat with the sender you’d like to block.",
+        "click the sender’s name > block user.",
+        "click  on the chat with the person you’d like to unblock. you can also click  at the top right of the chats window.",
+        "click unblock > unblock.",
+        "click report {contact} or report {phone number} or > block {contact} or block {phone number} or > report.",
+        "select the box if you want to block {contact}, block {phone number} or exit group and clear chat > report."
+      ],
+      "found": [
+        "block",
+        "exit",
+        "report"
+      ],
+      "missing": [],
+      "status": "ok",
+      "title": "How to block and report someone | WhatsApp Help Center"
+    },
+    {
+      "app": "WhatsApp",
+      "action": "proof",
+      "url": "https://faq.whatsapp.com/1180414079177245",
+      "wardSteps": [],
+      "pageSteps": [
+        "click  > export chat.",
+        "click export."
+      ],
+      "found": [],
+      "missing": [],
+      "status": "no-ward-step",
+      "title": "How to export your chat history | WhatsApp Help Center"
+    },
+    {
+      "app": "Instagram",
+      "action": "report",
+      "url": "https://help.instagram.com/",
+      "wardSteps": [
+        "Press and hold a mean message or comment, then tap Report.",
+        "Reports are anonymous."
+      ],
+      "pageSteps": [],
+      "found": [
+        "report"
+      ],
+      "missing": [],
+      "status": "ok",
+      "title": "Help Center"
+    },
+    {
+      "app": "Instagram",
+      "action": "block",
+      "url": "https://help.instagram.com/454180787965921",
+      "wardSteps": [
+        "On their profile, tap the three dots at the top right, then Block. Restrict is a quieter option: they won't know, and you won't see their comments."
+      ],
+      "pageSteps": [
+        "click the chat with the person you want to block/unblock, then click  information at the top.",
+        "click block/unblock, then click again to confirm."
+      ],
+      "found": [
+        "block",
+        "restrict"
+      ],
+      "missing": [
+        "three dots"
+      ],
+      "status": "drift",
+      "title": "Help Center"
+    },
+    {
+      "app": "Instagram",
+      "action": "proof",
+      "url": "https://help.instagram.com/272077316522642",
+      "wardSteps": [],
+      "pageSteps": [],
+      "found": [],
+      "missing": [],
+      "status": "no-ward-step",
+      "title": "Help Center"
+    },
+    {
+      "app": "TikTok",
+      "action": "report",
+      "url": "https://support.tiktok.com/en/safety-hc/report-a-problem/report-a-post",
+      "wardSteps": [
+        "Press and hold a mean comment, then tap Report.",
+        "On their profile, tap the share arrow at the top right, then Report or Block."
+      ],
+      "pageSteps": [],
+      "found": [
+        "report",
+        "block"
+      ],
+      "missing": [
+        "share arrow"
+      ],
+      "status": "drift",
+      "title": "Report a problem - TikTok Help Center"
+    },
+    {
+      "app": "TikTok",
+      "action": "block",
+      "url": "https://support.tiktok.com/en/using-tiktok/followers-and-following/blocking-the-users?lang=en",
+      "wardSteps": [
+        "On their profile, tap the share arrow at the top right, then Report or Block."
+      ],
+      "pageSteps": [
+        "3. tap block at the bottom, then tap block again to confirm.",
+        "4. select the comments from accounts you want to block, then tap more at the bottom.",
+        "5. tap block accounts.",
+        "6. tap block to confirm.",
+        "3. tap unblock at the bottom to confirm."
+      ],
+      "found": [
+        "report",
+        "block"
+      ],
+      "missing": [
+        "share arrow"
+      ],
+      "status": "drift",
+      "title": "Blocking someone - TikTok Help Center"
+    },
+    {
+      "app": "TikTok",
+      "action": "proof",
+      "url": "https://support.tiktok.com/?lang=en-us",
+      "wardSteps": [],
+      "pageSteps": [],
+      "found": [],
+      "missing": [],
+      "status": "no-ward-step",
+      "title": "TikTok Support"
+    },
+    {
+      "app": "Snapchat",
+      "action": "report",
+      "url": "https://help.snapchat.com/hc/en-us/p/5153567363039232-help-topic",
+      "wardSteps": [
+        "Tap Manage Friendship, then Report or Block."
+      ],
+      "pageSteps": [
+        "press and hold on the profile or content you’d like to report, then tap 'report.'"
+      ],
+      "found": [
+        "report"
+      ],
+      "missing": [
+        "manage friendship",
+        "block"
+      ],
+      "status": "drift",
+      "title": "Snapchat Support"
+    },
+    {
+      "app": "Snapchat",
+      "action": "block",
+      "url": "https://help.snapchat.com/hc/en-us/articles/7012401093396-How-do-I-block-a-friend-on-Snapchat",
+      "wardSteps": [
+        "Tap Manage Friendship, then Report or Block.",
+        "Snaps can be screenshotted. Save evidence with screenshots of your own before you block."
+      ],
+      "pageSteps": [
+        "tap ‘block’",
+        "tap ‘block’"
+      ],
+      "found": [
+        "manage friendship",
+        "report",
+        "block"
+      ],
+      "missing": [],
+      "status": "ok",
+      "title": "How do I block a friend on Snapchat? - Snapchat Support"
+    },
+    {
+      "app": "Snapchat",
+      "action": "proof",
+      "url": "https://help.snapchat.com/hc/en-us/articles/7012354501524-When-I-save-a-Snap-in-Chat-where-is-it-stored",
+      "wardSteps": [
+        "Snaps can be screenshotted. Save evidence with screenshots of your own before you block."
+      ],
+      "pageSteps": [],
+      "found": [],
+      "missing": [],
+      "status": "no-ward-step",
+      "title": "When I save a Snap in Chat, where is it stored? - Snapchat Support"
+    },
+    {
+      "app": "Discord",
+      "action": "report",
+      "url": "https://support.discord.com/hc/en-us/articles/22582288274071-Reporting-Abusive-Behavior-to-Discord",
+      "wardSteps": [
+        "Press and hold (or right-click) a message, then Report Message."
+      ],
+      "pageSteps": [],
+      "found": [],
+      "missing": [
+        "right-click",
+        "report message"
+      ],
+      "status": "drift",
+      "title": "Reporting Abusive Behavior to Discord"
+    },
+    {
+      "app": "Discord",
+      "action": "block",
+      "url": "https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings",
+      "wardSteps": [
+        "Tap their name, then the three dots, then Block."
+      ],
+      "pageSteps": [
+        "1. to block specific individuals, open a user's profile from the members list by selecting the member.",
+        "2. then, press the ellipsis [] and choose block.",
+        "3.  once you confirm your action, the user will be blocked.",
+        "2. select a user, tap the ellipsis [], and choose block to instantly block the user."
+      ],
+      "found": [
+        "block"
+      ],
+      "missing": [
+        "three dots"
+      ],
+      "status": "drift",
+      "title": "Blocking & Privacy Settings - Discord"
+    },
+    {
+      "app": "Discord",
+      "action": "proof",
+      "url": "https://support.discord.com/hc/en-us/articles/360034632292-Sending-Messages",
+      "wardSteps": [],
+      "pageSteps": [],
+      "found": [],
+      "missing": [],
+      "status": "no-ward-step",
+      "title": "Sending Messages - Discord"
+    }
+  ]
+}

@@ -252,6 +252,17 @@ Ward's installers aren't signed yet, so the first time you open one your compute
   **Run anyway**.
 - **Linux:** make the AppImage runnable with `chmod +x Ward-linux.AppImage`, then open it.
 
+### Checking the Coach's help steps
+
+The Coach tells kids where Report and Block are in WhatsApp, Instagram, TikTok, Snapchat and
+Discord, and apps move their buttons. `pnpm helpcheck` (`-- --only=TikTok` for one app) finds each
+app's own help page for reporting, blocking and saving proof (SerpApi), loads it in a real browser
+(Browserbase), and checks that the button names in Ward's steps are still on it. The latest run is
+in [eval/helpcheck/report.md](eval/helpcheck/report.md). A **drift** row means a person should look
+at the app and fix `en.ts` and `ur.ts` together. It isn't proof the step is wrong. It needs
+`SERPAPI_KEY`, `BROWSERBASE_API_KEY` and `BROWSERBASE_PROJECT_ID` in `ward/.env`. It only reads
+public help pages: no chat ever goes out.
+
 ## How it's built
 
 ```
