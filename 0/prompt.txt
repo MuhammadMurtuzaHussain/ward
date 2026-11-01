@@ -1,0 +1,17 @@
+Background (from the session that started this one):
+Ward (github.com/MuhammadMurtuzaHussain/ward, public MIT, local checkout at `/Users/haider/Desktop/Hacktoberfest 26/ward`) is a child-owned cyberbullying guardian for the DEV Hacktoberfest Week 4 challenge (deadline 31 Oct 11:59 PM PDT, about 06:59 GMT 1 Nov), headed for the Digital Public Goods registry (`docs/DPG.md`). Governance docs are in `docs/` (GOVERNANCE, SAFEGUARDING, HARMS) plus `CODE_OF_CONDUCT.md` and `SECURITY.md`; training data notes in `train/DATA.md`. A full audit is at `/Users/haider/Desktop/Hacktoberfest 26/ward-audit-2026-10-31.md`. Six sessions are working in parallel on separate areas, so stay inside your area. Project rules: commit and push each verified change straight to main (no PRs), with the attribution line `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; short plain-English commit messages. Docs must never claim more than the code does, and must never invent people, emails or partners that don't exist.
+
+Task:
+Your area: docs only. Audit rows: "Contributor on-ramp", "Licences and model card", and the DPG quick wins in the appendix.
+
+Setup: other sessions share this checkout, so work in your own worktree: `git -C ward fetch && git -C ward worktree add "../ward-wt-docs" -b contributor-docs origin/main` and work only there.
+
+1. `CONTRIBUTING.md` (DCO sign-off, how to run tests, how slang-pack and lesson changes are reviewed), `LANGUAGES.md` (who maintains what; today nobody), and `.github/ISSUE_TEMPLATE/` forms for helpline update, slang word, false alarm, translation and bug. Every form warns "never paste a real child's chat". Add a `config.yml` pointing safety concerns to SAFEGUARDING.md.
+2. Draft 6 to 10 seed issues as a markdown file (`docs/SEED_ISSUES.md`). **Don't create them on GitHub, and don't change repo settings or labels.**
+3. A model card for Ward Lite (`train/MODEL_CARD.md`): data, intended use, out-of-scope use, in-distribution caveat, the red-team weaknesses, and raise-only authority. Use numbers from `README.md`/`docs/REDTEAM.md` as they stand on main. Another session is rerunning them, so link to them rather than copying long tables.
+4. A licence column in `train/DATA.md` for every dataset (SentNoB is CC BY-ND; CB1 unknown; mteb undeclared), stating the consequence plainly and what replacing SentNoB would take. A content licence proposal (CC BY 4.0) as a clearly marked owner decision, not applied.
+5. DPG.md quick wins: cite SDG 4.a.2, split Gemma 4 (Apache 2.0) from ShieldGemma (Gemma Terms), e5-small is MIT. Link the new docs from README in one short line, and touch nothing else in README (another session is editing its scorecard section).
+
+Fill no contact placeholders with made-up addresses; list them as owner to-dos. Run `pnpm test`, then push to main (fetch, rebase onto origin/main, push; retry on rejection). Finish with a short report: commits, plus the list of owner-only to-dos you found.
+
+Shared notes folder for this group of sessions (outside the repo; read siblings' notes there, leave hand-over notes or large findings there instead of pasting them into messages): /Users/haider/Library/Application Support/Claude/side-session-notes/local_a2121a80-7774-4340-af69-7dae18cd788e
