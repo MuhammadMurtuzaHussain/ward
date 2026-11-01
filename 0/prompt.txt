@@ -1,0 +1,12 @@
+<task-notification>
+<task-id>b25c400zg</task-id>
+<tool-use-id>toolu_01DTRkHRr5o79c3xepruYiqo</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/b25c400zg.output</output-file>
+<status>completed</status>
+<summary>Background command "cd "/Users/haider/Desktop/Hacktoberfest 26/ward" &amp;&amp; git add -A &amp;&amp; git commit -q -m "Give check: read apksigner's certificate line in either format
+
+The share copy already matched the installed APK byte for byte on the emulator; only the
+script's parse of apksigner came back empty.
+
+Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;" &amp;&amp; git push -q origin main &amp;&amp; gh workflow run android.yml --ref main &amp;&amp; sleep 8 &amp;&amp; id=$(gh run list --workflow android.yml --limit 1 --json databaseId -q '.[0].databaseId') &amp;&amp; echo $id &amp;&amp; gh run watch $id --exit-status &gt;/dev/null 2&gt;&amp;1; gh run view $id --json conclusion,jobs -q '"\(.conclusion) " + ([.jobs[] | "\(.name)=\(.conclusion)"] | join(" "))'; gh run view $id --log 2&gt;/dev/null | grep -E "apksigner|SHA-256|give-check|GIVE_CHECK" | cut -c60-300 | head" completed (exit code 0)</summary>
+</task-notification>
