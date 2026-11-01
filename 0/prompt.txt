@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bgbgbgw59</task-id>
+<tool-use-id>toolu_01RFLPcCVpp2ujBKoyDAB84G</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/bgbgbgw59.output</output-file>
+<status>completed</status>
+<summary>Background command "cd "/Users/haider/Desktop/Hacktoberfest 26/ward" &amp;&amp; for id in 41224630766 41224671580 41224674314; do gh run watch $id --exit-status &gt;/dev/null 2&gt;&amp;1; gh run view $id --json name,conclusion,jobs -q '"\(.name): \(.conclusion) [" + ([.jobs[] | "\(.name[0:28])=\(.conclusion)"] | join(", ")) + "]"'; done; for id in 41224630766 41224671580 41224674314; do gh run view $id --log-failed 2&gt;/dev/null | grep -E "##\[error\]|Error|FAIL|✖" | cut -c1-260 | head -8; done" completed (exit code 0)</summary>
+</task-notification>
