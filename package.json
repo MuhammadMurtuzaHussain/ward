@@ -14,6 +14,11 @@
     "eval:chats": "node --experimental-strip-types eval/chats/run.ts",
     "eval:chats:lite": "train/.venv/bin/python eval/chats/score-lite.py",
     "secondlook": "node --experimental-strip-types eval/secondlook/run.ts gemma4:e2b gemma4:e4b",
-    "helpcheck": "node --experimental-strip-types eval/helpcheck/run.ts"
+    "helpcheck": "node --experimental-strip-types eval/helpcheck/run.ts",
+    "history:record": "node --experimental-strip-types eval/history/record.ts",
+    "history:report": "node --experimental-strip-types eval/history/report.ts"
+  },
+  "devDependencies": {
+    "postgres": "^4.0.0"
   }
 }
