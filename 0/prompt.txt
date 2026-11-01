@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>b8258u7yr</task-id>
+<tool-use-id>toolu_011mZuYAMmfFYQxWDDWVzxR7</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/b8258u7yr.output</output-file>
+<status>completed</status>
+<summary>Background command "cd /Users/haider/Projects/reel-factory &amp;&amp; until s=$(.venv/bin/python -m reelfactory status 2&gt;/dev/null | grep WARD-E1-KIDS); echo "$s" | grep -qE " (rendered|failed) " &amp;&amp; [ "$(stat -f %m output/drafts/WARD-E1-KIDS.mp4)" -gt "$(stat -f %m inbox/voiceovers/WARD-E1-KIDS.wav)" -o -n "$(echo "$s" | grep failed)" ]; do sleep 10; done; echo "$s"; grep -E "timing via|voice tightened|rendering|DONE|ERROR" logs/WARD-E1-KIDS.log | tail -5" completed (exit code 0)</summary>
+</task-notification>
