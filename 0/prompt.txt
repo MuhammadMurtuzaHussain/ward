@@ -1,0 +1,6 @@
+> Render. It’s the highest-value gap: judges and users could try Ward without installing anything. It means the web app and case viewer as static sites, plus the bot. This is the one step that needs you, to connect Render.
+> A v0.1.0 preview release, once your four signing secrets are set. That makes the download links and “Give Ward to a friend” real.
+> The help-page checker (Browserbase + SerpApi), if you have keys or credits for both. It’s a genuine use of both: it keeps the Coach’s instructions true as the apps change their menus.
+> Re-import Entire checkpoints for the work since the last import.
+
+im done with steps 1 and 2, can you launch sub sessions to do steps 3 and 4
