@@ -1,0 +1,6 @@
+<task-notification>
+<task-id>bdgifgd1d</task-id>
+<summary>Monitor event: "Ward Android and desktop CI step results on release-pipeline"</summary>
+<event>desktop/build (windows-latest, windows-x64, --win nsis --x64, release/win-unpacked/Ward.exe, release/win-...: success</event>
+If this event is something the user would act on now, send a PushNotification. Routine or benign output doesn't need one.
+</task-notification>
