@@ -1,0 +1,2 @@
+<bash-input>gh secret set ANDROID_KEYSTORE_PASSWORD --repo MuhammadMurtuzaHussain/ward</bash-input><bash-stdout>? Paste your secret: 
+[The user typed into the terminal pane (tab 2) while this command was running, so output after that point is not included; it may still be running there, or they may have stopped it. Use read_terminal with tab_id "2" to check on it.]</bash-stdout><bash-stderr></bash-stderr>
