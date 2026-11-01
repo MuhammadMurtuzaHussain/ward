@@ -1,6 +1,7 @@
 // Reads Ward's eval history from Tiger Data and writes eval/history/README.md: each benchmark's
 // latest score next to the run before it, any metric that got worse, and a chart over time of the
-// phone tier's F1 per language (what most children run). With --check it exits 1 on a regression, for CI.
+// phone tier's F1 per language (what most children run). With --check it exits 1 on a regression,
+// for CI; given a commit (--check=<sha>), only on regressions that commit introduced.
 //
 //   pnpm history:report
 //   pnpm history:report -- --check
@@ -11,7 +12,8 @@ import { connect } from "./db.ts";
 import { HIGHER_IS_BETTER } from "./flatten.ts";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
-const check = process.argv.includes("--check");
+const checkArg = process.argv.find((a) => a.startsWith("--check"));
+const checkSha = checkArg?.split("=")[1];
 /** A change smaller than this is noise on sets of 80 to 300 items. */
 const TOLERANCE = 0.03;
 
@@ -107,4 +109,8 @@ ${chart()}## Latest scores
 ${["scorecard", "redteam", "chats", "everyday", "secondlook"].map(table).join("")}`;
 writeFileSync(`${here}README.md`, md);
 console.log(`${pairs.length} series, ${worse.length} got worse`);
-if (check && worse.length) process.exit(1);
+const blocking = checkSha ? worse.filter((p) => checkSha.startsWith(p.commit)) : worse;
+if (checkArg && blocking.length) {
+  for (const p of blocking) console.error(`worse: ${p.suite} ${p.system} ${p.lang} ${p.metric} ${pct(p.previous!)} -> ${pct(p.latest)}`);
+  process.exit(1);
+}

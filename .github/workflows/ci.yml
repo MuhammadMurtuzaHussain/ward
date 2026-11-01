@@ -13,8 +13,13 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    env:
+      TIGER_DATABASE_URL: ${{ secrets.TIGER_DATABASE_URL }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # The eval history reads every committed version of the result files.
+          fetch-depth: 0
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -25,3 +30,10 @@ jobs:
       # The root test script: every package's tests plus the loose test files, so CI never drifts from it.
       - run: pnpm test
       - run: pnpm --filter @ward/web build
+      # Record this push's eval results on Tiger Data and fail if this commit made a score worse.
+      # Pull requests and forks have no secret, so the steps skip there.
+      - name: Eval history
+        if: github.event_name == 'push' && env.TIGER_DATABASE_URL != ''
+        run: |
+          pnpm history:record
+          pnpm history:report -- --check=${{ github.sha }}
