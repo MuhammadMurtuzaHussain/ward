@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bdthh6vz5</task-id>
+<tool-use-id>toolu_0141dzmw54wj6Np7w7QpXafL</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/bdthh6vz5.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for the Android and CI runs to finish" completed (exit code 0)</summary>
+</task-notification>
