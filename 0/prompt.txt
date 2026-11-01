@@ -1,0 +1,2 @@
+<bash-input>/opt/homebrew/opt/openjdk@21/bin/keytool -genkeypair -v -storetype PKCS12 -keystore ward-release.p12 -alias ward -keyalg RSA -keysize 4096 -validity 10000 -dname "CN=Ward, O=Ward"</bash-input><bash-stdout>Enter keystore password:
+[The user typed into the terminal pane (tab 1) while this command was running, so output after that point is not included; it may still be running there, or they may have stopped it. Use read_terminal with tab_id "1" to check on it.]</bash-stdout><bash-stderr></bash-stderr>
