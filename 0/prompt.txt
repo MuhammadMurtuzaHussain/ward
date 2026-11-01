@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bdgifgd1d</task-id>
+<summary>Monitor event: "Ward Android and desktop CI step results on release-pipeline"</summary>
+<event>android/launch: Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 success
+android/launch: Run reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d success</event>
+If this event is something the user would act on now, send a PushNotification. Routine or benign output doesn't need one.
+</task-notification>
