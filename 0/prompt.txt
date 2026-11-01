@@ -1,0 +1,12 @@
+Background (from the session that started this one):
+Ward is the user's HF26 Week 4 entry: a public MIT pnpm monorepo (github.com/MuhammadMurtuzaHussain/ward), an on-device cyberbullying guardian for kids and teens with packages/engine, apps/web, apps/discord, desktop, mobile, eval and train. The house rule is to commit and push each verified change straight to main. Another session may work in the same folder, so touch only your own files. Child chats never leave the device: the checker reads only public help pages. Use they/them for people.
+
+Task:
+In `/Users/haider/Desktop/Hacktoberfest 26/ward`, build a help-page checker. Ward's Coach tells kids how to report, block or save proof in each app (find where those per-app steps live in the engine/web i18n). The checker should:
+1. Use SerpApi to find each app's current official help page for each action.
+2. Use Browserbase to load the page and pull the steps.
+3. Compare the steps with Ward's text and write a drift report (markdown + JSON) under `eval/helpcheck/`.
+
+It is a script (`pnpm helpcheck`), not part of the app at runtime. Keys come from env (`SERPAPI_KEY`, `BROWSERBASE_API_KEY`, `BROWSERBASE_PROJECT_ID`) and `.env` stays gitignored. Never set secrets yourself: if the keys are missing, ask the user to paste them into `ward/.env`. Add a short README section, run it once for real if the keys exist, typecheck, then commit and push straight to main (no branches). Only touch the new checker files, package.json scripts and docs. Done means the script runs, the report is committed and the README explains it.
+
+Shared notes folder for this group of sessions (outside the repo; read siblings' notes there, leave hand-over notes or large findings there instead of pasting them into messages): /Users/haider/Library/Application Support/Claude/side-session-notes/local_a340ebaf-8965-489c-88cd-9f351923c756
