@@ -19,6 +19,7 @@ export function DemoSamples() {
           return (
             <button
               key={s.id}
+              data-tour={s.id === "pileon" ? "pileon" : undefined}
               onClick={() => void startCheck(parse(s.text), s.self, s.title)}
               className="flex min-h-14 flex-col items-start justify-center rounded-btn border border-line bg-raised px-4 py-3 text-start transition-colors hover:border-glow"
             >

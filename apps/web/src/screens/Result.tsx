@@ -124,6 +124,7 @@ export function Result({ id }: { id: string }) {
       <div className="grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-8">
         <div className="grid gap-5 lg:sticky lg:top-6">
           <motion.section
+            data-tour="verdict"
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex gap-5 rounded-card border border-line bg-surface p-6"
@@ -246,7 +247,9 @@ export function Result({ id }: { id: string }) {
           {!s.refining && DEMO_GEMMA_URL && !a.layers.models.some((m) => /gemma/i.test(m)) && <DemoGemmaOffer id={id} />}
         </div>
 
-        <Timeline analysis={a} self={s.self} help={plan.helpNow} fps={fps} />
+        <div data-tour="timeline">
+          <Timeline analysis={a} self={s.self} help={plan.helpNow} fps={fps} />
+        </div>
       </div>
     </Screen>
   );
@@ -320,7 +323,7 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
   const t = useT();
   const [open, setOpen] = useState(false);
   return (
-    <div className="text-sm">
+    <div data-tour="how" className="text-sm">
       <button onClick={() => setOpen((o) => !o)} aria-expanded={open} className="flex min-h-11 items-center gap-2 font-bold text-dim hover:text-ink">
         {t.result.how}
         <CaretDown size={14} weight="bold" className={open ? "rotate-180" : ""} />
@@ -592,7 +595,7 @@ function Correct({ f, fp, c, view, help, helpHere }: { f: Finding; fp: string; c
 function DemoGemmaOffer({ id }: { id: string }) {
   const t = useT();
   return (
-    <section className="rounded-card border border-dashed border-line bg-surface p-4">
+    <section data-tour="gemma" className="rounded-card border border-dashed border-line bg-surface p-4">
       <h2 className="font-display text-lg font-bold tracking-tight">{t.result.demoGemmaTitle}</h2>
       <p className="mt-1 text-sm text-dim">{t.result.demoGemmaLine}</p>
       <Button tone="quiet" className="mt-3" onClick={() => void readWithDemoGemma(id)}>

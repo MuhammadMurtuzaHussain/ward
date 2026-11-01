@@ -296,3 +296,14 @@ html[lang="ur"] [lang="en"] {
 [dir="rtl"] .flip-rtl {
   transform: scaleX(-1);
 }
+
+/* The demo tour points at one part of the screen at a time. */
+[data-tour-on] {
+  outline: 3px solid var(--glow);
+  outline-offset: 6px;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 10px var(--glow-soft);
+  transition: outline-color 0.2s;
+  /* Clear of the sticky demo banner, and above the tour card on a phone. */
+  scroll-margin-top: 10rem;
+}
