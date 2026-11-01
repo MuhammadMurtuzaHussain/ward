@@ -1,0 +1,13 @@
+<task-notification>
+<task-id>bdgifgd1d</task-id>
+<summary>Monitor event: "Ward Android and desktop CI step results on release-pipeline"</summary>
+<event>android/build: Build success
+android/build: Native libraries success
+android/build: Ward Lite is in both APKs success
+android/launch: Enable KVM success
+android/launch: Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262 success
+android/launch: Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 success
+android/launch: Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 success
+desktop/build (macos-latest, mac-arm64, --mac dmg --arm64, release/mac-arm64/Ward.app/Contents/MacOS/Ward...: success</event>
+If this event is something the user would act on now, send a PushNotification. Routine or benign output doesn't need one.
+</task-notification>
