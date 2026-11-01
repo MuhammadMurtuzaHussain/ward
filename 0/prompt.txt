@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>b8bihj2l7</task-id>
+<tool-use-id>toolu_01Qq6gRx1oC42YPmFTrMyYe8</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/b8bihj2l7.output</output-file>
+<status>completed</status>
+<summary>Background command "until curl -s https://ward-w8cd.onrender.com/ | grep -qi "&lt;div id=\"root\""; do sleep 15; done; curl -s -o /dev/null -w "%{http_code}\n" https://ward-w8cd.onrender.com/models/ward-lite/ward-lite.json; curl -s -o /dev/null -w "%{http_code}\n" https://ward-w8cd.onrender.com/ort/ort-wasm-simd-threaded.asyncify.wasm; curl -s -o /dev/null -w "%{http_code}\n" https://ward-w8cd.onrender.com/ward-viewer.html" completed (exit code 0)</summary>
+</task-notification>
