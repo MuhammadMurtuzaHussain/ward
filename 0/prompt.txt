@@ -1,0 +1,1 @@
+<bash-input>gh secret set ANDROID_KEY_ALIAS --repo MuhammadMurtuzaHussain/ward --body ward</bash-input><bash-stdout>[No output was captured. The command ran in the terminal pane (tab 3); if it should have printed something, use read_terminal with tab_id "3" to check.]</bash-stdout><bash-stderr></bash-stderr>
