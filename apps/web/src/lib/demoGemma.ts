@@ -6,7 +6,7 @@
 import { JSON_INSTRUCTION, type Transport } from "@ward/engine";
 
 export const DEMO_GEMMA_URL: string | undefined = import.meta.env.VITE_GEMMA_DEMO_URL || undefined;
-export const DEMO_GEMMA = "Gemma (Ward's demo server)";
+export const DEMO_GEMMA = "Gemma 4 (Google AI Studio, via Ward's demo server)";
 
 export const demoTransport: Transport = async (system, user) => {
   const r = await fetch(DEMO_GEMMA_URL!, {
