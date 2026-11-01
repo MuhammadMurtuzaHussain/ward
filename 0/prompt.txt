@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bvigtffvv</task-id>
+<tool-use-id>toolu_01UvE1TwvnnUxMkTctb2tTgy</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/bvigtffvv.output</output-file>
+<status>completed</status>
+<summary>Background command "cd "/Users/haider/Desktop/Hacktoberfest 26/ward" &amp;&amp; gh workflow run desktop.yml --ref main &amp;&amp; sleep 8 &amp;&amp; id=$(gh run list --workflow desktop.yml --limit 1 --json databaseId -q '.[0].databaseId') &amp;&amp; echo $id &amp;&amp; gh run watch $id --exit-status &gt;/dev/null 2&gt;&amp;1; gh run view $id --json conclusion,jobs -q '"\(.conclusion) " + ([.jobs[] | "\(.name)=\(.conclusion)"] | join(" | "))'; gh run view $id --log 2&gt;/dev/null | grep -E "smoke:|llama|##\[warning\]|##\[error\]" | cut -c1-80,100-260 | head -30; gh run list --commit 159edad --json name,conclusion -q '.[] | "\(.name): \(.conclusion)"'" completed (exit code 0)</summary>
+</task-notification>
