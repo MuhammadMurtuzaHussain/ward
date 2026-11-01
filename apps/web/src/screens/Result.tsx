@@ -37,7 +37,7 @@ import { patternText } from "../lib/patternText.ts";
 import { LessonSuggestions } from "../components/LessonSuggestions.tsx";
 import { locale, useT, type Dict } from "../i18n/index.ts";
 import { BUILT_IN_GEMMA, desktopStatus } from "../lib/desktopGemma.ts";
-import { DEMO_GEMMA_URL } from "../lib/demoGemma.ts";
+import { DEMO_GEMMA, DEMO_GEMMA_URL } from "../lib/demoGemma.ts";
 import { readWithDemoGemma } from "../lib/run.ts";
 
 const PATTERN_ICON: Record<PatternKind, Icon> = {
@@ -332,7 +332,9 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
         <div className="grid gap-2 text-dim">
           <p>
             {t.result.howLists(analysis.layers.packs.length)}
-            {analysis.layers.models.includes(BUILT_IN_GEMMA)
+            {analysis.layers.models.includes(DEMO_GEMMA)
+              ? t.result.howDemo
+              : analysis.layers.models.includes(BUILT_IN_GEMMA)
               ? t.result.howBuiltIn
               : analysis.layers.models.includes("Ward Lite")
               ? t.result.howLite
@@ -340,7 +342,7 @@ function HowWardKnows({ analysis }: { analysis: Analysis }) {
                 ? t.result.howModel(analysis.layers.models.join(" + "))
                 : t.result.howNone}
           </p>
-          <p>{t.result.howPrivate}</p>
+          <p>{analysis.layers.models.includes(DEMO_GEMMA) ? t.result.howPrivateDemo : t.result.howPrivate}</p>
         </div>
       )}
     </div>
