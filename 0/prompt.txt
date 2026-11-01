@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bs53jai4x</task-id>
+<tool-use-id>toolu_016Pmg3jJFEpxmTgJt5axj2s</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/2ed611ad-1695-4044-a993-e7431f46e8d1/tasks/bs53jai4x.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for signed build and pull certificate lines" completed (exit code 0)</summary>
+</task-notification>
