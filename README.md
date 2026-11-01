@@ -35,6 +35,10 @@ Before you put Ward in front of a child, read the draft
 a child-protection professional yet, and
 [how to raise a concern](docs/SAFEGUARDING.md#10-raising-a-concern-about-the-project-itself).
 
+**Raise a concern:** found a security flaw? Use the repo's **Security** tab → *Report a vulnerability*
+([SECURITY.md](SECURITY.md)). Worried about a child's safety or someone in the project? Write to
+[hello@muhammadmurtuza.com](mailto:hello@muhammadmurtuza.com). Never paste a real child's chat in a public issue.
+
 ## What this is, and what it isn't
 
 Ward is a response to World Solve problem

@@ -213,7 +213,7 @@ online or in person.
    chats. Material they review is synthetic or made up. If a member chooses to share something
    personal, a moderator makes sure they know they do not have to, and checks they are okay.
 6. **A way out and a way to complain.** Every member and parent has the contact for the safeguarding
-   lead and for `[second contact, outside the maintainer group: to be named]`. Concerns go to
+   lead and for a second contact outside the maintainer group (not named yet). Concerns go to
    somebody other than the person complained about.
 7. **Distress.** Moderators know the signs, know the helpline list and stop a session if someone
    is upset. After any session that touched a hard topic, the group is told where to find help.

@@ -235,8 +235,8 @@ please do not paste a real child's chat, name or photo into an issue. Use made-u
 
 **If someone tells us they are being harmed, or that a child is.**
 
-1. Whoever sees it tells the **safeguarding lead** (`[safeguarding lead: to be appointed]`,
-   contact `[safeguarding contact address: to be created]`) the same day. Until a lead is
+1. Whoever sees it tells the **safeguarding lead** (not appointed yet;
+   contact [hello@muhammadmurtuza.com](mailto:hello@muhammadmurtuza.com)) the same day. Until a lead is
    appointed, the maintainer who sees it does this and writes down what they did.
 2. **Respond kindly and briefly.** Believe them. Say it is not their fault. Do not ask for
    details, do not promise to keep it secret, and do not ask them to prove it.
@@ -311,12 +311,12 @@ being followed:
   Ward could expose a child): open an issue, or if it could expose a child's data, use
   [private vulnerability reporting](../SECURITY.md).
 - **Something about a person in the project** (a maintainer, volunteer or advisory group
-  member): write to `[safeguarding contact address: to be created]`. If you are not comfortable
-  writing to the lead, write to `[second contact, outside the maintainer group: to be named]`.
+  member): write to [hello@muhammadmurtuza.com](mailto:hello@muhammadmurtuza.com). No second contact outside the
+  maintainer group is named yet; until one is, you can also use [GitHub's own reporting](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam).
 - **A child is in immediate danger:** contact your local emergency number or child helpline first.
   Do not wait for us.
 
-We will acknowledge a concern within `[number: for example 3 working days]` and tell you what we
+We will acknowledge a concern within 3 working days and tell you what we
 decided. Nobody will be penalised for raising a concern in good faith. Concerns about a
 maintainer are handled by someone other than that maintainer.
 

@@ -1,7 +1,7 @@
 # Security policy
 
-> **DRAFT. Not yet reviewed by a safeguarding professional.** The contact details and response
-> times below are placeholders until the project has people to answer them. See
+> **DRAFT. Not yet reviewed by a safeguarding professional.** Ward has one maintainer for now,
+> so the response times below are honest targets, not guarantees. See
 > [docs/SAFEGUARDING.md](docs/SAFEGUARDING.md).
 
 Ward is used by children who are being hurt online, on phones that are sometimes shared. A
@@ -15,11 +15,7 @@ person hurting them. Please take that seriously, and thank you for helping.
 Use GitHub's private vulnerability reporting: on the repository page, open the **Security** tab,
 choose **Report a vulnerability** and fill in the form. Only the maintainers can see it.
 
-> Setup note for maintainers: private vulnerability reporting must be switched on under
-> Settings, then Code security, in the repository. Until it is, use the fallback below.
-> `[Decision needed: confirm it is enabled before publishing this file.]`
-
-If you cannot use GitHub, write to `[security contact address: to be created]`. Do not include a
+If you cannot use GitHub, write to [hello@muhammadmurtuza.com](mailto:hello@muhammadmurtuza.com). Do not include a
 real child's data in a report. Use made-up data or a test profile.
 
 A good report says what you found, how to reproduce it (a made-up chat is enough), which version
@@ -31,16 +27,16 @@ These are targets, not guarantees, from a very small team:
 
 | Step | Target |
 | --- | --- |
-| We reply to say we have it | within `[number: for example 5 days]` |
-| We tell you whether we agree it is a vulnerability | within `[for example 14 days]` |
-| We fix serious problems | as soon as we can; we will tell you if it will take longer than `[for example 30 days]` |
+| We reply to say we have it | within 7 days |
+| We tell you whether we agree it is a vulnerability | within 14 days |
+| We fix serious problems | as soon as we can; we will tell you if it will take longer than 30 days |
 | We publish an advisory and credit you | after a fix is released, if you want credit |
 
 We will not take legal action against anyone who finds and reports a problem in good faith,
 keeps to this policy, does not look at or keep anyone's real data, and gives us reasonable time
 to fix it before telling others.
 
-There is no bug bounty. `[Decision needed: whether to offer any recognition or reward.]`
+There is no bug bounty. If you want it, we credit you in the advisory.
 
 ## What is in scope
 
@@ -109,8 +105,7 @@ So you do not spend time rediscovering them:
 
 ## Supported versions
 
-Only the latest release is supported. `[Decision needed: policy once there are several
-releases.]`
+Only the latest release is supported.
 
 ## Disclosure of safeguarding concerns
 

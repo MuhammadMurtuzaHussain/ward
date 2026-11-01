@@ -52,16 +52,16 @@ one.
 
 ## Reporting and enforcement
 
-Report a conduct concern privately to `[conduct contact address: to be created]`. If the concern
-is about a maintainer, or you would rather not write to the maintainers, write to
-`[second contact, outside the maintainer group: to be named]`. If it is about a child's safety,
+Report a conduct concern privately to [hello@muhammadmurtuza.com](mailto:hello@muhammadmurtuza.com). A second contact outside the
+maintainer group hasn't been named yet; until one is, a concern about the maintainer can go to
+[GitHub's own reporting](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam). If it is about a child's safety,
 see [docs/SAFEGUARDING.md](docs/SAFEGUARDING.md#10-raising-a-concern-about-the-project-itself).
 If someone is in immediate danger, contact your local emergency services first.
 
-Reports are handled by the safeguarding lead (`[safeguarding lead: to be appointed]`) and one
-other maintainer who is not involved. They will:
+Reports will be handled by a safeguarding lead and one other maintainer who is not involved.
+Neither is appointed yet, so for now the project's one maintainer reads every report. They will:
 
-- acknowledge the report within `[number: for example 3 working days]`;
+- acknowledge the report within 3 working days;
 - treat it in confidence, sharing only what is needed to act;
 - never ask the reporter to confront the person;
 - decide on a response using the Covenant's enforcement ladder (a private note, a warning, a
