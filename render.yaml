@@ -20,3 +20,41 @@ services:
         sync: false
       - key: WARD_SERVER_MODE
         value: "off"
+
+  # The web demo (https://ward-w8cd.onrender.com). Everything runs in the visitor's browser; the
+  # only network calls are the optional Gemma demo relay and a local Ollama on the visitor's own
+  # machine. The case viewer carries its own stricter meta CSP and needs inline script and style,
+  # so it gets its own header instead of the site one.
+  - type: web
+    runtime: static
+    name: ward
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @ward/web build
+    staticPublishPath: apps/web/dist
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: VITE_GEMMA_DEMO_URL
+        value: https://ward-discord.onrender.com/gemma
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' https://ward-discord.onrender.com http://127.0.0.1:11434 http://localhost:11434; manifest-src 'self'; worker-src 'self' blob:; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'"
+      - path: /ward-viewer.html
+        name: Content-Security-Policy
+        value: "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: no-referrer
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Permissions-Policy
+        value: "camera=(self), microphone=(), geolocation=(), payment=(), usb=(), serial=(), bluetooth=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), interest-cohort=()"
