@@ -1,0 +1,1 @@
+<bash-input>rm ~/ward-signing/ward-release.p12</bash-input><bash-stdout>[No output was captured. The command ran in the terminal pane (tab 5); if it should have printed something, use read_terminal with tab_id "5" to check.]</bash-stdout><bash-stderr></bash-stderr>
