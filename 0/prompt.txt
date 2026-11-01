@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>be542q4in</task-id>
+<tool-use-id>toolu_01PuGMFEnZpbfbPPbXSjj6pV</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/tasks/be542q4in.output</output-file>
+<status>completed</status>
+<summary>Background command "cd "/Users/haider/Desktop/Hacktoberfest 26/ward" &amp;&amp; sleep 5; for i in $(seq 1 40); do out=$(gh run list --commit c4bae2e --json name,status,conclusion -q '.[] | "\(.name): \(.status) \(.conclusion)"'); if [ -n "$out" ] &amp;&amp; ! echo "$out" | grep -q -v completed; then :; fi; if [ -n "$out" ] &amp;&amp; ! echo "$out" | grep -qE "queued|in_progress"; then echo "$out"; break; fi; sleep 20; done" completed (exit code 0)</summary>
+</task-notification>
