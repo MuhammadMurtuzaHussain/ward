@@ -1,0 +1,6 @@
+<task-notification>
+<task-id>bdgifgd1d</task-id>
+<summary>Monitor event: "Ward Android and desktop CI step results on release-pipeline"</summary>
+<event>desktop/build (macos-15-intel, mac-x64, --mac dmg --x64, release/mac/Ward.app/Contents/MacOS/Ward, releas...: success</event>
+If this event is something the user would act on now, send a PushNotification. Routine or benign output doesn't need one.
+</task-notification>
