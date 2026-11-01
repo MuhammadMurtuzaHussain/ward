@@ -1,0 +1,14 @@
+okay,
+
+false alarms, how do we solve this
+
+i suppose it depends on context, can we pull in some way ai can see context and decide.
+
+i will do the native-speaker review with a friend
+
+i tried discord app, works great and stuff, however after a few messages it stopped working.
+
+yeah if merged, remove the stuff.
+
+
+tell me whats needs to be done next, also tell me what needs testing and i will review it.
