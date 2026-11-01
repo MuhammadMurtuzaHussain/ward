@@ -1,0 +1,1 @@
+<bash-input>openssl rand -base64 24</bash-input><bash-stdout>REDACTED</bash-stdout><bash-stderr></bash-stderr>
