@@ -1,0 +1,1 @@
+<bash-input>entire import claude-code --path /private/tmp/claude-501/-Users-haider-Desktop-Hacktoberfest-26/0cf62ca5-911b-48de-86c0-63490519bbda/scratchpad/entire</bash-input><bash-stdout>Not a git repository. Run 'entire enable' from within a git repository.</bash-stdout><bash-stderr></bash-stderr>
