@@ -19,6 +19,6 @@
     "history:report": "node --experimental-strip-types eval/history/report.ts"
   },
   "devDependencies": {
-    "postgres": "^4.0.0"
+    "postgres": "^4.1.0"
   }
 }
