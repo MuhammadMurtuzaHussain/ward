@@ -66,10 +66,10 @@
     }
   },
   "devDependencies": {
-    "electron": "^45.1.0",
+    "electron": "^45.3.4",
     "electron-builder": "^26.18.0"
   },
   "dependencies": {
-    "node-llama-cpp": "3.22.2"
+    "node-llama-cpp": "3.22.3"
   }
 }
